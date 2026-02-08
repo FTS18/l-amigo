@@ -49,31 +49,40 @@ L'Amigo automates the preservation of the user's solved problem library by synch
 
 ## Installation and Deployment
 
-### Development Environment Setup
-To initialize the development environment, execute the following commands in sequence:
-```bash
-# Clone the repository
-git clone https://github.com/FTS18/l-amigo.git
-cd l-amigo
+### Method 1: End-User Installation (Pre-built Release)
+This method is recommended for users who wish to utilize L'Amigo without maintaining a local development environment.
+1. Navigate to the official L'Amigo GitHub repository and access the **Releases** section.
+2. Download the distribution package: `lamigo_v1.4.0_release.zip`.
+3. Extract the ZIP archive contents to a persistent local directory.
+4. Open the Google Chrome browser and navigate to `chrome://extensions/`.
+5. Activate **Developer mode** using the toggle in the upper-right corner.
+6. Click the **Load unpacked** button and select the directory containing the extracted release files.
 
-# Install dependencies
-npm install
+### Method 2: Developer Installation (Build from Source)
+Use this method if you intend to contribute to the codebase or utilize the most recent unreleased features.
+1. Clone the repository and navigate to the project root:
+   ```bash
+   git clone https://github.com/FTS18/l-amigo.git
+   cd l-amigo
+   ```
+2. Install the required dependencies:
+   ```bash
+   npm install
+   ```
+3. Generate the production distribution using the build pipeline:
+   ```bash
+   npm run build
+   ```
+4. Open `chrome://extensions/` in the browser and ensure **Developer mode** is active.
+5. Click **Load unpacked** and choose the `dist/` directory generated in the previous step.
 
-# Start the development server with watch mode
-npm run dev
-```
-
-### Production Build
-To generate a minimized, production-ready build:
-```bash
-npm run build
-```
-The resulting assets will be located in the `dist/` directory, which is the package required for browser installation.
-
-### Browser Integration
-1. Navigate to the Chrome Extensions management page: `chrome://extensions/`.
-2. Enable "Developer Mode" in the management interface.
-3. Utilize the "Load unpacked" utility and select the `dist/` folder.
+### Project Architecture
+The codebase is structured into specialized modules to facilitate development scalability:
+- **src/content**: Logic for LeetCode DOM manipulation and submission monitoring.
+- **src/background**: Service worker for periodic data synchronization and alarm management.
+- **src/popup**: React-based architecture for the main user dashboard and configuration views.
+- **src/services**: Abstraction layer for API communications and internal data persistence.
+- **website**: Source for the product landing page and promotional assets.
 
 ## Future Development Roadmap
 - **Collaborative Squads**: Implementation of optional peer-to-peer data sharing for private community leaderboards.
