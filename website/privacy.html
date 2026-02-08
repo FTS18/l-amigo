@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - L'Amigo</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .legal-page {
+      padding: 140px 20px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .legal-header {
+      margin-bottom: 40px;
+    }
+    .legal-header h1 {
+      font-size: 44px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--dark);
+    }
+    .legal-meta {
+      color: var(--gray);
+      font-size: 14px;
+    }
+    .legal-content h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 40px 0 16px;
+      color: var(--dark);
+    }
+    .legal-content h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 28px 0 12px;
+      color: var(--dark);
+    }
+    .legal-content p {
+      margin-bottom: 16px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 16px 0 16px 24px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+    .legal-content li {
+      margin-bottom: 8px;
+    }
+    .legal-content strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .highlight-box {
+      background: var(--gradient-soft);
+      border-left: 4px solid var(--primary);
+      padding: 20px 24px;
+      margin: 24px 0;
+      border-radius: 8px;
+    }
+    .highlight-box p {
+      margin-bottom: 0;
+      color: var(--dark);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
+        <span class="logo-text">L'Amigo</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="#" class="btn-primary">Add to Chrome</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Privacy Policy Content -->
+  <div class="legal-page">
+    <div class="legal-header">
+      <h1>Privacy Policy</h1>
+      <p class="legal-meta">Last Updated: February 8, 2026</p>
+    </div>
+
+    <div class="legal-content">
+      <div class="highlight-box">
+        <p><strong>TL;DR:</strong> L'Amigo stores your data locally on your device. We don't collect, transmit, or sell your personal information. Your GitHub token stays on your device. We only communicate with LeetCode and GitHub APIs using credentials you provide.</p>
+      </div>
+
+      <h2>1. Introduction</h2>
+      <p>L'Amigo ("we," "our," or "the Extension") is a Chrome browser extension designed to help you track your friends' LeetCode progress and sync your solutions to GitHub. This Privacy Policy explains how we handle your data.</p>
+      <p>By using L'Amigo, you agree to the practices described in this policy.</p>
+
+      <h2 id="data">2. Data We Store Locally</h2>
+      <p>All data collected by L'Amigo is stored <strong>locally on your device</strong> using Chrome's storage API (<code>chrome.storage.local</code>). We do not transmit this data to any external servers.</p>
+
+      <h3>2.1 Personal Settings</h3>
+      <ul>
+        <li><strong>Your LeetCode Username:</strong> Used to fetch your profile and submission data</li>
+        <li><strong>GitHub Personal Access Token:</strong> Used exclusively for syncing submissions to your GitHub repository. This token is stored encrypted in your browser's local storage and never leaves your device.</li>
+        <li><strong>GitHub Repository Name:</strong> The target repository for syncing your solutions</li>
+        <li><strong>UI Preferences:</strong> Theme (dark/light mode), tab selections, and display settings</li>
+      </ul>
+
+      <h3>2.2 Friends Data</h3>
+      <ul>
+        <li><strong>Friend Usernames:</strong> LeetCode usernames you choose to track</li>
+        <li><strong>Cached Profile Data:</strong> Problem counts, difficulty distributions, streaks, topic statistics, language statistics, and recent submissions for each friend</li>
+        <li><strong>Timestamps:</strong> Last fetch times to optimize API calls and implement smart caching</li>
+      </ul>
+
+      <h3>2.3 Submission Data</h3>
+      <ul>
+        <li><strong>Accepted Submissions:</strong> Problem titles, IDs, difficulty levels, timestamps, and submission codes</li>
+        <li><strong>Sync Status:</strong> Which submissions have been pushed to GitHub</li>
+        <li><strong>Submission Calendar:</strong> 365 days of daily submission counts from LeetCode</li>
+      </ul>
+
+      <h2>3. External API Communication</h2>
+      <p>L'Amigo communicates directly with third-party APIs to function. <strong>We do not act as an intermediary or store this data on any servers.</strong></p>
+
+      <h3>3.1 LeetCode GraphQL API</h3>
+      <ul>
+        <li><strong>Purpose:</strong> Fetch user profiles, submission history, problem details, and submission calendars</li>
+        <li><strong>Data Sent:</strong> LeetCode usernames, GraphQL queries, cookies for authentication</li>
+        <li><strong>What We Receive:</strong> Public profile data as provided by LeetCode's API</li>
+        <li><strong>Your Control:</strong> Only usernames you explicitly add are queried</li>
+      </ul>
+
+      <h3>3.2 GitHub REST API</h3>
+      <ul>
+        <li><strong>Purpose:</strong> Create/update repositories and files with your accepted submission codes</li>
+        <li><strong>Data Sent:</strong> Your GitHub token (from local storage), repository name, file contents (problem solutions)</li>
+        <li><strong>Authorization:</strong> Uses the Personal Access Token (PAT) you provide. The token is sent directly from your browser to GitHub's API—never through our servers</li>
+        <li><strong>Your Control:</strong> You control token permissions and can revoke access anytime from GitHub settings</li>
+      </ul>
+
+      <h2>4. Permissions Explained</h2>
+      <p>L'Amigo requests the following Chrome permissions:</p>
+      <ul>
+        <li><strong>storage:</strong> Save your settings, friends list, and cached data locally</li>
+        <li><strong>unlimitedStorage:</strong> Store large submission datasets without browser limits</li>
+        <li><strong>alarms:</strong> Schedule background syncs and automatic profile refreshes</li>
+        <li><strong>notifications:</strong> Notify you when syncs complete or when friends hit milestones</li>
+        <li><strong>cookies:</strong> Access LeetCode cookies to authenticate API requests on your behalf</li>
+        <li><strong>Host Permissions (leetcode.com, api.github.com):</strong> Communicate with LeetCode and GitHub APIs</li>
+      </ul>
+
+      <h2>5. What We Don't Do</h2>
+      <div class="highlight-box">
+        <p><strong>L'Amigo does NOT:</strong></p>
+      </div>
+      <ul>
+        <li>❌ Collect personally identifiable information (PII) beyond what you explicitly provide</li>
+        <li>❌ Transmit your data to remote servers, analytics platforms, or third parties</li>
+        <li>❌ Use tracking pixels, cookies, or analytics scripts</li>
+        <li>❌ Sell, rent, or share your data with advertisers or data brokers</li>
+        <li>❌ Monitor your browsing activity outside of leetcode.com</li>
+        <li>❌ Access your GitHub repositories beyond what's needed for syncing (scoped by your token permissions)</li>
+      </ul>
+
+      <h2>6. Data Retention</h2>
+      <p>All data is retained locally until you:</p>
+      <ul>
+        <li>Manually delete it using the "Clear Data" button in Settings</li>
+        <li>Uninstall the extension (Chrome automatically removes extension storage)</li>
+        <li>Remove individual friends (their cached data is deleted)</li>
+      </ul>
+      <p><strong>We do not have access to or control over your local data.</strong></p>
+
+      <h2>7. Security</h2>
+      <p>We implement security best practices:</p>
+      <ul>
+        <li><strong>Token Encryption:</strong> GitHub tokens are stored in Chrome's secure storage with encryption</li>
+        <li><strong>HTTPS Only:</strong> All API communication uses encrypted HTTPS connections</li>
+        <li><strong>No External Requests:</strong> Extension code only contacts LeetCode and GitHub APIs—no third-party scripts</li>
+        <li><strong>Content Security Policy:</strong> Prevents injection attacks and unauthorized script execution</li>
+      </ul>
+      <p>However, no system is 100% secure. Protect your GitHub token by:</p>
+      <ul>
+        <li>Using fine-grained tokens with minimal permissions (only <code>repo</code> scope needed)</li>
+        <li>Setting token expiration dates</li>
+        <li>Revoking tokens immediately if you suspect compromise</li>
+      </ul>
+
+      <h2>8. Third-Party Services</h2>
+      <p>L'Amigo interacts with:</p>
+      <ul>
+        <li><strong>LeetCode:</strong> Subject to <a href="https://leetcode.com/terms/" target="_blank" rel="noopener">LeetCode's Terms of Service</a> and <a href="https://leetcode.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></li>
+        <li><strong>GitHub:</strong> Subject to <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener">GitHub's Terms of Service</a> and <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">Privacy Statement</a></li>
+      </ul>
+      <p>We are not responsible for the privacy practices of these third-party services.</p>
+
+      <h2>9. Children's Privacy</h2>
+      <p>L'Amigo is not directed to children under 13. We do not knowingly collect data from children. If you are a parent/guardian and believe your child has used this extension, please contact us.</p>
+
+      <h2>10. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy to reflect:</p>
+      <ul>
+        <li>New features or functionality</li>
+        <li>Changes in legal requirements</li>
+        <li>Improvements to our privacy practices</li>
+      </ul>
+      <p>Significant changes will be noted in the extension's changelog. Continued use after updates constitutes acceptance of the revised policy.</p>
+
+      <h2>11. Your Rights</h2>
+      <p>Since all data is stored locally on your device, you have full control:</p>
+      <ul>
+        <li><strong>Access:</strong> View all stored data via Chrome DevTools → Application → Storage → Extension</li>
+        <li><strong>Modify:</strong> Change settings, remove friends, or update tokens anytime</li>
+        <li><strong>Delete:</strong> Use "Clear Data" button or uninstall the extension</li>
+        <li><strong>Export:</strong> Use the built-in export feature to download your data as JSON</li>
+      </ul>
+
+      <h2>12. Open Source Transparency</h2>
+      <p>L'Amigo is open source. You can:</p>
+      <ul>
+        <li>Review our source code on GitHub</li>
+        <li>Verify our privacy claims by inspecting the code</li>
+        <li>Contribute improvements or report issues</li>
+        <li>Audit network requests using Chrome DevTools</li>
+      </ul>
+
+      <h2>13. Contact Us</h2>
+      <p>Questions about this Privacy Policy or our data practices?</p>
+      <ul>
+        <li><strong>GitHub Issues:</strong> <a href="#">github.com/yourrepo/issues</a></li>
+        <li><strong>Email:</strong> privacy@lamigo-extension.example</li>
+      </ul>
+
+      <h2>14. Disclaimer</h2>
+      <p>L'Amigo is an independent project and is <strong>not affiliated with, endorsed by, or sponsored by LeetCode or GitHub</strong>. All product names, logos, and brands are property of their respective owners.</p>
+
+      <hr style="margin: 40px 0; border: none; border-top: 1px solid var(--gray-light);">
+
+      <p style="text-align: center; color: var(--gray); font-size: 14px;">
+        By using L'Amigo, you acknowledge that you have read and understood this Privacy Policy.<br>
+        <a href="terms.html" style="color: var(--primary);">View Terms of Service</a> | <a href="index.html" style="color: var(--primary);">Back to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
+            <span class="logo-text">L'Amigo</span>
+          </div>
+          <p class="footer-tagline">Track friends. Compare stats. Stay motivated.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="#data">Data Usage</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 L'Amigo. Open source under MIT License.</p>
+        <p>Not affiliated with LeetCode or GitHub.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

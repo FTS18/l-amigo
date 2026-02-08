@@ -19,6 +19,8 @@ export interface FriendProfile {
   contestRating?: number;
   contestRanking?: number;
   recentSubmissions?: RecentSubmission[];
+  /** Daily submission counts keyed by Unix timestamp (seconds). Full year from LeetCode. */
+  submissionCalendar?: Record<string, number>;
   lastFetched?: number;
   topicStats?: TopicStat[];
   languageStats?: LanguageStat[];
@@ -45,4 +47,5 @@ export interface RecentSubmission {
   timestamp: number;
   statusDisplay: string;
   lang: string;
+  submissionId?: string;
 }

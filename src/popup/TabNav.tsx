@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface TabNavProps {
-  activeTab: 'friends' | 'compare' | 'sync';
-  onTabChange: (tab: 'friends' | 'compare' | 'sync') => void;
+  activeTab: 'friends' | 'compare' | 'settings';
+  onTabChange: (tab: 'friends' | 'compare' | 'settings') => void;
   friendCount?: number;
 }
 
@@ -22,10 +22,10 @@ export const TabNav: React.FC<TabNavProps> = ({ activeTab, onTabChange, friendCo
         Compare
       </button>
       <button
-        className={`tab-button ${activeTab === 'sync' ? 'active' : ''}`}
-        onClick={() => onTabChange('sync')}
+        className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+        onClick={() => onTabChange('settings')}
       >
-        Sync
+        Settings
       </button>
     </div>
   );

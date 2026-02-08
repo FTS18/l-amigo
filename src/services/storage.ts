@@ -1,4 +1,5 @@
 import { Friend, FriendProfile } from "../types";
+import { DATA_LIMITS } from "../constants";
 
 const FRIENDS_STORAGE_KEY = "leetcode_friends";
 const PROFILES_STORAGE_KEY = "leetcode_profiles";
@@ -11,6 +12,11 @@ export class StorageService {
 
   static async addFriend(username: string): Promise<void> {
     const friends = await this.getFriends();
+
+    // Check max friends limit
+    if (friends.length >= DATA_LIMITS.MAX_FRIENDS) {
+      throw new Error(`Maximum ${DATA_LIMITS.MAX_FRIENDS} friends allowed`);
+    }
 
     // Check if friend already exists
     if (
@@ -47,10 +53,31 @@ export class StorageService {
 
   static async saveProfile(profile: FriendProfile): Promise<void> {
     const profiles = await this.getProfiles();
-    profiles[profile.username.toLowerCase()] = {
+    
+    // Limit recent submissions to prevent bloat
+    const limitedProfile = {
       ...profile,
+      recentSubmissions: profile.recentSubmissions?.slice(0, DATA_LIMITS.MAX_RECENT_SUBMISSIONS),
       lastFetched: Date.now(),
     };
+    
+    profiles[profile.username.toLowerCase()] = limitedProfile;
+
+    // Inline cleanup: remove stale profiles without extra storage reads
+    const friends = await this.getFriends();
+    const friendUsernames = new Set(friends.map(f => f.username.toLowerCase()));
+    // Also keep the own username profile
+    const { own_username: ownUser } = await chrome.storage.local.get('own_username');
+    if (ownUser) friendUsernames.add(ownUser.toLowerCase());
+
+    const now = Date.now();
+    for (const username of Object.keys(profiles)) {
+      const age = now - (profiles[username].lastFetched || 0);
+      if (!friendUsernames.has(username) || age >= DATA_LIMITS.PROFILE_CACHE_DURATION * 7) {
+        delete profiles[username];
+      }
+    }
+
     await chrome.storage.local.set({ [PROFILES_STORAGE_KEY]: profiles });
   }
 

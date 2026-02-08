@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Friend, FriendProfile } from '../types';
 import { DifficultyChart } from './DifficultyChart';
-import { StreakCalculator } from '../services/streak';
+import { StreakCalculator, StreakInfo } from '../services/streak';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface CompareTabProps {
@@ -13,145 +13,8 @@ interface CompareTabProps {
 
 export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDarkMode, ownUsername }) => {
   const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
-
-  const calculateActivityStats = (profile: FriendProfile) => {
-    if (!profile.recentSubmissions || profile.recentSubmissions.length === 0) {
-      return {
-        last7Days: 0,
-        last30Days: 0,
-        activeDays: 0,
-        weeklyAvg: 0,
-        monthlyAvg: 0,
-      };
-    }
-
-    const now = Date.now();
-    const day = 24 * 60 * 60 * 1000;
-    const sevenDaysAgo = now - (7 * day);
-    const thirtyDaysAgo = now - (30 * day);
-
-    const last7DaysSubmissions = profile.recentSubmissions.filter(
-      sub => sub.timestamp >= sevenDaysAgo
-    );
-    const last30DaysSubmissions = profile.recentSubmissions.filter(
-      sub => sub.timestamp >= thirtyDaysAgo
-    );
-
-    // Count unique active days in last 30 days
-    const uniqueDays = new Set(
-      last30DaysSubmissions.map(sub => 
-        new Date(sub.timestamp).toDateString()
-      )
-    );
-
-    return {
-      last7Days: last7DaysSubmissions.length,
-      last30Days: last30DaysSubmissions.length,
-      activeDays: uniqueDays.size,
-      weeklyAvg: (last30DaysSubmissions.length / 4.3).toFixed(1),
-      monthlyAvg: last30DaysSubmissions.length,
-    };
-  };
-
-  const getSubmissionVelocityData = () => {
-    if (selectedProfiles.length === 0) return [];
-
-    const velocityData: any[] = [];
-    const days = 30;
-    const day = 24 * 60 * 60 * 1000;
-    const now = Date.now();
-
-    for (let i = days - 1; i >= 0; i--) {
-      const currentDate = new Date(now - i * day);
-      const dateStr = currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      const dataPoint: any = { date: dateStr };
-
-      selectedProfiles.forEach(profile => {
-        const submissionsOnDate = profile.recentSubmissions?.filter(sub => {
-          const subDate = new Date(sub.timestamp).toDateString();
-          const checkDate = new Date(now - i * day).toDateString();
-          return subDate === checkDate;
-        }).length || 0;
-        dataPoint[profile.username] = submissionsOnDate;
-      });
-
-      velocityData.push(dataPoint);
-    }
-
-    return velocityData;
-  };
-
-  const getMaxValue = (metric: string): string => {
-    let maxVal = -Infinity;
-    selectedProfiles.forEach(profile => {
-      let val = 0;
-      if (metric === 'Total Problems') val = profile?.problemsSolved?.total || 0;
-      else if (metric === 'Easy') val = profile?.problemsSolved?.easy || 0;
-      else if (metric === 'Medium') val = profile?.problemsSolved?.medium || 0;
-      else if (metric === 'Hard') val = profile?.problemsSolved?.hard || 0;
-      else if (metric === 'Submissions') val = profile?.submissionStats?.totalSubmissions || 0;
-      else if (metric === 'Acceptance Rate') val = profile?.submissionStats?.acceptanceRate || 0;
-      else if (metric === 'Contest Rating') val = profile?.contestRating ? Math.round(profile.contestRating) : 0;
-      else if (metric === 'Rank') val = profile?.ranking ? Math.max(0, 100000000 - profile.ranking) : 0;
-      else if (metric === 'Reputation') val = profile?.reputation || 0;
-      else {
-        const streak = StreakCalculator.calculateStreak(profile);
-        if (metric === 'Current Streak') val = streak.currentStreak;
-        else if (metric === 'Best Streak') val = streak.longestStreak;
-      }
-      if (val > maxVal) maxVal = val;
-    });
-    return maxVal > -Infinity ? String(maxVal) : '';
-  };
-
-  const isMaxValue = (metric: string, value: string | number): boolean => {
-    if (!value || value === '-') return false;
-    const maxVal = getMaxValue(metric);
-    return String(value) === maxVal;
-  };
-
-  const getMaxActivityValue = (metric: string): number => {
-    let maxVal = -Infinity;
-    selectedProfiles.forEach(profile => {
-      const stats = calculateActivityStats(profile);
-      let val = 0;
-      if (metric === 'Last 7 Days') val = stats.last7Days;
-      else if (metric === 'Last 30 Days') val = stats.last30Days;
-      else if (metric === 'Active Days') val = stats.activeDays;
-      if (val > maxVal) maxVal = val;
-    });
-    return maxVal > -Infinity ? maxVal : 0;
-  };
-
-  const isMaxActivity = (metric: string, value: number): boolean => {
-    return value > 0 && value === getMaxActivityValue(metric);
-  };
-
-  const getMaxTopicCount = (topicName: string): number => {
-    let maxVal = 0;
-    selectedProfiles.forEach(profile => {
-      const count = profile.topicStats?.find(t => t.topicName === topicName)?.problemsSolved || 0;
-      if (count > maxVal) maxVal = count;
-    });
-    return maxVal;
-  };
-
-  const isMaxTopic = (topicName: string, count: number): boolean => {
-    return count > 0 && count === getMaxTopicCount(topicName);
-  };
-
-  const getMaxLanguageCount = (langName: string): number => {
-    let maxVal = 0;
-    selectedProfiles.forEach(profile => {
-      const count = profile.languageStats?.find(l => l.languageName === langName)?.problemsSolved || 0;
-      if (count > maxVal) maxVal = count;
-    });
-    return maxVal;
-  };
-
-  const isMaxLanguage = (langName: string, count: number): boolean => {
-    return count > 0 && count === getMaxLanguageCount(langName);
-  };
+  const [showAllTopics, setShowAllTopics] = useState(false);
+  const [showAllLangs, setShowAllLangs] = useState(false);
 
   const handleToggleFriend = (username: string) => {
     setSelectedFriends(prev => {
@@ -165,13 +28,245 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     });
   };
 
-  const getSelectedProfiles = () => {
+  const selectedProfiles = useMemo(() => {
     return selectedFriends
       .map(username => profiles[username.toLowerCase()])
       .filter(Boolean);
+  }, [selectedFriends, profiles]);
+
+  // ── Memoize expensive calculations ──────────────────────────────────
+
+  /** Cache streak calculations — avoids recalculating 4× per profile per render */
+  const streakMap = useMemo(() => {
+    const map = new Map<string, StreakInfo>();
+    for (const p of selectedProfiles) {
+      map.set(p.username, StreakCalculator.calculateStreak(p));
+    }
+    return map;
+  }, [selectedProfiles]);
+
+  /** Single-pass activity stats per profile — uses submissionCalendar (full year) when available */
+  const activityMap = useMemo(() => {
+    const DAY = 86400000;
+    const now = Date.now();
+    const sevenDaysAgo = now - 7 * DAY;
+    const thirtyDaysAgo = now - 30 * DAY;
+    const map = new Map<string, { last7Days: number; last30Days: number; activeDays: number; weeklyAvg: string; monthlyAvg: number }>();
+
+    for (const p of selectedProfiles) {
+      const cal = p.submissionCalendar;
+
+      if (cal && Object.keys(cal).length > 0) {
+        // Use full-year calendar data — far more accurate
+        let last7 = 0, last30 = 0;
+        const daySet = new Set<string>();
+        for (const [tsStr, count] of Object.entries(cal)) {
+          if (count <= 0) continue;
+          const tsMs = parseInt(tsStr, 10) * 1000;
+          if (tsMs >= thirtyDaysAgo) {
+            last30 += count;
+            daySet.add(new Date(tsMs).toDateString());
+            if (tsMs >= sevenDaysAgo) last7 += count;
+          }
+        }
+        map.set(p.username, {
+          last7Days: last7,
+          last30Days: last30,
+          activeDays: daySet.size,
+          weeklyAvg: (last30 / 4.3).toFixed(1),
+          monthlyAvg: last30,
+        });
+      } else {
+        // Fallback to recentSubmissions
+        const subs = p.recentSubmissions;
+        if (!subs || subs.length === 0) {
+          map.set(p.username, { last7Days: 0, last30Days: 0, activeDays: 0, weeklyAvg: '0', monthlyAvg: 0 });
+          continue;
+        }
+        let last7 = 0, last30 = 0;
+        const daySet = new Set<string>();
+        for (const sub of subs) {
+          const ts = sub.timestamp;
+          if (ts >= thirtyDaysAgo) {
+            last30++;
+            daySet.add(new Date(ts).toDateString());
+            if (ts >= sevenDaysAgo) last7++;
+          }
+        }
+        map.set(p.username, {
+          last7Days: last7,
+          last30Days: last30,
+          activeDays: daySet.size,
+          weeklyAvg: (last30 / 4.3).toFixed(1),
+          monthlyAvg: last30,
+        });
+      }
+    }
+    return map;
+  }, [selectedProfiles]);
+
+  /** O(1) topic lookup maps per profile */
+  const topicMaps = useMemo(() => {
+    const maps = new Map<string, Map<string, number>>();
+    for (const p of selectedProfiles) {
+      const m = new Map<string, number>();
+      for (const t of p.topicStats || []) m.set(t.topicName, t.problemsSolved);
+      maps.set(p.username, m);
+    }
+    return maps;
+  }, [selectedProfiles]);
+
+  /** O(1) language lookup maps per profile */
+  const langMaps = useMemo(() => {
+    const maps = new Map<string, Map<string, number>>();
+    for (const p of selectedProfiles) {
+      const m = new Map<string, number>();
+      for (const l of p.languageStats || []) m.set(l.languageName, l.problemsSolved);
+      maps.set(p.username, m);
+    }
+    return maps;
+  }, [selectedProfiles]);
+
+  /** Pre-bucket submissions by dateString per profile for velocity chart.
+   *  Uses submissionCalendar (full year) when available, falls back to recentSubmissions. */
+  const submissionBuckets = useMemo(() => {
+    const buckets = new Map<string, Map<string, number>>();
+    for (const p of selectedProfiles) {
+      const m = new Map<string, number>();
+      const cal = p.submissionCalendar;
+      if (cal && Object.keys(cal).length > 0) {
+        // Calendar keys are Unix timestamps in seconds
+        for (const [tsStr, count] of Object.entries(cal)) {
+          if (count <= 0) continue;
+          const key = new Date(parseInt(tsStr, 10) * 1000).toDateString();
+          m.set(key, (m.get(key) || 0) + count);
+        }
+      } else {
+        // Fallback to recentSubmissions
+        for (const sub of p.recentSubmissions || []) {
+          const key = new Date(sub.timestamp).toDateString();
+          m.set(key, (m.get(key) || 0) + 1);
+        }
+      }
+      buckets.set(p.username, m);
+    }
+    return buckets;
+  }, [selectedProfiles]);
+
+  /** Precompute all max values in a single pass */
+  const maxValues = useMemo(() => {
+    const mv: Record<string, number> = {};
+    const metrics = ['Total Problems', 'Easy', 'Medium', 'Hard', 'Submissions', 'Acceptance Rate', 'Contest Rating', 'Rank', 'Reputation', 'Current Streak', 'Best Streak'];
+    for (const m of metrics) mv[m] = -Infinity;
+
+    for (const p of selectedProfiles) {
+      const streak = streakMap.get(p.username);
+      const vals: Record<string, number> = {
+        'Total Problems': p.problemsSolved?.total || 0,
+        'Easy': p.problemsSolved?.easy || 0,
+        'Medium': p.problemsSolved?.medium || 0,
+        'Hard': p.problemsSolved?.hard || 0,
+        'Submissions': p.submissionStats?.totalSubmissions || 0,
+        'Acceptance Rate': p.submissionStats?.acceptanceRate || 0,
+        'Contest Rating': p.contestRating ? Math.round(p.contestRating) : 0,
+        'Rank': p.ranking ? Math.max(0, 100000000 - p.ranking) : 0,
+        'Reputation': p.reputation || 0,
+        'Current Streak': streak?.currentStreak || 0,
+        'Best Streak': streak?.longestStreak || 0,
+      };
+      for (const m of metrics) {
+        if (vals[m] > mv[m]) mv[m] = vals[m];
+      }
+    }
+    return mv;
+  }, [selectedProfiles, streakMap]);
+
+  /** Precompute activity max values */
+  const maxActivity = useMemo(() => {
+    const mx = { 'Last 7 Days': 0, 'Last 30 Days': 0, 'Active Days': 0 };
+    for (const p of selectedProfiles) {
+      const s = activityMap.get(p.username);
+      if (!s) continue;
+      if (s.last7Days > mx['Last 7 Days']) mx['Last 7 Days'] = s.last7Days;
+      if (s.last30Days > mx['Last 30 Days']) mx['Last 30 Days'] = s.last30Days;
+      if (s.activeDays > mx['Active Days']) mx['Active Days'] = s.activeDays;
+    }
+    return mx;
+  }, [selectedProfiles, activityMap]);
+
+  const isMax = (metric: string, value: number | string): boolean => {
+    if (!value || value === '-') return false;
+    const mv = maxValues[metric];
+    return mv > -Infinity && String(value) === String(mv);
   };
 
-  const selectedProfiles = getSelectedProfiles();
+  const isMaxAct = (metric: string, value: number): boolean => {
+    return value > 0 && value === (maxActivity as any)[metric];
+  };
+
+  /** Sorted topics with O(1) lookups and precomputed max per topic */
+  const { sortedTopics, topicMaxMap } = useMemo(() => {
+    const allNames = new Set<string>();
+    for (const p of selectedProfiles) {
+      for (const t of p.topicStats || []) allNames.add(t.topicName);
+    }
+    // Compute total per topic for sorting + max per topic for highlighting
+    const totals = new Map<string, number>();
+    const maxMap = new Map<string, number>();
+    for (const name of allNames) {
+      let total = 0, mx = 0;
+      for (const p of selectedProfiles) {
+        const c = topicMaps.get(p.username)?.get(name) || 0;
+        total += c;
+        if (c > mx) mx = c;
+      }
+      totals.set(name, total);
+      maxMap.set(name, mx);
+    }
+    const sorted = Array.from(allNames).sort((a, b) => (totals.get(b) || 0) - (totals.get(a) || 0));
+    return { sortedTopics: sorted, topicMaxMap: maxMap };
+  }, [selectedProfiles, topicMaps]);
+
+  /** Sorted languages with O(1) lookups and precomputed max per language */
+  const { sortedLangs, langMaxMap } = useMemo(() => {
+    const allNames = new Set<string>();
+    for (const p of selectedProfiles) {
+      for (const l of p.languageStats || []) allNames.add(l.languageName);
+    }
+    const totals = new Map<string, number>();
+    const maxMap = new Map<string, number>();
+    for (const name of allNames) {
+      let total = 0, mx = 0;
+      for (const p of selectedProfiles) {
+        const c = langMaps.get(p.username)?.get(name) || 0;
+        total += c;
+        if (c > mx) mx = c;
+      }
+      totals.set(name, total);
+      maxMap.set(name, mx);
+    }
+    const sorted = Array.from(allNames).sort((a, b) => (totals.get(b) || 0) - (totals.get(a) || 0));
+    return { sortedLangs: sorted, langMaxMap: maxMap };
+  }, [selectedProfiles, langMaps]);
+
+  /** Build velocity chart data using pre-bucketed submissions — O(30 × profiles) instead of O(30 × profiles × subs) */
+  const velocityData = useMemo(() => {
+    if (selectedProfiles.length === 0) return [];
+    const DAY = 86400000;
+    const now = Date.now();
+    const data: any[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(now - i * DAY);
+      const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const dateKey = d.toDateString();
+      const point: any = { date: dateStr };
+      for (const p of selectedProfiles) {
+        point[p.username] = submissionBuckets.get(p.username)?.get(dateKey) || 0;
+      }
+      data.push(point);
+    }
+    return data;
+  }, [selectedProfiles, submissionBuckets]);
 
   // Create a list that includes own profile if available
   const allComparableUsers = ownUsername && profiles[ownUsername.toLowerCase()] 
@@ -227,9 +322,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <td className="metric-label">Total Problems</td>
                   {selectedProfiles.map(profile => {
                     const val = profile?.problemsSolved?.total || '-';
-                    const isMax = isMaxValue('Total Problems', val);
+                    const mx = isMax('Total Problems', val);
                     return (
-                      <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                      <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                         {val}
                       </td>
                     );
@@ -239,9 +334,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <td className="metric-label">Easy</td>
                   {selectedProfiles.map(profile => {
                     const val = profile?.problemsSolved?.easy || '-';
-                    const isMax = isMaxValue('Easy', val);
+                    const mx = isMax('Easy', val);
                     return (
-                      <td key={profile.username} className={`metric-value easy ${isMax ? 'max-value' : ''}`}>
+                      <td key={profile.username} className={`metric-value easy ${mx ? 'max-value' : ''}`}>
                         {val}
                       </td>
                     );
@@ -251,9 +346,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <td className="metric-label">Medium</td>
                   {selectedProfiles.map(profile => {
                     const val = profile?.problemsSolved?.medium || '-';
-                    const isMax = isMaxValue('Medium', val);
+                    const mx = isMax('Medium', val);
                     return (
-                      <td key={profile.username} className={`metric-value medium ${isMax ? 'max-value' : ''}`}>
+                      <td key={profile.username} className={`metric-value medium ${mx ? 'max-value' : ''}`}>
                         {val}
                       </td>
                     );
@@ -263,9 +358,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <td className="metric-label">Hard</td>
                   {selectedProfiles.map(profile => {
                     const val = profile?.problemsSolved?.hard || '-';
-                    const isMax = isMaxValue('Hard', val);
+                    const mx = isMax('Hard', val);
                     return (
-                      <td key={profile.username} className={`metric-value hard ${isMax ? 'max-value' : ''}`}>
+                      <td key={profile.username} className={`metric-value hard ${mx ? 'max-value' : ''}`}>
                         {val}
                       </td>
                     );
@@ -274,11 +369,11 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                 <tr>
                   <td className="metric-label">Current Streak</td>
                   {selectedProfiles.map(profile => {
-                    const streak = StreakCalculator.calculateStreak(profile);
+                    const streak = streakMap.get(profile.username)!;
                     const val = streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
-                    const isMax = isMaxValue('Current Streak', streak.currentStreak);
+                    const mx = isMax('Current Streak', streak.currentStreak);
                     return (
-                      <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                      <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                         {val}
                       </td>
                     );
@@ -287,11 +382,11 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                 <tr>
                   <td className="metric-label">Best Streak</td>
                   {selectedProfiles.map(profile => {
-                    const streak = StreakCalculator.calculateStreak(profile);
+                    const streak = streakMap.get(profile.username)!;
                     const val = streak.longestStreak > 0 ? streak.longestStreak : '-';
-                    const isMax = isMaxValue('Best Streak', streak.longestStreak);
+                    const mx = isMax('Best Streak', streak.longestStreak);
                     return (
-                      <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                      <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                         {val}
                       </td>
                     );
@@ -303,9 +398,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                       <td className="metric-label">Total Submissions</td>
                       {selectedProfiles.map(profile => {
                         const val = profile?.submissionStats?.totalSubmissions || '-';
-                        const isMax = isMaxValue('Submissions', val);
+                        const mx = isMax('Submissions', val);
                         return (
-                          <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                             {val}
                           </td>
                         );
@@ -315,9 +410,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                       <td className="metric-label">Acceptance Rate</td>
                       {selectedProfiles.map(profile => {
                         const val = profile?.submissionStats?.acceptanceRate ? `${profile.submissionStats.acceptanceRate.toFixed(1)}%` : '-';
-                        const isMax = isMaxValue('Acceptance Rate', profile?.submissionStats?.acceptanceRate || 0);
+                        const mx = isMax('Acceptance Rate', profile?.submissionStats?.acceptanceRate || 0);
                         return (
-                          <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                             {val}
                           </td>
                         );
@@ -330,9 +425,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                     <td className="metric-label">Contest Rating</td>
                     {selectedProfiles.map(profile => {
                       const val = profile?.contestRating ? Math.round(profile.contestRating) : '-';
-                      const isMax = isMaxValue('Contest Rating', val);
+                      const mx = isMax('Contest Rating', val);
                       return (
-                        <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                           {val}
                         </td>
                       );
@@ -344,9 +439,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                     <td className="metric-label">Global Rank</td>
                     {selectedProfiles.map(profile => {
                       const val = profile?.ranking ? `#${profile.ranking.toLocaleString()}` : '-';
-                      const isMax = isMaxValue('Rank', profile?.ranking ? 100000000 - profile.ranking : 0);
+                      const mx = isMax('Rank', profile?.ranking ? 100000000 - profile.ranking : 0);
                       return (
-                        <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                           {val}
                         </td>
                       );
@@ -358,9 +453,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                     <td className="metric-label">Reputation</td>
                     {selectedProfiles.map(profile => {
                       const val = profile?.reputation || '-';
-                      const isMax = isMaxValue('Reputation', val);
+                      const mx = isMax('Reputation', val);
                       return (
-                        <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                           {val}
                         </td>
                       );
@@ -387,10 +482,10 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <tr>
                     <td className="metric-label">Last 7 Days</td>
                     {selectedProfiles.map(profile => {
-                      const activityStats = calculateActivityStats(profile);
-                      const isMax = isMaxActivity('Last 7 Days', activityStats.last7Days);
+                      const activityStats = activityMap.get(profile.username)!;
+                      const mx = isMaxAct('Last 7 Days', activityStats.last7Days);
                       return (
-                        <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                           {activityStats.last7Days}
                         </td>
                       );
@@ -399,10 +494,10 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <tr>
                     <td className="metric-label">Last 30 Days</td>
                     {selectedProfiles.map(profile => {
-                      const activityStats = calculateActivityStats(profile);
-                      const isMax = isMaxActivity('Last 30 Days', activityStats.last30Days);
+                      const activityStats = activityMap.get(profile.username)!;
+                      const mx = isMaxAct('Last 30 Days', activityStats.last30Days);
                       return (
-                        <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                           {activityStats.last30Days}
                         </td>
                       );
@@ -411,10 +506,10 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
                   <tr>
                     <td className="metric-label">Active Days</td>
                     {selectedProfiles.map(profile => {
-                      const activityStats = calculateActivityStats(profile);
-                      const isMax = isMaxActivity('Active Days', activityStats.activeDays);
+                      const activityStats = activityMap.get(profile.username)!;
+                      const mx = isMaxAct('Active Days', activityStats.activeDays);
                       return (
-                        <td key={profile.username} className={`metric-value ${isMax ? 'max-value' : ''}`}>
+                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
                           {activityStats.activeDays}/30
                         </td>
                       );
@@ -429,7 +524,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
 
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.topicStats && p.topicStats.length > 0) && (
         <div className="topics-table-section">
-          <h3>Topics Solved</h3>
+          <h3>Topics Solved <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedTopics.length} total)</span></h3>
           <table className="topics-data-table">
             <thead>
               <tr>
@@ -440,48 +535,37 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
               </tr>
             </thead>
             <tbody>
-              {(() => {
-                // Merge all unique topics from all selected profiles
-                const allTopics = new Map<string, number>();
-                selectedProfiles.forEach(profile => {
-                  profile.topicStats?.forEach(topic => {
-                    if (!allTopics.has(topic.topicName)) {
-                      allTopics.set(topic.topicName, 0);
-                    }
-                  });
-                });
-                
-                // Sort by total problems solved across all friends (no limit)
-                const sortedTopics = Array.from(allTopics.keys()).sort((a, b) => {
-                  const totalA = selectedProfiles.reduce((sum, p) => sum + (p.topicStats?.find(t => t.topicName === a)?.problemsSolved || 0), 0);
-                  const totalB = selectedProfiles.reduce((sum, p) => sum + (p.topicStats?.find(t => t.topicName === b)?.problemsSolved || 0), 0);
-                  return totalB - totalA;
-                });
-                
-                return sortedTopics.map((topicName, idx) => (
-                  <tr key={idx}>
-                    <td className="topic-name-cell">{topicName}</td>
-                    {selectedProfiles.map(profile => {
-                      const profileTopic = profile.topicStats?.find(t => t.topicName === topicName);
-                      const count = profileTopic?.problemsSolved || 0;
-                      const isMax = isMaxTopic(topicName, count);
-                      return (
-                        <td key={profile.username} className={`topic-count-cell ${isMax ? 'max-value' : ''}`}>
-                          {count || '-'}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ));
-              })()}
+              {(showAllTopics ? sortedTopics : sortedTopics.slice(0, 10)).map((topicName, idx) => (
+                <tr key={idx}>
+                  <td className="topic-name-cell">{topicName}</td>
+                  {selectedProfiles.map(profile => {
+                    const count = topicMaps.get(profile.username)?.get(topicName) || 0;
+                    const mx = count > 0 && count === topicMaxMap.get(topicName);
+                    return (
+                      <td key={profile.username} className={`topic-count-cell ${mx ? 'max-value' : ''}`}>
+                        {count || '-'}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
             </tbody>
           </table>
+          {sortedTopics.length > 10 && (
+            <button
+              className="show-all-btn"
+              onClick={() => setShowAllTopics(!showAllTopics)}
+              style={{ margin: '8px auto', display: 'block', padding: '4px 16px', fontSize: '12px', cursor: 'pointer', borderRadius: '6px', border: `1px solid ${isDarkMode ? '#555' : '#ddd'}`, background: isDarkMode ? '#2a2a2a' : '#f5f5f5', color: isDarkMode ? '#ccc' : '#555' }}
+            >
+              {showAllTopics ? 'Show Less' : `Show All ${sortedTopics.length} Topics`}
+            </button>
+          )}
         </div>
       )}
 
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.languageStats && p.languageStats.length > 0) && (
         <div className="language-table-section">
-          <h3>Languages Used</h3>
+          <h3>Languages Used <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedLangs.length} total)</span></h3>
           <table className="language-data-table">
             <thead>
               <tr>
@@ -492,42 +576,31 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
               </tr>
             </thead>
             <tbody>
-              {(() => {
-                // Merge all unique languages from all selected profiles
-                const allLanguages = new Map<string, number>();
-                selectedProfiles.forEach(profile => {
-                  profile.languageStats?.forEach(lang => {
-                    if (!allLanguages.has(lang.languageName)) {
-                      allLanguages.set(lang.languageName, 0);
-                    }
-                  });
-                });
-                
-                // Sort by total problems solved across all friends (no limit)
-                const sortedLanguages = Array.from(allLanguages.keys()).sort((a, b) => {
-                  const totalA = selectedProfiles.reduce((sum, p) => sum + (p.languageStats?.find(l => l.languageName === a)?.problemsSolved || 0), 0);
-                  const totalB = selectedProfiles.reduce((sum, p) => sum + (p.languageStats?.find(l => l.languageName === b)?.problemsSolved || 0), 0);
-                  return totalB - totalA;
-                });
-                
-                return sortedLanguages.map((langName, idx) => (
-                  <tr key={idx}>
-                    <td className="language-name-cell">{langName}</td>
-                    {selectedProfiles.map(profile => {
-                      const profileLang = profile.languageStats?.find(l => l.languageName === langName);
-                      const count = profileLang?.problemsSolved || 0;
-                      const isMax = isMaxLanguage(langName, count);
-                      return (
-                        <td key={profile.username} className={`language-count-cell ${isMax ? 'max-value' : ''}`}>
-                          {count || '-'}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ));
-              })()}
+              {(showAllLangs ? sortedLangs : sortedLangs.slice(0, 10)).map((langName, idx) => (
+                <tr key={idx}>
+                  <td className="language-name-cell">{langName}</td>
+                  {selectedProfiles.map(profile => {
+                    const count = langMaps.get(profile.username)?.get(langName) || 0;
+                    const mx = count > 0 && count === langMaxMap.get(langName);
+                    return (
+                      <td key={profile.username} className={`language-count-cell ${mx ? 'max-value' : ''}`}>
+                        {count || '-'}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
             </tbody>
           </table>
+          {sortedLangs.length > 10 && (
+            <button
+              className="show-all-btn"
+              onClick={() => setShowAllLangs(!showAllLangs)}
+              style={{ margin: '8px auto', display: 'block', padding: '4px 16px', fontSize: '12px', cursor: 'pointer', borderRadius: '6px', border: `1px solid ${isDarkMode ? '#555' : '#ddd'}`, background: isDarkMode ? '#2a2a2a' : '#f5f5f5', color: isDarkMode ? '#ccc' : '#555' }}
+            >
+              {showAllLangs ? 'Show Less' : `Show All ${sortedLangs.length} Languages`}
+            </button>
+          )}
         </div>
       )}
 
@@ -535,17 +608,21 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
         <div className="velocity-chart-section">
           <h3>Submission Velocity (Last 30 Days)</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={getSubmissionVelocityData()}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-              <XAxis dataKey="date" stroke="#999" />
-              <YAxis stroke="#999" />
+            <LineChart data={velocityData}>
+              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#444' : '#e0e0e0'} />
+              <XAxis dataKey="date" stroke={isDarkMode ? '#aaa' : '#999'} tick={{ fontSize: 11 }} />
+              <YAxis stroke={isDarkMode ? '#aaa' : '#999'} allowDecimals={false} />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#f9f9f9', border: '1px solid #e0e0e0' }}
-                labelStyle={{ color: '#333' }}
+                contentStyle={{ 
+                  backgroundColor: isDarkMode ? '#2a2a2a' : '#f9f9f9', 
+                  border: `1px solid ${isDarkMode ? '#555' : '#e0e0e0'}`,
+                  color: isDarkMode ? '#e0e0e0' : '#333',
+                }}
+                labelStyle={{ color: isDarkMode ? '#e0e0e0' : '#333' }}
               />
               <Legend />
               {selectedProfiles.map((profile, idx) => {
-                const colors = ['#009a3d', '#d6c101', '#960808'];
+                const colors = ['#22c55e', '#eab308', '#ef4444'];
                 return (
                   <Line 
                     key={profile.username}

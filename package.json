@@ -1,6 +1,7 @@
 {
   "name": "lamigo",
-  "version": "1.3.1",
+  "version": "1.4.0",
+  "private": true,
   "description": "Track your friends' LeetCode progress with tabbed interface, charts, streaks, and GitHub sync",
   "scripts": {
     "build": "webpack --mode production",
@@ -8,9 +9,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "chart.js": "^4.5.1",
     "react": "^18.2.0",
-    "react-chartjs-2": "^5.3.1",
     "react-dom": "^18.2.0",
     "recharts": "^3.7.0"
   },
@@ -20,6 +19,7 @@
     "@types/react-dom": "^18.2.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.10.0",
+    "mini-css-extract-plugin": "^2.7.6",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",

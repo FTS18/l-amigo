@@ -1,4 +1,5 @@
 import { FriendProfile, RecentSubmission } from "../types";
+import { LeetCodeService } from "./leetcode";
 
 export interface ProblemRecommendation {
   titleSlug: string;
@@ -9,8 +10,6 @@ export interface ProblemRecommendation {
 }
 
 export class RecommendationService {
-  private static readonly LEETCODE_API = "https://leetcode.com/graphql";
-
   static async getRecommendations(
     profiles: Record<string, FriendProfile>,
     currentUserSolvedProblems: Set<string> = new Set(),
@@ -37,30 +36,43 @@ export class RecommendationService {
       .sort((a, b) => b[1].length - a[1].length)
       .slice(0, 10);
 
-    // Fetch problem details
-    const recommendations: ProblemRecommendation[] = [];
+    // Fetch problem details in parallel (all at once – max 10 requests)
+    const results = await Promise.allSettled(
+      sortedProblems.map(async ([titleSlug, friendsWhoSolved]) => {
+        const data = await LeetCodeService.gql<{
+          question: { title: string; difficulty: string } | null;
+        }>(
+          `query getProblemDetails($titleSlug: String!) {
+            question(titleSlug: $titleSlug) {
+              title
+              difficulty
+            }
+          }`,
+          { titleSlug },
+        );
 
-    for (const [titleSlug, friendsWhoSolved] of sortedProblems) {
-      try {
-        const problemDetails = await this.fetchProblemDetails(titleSlug);
-        if (problemDetails) {
-          const reason = this.generateReason(
-            friendsWhoSolved.length,
-            problemDetails.difficulty,
-            difficultyPreference,
-          );
-          recommendations.push({
-            titleSlug,
-            title: problemDetails.title,
-            difficulty: problemDetails.difficulty,
-            reason,
-            solvedByFriends: friendsWhoSolved,
-          });
-        }
-      } catch (error) {
-        console.error(`Error fetching problem ${titleSlug}:`, error);
-      }
-    }
+        const problemDetails = data?.question;
+        if (!problemDetails) return null;
+
+        const reason = this.generateReason(
+          friendsWhoSolved.length,
+          problemDetails.difficulty,
+          difficultyPreference,
+        );
+        return {
+          titleSlug,
+          title: problemDetails.title,
+          difficulty: problemDetails.difficulty,
+          reason,
+          solvedByFriends: friendsWhoSolved,
+        } as ProblemRecommendation;
+      }),
+    );
+
+    const recommendations = results
+      .filter((r): r is PromiseFulfilledResult<ProblemRecommendation | null> => r.status === 'fulfilled')
+      .map(r => r.value)
+      .filter((v): v is ProblemRecommendation => v !== null);
 
     return recommendations;
   }
@@ -103,34 +115,5 @@ export class RecommendationService {
     }
 
     return reason;
-  }
-
-  private static async fetchProblemDetails(
-    titleSlug: string,
-  ): Promise<{ title: string; difficulty: string } | null> {
-    try {
-      const query = {
-        query: `
-          query getProblemDetails($titleSlug: String!) {
-            question(titleSlug: $titleSlug) {
-              title
-              difficulty
-            }
-          }
-        `,
-        variables: { titleSlug },
-      };
-
-      const response = await fetch(this.LEETCODE_API, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(query),
-      });
-
-      const data = await response.json();
-      return data.data?.question || null;
-    } catch (error) {
-      return null;
-    }
   }
 }

@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Friend, FriendProfile } from '../types';
 import { StorageService } from '../services/storage';
 import { LeetCodeService } from '../services/leetcode';
 import { ExportService } from '../services/export';
+import { DATA_LIMITS } from '../constants';
 import { FriendCard } from './FriendCard';
-import { AddFriendForm } from './AddFriendForm';
 import { Recommendations } from './Recommendations';
 import { TabNav } from './TabNav';
-import { SyncTab } from './SyncTab';
+import { SettingsTab } from './SettingsTab';
 import { CompareTab } from './CompareTab';
 import { Onboarding } from './Onboarding';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { Modal } from './Modal';
+import { Toast } from './Toast';
+import { Skeleton } from './Skeleton';
 import './App.css';
 
 const formatTimestamp = (timestamp: number) => {
@@ -46,20 +48,25 @@ export const App: React.FC = () => {
   const [profiles, setProfiles] = useState<Record<string, FriendProfile>>({});
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [refreshingFriend, setRefreshingFriend] = useState<string | null>(null);
+  const [addingFriend, setAddingFriend] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'problems' | 'recent'>('recent');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [activeTab, setActiveTab] = useState<'friends' | 'compare' | 'sync'>('friends');
+  const [activeTab, setActiveTab] = useState<'friends' | 'compare' | 'settings'>('friends');
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [ownUsername, setOwnUsername] = useState<string>('');
   const [selectedFriendIndex, setSelectedFriendIndex] = useState(0);
   const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [modal, setModal] = useState<{ isOpen: boolean; title: string; message: string; type: 'info' | 'error' | 'success' }>({
     isOpen: false,
     title: '',
     message: '',
     type: 'info'
   });
+  const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
 
   useEffect(() => {
     checkOnboarding();
@@ -127,29 +134,60 @@ export const App: React.FC = () => {
     }
   }, [isDarkMode]);
 
-  useEffect(() => {
-    loadData(ownUsername);
-  }, []);
-
   const loadData = async (currentUsername?: string) => {
     try {
+      // 1. Load from cache instantly — popup appears immediately
       const friendsList = await StorageService.getFriends();
       const profilesData = await StorageService.getProfiles();
       setFriends(friendsList);
       setProfiles(profilesData);
       setLastUpdated(Date.now());
-      
-      // Fetch own profile if username is set and profile doesn't exist
+
       const username = currentUsername || ownUsername;
-      if (username && !profilesData[username.toLowerCase()]) {
-        try {
-          const profile = await LeetCodeService.fetchUserProfile(username);
-          await StorageService.saveProfile(profile);
-          profilesData[username.toLowerCase()] = profile;
-          setProfiles({ ...profilesData });
-        } catch (error) {
-          console.error('Error fetching own profile:', error);
+
+      // 2. Determine which profiles need a refresh (stale or missing)
+      const now = Date.now();
+      const staleUsernames: string[] = [];
+
+      // Own profile
+      if (username) {
+        const own = profilesData[username.toLowerCase()];
+        if (!own || (now - (own.lastFetched || 0)) > DATA_LIMITS.PROFILE_STALE_THRESHOLD) {
+          staleUsernames.push(username);
         }
+      }
+
+      // Friend profiles
+      for (const f of friendsList) {
+        const p = profilesData[f.username.toLowerCase()];
+        if (!p || (now - (p.lastFetched || 0)) > DATA_LIMITS.PROFILE_STALE_THRESHOLD) {
+          staleUsernames.push(f.username);
+        }
+      }
+
+      // 3. Background-refresh only stale profiles (non-blocking UI update)
+      if (staleUsernames.length > 0) {
+        console.log(`[App] ${staleUsernames.length} stale profiles — refreshing in background`);
+        (async () => {
+          const BATCH = 3;
+          for (let i = 0; i < staleUsernames.length; i += BATCH) {
+            const batch = staleUsernames.slice(i, i + BATCH);
+            await Promise.allSettled(
+              batch.map(async (u) => {
+                try {
+                  const profile = await LeetCodeService.fetchUserProfile(u);
+                  await StorageService.saveProfile(profile);
+                } catch (e) {
+                  console.warn(`[App] Background refresh failed for ${u}:`, e);
+                }
+              }),
+            );
+          }
+          // Silently update state with fresh data
+          const freshProfiles = await StorageService.getProfiles();
+          setProfiles(freshProfiles);
+          setLastUpdated(Date.now());
+        })();
       }
     } catch (error) {
       console.error('Error loading data:', error);
@@ -159,77 +197,129 @@ export const App: React.FC = () => {
   };
 
   const handleAddFriend = async (username: string) => {
+    if (!username.trim()) return;
     // Check if it's the user's own username
-    if (ownUsername && username.toLowerCase() === ownUsername) {
-      setModal({
-        isOpen: true,
-        title: "L'Amigo says",
-        message: "You can't add yourself as a friend!",
-        type: 'info'
-      });
+    if (ownUsername && username.toLowerCase() === ownUsername.toLowerCase()) {
+      setToast({ message: "You can't add yourself as a friend!", type: 'info' });
       return;
     }
 
+    setAddingFriend(true);
     try {
       await StorageService.addFriend(username);
       
       // Fetch profile immediately
-      const profile = await LeetCodeService.fetchUserProfile(username);
-      await StorageService.saveProfile(profile);
+      try {
+        const profile = await LeetCodeService.fetchUserProfile(username);
+        await StorageService.saveProfile(profile);
+      } catch (profileErr) {
+        console.warn(`Added ${username} but profile fetch failed:`, profileErr);
+      }
       
       // Reload data
       await loadData();
+      setToast({ message: `${username} added successfully!`, type: 'success' });
     } catch (error) {
       if (error instanceof Error) {
-        setModal({
-          isOpen: true,
-          title: 'Error',
-          message: error.message,
-          type: 'error'
-        });
+        setToast({ message: error.message, type: 'error' });
       }
+    } finally {
+      setAddingFriend(false);
     }
   };
 
   const handleRemoveFriend = async (username: string) => {
-    if (confirm(`Remove ${username} from your friends list?`)) {
+    setModal({
+      isOpen: true,
+      title: 'Remove Friend',
+      message: `Remove ${username} from your friends list?`,
+      type: 'info'
+    });
+    setConfirmAction(() => async () => {
       try {
         await StorageService.removeFriend(username);
         await loadData();
+        setToast({ message: `${username} removed`, type: 'success' });
       } catch (error) {
-        console.error('Error removing friend:', error);
+        setToast({ message: 'Failed to remove friend', type: 'error' });
       }
+    });
+  };
+
+  const handleExport = (format: 'csv' | 'detailed' | 'json') => {
+    switch (format) {
+      case 'csv':
+        ExportService.exportToCSV(friends, profiles);
+        setToast({ message: 'Data exported as CSV!', type: 'success' });
+        break;
+      case 'detailed':
+        ExportService.exportDetailedCSV(friends, profiles);
+        setToast({ message: 'Detailed data exported as CSV!', type: 'success' });
+        break;
+      case 'json':
+        ExportService.exportToJSON(friends, profiles);
+        setToast({ message: 'Data exported as JSON!', type: 'success' });
+        break;
     }
-  };
-
-  const handleExport = () => {
-    ExportService.exportToCSV(friends, profiles);
-    setShowMenu(false);
-  };
-
-  const handleExportDetailed = () => {
-    ExportService.exportDetailedCSV(friends, profiles);
+    setShowExportMenu(false);
     setShowMenu(false);
   };
 
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
-      for (const friend of friends) {
+      // Refresh own profile first
+      if (ownUsername) {
         try {
-          const profile = await LeetCodeService.fetchUserProfile(friend.username);
-          await StorageService.saveProfile(profile);
-        } catch (error) {
-          console.error(`Error refreshing ${friend.username}:`, error);
+          const ownProfile = await LeetCodeService.fetchUserProfile(ownUsername);
+          await StorageService.saveProfile(ownProfile);
+        } catch (e) {
+          console.error('Error refreshing own profile:', e);
         }
       }
+
+      // Refresh friends in parallel batches of 3 to avoid rate-limiting
+      const BATCH_SIZE = 3;
+      let failed = 0;
+      for (let i = 0; i < friends.length; i += BATCH_SIZE) {
+        const batch = friends.slice(i, i + BATCH_SIZE);
+        const results = await Promise.allSettled(
+          batch.map(async (friend) => {
+            const profile = await LeetCodeService.fetchUserProfile(friend.username);
+            await StorageService.saveProfile(profile);
+          })
+        );
+        failed += results.filter(r => r.status === 'rejected').length;
+      }
+
       await loadData();
+      if (failed > 0) {
+        setToast({ message: `Refreshed! (${failed} failed)`, type: 'info' });
+      } else {
+        setToast({ message: 'All friends refreshed!', type: 'success' });
+      }
+    } catch (error) {
+      setToast({ message: 'Failed to refresh friends', type: 'error' });
     } finally {
       setRefreshing(false);
     }
   };
 
-  const getSortedFriends = () => {
+  const handleRefreshFriend = async (username: string) => {
+    setRefreshingFriend(username);
+    try {
+      const profile = await LeetCodeService.fetchUserProfile(username);
+      await StorageService.saveProfile(profile);
+      await loadData();
+      setToast({ message: `Refreshed ${username}!`, type: 'success' });
+    } catch (error) {
+      setToast({ message: `Failed to refresh ${username}`, type: 'error' });
+    } finally {
+      setRefreshingFriend(null);
+    }
+  };
+
+  const sortedFriends = useMemo(() => {
     return [...friends].sort((a, b) => {
       const profileA = profiles[a.username.toLowerCase()];
       const profileB = profiles[b.username.toLowerCase()];
@@ -238,13 +328,15 @@ export const App: React.FC = () => {
         case 'problems':
           return (profileB?.problemsSolved.total || 0) - (profileA?.problemsSolved.total || 0);
         case 'recent':
-          return (profileB?.lastFetched || 0) - (profileA?.lastFetched || 0);
+          const recentA = profileA?.recentSubmissions?.[0]?.timestamp || 0;
+          const recentB = profileB?.recentSubmissions?.[0]?.timestamp || 0;
+          return recentB - recentA;
         case 'name':
         default:
           return a.username.localeCompare(b.username);
       }
     });
-  };
+  }, [friends, profiles, sortBy]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts([
@@ -283,8 +375,8 @@ export const App: React.FC = () => {
     },
     {
       key: '3',
-      handler: () => setActiveTab('sync'),
-      description: 'Go to Sync tab',
+      handler: () => setActiveTab('settings'),
+      description: 'Go to Settings tab',
     },
     {
       key: 'Escape',
@@ -299,14 +391,16 @@ export const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`app loading ${isDarkMode ? 'dark' : ''}`}>
-        <div className="spinner"></div>
-        <p>Loading...</p>
+      <div className={`app ${isDarkMode ? 'dark' : ''}`}>
+        <TabNav 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab}
+          friendCount={0}
+        />
+        <Skeleton />
       </div>
     );
   }
-
-  const sortedFriends = getSortedFriends();
 
   return (
     <div className={`app ${isDarkMode ? 'dark' : ''}`}>
@@ -319,22 +413,26 @@ export const App: React.FC = () => {
       <div className="content-area">
         {activeTab === 'friends' ? (
           <>
-            <Recommendations profiles={profiles} />
+            <Recommendations profiles={profiles} ownUsername={ownUsername} />
 
             {friends.length === 0 ? (
               <div className="empty-state">
-                <p>No friends added yet!</p>
-                <p className="hint">Add a LeetCode username above to start tracking.</p>
+                <p className="empty-title">👋 Welcome to L'Amigo!</p>
+                <p className="empty-message">Track your friends' LeetCode progress</p>
+                <p className="hint">💡 Start by adding a friend's LeetCode username or profile URL below</p>
+                <div className="example-hint">
+                  <small>Examples: "john_doe" or "https://leetcode.com/john_doe"</small>
+                </div>
               </div>
             ) : (
               <>
                 <div className="controls">
-                  <label>
+                  <label title="Sort your friends list by different criteria">
                     Sort by:
-                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value as any)}>
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value as any)} title="Choose how to sort friends">
                       <option value="name">Name</option>
                       <option value="problems">Problems Solved</option>
-                      <option value="recent">Recently Updated</option>
+                      <option value="recent">Last Submitted</option>
                     </select>
                   </label>
                   <span className="last-updated-info">Updated {formatTimestamp(lastUpdated)}</span>
@@ -355,6 +453,8 @@ export const App: React.FC = () => {
                       friend={friend}
                       profile={profiles[friend.username.toLowerCase()]}
                       onRemove={handleRemoveFriend}
+                      onRefresh={handleRefreshFriend}
+                      refreshing={refreshingFriend === friend.username}
                       isDarkMode={isDarkMode}
                     />
                   ))}
@@ -365,17 +465,25 @@ export const App: React.FC = () => {
         ) : activeTab === 'compare' ? (
           <CompareTab friends={friends} profiles={profiles} isDarkMode={isDarkMode} ownUsername={ownUsername} />
         ) : (
-          <SyncTab onSync={loadData} isDarkMode={isDarkMode} />
+          <SettingsTab 
+            onSync={loadData} 
+            isDarkMode={isDarkMode}
+            onToggleDarkMode={toggleDarkMode}
+            ownUsername={ownUsername}
+            onUsernameChange={setOwnUsername}
+            onToast={(message, type) => setToast({ message, type })}
+          />
         )}
       </div>
 
       <header className="header header-bottom">
-        <img src="/android-chrome-192x192.png" alt="L'Amigo" className="header-logo" />
+        <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" />
         <div className="header-search-add">
           <input
             type="text"
             id="friend-username-input"
-            placeholder="Enter username or LeetCode URL"
+            placeholder="Add friend (e.g., john_doe or URL)"
+            title="Enter a LeetCode username or profile URL"
             className="header-search-input"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
@@ -390,6 +498,8 @@ export const App: React.FC = () => {
           />
           <button 
             className="add-friend-btn-header"
+            title="Add friend to track their progress"
+            disabled={addingFriend}
             onClick={() => {
               const input = document.getElementById('friend-username-input') as HTMLInputElement;
               if (input) {
@@ -400,9 +510,8 @@ export const App: React.FC = () => {
                 }
               }
             }}
-            title="Add friend by username or URL"
           >
-            +
+            {addingFriend ? '⟳' : '+'}
           </button>
         </div>
         <div className="header-actions">
@@ -424,14 +533,26 @@ export const App: React.FC = () => {
             {showMenu && (
               <div className="menu-dropdown">
                 <button onClick={handleRefresh} disabled={refreshing}>
-                  {refreshing ? 'Refreshing...' : 'Refresh'}
+                  {refreshing ? 'Refreshing...' : 'Refresh All'}
                 </button>
-                <button onClick={handleExport}>
-                  Export CSV
+                <button onClick={() => {
+                  setShowExportMenu(!showExportMenu);
+                }}>
+                  Export Data {showExportMenu ? '▴' : '▾'}
                 </button>
-                <button onClick={handleExportDetailed}>
-                  Export Detailed
-                </button>
+                {showExportMenu && (
+                  <div className="submenu">
+                    <button onClick={() => handleExport('csv')}>
+                      📊 Export CSV
+                    </button>
+                    <button onClick={() => handleExport('detailed')}>
+                      📈 Export Detailed CSV
+                    </button>
+                    <button onClick={() => handleExport('json')}>
+                      📦 Export JSON
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -440,11 +561,27 @@ export const App: React.FC = () => {
 
       <Modal
         isOpen={modal.isOpen}
-        onClose={() => setModal({ ...modal, isOpen: false })}
+        onClose={() => {
+          setModal({ ...modal, isOpen: false });
+          setConfirmAction(null);
+        }}
+        onConfirm={confirmAction ? () => {
+          confirmAction();
+          setConfirmAction(null);
+        } : undefined}
         title={modal.title}
         message={modal.message}
         type={modal.type}
+        showCancel={!!confirmAction}
       />
+      
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 };

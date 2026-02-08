@@ -3,13 +3,30 @@ import React from 'react';
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm?: () => void;
   title: string;
   message: string;
   type?: 'info' | 'error' | 'success';
+  showCancel?: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, message, type = 'info' }) => {
+export const Modal: React.FC<ModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  onConfirm,
+  title, 
+  message, 
+  type = 'info',
+  showCancel = false 
+}) => {
   if (!isOpen) return null;
+
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm();
+    }
+    onClose();
+  };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -21,8 +38,13 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, message, t
           <p>{message}</p>
         </div>
         <div className="modal-footer">
-          <button className="modal-btn" onClick={onClose}>
-            OK
+          {showCancel && (
+            <button className="modal-btn modal-btn-secondary" onClick={onClose}>
+              Cancel
+            </button>
+          )}
+          <button className="modal-btn" onClick={handleConfirm}>
+            {showCancel ? 'Confirm' : 'OK'}
           </button>
         </div>
       </div>

@@ -7,79 +7,68 @@ export interface StreakInfo {
 }
 
 export class StreakCalculator {
+  /**
+   * Calculate streak using submissionCalendar (full year, 365 days) when available,
+   * falling back to recentSubmissions (~20 items) otherwise.
+   */
   static calculateStreak(profile: FriendProfile): StreakInfo {
-    const submissions = profile.recentSubmissions || [];
-
-    if (submissions.length === 0) {
-      return {
-        currentStreak: 0,
-        longestStreak: 0,
-        lastSubmissionDate: null,
-      };
+    // Prefer submissionCalendar — it has full-year daily counts
+    const calendar = profile.submissionCalendar;
+    if (calendar && Object.keys(calendar).length > 0) {
+      return this.fromCalendar(calendar);
     }
 
-    // Group submissions by date
-    const submissionDates = submissions.map((sub) => {
-      const date = new Date(sub.timestamp);
-      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    });
+    // Fallback to recentSubmissions
+    return this.fromRecent(profile.recentSubmissions || []);
+  }
 
-    // Sort dates descending
-    submissionDates.sort((a, b) => b.getTime() - a.getTime());
+  /** Full-year streak from submissionCalendar: {unixTimestampSec: count} */
+  private static fromCalendar(calendar: Record<string, number>): StreakInfo {
+    const ONE_DAY = 86400000;
 
-    // Remove duplicates
-    const uniqueDates = Array.from(
-      new Set(submissionDates.map((d) => d.getTime())),
-    )
-      .map((t) => new Date(t))
-      .sort((a, b) => b.getTime() - a.getTime());
-
-    if (uniqueDates.length === 0) {
-      return {
-        currentStreak: 0,
-        longestStreak: 0,
-        lastSubmissionDate: null,
-      };
+    // Convert to unique day-timestamps (midnight local) and sort descending
+    const daySet = new Set<number>();
+    for (const [tsStr, count] of Object.entries(calendar)) {
+      if (count <= 0) continue;
+      const d = new Date(parseInt(tsStr, 10) * 1000);
+      daySet.add(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime());
     }
+
+    if (daySet.size === 0) {
+      return { currentStreak: 0, longestStreak: 0, lastSubmissionDate: null };
+    }
+
+    const uniqueDates = Array.from(daySet).sort((a, b) => b - a);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
+    const todayTs = today.getTime();
+    const yesterdayTs = todayTs - ONE_DAY;
 
-    // Calculate current streak
+    // Current streak
     let currentStreak = 0;
-    const latestDate = uniqueDates[0];
+    const latestTs = uniqueDates[0];
 
-    // Check if last submission was today or yesterday
-    if (
-      latestDate.getTime() === today.getTime() ||
-      latestDate.getTime() === yesterday.getTime()
-    ) {
+    if (latestTs === todayTs || latestTs === yesterdayTs) {
       currentStreak = 1;
-      let checkDate = new Date(latestDate);
-
+      let prevTs = latestTs;
       for (let i = 1; i < uniqueDates.length; i++) {
-        checkDate.setDate(checkDate.getDate() - 1);
-        if (uniqueDates[i].getTime() === checkDate.getTime()) {
+        if (uniqueDates[i] === prevTs - ONE_DAY) {
           currentStreak++;
+          prevTs = uniqueDates[i];
         } else {
           break;
         }
       }
     }
 
-    // Calculate longest streak
+    // Longest streak
     let longestStreak = 1;
     let tempStreak = 1;
-
     for (let i = 1; i < uniqueDates.length; i++) {
-      const prevDate = new Date(uniqueDates[i - 1]);
-      prevDate.setDate(prevDate.getDate() - 1);
-
-      if (uniqueDates[i].getTime() === prevDate.getTime()) {
+      if (uniqueDates[i] === uniqueDates[i - 1] - ONE_DAY) {
         tempStreak++;
-        longestStreak = Math.max(longestStreak, tempStreak);
+        if (tempStreak > longestStreak) longestStreak = tempStreak;
       } else {
         tempStreak = 1;
       }
@@ -88,7 +77,64 @@ export class StreakCalculator {
     return {
       currentStreak,
       longestStreak: Math.max(longestStreak, currentStreak),
-      lastSubmissionDate: latestDate,
+      lastSubmissionDate: new Date(latestTs),
+    };
+  }
+
+  /** Fallback streak from recentSubmissions (~20 items max) */
+  private static fromRecent(submissions: { timestamp: number }[]): StreakInfo {
+    if (submissions.length === 0) {
+      return { currentStreak: 0, longestStreak: 0, lastSubmissionDate: null };
+    }
+
+    const ONE_DAY = 86400000;
+    const daySet = new Set<number>();
+    for (const sub of submissions) {
+      const d = new Date(sub.timestamp);
+      daySet.add(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime());
+    }
+
+    const uniqueDates = Array.from(daySet).sort((a, b) => b - a);
+    if (uniqueDates.length === 0) {
+      return { currentStreak: 0, longestStreak: 0, lastSubmissionDate: null };
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayTs = today.getTime();
+    const yesterdayTs = todayTs - ONE_DAY;
+
+    let currentStreak = 0;
+    const latestTs = uniqueDates[0];
+
+    if (latestTs === todayTs || latestTs === yesterdayTs) {
+      currentStreak = 1;
+      let prevTs = latestTs;
+      for (let i = 1; i < uniqueDates.length; i++) {
+        if (uniqueDates[i] === prevTs - ONE_DAY) {
+          currentStreak++;
+          prevTs = uniqueDates[i];
+        } else {
+          break;
+        }
+      }
+    }
+
+    let longestStreak = 1;
+    let tempStreak = 1;
+    for (let i = 1; i < uniqueDates.length; i++) {
+      if (uniqueDates[i] === uniqueDates[i - 1] - ONE_DAY) {
+        tempStreak++;
+        if (tempStreak > longestStreak) longestStreak = tempStreak;
+      } else {
+        tempStreak = 1;
+      }
+    }
+
+    return {
+      currentStreak,
+      longestStreak: Math.max(longestStreak, currentStreak),
+      lastSubmissionDate: new Date(latestTs),
     };
   }
 }

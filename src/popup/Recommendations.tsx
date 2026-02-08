@@ -4,9 +4,10 @@ import { FriendProfile } from '../types';
 
 interface RecommendationsProps {
   profiles: Record<string, FriendProfile>;
+  ownUsername?: string;
 }
 
-export const Recommendations: React.FC<RecommendationsProps> = ({ profiles }) => {
+export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownUsername }) => {
   const [recommendations, setRecommendations] = useState<ProblemRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -16,7 +17,19 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles }) =>
     
     setLoading(true);
     try {
-      const recs = await RecommendationService.getRecommendations(profiles);
+      // Get own solved problems if ownUsername is available
+      const ownProfile = ownUsername ? profiles[ownUsername.toLowerCase()] : undefined;
+      const ownSolvedProblems = new Set<string>();
+      
+      if (ownProfile?.recentSubmissions) {
+        ownProfile.recentSubmissions.forEach(sub => {
+          if (sub.statusDisplay === 'Accepted') {
+            ownSolvedProblems.add(sub.titleSlug);
+          }
+        });
+      }
+      
+      const recs = await RecommendationService.getRecommendations(profiles, ownSolvedProblems);
       setRecommendations(recs);
     } catch (error) {
       console.error('Error loading recommendations:', error);

@@ -139,4 +139,61 @@ export class ExportService {
     link.click();
     document.body.removeChild(link);
   }
+
+  static exportToJSON(
+    friends: Friend[],
+    profiles: Record<string, FriendProfile>,
+  ) {
+    const exportData = {
+      exportDate: new Date().toISOString(),
+      totalFriends: friends.length,
+      friends: friends.map((friend) => {
+        const profile = profiles[friend.username.toLowerCase()];
+        if (!profile) {
+          return {
+            username: friend.username,
+            addedAt: new Date(friend.addedAt).toISOString(),
+            profile: null,
+          };
+        }
+
+        return {
+          username: profile.username,
+          realName: profile.realName || null,
+          avatar: profile.avatar || null,
+          problemsSolved: profile.problemsSolved,
+          contestRating: profile.contestRating || null,
+          contestRanking: profile.contestRanking || null,
+          ranking: profile.ranking || null,
+          reputation: profile.reputation || null,
+          recentSubmissions: (profile.recentSubmissions || []).map((sub) => ({
+            title: sub.title,
+            titleSlug: sub.titleSlug,
+            timestamp: new Date(sub.timestamp).toISOString(),
+            lang: sub.lang,
+          })),
+          topicStats: profile.topicStats || null,
+          languageStats: profile.languageStats || null,
+          submissionStats: profile.submissionStats || null,
+          addedAt: new Date(friend.addedAt).toISOString(),
+          lastFetched: profile.lastFetched
+            ? new Date(profile.lastFetched).toISOString()
+            : null,
+        };
+      }),
+    };
+
+    const jsonContent = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonContent], { type: "application/json" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute("href", url);
+    link.setAttribute("download", `leetcode-friends-${Date.now()}.json`);
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }

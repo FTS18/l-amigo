@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Friend, FriendProfile } from '../types';
-import { DifficultyChart } from './DifficultyChart';
 import { StreakCalculator } from '../services/streak';
 
 interface FriendCardProps {
   friend: Friend;
   profile?: FriendProfile;
   onRemove: (username: string) => void;
+  onRefresh?: (username: string) => Promise<void>;
+  refreshing?: boolean;
   isDarkMode?: boolean;
 }
 
-export const FriendCard: React.FC<FriendCardProps> = ({ friend, profile, onRemove, isDarkMode }) => {
+export const FriendCard: React.FC<FriendCardProps> = ({ friend, profile, onRemove, onRefresh, refreshing, isDarkMode }) => {
   const [showSubmissions, setShowSubmissions] = useState(false);
 
   const formatTimestamp = (timestamp: number) => {
@@ -64,9 +65,21 @@ export const FriendCard: React.FC<FriendCardProps> = ({ friend, profile, onRemov
                 {profile.realName && <p className="real-name">{profile.realName}</p>}
               </div>
             </div>
-            <button className="remove-btn" onClick={() => onRemove(friend.username)}>
-              ✕
-            </button>
+            <div className="card-actions">
+              {onRefresh && (
+                <button 
+                  className="action-btn refresh-btn" 
+                  onClick={() => onRefresh(friend.username)}
+                  disabled={refreshing}
+                  title="Refresh this friend's data"
+                >
+                  {refreshing ? '⟳' : '↻'}
+                </button>
+              )}
+              <button className="action-btn remove-btn" onClick={() => onRemove(friend.username)}>
+                ✕
+              </button>
+            </div>
           </div>
 
           <div className="stats-compact">

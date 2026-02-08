@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Amigo - LeetCode Friends Tracker</title>
+  <meta name="description"
+    content="Track your friends' LeetCode progress, compare stats, sync to GitHub. Stay motivated together.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
+        <span class="logo-text">L'AMIGO</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="#" class="btn-primary">ADD TO CHROME</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>FREE & OPEN SOURCE</span>
+        </div>
+        <h1 class="hero-title">
+          Track Your Friends' <span class="gradient-text">LeetCode Journey</span>
+        </h1>
+        <p class="hero-subtitle">
+          Monitor your coding squad's progress. Compare stats, compete on streaks, and auto-sync your solutions to
+          GitHub.
+        </p>
+        <div class="hero-cta">
+          <a href="#" class="btn-primary btn-large">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+            </svg>
+            INSTALL NOW
+          </a>
+          <a href="docs.html" class="btn-secondary btn-large">
+            READ DOCS
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Friends</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">365</div>
+            <div class="stat-label">Days History</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Synced</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="mockup-window">
+          <div class="mockup-header">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="mockup-content">
+            <div class="mockup-card">
+              <div class="card-header">
+                <div class="avatar">JD</div>
+                <div class="card-info">
+                  <div class="card-name">john_doe</div>
+                  <div class="card-meta">847 solved</div>
+                </div>
+                <div class="card-badge">🔥15</div>
+              </div>
+              <div class="card-stats">
+                <div class="stat-pill easy">342 E</div>
+                <div class="stat-pill medium">421 M</div>
+                <div class="stat-pill hard">84 H</div>
+              </div>
+              <div class="card-chart">
+                <div class="chart-bar" style="height: 40%"></div>
+                <div class="chart-bar" style="height: 65%"></div>
+                <div class="chart-bar" style="height: 45%"></div>
+                <div class="chart-bar" style="height: 80%"></div>
+                <div class="chart-bar" style="height: 55%"></div>
+                <div class="chart-bar" style="height: 90%"></div>
+                <div class="chart-bar" style="height: 70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Features</h2>
+        <p class="section-subtitle">Everything you need to track and compete with your coding squad</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <h3 class="feature-title">50 FRIENDS</h3>
+          <p class="feature-description">Track up to 50 friends. See streaks, stats, and velocity at a glance.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <h3 class="feature-title">COMPARE</h3>
+          <p class="feature-description">Side-by-side comparison. Charts for difficulty, topics, languages.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+          </div>
+          <h3 class="feature-title">GITHUB SYNC</h3>
+          <p class="feature-description">Auto-push accepted solutions to GitHub. Organized by difficulty.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <h3 class="feature-title">AUTO DETECT</h3>
+          <p class="feature-description">Real-time "Accepted" detection. Syncs instantly to GitHub.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="0" ry="0" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </div>
+          <h3 class="feature-title">365 DAYS</h3>
+          <p class="feature-description">Full year of submission history. Accurate streaks and trends.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </div>
+          <h3 class="feature-title">DISCOVER</h3>
+          <p class="feature-description">Find problems your friends solved that you haven't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three steps to get started</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h3 class="step-title">INSTALL</h3>
+            <p class="step-description">Add from Chrome Web Store. Enter your LeetCode username. Optionally add GitHub
+              token.</p>
+          </div>
+          <div class="step-visual">
+            <div class="visual-box">
+              <div class="visual-line"></div>
+              <div class="visual-line short"></div>
+              <div class="visual-line"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step step-reverse">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h3 class="step-title">ADD FRIENDS</h3>
+            <p class="step-description">Enter LeetCode usernames. Profiles load instantly. Track up to 50 friends.</p>
+          </div>
+          <div class="step-visual">
+            <div class="visual-box">
+              <div class="visual-circle"></div>
+              <div class="visual-circle"></div>
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h3 class="step-title">COMPETE</h3>
+            <p class="step-description">View friend cards with stats. Compare head-to-head with interactive charts.</p>
+          </div>
+          <div class="step-visual">
+            <div class="visual-box">
+              <div class="visual-chart">
+                <div class="bar" style="height: 60%"></div>
+                <div class="bar" style="height: 80%"></div>
+                <div class="bar" style="height: 45%"></div>
+                <div class="bar" style="height: 95%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screenshots -->
+      <div class="screenshots-section">
+        <h3 class="section-title">Screenshots</h3>
+        <div class="screenshots-grid">
+          <div class="screenshot-item">
+            <img src="screenshots/1.png" alt="Friends List" loading="lazy">
+            <p class="screenshot-caption">FRIENDS LIST</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="screenshots/2.png" alt="Compare Tab" loading="lazy">
+            <p class="screenshot-caption">COMPARE</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="screenshots/3.png" alt="Settings" loading="lazy">
+            <p class="screenshot-caption">SETTINGS</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="screenshots/5.png" alt="Charts" loading="lazy">
+            <p class="screenshot-caption">DIFFICULTY</p>
+          </div>
+          <div class="screenshot-item">
+            <img src="screenshots/6.png" alt="Topics" loading="lazy">
+            <p class="screenshot-caption">TOPICS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-banner">
+        <h3>Ready to start tracking?</h3>
+        <a href="#" class="btn-primary btn-large">INSTALL NOW</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24">
+            <span>L'AMIGO</span>
+          </div>
+          <p class="footer-tagline">Track friends. Compare stats. Stay motivated.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>PRODUCT</h4>
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="docs.html">Documentation</a></li>
+              <li><a href="#">Chrome Store</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>RESOURCES</h4>
+            <ul>
+              <li><a href="docs.html#installation">Install Guide</a></li>
+              <li><a href="docs.html#github-sync">GitHub Setup</a></li>
+              <li><a href="docs.html#faq">FAQ</a></li>
+              <li><a href="#">Changelog</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>LEGAL</h4>
+            <ul>
+              <li><a href="privacy.html">Privacy</a></li>
+              <li><a href="terms.html">Terms</a></li>
+              <li><a href="privacy.html#data">Data Usage</a></li>
+              <li><a href="#">MIT License</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 L'Amigo. Open source under MIT License.</p>
+        <p>Not affiliated with LeetCode or GitHub.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
