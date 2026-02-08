@@ -61,7 +61,7 @@
  ## [1.0.0] - Initial Release
  
  ### Added
-- Squad Management: Basic functionality to track LeetCode profiles by username.
+- Peer Management: Basic functionality to track LeetCode profiles by username.
 - Problem Statistics: Core tracking for Easy, Medium, and Hard problem counts.
 - Contest Tracking: Integration of contest ratings and global leaderboard rankings.
 - Submission Logs: Visibility into the most recent problem solving activity.

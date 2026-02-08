@@ -1,27 +1,26 @@
-# L'Amigo - Advanced LeetCode Squad Analytics and Automation
+# L'Amigo - LeetCode Peer Progress and Automation
 
-L'Amigo is a sophisticated browser extension engineered for competitive programmers, software engineers, and technical interview candidates. The platform provides a comprehensive suite of analytics, peer-tracking metrics, and automation tools designed to optimize the LeetCode preparation workflow. By integrating directly into the LeetCode environment, L'Amigo bridges the gap between individual practice and collaborative competitive growth.
+L'Amigo is a browser extension engineered for competitive programmers and software engineering candidates to monitor peer performance and automate personal progress management. By integrating directly into the LeetCode environment, L'Amigo enables users to track friend activity, perform detailed statistical comparisons, and maintain an automated repository of their own solved problems on GitHub.
 
 ## Core Architectural Components
 
 ### Native UI Injection Engine
-The extension utilizes a high-frequency MutationObserver paired with a target-specific injection algorithm to modify the LeetCode Document Object Model (DOM) in real-time. 
-- **Dynamic Content Injection**: The engine identifies the profile identity block on LeetCode user pages and prepends custom action containers.
-- **State-Aware UI**: Buttons dynamically reflect the tracking status of a profile (e.g., updating from "Track" to a checkmark status) by cross-referencing the local SQLite-based storage.
-- **Persistence Layer**: The injection logic is designed to survive React-based partial page updates, which frequently clear non-React-managed DOM elements.
+The extension utilizes a MutationObserver to modify the LeetCode Document Object Model (DOM) in real-time, providing immediate access to peer tracking tools.
+- **Dynamic Action Buttons**: Adds "Track" and "Compare" utilities directly to any LeetCode user profile without requiring manual navigation.
+- **Status Persistence**: Buttons cross-reference the local browser storage to provide real-time tracking status indicators.
+- **Non-Invasive Integration**: Designed to operate seamlessly within LeetCode's React-based dynamic interface.
 
-### Advanced Squad Analytics Dashboard
-The primary user interface, accessible via the extension popup, serves as a high-fidelity control center for peer monitoring.
-- **Quantitative Performance Metrics**: Aggregates problem solve counts across three difficulty tiers—Easy, Medium, and Hard—providing a granular view of a user's technical breadth.
-- **Visual Statistical Modeling**: Implements SVG-based rendering through the Recharts library to visualize difficulty distribution, allowing for rapid identification of problem-solving patterns.
-- **Consistency and Momentum Analysis**: Derived from historical submission data, the system calculates current and historical solving streaks, providing a metric for consistency that raw solve counts often obscure.
-- **Interactive Submission Timeline**: Provides a recursive expansion view of the most recent five accepted submissions for every tracked peer, including direct deep-links to specific problem statements.
+### Peer Progress Dashboard
+The extension popup serves as a centralized interface for monitoring your tracked friends.
+- **Individual Performance Cards**: Provides a granular view of total solved problems, difficulty breakdowns (Easy, Medium, Hard), and current activity streaks.
+- **Visual Pattern Analysis**: Uses Recharts to render SVG-based distribution charts, helping users identify their peers' solving habits.
+- **Submission History**: Extracts and displays the five most recent accepted problems for each tracked friend, including direct links to problem statements.
 
-### Peer Comparison Infrastructure
-The Comparison module is built on a custom data-aggregator that facilitates head-to-head analysis of multiple entities.
-- **Topic Mastery Profiling**: The system performs a frequency analysis on the tags associated with a user's solved problems to extract their Top 5 domain specialties (e.g., Graph Theory, Dynamic Programming, Heap).
-- **Competitiveness Benchmarking**: Integrates LeetCode Contest Ratings and Global Ranking positions to provide a comprehensive competitiveness index.
-- **Multi-Entity Grid**: Supports simultaneous comparison of up to 50 profiles with a responsive layout that prioritizes high-impact metrics.
+### Head-to-Head Comparison
+The Comparison module allows users to perform deep-dive analytics by selecting multiple friends for side-by-side evaluation.
+- **Topic Proficiency**: Analyzes public solve data to identify a user's top five mastered topics (e.g., Dynamic Programming, Graph Theory).
+- **Competitiveness Index**: Compares LeetCode Contest Ratings and Global Rankings in a unified grid.
+- **Interactive Metrics**: Highlights highest performers across different statistical categories for rapid comparison.
 
 ### Automated GitHub Solution Repository Sync
 L'Amigo automates the preservation of the user's solved problem library by synchronizing accepted submissions with a dedicated GitHub repository.

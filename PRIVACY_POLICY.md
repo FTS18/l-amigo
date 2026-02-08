@@ -33,7 +33,7 @@ Technical measures are implemented to protect user data from unauthorized access
 As a local-first application, users retain full control over their data:
 - **Access and Correction**: Users can view and modify all stored data (track lists, settings, tokens) through the extension's internal interface.
 - **Deletion**: Uninstalling the L'Amigo extension immediately and permanently removes all associated data from the browser's local storage.
-- **Portability**: Users can export their squad data into non-proprietary CSV formats at any time for use in other systems.
+- **Portability**: Users can export their tracked peer data into non-proprietary CSV formats at any time for use in other systems.
 
 ## 7. Compliance and Contact
 L'Amigo is designed to be compliant with global privacy standards, including the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA), through its rigorous local-only data processing model.
