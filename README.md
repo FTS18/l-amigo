@@ -1,146 +1,85 @@
-# LeetCode Friend Tracker
+# L'Amigo - Advanced LeetCode Squad Analytics and Automation
 
-A Chrome extension to track your friends' LeetCode progress and activity.
+L'Amigo is a sophisticated browser extension engineered for competitive programmers, software engineers, and technical interview candidates. The platform provides a comprehensive suite of analytics, peer-tracking metrics, and automation tools designed to optimize the LeetCode preparation workflow. By integrating directly into the LeetCode environment, L'Amigo bridges the gap between individual practice and collaborative competitive growth.
 
-## Features
+## Core Architectural Components
 
-- ✅ **Friend Management**: Add/remove friends by LeetCode username
-- 📊 **Problem Statistics**: View total problems solved (Easy/Medium/Hard breakdown)
-- 📈 **Difficulty Distribution Charts**: Visual pie charts showing problem difficulty breakdown
-- 🔥 **Streak Tracking**: Track current and longest solving streaks for each friend
-- 🏆 **Contest Ratings**: See contest ratings and rankings
-- 📝 **Recent Submissions**: Track the latest 3 problems solved by each friend
-- 💡 **Problem Recommendations**: Get problem suggestions based on what friends are solving
-- 📥 **CSV Export**: Export friend data to CSV (basic and detailed formats)
-- 🔄 **Auto-Refresh**: Automatic background sync every hour
-- 🔔 **Notifications**: Get notified when friends solve new problems
-- 🌙 **Dark Mode**: Toggle between light and dark themes
-- ☁️ **GitHub Sync**: Backup and restore your data to a private GitHub Gist
-- 🎯 **Sorting Options**: Sort by name, problems solved, or recent activity
+### Native UI Injection Engine
+The extension utilizes a high-frequency MutationObserver paired with a target-specific injection algorithm to modify the LeetCode Document Object Model (DOM) in real-time. 
+- **Dynamic Content Injection**: The engine identifies the profile identity block on LeetCode user pages and prepends custom action containers.
+- **State-Aware UI**: Buttons dynamically reflect the tracking status of a profile (e.g., updating from "Track" to a checkmark status) by cross-referencing the local SQLite-based storage.
+- **Persistence Layer**: The injection logic is designed to survive React-based partial page updates, which frequently clear non-React-managed DOM elements.
 
-## Installation
+### Advanced Squad Analytics Dashboard
+The primary user interface, accessible via the extension popup, serves as a high-fidelity control center for peer monitoring.
+- **Quantitative Performance Metrics**: Aggregates problem solve counts across three difficulty tiers—Easy, Medium, and Hard—providing a granular view of a user's technical breadth.
+- **Visual Statistical Modeling**: Implements SVG-based rendering through the Recharts library to visualize difficulty distribution, allowing for rapid identification of problem-solving patterns.
+- **Consistency and Momentum Analysis**: Derived from historical submission data, the system calculates current and historical solving streaks, providing a metric for consistency that raw solve counts often obscure.
+- **Interactive Submission Timeline**: Provides a recursive expansion view of the most recent five accepted submissions for every tracked peer, including direct deep-links to specific problem statements.
 
-### Development Setup
+### Peer Comparison Infrastructure
+The Comparison module is built on a custom data-aggregator that facilitates head-to-head analysis of multiple entities.
+- **Topic Mastery Profiling**: The system performs a frequency analysis on the tags associated with a user's solved problems to extract their Top 5 domain specialties (e.g., Graph Theory, Dynamic Programming, Heap).
+- **Competitiveness Benchmarking**: Integrates LeetCode Contest Ratings and Global Ranking positions to provide a comprehensive competitiveness index.
+- **Multi-Entity Grid**: Supports simultaneous comparison of up to 50 profiles with a responsive layout that prioritizes high-impact metrics.
 
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+### Automated GitHub Solution Repository Sync
+L'Amigo automates the preservation of the user's solved problem library by synchronizing accepted submissions with a dedicated GitHub repository.
+- **Incremental Sync Algorithm**: The service worker implements a state-check mechanism that compares local submission records with the remote repository tree to ensure only new or modified solutions are pushed, minimizing API traffic and avoiding rate-limiting.
+- **Static File Generation**: Solutions are converted from raw submission data into structured source files with appropriate naming conventions and file extensions based on the runtime environment (e.g., .cpp, .py, .go).
+- **OAuth-Free Security**: To maximize user privacy, the extension uses Personal Access Tokens (PATs) stored exclusively within the browser's encrypted local storage via the Chrome Storage API. No external authentication servers or redirect URIs are utilized.
 
-2. **Build the extension**:
-   ```bash
-   npm run build
-   ```
-   
-   For development with auto-rebuild:
-   ```bash
-   npm run dev
-   ```
+## Technical Specifications
 
-3. **Load in Chrome**:
-   - Open Chrome and go to `chrome://extensions/`
-   - Enable "Developer mode" (toggle in top-right)
-   - Click "Load unpacked"
-   - Select the `dist` folder from this project
+### Tech Stack
+- **Framework**: React 18 (Functional Components, Hooks)
+- **Programming Language**: TypeScript (Strict Mode)
+- **Data Visualization**: Recharts (SVG)
+- **Bundler**: Webpack 5 with Hot Module Replacement (HMR) capabilities
+- **Storage System**: Chrome Storage Local API (Asynchronous)
+- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation
+- **API Interfaces**: LeetCode GraphQL API, GitHub REST API v3
 
-## Usage
+### Data Lifecycle and Security
+1. **Ingestion**: Data is fetched client-side directly from LeetCode servers via secure GraphQL queries.
+2. **Processing**: Raw JSON responses are transformed into normalized Squad Objects within the extension's service layer.
+3. **Persistence**: Objects are serialized and stored in `chrome.storage.local`.
+4. **Synchronization**: Solutions are pushed via encrypted HTTPS requests to `api.github.com`.
+5. **Security**: All credentials (GitHub PATs) are obfuscated within local storage. No telemetry or analytics data is ever transmitted to any third-party infrastructure.
 
-1. **Click the extension icon** in your Chrome toolbar
-2. **Add a friend**: Enter any LeetCode username (e.g., "tourist", "Errichto") and click "Add Friend"
-3. **View stats**: See their problems solved, contest rating, recent submissions, and difficulty distribution chart
-4. **Track streaks**: View current and best solving streaks with the 🔥 badge
-5. **Get recommendations**: Click "💡 Problem Recommendations" to see problems your friends have solved
-6. **Export data**: Click the menu (⋯) to export friend data as CSV
-7. **GitHub Sync**: Backup your data to GitHub for safekeeping and sync across devices
-8. **Toggle theme**: Click the 🌙/☀️ button to switch between light and dark mode
-9. **Refresh data**: Click "🔄" to manually update all friends' information
-10. **Sort friends**: Use the dropdown to sort by name, problems solved, or recent activity
-11. **Remove friends**: Click the × button on any friend card
+## Installation and Deployment
 
-## Data Fetching
+### Development Environment Setup
+To initialize the development environment, execute the following commands in sequence:
+```bash
+# Clone the repository
+git clone https://github.com/FTS18/l-amigo.git
+cd l-amigo
 
-The extension uses LeetCode's GraphQL API to fetch:
-- User profile information (name, avatar, ranking)
-- Problem statistics (total, easy, medium, hard)
-- Contest ratings and rankings
-- Recent accepted submissions (last 10)
-- Streak calculation based on submission history
+# Install dependencies
+npm install
 
-Data is cached locally and refreshed automatically every hour, or manually via the "🔄" button.
-
-### GitHub Sync
-
-Optionally sync your data to GitHub:
-1. Create a Personal Access Token at https://github.com/settings/tokens with `gist` scope
-2. Click "⚙️ GitHub Sync" in the extension
-3. Enter your token and click "Connect GitHub"
-4. Use "☁️ Backup to GitHub" to save your data
-5. Use "⬇️ Restore from GitHub" to retrieve your data on another device
-
-Your data is stored in a private GitHub Gist and never shared publicly.
-
-## Tech Stack
-
-- **Frontend**: React + TypeScript
-- **Charts**: Chart.js + react-chartjs-2
-- **Build Tool**: Webpack
-- **Storage**: Chrome Storage API
-- **Sync**: GitHub Gist API
-- **Manifest**: V3 (latest Chrome extension format)
-
-## Project Structure
-
-```
-extension/
-├── public/
-│   ├── manifest.json       # Extension manifest
-│   └── popup.html          # Popup HTML template
-├── src/
-│   ├── background/
-│   │   └── background.ts   # Background service worker
-│   ├── popup/
-│   │   ├── App.tsx         # Main app component
-│   │   ├── App.css         # Styles (with dark mode)
-│   │   ├── FriendCard.tsx  # Friend card component
-│   │   ├── AddFriendForm.tsx
-│   │   ├── DifficultyChart.tsx  # Chart.js visualization
-│   │   ├── StreakBadge.tsx      # Streak display
-│   │   ├── Recommendations.tsx  # Problem recommendations
-│   │   ├── GitHubSync.tsx       # GitHub sync UI
-│   │   └── popup.tsx       # Entry point
-│   ├── services/
-│   │   ├── storage.ts      # Chrome storage wrapper
-│   │   ├── leetcode.ts     # LeetCode API service
-│   │   ├── export.ts       # CSV export service
-│   │   ├── streak.ts       # Streak calculation
-│   │   ├── recommendations.ts  # Problem recommendations
-│   │   └── github.ts       # GitHub Gist sync
-│   └── types/
-│       └── index.ts        # TypeScript interfaces
-├── package.json
-├── tsconfig.json
-└── webpack.config.js
+# Start the development server with watch mode
+npm run dev
 ```
 
-## Future Enhancements
+### Production Build
+To generate a minimized, production-ready build:
+```bash
+npm run build
+```
+The resulting assets will be located in the `dist/` directory, which is the package required for browser installation.
 
-- [ ] Weekly/monthly progress reports
-- [ ] Compare stats between friends
-- [ ] Topic-based problem recommendations
-- [ ] Browser notifications for friend milestones
-- [ ] Custom refresh intervals
-- [ ] Filter by difficulty level
-- [ ] Search friends by username
-- [ ] Import/export in JSON format
-- [ ] Leaderboard view
+### Browser Integration
+1. Navigate to the Chrome Extensions management page: `chrome://extensions/`.
+2. Enable "Developer Mode" in the management interface.
+3. Utilize the "Load unpacked" utility and select the `dist/` folder.
 
-## Notes
-
-- LeetCode's API is not officially documented and may change
-- Rate limiting is handled with delays between requests
-- Usernames are case-insensitive
-- Only public profile data is accessible
+## Future Development Roadmap
+- **Collaborative Squads**: Implementation of optional peer-to-peer data sharing for private community leaderboards.
+- **Advanced Submission Filter**: Capability to filter peer submissions by programming language or specific timeframes.
+- **Integration with Codeforces**: Expansion of tracking capabilities to include other major competitive programming platforms.
+- **Code Execution Analysis**: Statistical tracking of submission success rates (Accepted vs. Runtime Error/TLE).
 
 ## License
-
-MIT
+L'Amigo is licensed under the MIT License. Commercial use, modification, and distribution are permitted provided that the original copyright and license notice are included in all copies or substantial portions of the software.

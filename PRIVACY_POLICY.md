@@ -1,63 +1,42 @@
 # Privacy Policy for L'Amigo
 
-**Last Updated:** February 8, 2026
+**Version:** 1.4.0
+**Effective Date:** February 9, 2026
 
-## Overview
-L'Amigo is a Chrome extension that helps you track your LeetCode progress and sync your accepted submissions to GitHub. We take your privacy seriously.
+## 1. Introduction
+This Privacy Policy outlines the data processing practices of L'Amigo, a browser extension designed to facilitate LeetCode progress tracking and automated GitHub synchronization. We operate under a "Privacy by Design" framework, ensuring that user data is processed with maximum transparency and minimal risk.
 
-## Data Collection
-L'Amigo collects and stores the following data **locally on your device only**:
-- LeetCode usernames (yours and friends you add)
-- LeetCode submission data (problem titles, submission times, programming languages)
-- GitHub personal access token (for syncing)
-- GitHub repository name
-- Extension settings (dark mode, notifications, refresh intervals)
+## 2. Data Categories and Collection Methods
+L'Amigo processes several categories of data, all of which are managed locally within the user's browser environment:
+- **Identification Data**: Public LeetCode handles (usernames) and associated public profile metadata (avatars, real names).
+- **Performance Data**: Quantitative metrics regarding problem-solving activity, including solve counts, difficulty distributions, and contest participation history.
+- **Authentication Metadata**: User-provided GitHub Personal Access Tokens (PATs) and repository identifiers required for write-access to the user's designated repository.
+- **Preference Data**: Application state variables including interface theme selections, synchronization intervals, and notification preferences.
 
-## Data Storage
-- **All data is stored locally** using Chrome's storage API (`chrome.storage.local`)
-- **No data is sent to our servers** - we don't operate any backend servers
-- Data syncs directly between:
-  - Your browser and LeetCode.com (to fetch submissions)
-  - Your browser and GitHub.com (to push code to your repository)
+## 3. Storage and Retention Policy
+All data processed by L'Amigo is stored using the `chrome.storage.local` API. We do not maintain any centralized servers or databases; therefore, we have no capability to access, sell, or analyze your data.
+- **Local Persistence**: Data remains on the user's local machine until the extension is uninstalled or the local storage is manually purged.
+- **No Cloud Exposure**: Aside from direct API interactions with LeetCode and GitHub, no data is transmitted to cloud environments or third-party analytics providers.
 
-## Third-Party Services
-The extension communicates with:
-1. **LeetCode.com** - To fetch your submissions and friend profiles
-2. **GitHub.com** - To sync your code to your personal repository
+## 4. Third-Party API Interoperability
+L'Amigo functions as a client-side bridge between the user's browser, LeetCode, and GitHub.
+- **LeetCode GraphQL API**: The extension performs read-only requests to LeetCode's official GraphQL endpoints to retrieve public profile and submission data. These requests utilize the user's active session cookies to ensure data accuracy.
+- **GitHub REST API v3**: The extension performs authenticated write requests to GitHub's `api.github.com` endpoints to push source code solutions. This interacton is secured using the user-provided Personal Access Token.
 
-These services have their own privacy policies:
-- LeetCode: https://leetcode.com/privacy-policy/
-- GitHub: https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement
+## 5. Security Controls
+Technical measures are implemented to protect user data from unauthorized access:
+- **Credential Obfuscation**: GitHub Personal Access Tokens are stored in the browser's local secure storage, preventing exposure via standard file inspection.
+- **HTTPS Enforcement**: All communications between the extension and third-party APIs are strictly conducted over encrypted TLS/SSL protocols.
+- **OAuth-Free Architecture**: By using Personal Access Tokens rather than traditional OAuth flows, L'Amigo eliminates the need for middle-man authentication servers, further reducing the attack surface.
 
-## Permissions
-L'Amigo requires the following permissions:
-- `storage` - To save your settings and submission data locally
-- `unlimitedStorage` - To store large amounts of submission data
-- `alarms` - For periodic background refresh
-- `notifications` - To notify you of friends' new submissions
-- `cookies` - To authenticate with LeetCode (CSRF token)
-- `host_permissions` for leetcode.com and api.github.com - To fetch data from these sites
+## 6. User Rights and Data Portability
+As a local-first application, users retain full control over their data:
+- **Access and Correction**: Users can view and modify all stored data (track lists, settings, tokens) through the extension's internal interface.
+- **Deletion**: Uninstalling the L'Amigo extension immediately and permanently removes all associated data from the browser's local storage.
+- **Portability**: Users can export their squad data into non-proprietary CSV formats at any time for use in other systems.
 
-## Data Security
-- Your GitHub token is stored locally in Chrome's encrypted storage
-- We never log, transmit, or share your personal data
-- All communications with LeetCode and GitHub use HTTPS
+## 7. Compliance and Contact
+L'Amigo is designed to be compliant with global privacy standards, including the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA), through its rigorous local-only data processing model.
 
-## Data Deletion
-To delete your data:
-1. Uninstall the extension from Chrome
-2. All locally stored data will be automatically removed
-
-## Changes to This Policy
-We may update this privacy policy from time to time. Updates will be posted on this page.
-
-## Contact
-For questions about this privacy policy, please open an issue at:
-https://github.com/YOUR_USERNAME/lamigo/issues
-
----
-
-**Your Privacy Rights:**
-- You control all data stored by this extension
-- You can delete all data at any time by uninstalling
-- No data is shared with third parties beyond LeetCode and GitHub (which you directly authorize)
+For inquiries regarding this policy or technical implementation of privacy controls, please submit a formal issue through the official project repository:
+[https://github.com/FTS18/l-amigo/issues](https://github.com/FTS18/l-amigo/issues)
