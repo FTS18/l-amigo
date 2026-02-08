@@ -1,6 +1,6 @@
 // API Configuration
 export const API_CONSTANTS = {
-  LEETCODE_GRAPHQL: 'https://leetcode.com/graphql',
+  LEETCODE_GRAPHQL: "https://leetcode.com/graphql",
   REQUEST_TIMEOUT: 10000, // 10 seconds
   MAX_RETRIES: 3,
   RETRY_DELAY_BASE: 1000, // 1 second for exponential backoff
@@ -36,6 +36,6 @@ export const UI_CONSTANTS = {
 
 // Notification Configuration
 export const NOTIFICATION_CONSTANTS = {
-  getIconPath: () => chrome.runtime.getURL('android-chrome-192x192.png'),
+  getIconPath: () => chrome.runtime.getURL("android-chrome-192x192.png"),
   PRIORITY: 1,
 } as const;

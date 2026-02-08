@@ -41,7 +41,7 @@ export class GitHubSyncService {
   private static async batchMarkSynced(ids: string[]): Promise<void> {
     if (ids.length === 0) return;
     const s = await this.getSyncedIds();
-    ids.forEach(id => s.add(id));
+    ids.forEach((id) => s.add(id));
     await chrome.storage.local.set({ [this.SYNCED_KEY]: Array.from(s) });
   }
 
@@ -92,13 +92,18 @@ export class GitHubSyncService {
     }
 
     // Cache for problem metadata (number + difficulty)
-    const metaCache = new Map<string, { num: number | null; difficulty: string }>();
+    const metaCache = new Map<
+      string,
+      { num: number | null; difficulty: string }
+    >();
 
     let syncedCount = 0;
     const toSync = submissions.filter((s) => !synced.has(s.id));
     const total = toSync.length;
     const newlySyncedIds: string[] = [];
-    console.log(`[GH] ${total} new submissions to sync (${synced.size} already synced)`);
+    console.log(
+      `[GH] ${total} new submissions to sync (${synced.size} already synced)`,
+    );
 
     for (const sub of toSync) {
       // O(1) try number lookup
@@ -110,7 +115,7 @@ export class GitHubSyncService {
       }
       const meta = metaCache.get(sub.titleSlug)!;
       const num = meta.num;
-      const difficulty = meta.difficulty;   // "Easy" | "Medium" | "Hard" | "Unknown"
+      const difficulty = meta.difficulty; // "Easy" | "Medium" | "Hard" | "Unknown"
       const problemFolder = num ? `${num}-${sub.titleSlug}` : sub.titleSlug;
 
       const ext = this.ext(sub.lang);
@@ -121,7 +126,10 @@ export class GitHubSyncService {
       const code = await LeetCodeService.fetchSubmissionCode(sub.id);
 
       // Throttle to avoid LeetCode WAF
-      await sleep(API_CONSTANTS.SUBMISSION_FETCH_DELAY_MS + Math.random() * API_CONSTANTS.SUBMISSION_FETCH_JITTER_MS);
+      await sleep(
+        API_CONSTANTS.SUBMISSION_FETCH_DELAY_MS +
+          Math.random() * API_CONSTANTS.SUBMISSION_FETCH_JITTER_MS,
+      );
 
       const content = this.buildFile(sub, tryIndex, num, difficulty, code);
 
@@ -181,11 +189,26 @@ export class GitHubSyncService {
 
   private static ext(lang: string): string {
     const m: Record<string, string> = {
-      cpp: ".cpp", "c++": ".cpp", python: ".py", python3: ".py",
-      java: ".java", javascript: ".js", typescript: ".ts", c: ".c",
-      csharp: ".cs", go: ".go", rust: ".rs", kotlin: ".kt",
-      swift: ".swift", mysql: ".sql", mssql: ".sql", oraclesql: ".sql",
-      ruby: ".rb", scala: ".scala", php: ".php", dart: ".dart",
+      cpp: ".cpp",
+      "c++": ".cpp",
+      python: ".py",
+      python3: ".py",
+      java: ".java",
+      javascript: ".js",
+      typescript: ".ts",
+      c: ".c",
+      csharp: ".cs",
+      go: ".go",
+      rust: ".rs",
+      kotlin: ".kt",
+      swift: ".swift",
+      mysql: ".sql",
+      mssql: ".sql",
+      oraclesql: ".sql",
+      ruby: ".rb",
+      scala: ".scala",
+      php: ".php",
+      dart: ".dart",
     };
     return m[lang.toLowerCase()] || ".txt";
   }
@@ -217,15 +240,25 @@ ${code || "// Code not available"}
 
   static async getGitHubUsername(token: string): Promise<string> {
     const r = await fetch(`${this.API}/user`, {
-      headers: { Authorization: `token ${token}`, Accept: "application/vnd.github.v3+json" },
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
     });
     if (!r.ok) throw new Error("Failed to get GitHub user");
     return (await r.json()).login;
   }
 
-  private static async repoExists(token: string, user: string, repo: string): Promise<boolean> {
+  private static async repoExists(
+    token: string,
+    user: string,
+    repo: string,
+  ): Promise<boolean> {
     const r = await fetch(`${this.API}/repos/${user}/${repo}`, {
-      headers: { Authorization: `token ${token}`, Accept: "application/vnd.github.v3+json" },
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
     });
     return r.ok;
   }
@@ -262,25 +295,36 @@ ${code || "// Code not available"}
     // Get SHA if file already exists
     let sha: string | undefined;
     try {
-      const g = await fetch(`${this.API}/repos/${user}/${repo}/contents/${path}`, {
-        headers: { Authorization: `token ${token}`, Accept: "application/vnd.github.v3+json" },
-      });
+      const g = await fetch(
+        `${this.API}/repos/${user}/${repo}/contents/${path}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: "application/vnd.github.v3+json",
+          },
+        },
+      );
       if (g.ok) sha = (await g.json()).sha;
-    } catch { /* file doesn't exist yet */ }
+    } catch {
+      /* file doesn't exist yet */
+    }
 
-    const r = await fetch(`${this.API}/repos/${user}/${repo}/contents/${path}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `token ${token}`,
-        Accept: "application/vnd.github.v3+json",
-        "Content-Type": "application/json",
+    const r = await fetch(
+      `${this.API}/repos/${user}/${repo}/contents/${path}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: "application/vnd.github.v3+json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: sha ? `Update ${path}` : `Add ${path}`,
+          content: btoa(unescape(encodeURIComponent(content))),
+          ...(sha && { sha }),
+        }),
       },
-      body: JSON.stringify({
-        message: sha ? `Update ${path}` : `Add ${path}`,
-        content: btoa(unescape(encodeURIComponent(content))),
-        ...(sha && { sha }),
-      }),
-    });
+    );
     if (!r.ok) {
       const e = await r.json();
       throw new Error(e.message || `Failed to update ${path}`);

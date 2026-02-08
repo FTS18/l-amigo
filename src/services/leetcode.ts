@@ -9,7 +9,7 @@ export interface AcceptedSubmission {
   id: string;
   title: string;
   titleSlug: string;
-  timestamp: number;   // ms
+  timestamp: number; // ms
   lang: string;
   statusDisplay: string;
 }
@@ -58,7 +58,10 @@ export class LeetCodeService {
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
         const ctl = new AbortController();
-        const timer = setTimeout(() => ctl.abort(), API_CONSTANTS.REQUEST_TIMEOUT);
+        const timer = setTimeout(
+          () => ctl.abort(),
+          API_CONSTANTS.REQUEST_TIMEOUT,
+        );
 
         const res = await fetch(this.GQL, {
           method: "POST",
@@ -72,11 +75,15 @@ export class LeetCodeService {
         if (res.status === 429 || res.status === 403) {
           if (attempt < retries) {
             const wait = API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt);
-            console.warn(`[LC] ${res.status} – retry in ${wait}ms (${attempt + 1}/${retries})`);
+            console.warn(
+              `[LC] ${res.status} – retry in ${wait}ms (${attempt + 1}/${retries})`,
+            );
             await this.sleep(wait);
             continue;
           }
-          throw new Error(`LeetCode ${res.status} after ${retries + 1} attempts`);
+          throw new Error(
+            `LeetCode ${res.status} after ${retries + 1} attempts`,
+          );
         }
 
         if (!res.ok) throw new Error(`LeetCode HTTP ${res.status}`);
@@ -159,14 +166,18 @@ export class LeetCodeService {
       }
 
       onProgress?.(all.length);
-      console.log(`[LC] Fetched ${all.length} new accepted (offset ${offset}, ${newInPage} new in page)`);
+      console.log(
+        `[LC] Fetched ${all.length} new accepted (offset ${offset}, ${newInPage} new in page)`,
+      );
 
       // Incremental: stop after 2 consecutive pages with zero new accepted
       if (knownIds) {
         if (newInPage === 0) {
           consecutiveKnownPages++;
           if (consecutiveKnownPages >= 2) {
-            console.log("[LC] Incremental: 2 all-known pages in a row → stopping early");
+            console.log(
+              "[LC] Incremental: 2 all-known pages in a row → stopping early",
+            );
             break;
           }
         } else {
@@ -178,7 +189,9 @@ export class LeetCodeService {
       offset += PAGE;
 
       // Throttle between pages
-      const jitter = Math.floor(Math.random() * API_CONSTANTS.SUBMISSION_FETCH_JITTER_MS);
+      const jitter = Math.floor(
+        Math.random() * API_CONSTANTS.SUBMISSION_FETCH_JITTER_MS,
+      );
       await this.sleep(API_CONSTANTS.SUBMISSION_FETCH_DELAY_MS + jitter);
     }
 
@@ -188,7 +201,9 @@ export class LeetCodeService {
 
   // ── Fetch code by submission ID ────────────────────────────────────
 
-  static async fetchSubmissionCode(submissionId: string): Promise<string | null> {
+  static async fetchSubmissionCode(
+    submissionId: string,
+  ): Promise<string | null> {
     try {
       const data = await this.gql<{
         submissionDetails: { code: string; lang: { name: string } } | null;
@@ -249,8 +264,10 @@ export class LeetCodeService {
 
     for (const s of acStats) {
       const d = s.difficulty.toLowerCase();
-      if (d === "all") { solved.total = s.count; totalAc = s.count; }
-      else if (d === "easy") solved.easy = s.count;
+      if (d === "all") {
+        solved.total = s.count;
+        totalAc = s.count;
+      } else if (d === "easy") solved.easy = s.count;
       else if (d === "medium") solved.medium = s.count;
       else if (d === "hard") solved.hard = s.count;
     }
@@ -267,7 +284,10 @@ export class LeetCodeService {
         user.tagProblemCounts.fundamental,
       ]) {
         for (const t of bucket || []) {
-          topicMap.set(t.tagName, (topicMap.get(t.tagName) || 0) + t.problemsSolved);
+          topicMap.set(
+            t.tagName,
+            (topicMap.get(t.tagName) || 0) + t.problemsSolved,
+          );
         }
       }
     }
@@ -319,7 +339,9 @@ export class LeetCodeService {
   }
 
   /** Quick fetch of recent AC submissions (max ~20) – used only for friend cards. */
-  private static async fetchRecentAc(username: string): Promise<RecentSubmission[]> {
+  private static async fetchRecentAc(
+    username: string,
+  ): Promise<RecentSubmission[]> {
     try {
       const data = await this.gql<{
         recentAcSubmissionList: Array<{

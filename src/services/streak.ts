@@ -31,7 +31,9 @@ export class StreakCalculator {
     for (const [tsStr, count] of Object.entries(calendar)) {
       if (count <= 0) continue;
       const d = new Date(parseInt(tsStr, 10) * 1000);
-      daySet.add(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime());
+      daySet.add(
+        new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(),
+      );
     }
 
     if (daySet.size === 0) {
@@ -91,7 +93,9 @@ export class StreakCalculator {
     const daySet = new Set<number>();
     for (const sub of submissions) {
       const d = new Date(sub.timestamp);
-      daySet.add(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime());
+      daySet.add(
+        new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(),
+      );
     }
 
     const uniqueDates = Array.from(daySet).sort((a, b) => b - a);

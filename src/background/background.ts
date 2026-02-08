@@ -38,7 +38,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 async function refreshAllFriends() {
   try {
     const friends = await StorageService.getFriends();
-    const { own_username: ownUsername } = await chrome.storage.local.get("own_username");
+    const { own_username: ownUsername } =
+      await chrome.storage.local.get("own_username");
 
     // Refresh own profile
     if (ownUsername) {
@@ -70,11 +71,14 @@ async function refreshAllFriends() {
 // ── Notifications ───────────────────────────────────────────────────
 
 async function checkForNewSubmissions(username: string, newProfile: any) {
-  const { notifications_enabled } = await chrome.storage.local.get("notifications_enabled");
+  const { notifications_enabled } = await chrome.storage.local.get(
+    "notifications_enabled",
+  );
   if (!(notifications_enabled ?? true)) return;
 
   const old = await StorageService.getProfile(username);
-  if (!old?.recentSubmissions?.length || !newProfile.recentSubmissions?.length) return;
+  if (!old?.recentSubmissions?.length || !newProfile.recentSubmissions?.length)
+    return;
 
   const oldTs = old.recentSubmissions[0]?.timestamp || 0;
   const newTs = newProfile.recentSubmissions[0]?.timestamp || 0;
@@ -120,7 +124,8 @@ async function handleFullSync(sendResponse?: (r: any) => void) {
     // Load previously stored submissions (if any)
     const stored: AcceptedSubmission[] =
       (await chrome.storage.local.get(ALL_SUBS_KEY))[ALL_SUBS_KEY] || [];
-    const knownIds = stored.length > 0 ? new Set(stored.map((s) => s.id)) : undefined;
+    const knownIds =
+      stored.length > 0 ? new Set(stored.map((s) => s.id)) : undefined;
 
     const isFirstSync = !knownIds;
     console.log(
@@ -142,36 +147,52 @@ async function handleFullSync(sendResponse?: (r: any) => void) {
 
     if (allSubs.length === 0) {
       await chrome.storage.local.set({ sync_status: "idle" });
-      sendResponse?.({ success: true, synced: 0, message: "No accepted submissions found." });
+      sendResponse?.({
+        success: true,
+        synced: 0,
+        message: "No accepted submissions found.",
+      });
       return;
     }
 
     await chrome.storage.local.set({ sync_status: "syncing" });
 
-    console.log(`[Sync] ${allSubs.length} total accepted (${newSubs.length} new). Starting GitHub sync…`);
-    const count = await GitHubSyncService.syncSubmissions(allSubs, (done, total) => {
-      chrome.storage.local.set({
-        sync_progress_done: done,
-        sync_progress_total: total,
-      });
-    });
+    console.log(
+      `[Sync] ${allSubs.length} total accepted (${newSubs.length} new). Starting GitHub sync…`,
+    );
+    const count = await GitHubSyncService.syncSubmissions(
+      allSubs,
+      (done, total) => {
+        chrome.storage.local.set({
+          sync_progress_done: done,
+          sync_progress_total: total,
+        });
+      },
+    );
 
-    await chrome.storage.local.set({ sync_status: "idle", sync_resume_offset: 0 });
+    await chrome.storage.local.set({
+      sync_status: "idle",
+      sync_resume_offset: 0,
+    });
     console.log(`[Sync] Done – ${count} new submissions synced`);
 
     chrome.notifications.create({
       type: "basic",
       iconUrl: chrome.runtime.getURL("android-chrome-192x192.png"),
       title: "L'Amigo – Sync Complete",
-      message: count > 0
-        ? `Synced ${count} new submission${count > 1 ? "s" : ""} to GitHub!`
-        : "Everything is up to date.",
+      message:
+        count > 0
+          ? `Synced ${count} new submission${count > 1 ? "s" : ""} to GitHub!`
+          : "Everything is up to date.",
     });
 
     sendResponse?.({ success: true, synced: count });
   } catch (err: any) {
     console.error("[Sync] Error:", err);
-    await chrome.storage.local.set({ sync_status: "error", sync_error: err.message });
+    await chrome.storage.local.set({
+      sync_status: "error",
+      sync_error: err.message,
+    });
     sendResponse?.({ success: false, error: err.message });
   } finally {
     syncInProgress = false;
@@ -235,9 +256,15 @@ async function handleIncrementalSync() {
     await chrome.storage.local.set({ sync_status: "syncing" });
     console.log(`[RT] ${newSubs.length} new – syncing to GitHub…`);
 
-    const count = await GitHubSyncService.syncSubmissions(merged, (done, total) => {
-      chrome.storage.local.set({ sync_progress_done: done, sync_progress_total: total });
-    });
+    const count = await GitHubSyncService.syncSubmissions(
+      merged,
+      (done, total) => {
+        chrome.storage.local.set({
+          sync_progress_done: done,
+          sync_progress_total: total,
+        });
+      },
+    );
 
     await chrome.storage.local.set({ sync_status: "idle" });
 
@@ -252,7 +279,10 @@ async function handleIncrementalSync() {
     console.log(`[RT] Incremental done – ${count} pushed`);
   } catch (err: any) {
     console.error("[RT] Incremental sync failed:", err);
-    await chrome.storage.local.set({ sync_status: "error", sync_error: err.message });
+    await chrome.storage.local.set({
+      sync_status: "error",
+      sync_error: err.message,
+    });
   } finally {
     syncInProgress = false;
   }
@@ -283,7 +313,9 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       });
       sendResponse({ success: true });
     } else {
-      chrome.alarms.clear("refreshFriends", (ok) => sendResponse({ success: ok }));
+      chrome.alarms.clear("refreshFriends", (ok) =>
+        sendResponse({ success: ok }),
+      );
     }
     return true;
   }

@@ -70,8 +70,11 @@ export class RecommendationService {
     );
 
     const recommendations = results
-      .filter((r): r is PromiseFulfilledResult<ProblemRecommendation | null> => r.status === 'fulfilled')
-      .map(r => r.value)
+      .filter(
+        (r): r is PromiseFulfilledResult<ProblemRecommendation | null> =>
+          r.status === "fulfilled",
+      )
+      .map((r) => r.value)
       .filter((v): v is ProblemRecommendation => v !== null);
 
     return recommendations;

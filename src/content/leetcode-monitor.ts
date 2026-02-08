@@ -12,14 +12,14 @@ class LeetCodeMonitor {
     submitButton: '[data-e2e-locator="console-submit-button"]',
     submitButtonFallback: 'button[data-cy="submit-code-btn"]',
     submissionResult: '[data-e2e-locator="submission-result"]',
-    submissionResultFallback: '.result-state',
+    submissionResultFallback: ".result-state",
     problemTitle: '[data-cy="question-title"]',
     problemTitleFallback: 'a[href*="/problems/"] span.text-title',
   };
 
   private isMonitoring = false;
   private lastSubmissionTime = 0;
-  private urlBeforeSubmit = '';
+  private urlBeforeSubmit = "";
 
   constructor() {
     this.init();
@@ -29,11 +29,14 @@ class LeetCodeMonitor {
     // Only activate on problem pages
     if (!window.location.pathname.includes("/problems/")) return;
 
-    console.log("[L'Amigo] Monitoring submissions on", window.location.pathname);
+    console.log(
+      "[L'Amigo] Monitoring submissions on",
+      window.location.pathname,
+    );
     try {
       await this.waitForElement(
-        LeetCodeMonitor.SELECTORS.submitButton, 
-        LeetCodeMonitor.SELECTORS.submitButtonFallback
+        LeetCodeMonitor.SELECTORS.submitButton,
+        LeetCodeMonitor.SELECTORS.submitButtonFallback,
       );
       this.setupSubmitListener();
       this.setupUrlChangeDetection();
@@ -43,8 +46,9 @@ class LeetCodeMonitor {
   }
 
   private setupSubmitListener() {
-    const btn = document.querySelector(LeetCodeMonitor.SELECTORS.submitButton) ||
-                 document.querySelector(LeetCodeMonitor.SELECTORS.submitButtonFallback);
+    const btn =
+      document.querySelector(LeetCodeMonitor.SELECTORS.submitButton) ||
+      document.querySelector(LeetCodeMonitor.SELECTORS.submitButtonFallback);
     if (!btn) return;
     btn.addEventListener("click", () => this.handleSubmit());
   }
@@ -55,8 +59,11 @@ class LeetCodeMonitor {
     new MutationObserver(() => {
       const currentUrl = window.location.href;
       if (currentUrl !== lastUrl) {
-        if (this.urlBeforeSubmit && currentUrl.includes('/submissions/') && 
-            !lastUrl.includes('/submissions/')) {
+        if (
+          this.urlBeforeSubmit &&
+          currentUrl.includes("/submissions/") &&
+          !lastUrl.includes("/submissions/")
+        ) {
           // Just navigated to submissions page - likely after a submit
           setTimeout(() => this.checkSubmissionPage(), 1000);
         }
@@ -68,7 +75,9 @@ class LeetCodeMonitor {
   private async checkSubmissionPage() {
     // Check if the most recent submission on the page is "Accepted"
     try {
-      const statusElements = document.querySelectorAll('[data-e2e-locator="submission-item-status"]');
+      const statusElements = document.querySelectorAll(
+        '[data-e2e-locator="submission-item-status"]',
+      );
       if (statusElements.length > 0) {
         const firstStatus = statusElements[0].textContent?.trim();
         if (firstStatus === "Accepted") {
@@ -89,10 +98,13 @@ class LeetCodeMonitor {
       await this.waitForElement(
         LeetCodeMonitor.SELECTORS.submissionResult,
         LeetCodeMonitor.SELECTORS.submissionResultFallback,
-        30000
+        30000,
       );
-      const result = document.querySelector(LeetCodeMonitor.SELECTORS.submissionResult) ||
-                     document.querySelector(LeetCodeMonitor.SELECTORS.submissionResultFallback);
+      const result =
+        document.querySelector(LeetCodeMonitor.SELECTORS.submissionResult) ||
+        document.querySelector(
+          LeetCodeMonitor.SELECTORS.submissionResultFallback,
+        );
       const text = result?.textContent?.trim();
 
       if (text === "Accepted" || text?.toLowerCase().includes("accepted")) {
@@ -102,7 +114,7 @@ class LeetCodeMonitor {
       console.error("[L'Amigo] Monitor error:", err);
     } finally {
       this.isMonitoring = false;
-      this.urlBeforeSubmit = '';
+      this.urlBeforeSubmit = "";
     }
   }
 
@@ -115,20 +127,29 @@ class LeetCodeMonitor {
       document.querySelector(LeetCodeMonitor.SELECTORS.problemTitle) ||
       document.querySelector(LeetCodeMonitor.SELECTORS.problemTitleFallback)
     )?.textContent?.trim();
-    
+
     console.log("[L'Amigo] Accepted!", title);
 
-    chrome.runtime.sendMessage({
-      type: "newSubmissionDetected",
-      data: { title, timestamp: now, url: window.location.href },
-    }).catch(() => { /* extension context invalidated */ });
+    chrome.runtime
+      .sendMessage({
+        type: "newSubmissionDetected",
+        data: { title, timestamp: now, url: window.location.href },
+      })
+      .catch(() => {
+        /* extension context invalidated */
+      });
   }
 
-  private waitForElement(selector: string, fallbackSelector?: string, timeout = 10000): Promise<Element> {
+  private waitForElement(
+    selector: string,
+    fallbackSelector?: string,
+    timeout = 10000,
+  ): Promise<Element> {
     return new Promise((resolve, reject) => {
       const check = () => {
-        const el = document.querySelector(selector) || 
-                   (fallbackSelector ? document.querySelector(fallbackSelector) : null);
+        const el =
+          document.querySelector(selector) ||
+          (fallbackSelector ? document.querySelector(fallbackSelector) : null);
         if (el) return el;
         return null;
       };
