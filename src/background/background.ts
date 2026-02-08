@@ -298,10 +298,45 @@ async function handleNewSubmission() {
 }
 
 // ── Message router ──────────────────────────────────────────────────
+async function handleAddFriendMessage(username: string) {
+  try {
+    await StorageService.addFriend(username);
+    const profile = await LeetCodeService.fetchUserProfile(username);
+    await StorageService.saveProfile(profile);
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.action === "refreshNow") {
     refreshAllFriends().then(() => sendResponse({ success: true }));
+    return true;
+  }
+
+  if (message.action === "addFriend") {
+    handleAddFriendMessage(message.username).then(sendResponse);
+    return true;
+  }
+
+  if (message.action === "fetchProfile") {
+    LeetCodeService.fetchUserProfile(message.username)
+      .then(async (profile) => {
+        await StorageService.saveProfile(profile);
+        sendResponse({ success: true, profile });
+      })
+      .catch((err) => sendResponse({ success: false, error: err.message }));
+    return true;
+  }
+
+  if (message.action === "getOwnProfile") {
+    (async () => {
+      const { own_username } = await chrome.storage.local.get("own_username");
+      if (!own_username) return { success: false, error: "Not configured" };
+      const profile = await StorageService.getProfile(own_username);
+      return { success: true, profile, username: own_username };
+    })().then(sendResponse);
     return true;
   }
 

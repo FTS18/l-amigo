@@ -1,11 +1,5 @@
-/**
- * LeetCode Content Script – Real-time Submission Monitor
- *
- * Watches for "Accepted" results on problem pages and notifies
- * the background service-worker to trigger an immediate sync.
- *
- * NO DOM scraping – all data fetching is done via GraphQL in the background.
- */
+import { ProfilePageManager } from "./profile-manager";
+import "./content.css";
 
 class LeetCodeMonitor {
   private static readonly SELECTORS = {
@@ -176,7 +170,11 @@ class LeetCodeMonitor {
 
 // Kick off
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => new LeetCodeMonitor());
+  document.addEventListener("DOMContentLoaded", () => {
+    new LeetCodeMonitor();
+    new ProfilePageManager();
+  });
 } else {
   new LeetCodeMonitor();
+  new ProfilePageManager();
 }

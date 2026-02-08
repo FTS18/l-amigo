@@ -28,8 +28,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://leetcode.com/*"],
-      "js": ["content.js"],
+      "matches": [
+        "https://leetcode.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle"
     }
   ],
