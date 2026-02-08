@@ -95,8 +95,13 @@ body.dark {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .header {
@@ -135,6 +140,7 @@ body.dark {
   width: auto;
   object-fit: contain;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .header-search-add {
@@ -850,8 +856,7 @@ body.dark {
   margin-bottom: 16px;
 }
 
-.app.dark .recommendations-section {
-}
+
 
 .recommendations-toggle {
   width: 100%;
@@ -1018,7 +1023,8 @@ body.dark {
   background: #1f1f1f;
 }
 
-.github-setup, .github-actions {
+.github-setup,
+.github-actions {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1243,12 +1249,12 @@ body.dark {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.toggle-switch input:checked+.toggle-slider {
   background-color: #009a3d;
   border-color: #007a2d;
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
+.toggle-switch input:checked+.toggle-slider:before {
   transform: translateX(20px);
 }
 
@@ -1257,7 +1263,7 @@ body.dark {
   border-color: #444;
 }
 
-.app.dark .toggle-switch input:checked + .toggle-slider {
+.app.dark .toggle-switch input:checked+.toggle-slider {
   background-color: #009a3d;
   border-color: #00b849;
 }
@@ -3214,6 +3220,7 @@ body.dark {
     transform: translateX(400px);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -3352,6 +3359,7 @@ body.dark {
 .app.dark .example-hint small {
   color: #888;
 }
+
 /* Error Boundary */
 .error-boundary {
   display: flex;
@@ -3416,6 +3424,7 @@ body.dark {
   background: #4a4a4a;
   transform: scale(1.05);
 }
+
 /* Skeleton Loaders */
 .skeleton-container {
   padding: 16px;
@@ -3432,8 +3441,15 @@ body.dark {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .skeleton-avatar {
@@ -3446,8 +3462,13 @@ body.dark {
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .skeleton-content {
@@ -3714,11 +3735,11 @@ body.dark {
   border-radius: 50%;
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.toggle-switch input:checked+.toggle-slider {
   background-color: #009a3d;
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
+.toggle-switch input:checked+.toggle-slider:before {
   transform: translateX(24px);
 }
 
@@ -3861,8 +3882,13 @@ body.dark {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Add friend button loading state */
@@ -3928,9 +3954,17 @@ body.dark {
 }
 
 @keyframes indeterminate-slide {
-  0%   { transform: translateX(-100%); }
-  50%  { transform: translateX(150%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(150%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .sync-progress-text {

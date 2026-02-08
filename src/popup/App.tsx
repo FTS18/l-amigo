@@ -477,7 +477,9 @@ export const App: React.FC = () => {
       </div>
 
       <header className="header header-bottom">
-        <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" />
+        <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" />
+        </a>
         <div className="header-search-add">
           <input
             type="text"

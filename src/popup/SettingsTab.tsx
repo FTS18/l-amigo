@@ -611,6 +611,51 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
           <p><strong>L'Amigo</strong> - LeetCode Friends Tracker</p>
           <p>Version {chrome.runtime.getManifest().version}</p>
           <p className="settings-hint">Track your friends' progress and stay motivated!</p>
+          
+          {isConfigured && lastSyncTime && (
+            <p className="settings-hint" style={{ color: '#FFA116', marginTop: '10px' }}>
+              ✓ Dynamically synced history to GitHub
+            </p>
+          )}
+
+          <div className="about-links" style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <a 
+              href="https://lamigo.netlify.app" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ color: '#FFA116', textDecoration: 'none', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              Official Website
+            </a>
+            <a 
+              href="https://github.com/FTS18/l-amigo" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ color: '#FFA116', textDecoration: 'none', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              Star L'Amigo on GitHub
+            </a>
+            <a 
+              href="https://github.com/FTS18/l-amigo/issues" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ color: '#FFA116', textDecoration: 'none', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1 6h2v8h-2v-8zm1 12.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/></svg>
+              Report an Issue / Suggest Feature
+            </a>
+            <a 
+              href="https://github.com/FTS18/l-amigo/blob/main/LICENSE" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ color: '#FFA116', textDecoration: 'none', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0 2c2.67 0 8 1.34 8 4v2H4v-2c0-2.66 5.33-4 8-4z"/></svg>
+              Open Source (MIT License)
+            </a>
+          </div>
         </div>
       </section>
     </div>

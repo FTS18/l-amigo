@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
       navToggle.classList.toggle('active');
+      document.body.classList.toggle('menu-open');
     });
 
     // Close menu on link click
@@ -19,7 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
         navToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
       });
+    });
+
+    // Close menu when clicking overlay
+    document.body.addEventListener('click', (e) => {
+      if (document.body.classList.contains('menu-open') &&
+        !navLinks.contains(e.target) &&
+        !navToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+        navToggle.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
     });
   }
 
@@ -93,6 +106,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.5 });
 
   statNumbers.forEach(stat => statsObserver.observe(stat));
+
+  // FAQ Accordion
+  const faqQuestions = document.querySelectorAll('.faq-question');
+
+  faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+      const parent = question.parentElement;
+      const isOpen = parent.classList.contains('active');
+
+
+
+      // Toggle current
+      if (!isOpen) {
+        parent.classList.add('active');
+        const answer = parent.querySelector('.faq-answer');
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      } else {
+        parent.classList.remove('active');
+        const answer = parent.querySelector('.faq-answer');
+        answer.style.maxHeight = null;
+      }
+    });
+  });
 });
 
 // Reduced motion support

@@ -11,280 +11,262 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
+    rel="stylesheet">
 </head>
 
-<body>
+<body class="home-page">
   <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-container">
+    <div class="container nav-container">
       <a href="index.html" class="nav-logo">
-        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
-        <span class="logo-text">L'AMIGO</span>
+        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24" style="margin-right: 8px;">
+        L'AMIGO
       </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
       <ul class="nav-links">
+        <!-- Main Navigation -->
         <li><a href="#features">Features</a></li>
         <li><a href="#how-it-works">How It Works</a></li>
         <li><a href="docs.html">Docs</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="#" class="btn-primary">ADD TO CHROME</a></li>
+
+        <!-- Mobile: Detailed Links -->
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Documentation</li>
+        <li class="mobile-only"><a href="docs.html#dashboard">Dashboard & Friends</a></li>
+        <li class="mobile-only"><a href="docs.html#recommendations">Problem Recommendations</a></li>
+        <li class="mobile-only"><a href="docs.html#analytics">Deep Analytics</a></li>
+        <li class="mobile-only"><a href="docs.html#compare">Head-to-Head Comparison</a></li>
+        <li class="mobile-only"><a href="docs.html#sync">GitHub Sync Setup</a></li>
+        <li class="mobile-only"><a href="docs.html#troubleshooting">Troubleshooting & FAQ</a></li>
+
+        <!-- Mobile: Resources -->
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Resources</li>
+        <li class="mobile-only"><a href="#faq">FAQ</a></li>
+        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo" target="_blank">GitHub Repository</a></li>
+        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo/issues" target="_blank">Report an Issue</a>
+        </li>
+
+        <!-- Mobile: Legal & About -->
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Legal & About</li>
+        <li class="mobile-only"><a href="privacy.html">Privacy Policy</a></li>
+        <li class="mobile-only"><a href="terms.html">Terms of Service</a></li>
+        <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
+
+        <!-- Mobile: CTA Button -->
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only">
+          <a href="https://github.com/FTS18/l-amigo" target="_blank" class="btn-cta">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
+            </svg>
+            Add to Chrome
+          </a>
+        </li>
       </ul>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          <span>FREE & OPEN SOURCE</span>
+  <section class="hero"
+    style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('bg1.jpg'); background-size: cover; background-position: center;">
+    <div class="container">
+      <div class="hero-layout">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Track Your Friends' <br>
+            <span>LeetCode Journey</span>
+          </h1>
+          <p class="hero-desc">
+            Monitor your coding squad's progress. Compare stats, compete on streaks, and auto-sync your solutions to
+            GitHub.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-hero primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              INSTALL NOW
+            </a>
+            <a href="docs.html" class="btn-hero secondary">
+              READ DOCS
+            </a>
+          </div>
+
         </div>
-        <h1 class="hero-title">
-          Track Your Friends' <span class="gradient-text">LeetCode Journey</span>
-        </h1>
-        <p class="hero-subtitle">
-          Monitor your coding squad's progress. Compare stats, compete on streaks, and auto-sync your solutions to
-          GitHub.
-        </p>
-        <div class="hero-cta">
-          <a href="#" class="btn-primary btn-large">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-            </svg>
-            INSTALL NOW
-          </a>
-          <a href="docs.html" class="btn-secondary btn-large">
-            READ DOCS
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-number">50+</div>
-            <div class="stat-label">Friends</div>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <div class="stat-number">365</div>
-            <div class="stat-label">Days History</div>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <div class="stat-number">∞</div>
-            <div class="stat-label">Synced</div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="mockup-window">
-          <div class="mockup-header">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="mockup-content">
-            <div class="mockup-card">
-              <div class="card-header">
-                <div class="avatar">JD</div>
-                <div class="card-info">
-                  <div class="card-name">john_doe</div>
-                  <div class="card-meta">847 solved</div>
-                </div>
-                <div class="card-badge">🔥15</div>
-              </div>
-              <div class="card-stats">
-                <div class="stat-pill easy">342 E</div>
-                <div class="stat-pill medium">421 M</div>
-                <div class="stat-pill hard">84 H</div>
-              </div>
-              <div class="card-chart">
-                <div class="chart-bar" style="height: 40%"></div>
-                <div class="chart-bar" style="height: 65%"></div>
-                <div class="chart-bar" style="height: 45%"></div>
-                <div class="chart-bar" style="height: 80%"></div>
-                <div class="chart-bar" style="height: 55%"></div>
-                <div class="chart-bar" style="height: 90%"></div>
-                <div class="chart-bar" style="height: 70%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+
       </div>
     </div>
   </section>
 
   <!-- Features Section -->
-  <section id="features" class="features">
+  <section id="features" class="features"
+    style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('bg2.jpg'); background-size: cover; background-position: center; padding: 140px 0;">
     <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Features</h2>
-        <p class="section-subtitle">Everything you need to track and compete with your coding squad</p>
+      <div class="section-head">
+        <h2>System Features</h2>
+        <p>Everything you need to track and compete with your coding squad.</p>
       </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
+      <div class="grid-3">
+        <div class="feat-card">
+          <div class="icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
           </div>
-          <h3 class="feature-title">50 FRIENDS</h3>
-          <p class="feature-description">Track up to 50 friends. See streaks, stats, and velocity at a glance.</p>
+          <h3>Track 50 Friends</h3>
+          <p>Monitor up to 50 friends with live stats, streaks, and velocity metrics all in one place.</p>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
+        <div class="feat-card">
+          <div class="icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
             </svg>
           </div>
-          <h3 class="feature-title">COMPARE</h3>
-          <p class="feature-description">Side-by-side comparison. Charts for difficulty, topics, languages.</p>
+          <h3>Values Comparison</h3>
+          <p>Side-by-side comparison with precision charts for difficulty, topics, and languages.</p>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
+        <div class="feat-card">
+          <div class="icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path
                 d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
             </svg>
           </div>
-          <h3 class="feature-title">GITHUB SYNC</h3>
-          <p class="feature-description">Auto-push accepted solutions to GitHub. Organized by difficulty.</p>
+          <h3>Internal GitHub Sync</h3>
+          <p>Auto-push your accepted solutions to GitHub, organized by difficulty level.</p>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
+        <div class="feat-card">
+          <div class="icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
           </div>
-          <h3 class="feature-title">AUTO DETECT</h3>
-          <p class="feature-description">Real-time "Accepted" detection. Syncs instantly to GitHub.</p>
+          <h3>Auto Detection</h3>
+          <p>Real-time "Accepted" verdict detection. Solutions sync instantly to your repo.</p>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
+        <div class="feat-card">
+          <div class="icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="0" ry="0" />
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
               <line x1="16" y1="2" x2="16" y2="6" />
               <line x1="8" y1="2" x2="8" y2="6" />
               <line x1="3" y1="10" x2="21" y2="10" />
             </svg>
           </div>
-          <h3 class="feature-title">365 DAYS</h3>
-          <p class="feature-description">Full year of submission history. Accurate streaks and trends.</p>
+          <h3>365 Days History</h3>
+          <p>Full year of submission history. Accurate streaks, trends, and activity insights.</p>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
+        <div class="feat-card">
+          <div class="icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polygon
                 points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
           </div>
-          <h3 class="feature-title">DISCOVER</h3>
-          <p class="feature-description">Find problems your friends solved that you haven't.</p>
+          <h3>Discover Problems</h3>
+          <p>Find problems your friends solved that you haven't. Never miss a good challenge.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- How It Works -->
-  <section id="how-it-works" class="how-it-works">
+  <section id="how-it-works" class="features"
+    style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('bg3.jpg'); background-size: cover; background-position: center; padding: 140px 0;">
     <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Three steps to get started</p>
+      <div class="section-head">
+        <h2>Quick Start</h2>
+        <p>Get up and running in less than 2 minutes.</p>
       </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">01</div>
-          <div class="step-content">
-            <h3 class="step-title">INSTALL</h3>
-            <p class="step-description">Add from Chrome Web Store. Enter your LeetCode username. Optionally add GitHub
-              token.</p>
-          </div>
-          <div class="step-visual">
-            <div class="visual-box">
-              <div class="visual-line"></div>
-              <div class="visual-line short"></div>
-              <div class="visual-line"></div>
-            </div>
-          </div>
+      <div class="grid-3">
+        <div class="feat-card">
+          <h3 style="color: var(--primary); font-size: 32px; margin-bottom: 16px;">01</h3>
+          <h3>Install</h3>
+          <p>Add from Chrome Web Store. Enter your LeetCode username to get started.</p>
         </div>
-
-        <div class="step step-reverse">
-          <div class="step-number">02</div>
-          <div class="step-content">
-            <h3 class="step-title">ADD FRIENDS</h3>
-            <p class="step-description">Enter LeetCode usernames. Profiles load instantly. Track up to 50 friends.</p>
-          </div>
-          <div class="step-visual">
-            <div class="visual-box">
-              <div class="visual-circle"></div>
-              <div class="visual-circle"></div>
-              <div class="visual-circle"></div>
-            </div>
-          </div>
+        <div class="feat-card">
+          <h3 style="color: var(--primary); font-size: 32px; margin-bottom: 16px;">02</h3>
+          <h3>Add Friends</h3>
+          <p>Enter LeetCode usernames. Profiles load instantly with full stats.</p>
         </div>
-
-        <div class="step">
-          <div class="step-number">03</div>
-          <div class="step-content">
-            <h3 class="step-title">COMPETE</h3>
-            <p class="step-description">View friend cards with stats. Compare head-to-head with interactive charts.</p>
-          </div>
-          <div class="step-visual">
-            <div class="visual-box">
-              <div class="visual-chart">
-                <div class="bar" style="height: 60%"></div>
-                <div class="bar" style="height: 80%"></div>
-                <div class="bar" style="height: 45%"></div>
-                <div class="bar" style="height: 95%"></div>
-              </div>
-            </div>
-          </div>
+        <div class="feat-card">
+          <h3 style="color: var(--primary); font-size: 32px; margin-bottom: 16px;">03</h3>
+          <h3>Compete</h3>
+          <p>View cards, compare stats, track streaks. Stay motivated with your squad.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Screenshots -->
-      <div class="screenshots-section">
-        <h3 class="section-title">Screenshots</h3>
-        <div class="screenshots-grid">
-          <div class="screenshot-item">
-            <img src="screenshots/1.png" alt="Friends List" loading="lazy">
-            <p class="screenshot-caption">FRIENDS LIST</p>
-          </div>
-          <div class="screenshot-item">
-            <img src="screenshots/2.png" alt="Compare Tab" loading="lazy">
-            <p class="screenshot-caption">COMPARE</p>
-          </div>
-          <div class="screenshot-item">
-            <img src="screenshots/3.png" alt="Settings" loading="lazy">
-            <p class="screenshot-caption">SETTINGS</p>
-          </div>
-          <div class="screenshot-item">
-            <img src="screenshots/5.png" alt="Charts" loading="lazy">
-            <p class="screenshot-caption">DIFFICULTY</p>
-          </div>
-          <div class="screenshot-item">
-            <img src="screenshots/6.png" alt="Topics" loading="lazy">
-            <p class="screenshot-caption">TOPICS</p>
-          </div>
-        </div>
+  <!-- FAQ Section (Premium Cards) -->
+  <section id="faq" class="features" style="background: #000; padding: 120px 0;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Frequently Asked Questions</h2>
+        <p>Common questions about L'Amigo and how it works.</p>
       </div>
 
-      <div class="cta-banner">
-        <h3>Ready to start tracking?</h3>
-        <a href="#" class="btn-primary btn-large">INSTALL NOW</a>
+      <div class="faq-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <div class="premium-card">
+          <h4>Is L'Amigo free?</h4>
+          <p>100% free and open-source. No premium features, ads, or tracking. Built by developers for developers.</p>
+        </div>
+
+        <div class="premium-card">
+          <h4>Data Privacy</h4>
+          <p>Local storage only. Nothing is sent to third-party servers except direct API calls to platform providers.
+          </p>
+        </div>
+
+        <div class="premium-card">
+          <h4>Friend Tracking</h4>
+          <p>Track up to 50 friends simultaneously with real-time updates and performance optimization.</p>
+        </div>
+
+        <div class="premium-card">
+          <h4>Background Sync</h4>
+          <p>Maintain an up-to-date board with auto-refresh intervals customizable in your settings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contribute Section -->
+  <section id="contribute" class="features" style="background: #050505; padding: 120px 0;">
+    <div class="container text-center" style="text-align: center;">
+      <div class="section-head" style="margin-left: auto; margin-right: auto; text-align: center;">
+        <h2>Contribute & Support</h2>
+        <p>L'Amigo is community-driven. Help us grow the project!</p>
+      </div>
+
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px;">
+        <a href="https://github.com/FTS18/l-amigo" target="_blank" class="premium-card"
+          style="text-decoration: none; text-align: left;">
+          <h4>Star on GitHub</h4>
+          <p>Support the project with a star. Helps more developers find and use L'Amigo.</p>
+        </a>
+        <a href="https://github.com/FTS18/l-amigo/issues" target="_blank" class="premium-card"
+          style="text-decoration: none; text-align: left;">
+          <h4>Report Issue</h4>
+          <p>Encountered a bug or have a suggestion? Open an issue on GitHub to help us improve.</p>
+        </a>
       </div>
     </div>
   </section>
@@ -294,59 +276,73 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <div class="footer-logo">
-            <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24">
-            <span>L'AMIGO</span>
-          </div>
-          <p class="footer-tagline">Track friends. Compare stats. Stay motivated.</p>
-          <div class="footer-social">
-            <a href="#" aria-label="GitHub">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <a href="#" class="footer-logo">L'AMIGO</a>
+          <p style="color: #666; font-size: 13px; max-width: 300px;">
+            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
-            <a href="#" aria-label="Twitter">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <a href="http://linkedin.com/in/ananaydubey" target="_blank" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+            <a href="https://instagram.com/ananay_dubey" target="_blank" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+            <a href="mailto:dubeyananay@gmail.com" target="_blank" aria-label="Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+            </a>
+            <a href="tel:+917719767324" target="_blank" aria-label="Phone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.27-.27.35-.66.24-1.01-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.33 3 3.24 3 7.5c0 6.62 5.38 12 12 12 4.26 0 4.17-.65 4.17-1.19v-2.93c0-.54-.45-.99-.99-.99z" />
               </svg>
             </a>
           </div>
         </div>
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>PRODUCT</h4>
-            <ul>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#how-it-works">How It Works</a></li>
-              <li><a href="docs.html">Documentation</a></li>
-              <li><a href="#">Chrome Store</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>RESOURCES</h4>
-            <ul>
-              <li><a href="docs.html#installation">Install Guide</a></li>
-              <li><a href="docs.html#github-sync">GitHub Setup</a></li>
-              <li><a href="docs.html#faq">FAQ</a></li>
-              <li><a href="#">Changelog</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>LEGAL</h4>
-            <ul>
-              <li><a href="privacy.html">Privacy</a></li>
-              <li><a href="terms.html">Terms</a></li>
-              <li><a href="privacy.html#data">Data Usage</a></li>
-              <li><a href="#">MIT License</a></li>
-            </ul>
-          </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="https://github.com/FTS18/l-amigo" target="_blank">Chrome Store</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html#getting-started">Install Guide</a></li>
+            <li><a href="docs.html#github-sync">GitHub Setup</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="https://github.com/FTS18/l-amigo/blob/main/LICENSE" target="_blank">License</a></li>
+          </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 L'Amigo. Open source under MIT License.</p>
-        <p>Not affiliated with LeetCode or GitHub.</p>
+      <div class="footer-btm">
+        <p>&copy; 2026 L'Amigo. Free & Open Source.</p>
       </div>
     </div>
   </footer>

@@ -1,309 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Service - L'Amigo</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    .legal-page {
-      padding: 140px 20px 80px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .legal-header {
-      margin-bottom: 40px;
-    }
-    .legal-header h1 {
-      font-size: 44px;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: var(--dark);
-    }
-    .legal-meta {
-      color: var(--gray);
-      font-size: 14px;
-    }
-    .legal-content h2 {
-      font-size: 28px;
-      font-weight: 700;
-      margin: 40px 0 16px;
-      color: var(--dark);
-    }
-    .legal-content h3 {
-      font-size: 20px;
-      font-weight: 600;
-      margin: 28px 0 12px;
-      color: var(--dark);
-    }
-    .legal-content p {
-      margin-bottom: 16px;
-      color: var(--gray);
-      line-height: 1.8;
-    }
-    .legal-content ul, .legal-content ol {
-      margin: 16px 0 16px 24px;
-      color: var(--gray);
-      line-height: 1.8;
-    }
-    .legal-content li {
-      margin-bottom: 8px;
-    }
-    .legal-content strong {
-      color: var(--dark);
-      font-weight: 600;
-    }
-    .highlight-box {
-      background: var(--gradient-soft);
-      border-left: 4px solid var(--primary);
-      padding: 20px 24px;
-      margin: 24px 0;
-      border-radius: 8px;
-    }
-    .highlight-box p {
-      margin-bottom: 0;
-      color: var(--dark);
-    }
-  </style>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
+    rel="stylesheet">
+
 </head>
-<body>
-  <!-- Navigation -->
+
+<body class="docs-body">
+  <!-- Navigation (Same as Home) -->
   <nav class="nav">
-    <div class="nav-container">
+    <div class="container nav-container">
       <a href="index.html" class="nav-logo">
-        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
-        <span class="logo-text">L'Amigo</span>
+        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24" style="margin-right: 8px;">
+        L'AMIGO
       </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
       <ul class="nav-links">
         <li><a href="index.html#features">Features</a></li>
         <li><a href="index.html#how-it-works">How It Works</a></li>
         <li><a href="docs.html">Docs</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="#" class="btn-primary">Add to Chrome</a></li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Documentation</li>
+        <li class="mobile-only"><a href="docs.html#dashboard">Dashboard & Friends</a></li>
+        <li class="mobile-only"><a href="docs.html#recommendations">Problem Recommendations</a></li>
+        <li class="mobile-only"><a href="docs.html#analytics">Deep Analytics</a></li>
+        <li class="mobile-only"><a href="docs.html#compare">Head-to-Head Comparison</a></li>
+        <li class="mobile-only"><a href="docs.html#sync">GitHub Sync Setup</a></li>
+        <li class="mobile-only"><a href="docs.html#troubleshooting">Troubleshooting & FAQ</a></li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Resources</li>
+        <li class="mobile-only"><a href="index.html#faq">FAQ</a></li>
+        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo" target="_blank">GitHub Repository</a></li>
+        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo/issues" target="_blank">Report an Issue</a>
+        </li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Legal & About</li>
+        <li class="mobile-only"><a href="privacy.html">Privacy Policy</a></li>
+        <li class="mobile-only"><a href="terms.html" style="color: var(--white);">Terms of Service</a></li>
+        <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only">
+          <a href="https://github.com/FTS18/l-amigo" target="_blank" class="btn-cta">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
+            </svg>
+            Add to Chrome
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
 
-  <!-- Terms of Service Content -->
+  <!-- Terms Content -->
   <div class="legal-page">
-    <div class="legal-header">
-      <h1>Terms of Service</h1>
-      <p class="legal-meta">Last Updated: February 8, 2026</p>
-    </div>
+    <div class="container">
+      <div class="legal-content">
+        <h1>Terms of Service</h1>
+        <p style="text-align: center; margin-bottom: 40px; color: var(--text-muted);">Last Updated: February 8, 2026</p>
 
-    <div class="legal-content">
-      <div class="highlight-box">
-        <p><strong>Summary:</strong> L'Amigo is free, open-source software provided "as is." Use it responsibly, respect third-party terms, and don't hold us liable for issues. You're responsible for your GitHub token security.</p>
+        <p>Hey again! 👋</p>
+        <p>Since I need to have a Terms page, let's keep this simple and human-readable. By using L'Amigo, here is what
+          you are agreeing to.</p>
+
+        <h2>1. It's Free & Open Source</h2>
+        <p>L'Amigo is a hobby project. It's free to use, and the code is open source on GitHub. You can inspect it, fork
+          it, or even contribute to it. Because it's free, there are <strong>no warranties</strong>. If it breaks, I'll
+          try to fix it, but I can't promise anything.</p>
+
+        <h2>2. Use Responsibly</h2>
+        <p>This extension hits LeetCode's public API. Please don't use it to spam requests or do anything sketchy. If
+          you get rate-limited by LeetCode, that's on you (though the extension tries its best to prevent this with
+          caching).</p>
+
+        <h2>3. Your GitHub Token</h2>
+        <p>If you use the Sync feature, you are responsible for your storage of your GitHub Personal Access Token. I
+          don't see it, I don't store it on my servers (because I don't have any). It lives on your computer. Keep it
+          safe.</p>
+
+        <h2>4. Disclaimer</h2>
+        <p>I am not affiliated with LeetCode or GitHub. This is a third-party tool made by a fan of both platforms. Use
+          it at your own risk.</p>
+
+        <h2>5. Don't Be Evil</h2>
+        <p>Basically: be nice, code hard, and don't use this tool to harass people or break things. Simple as that.</p>
+
+        <p style="margin-top: 40px; text-align: center;">- Ananay</p>
       </div>
-
-      <h2>1. Acceptance of Terms</h2>
-      <p>By installing, accessing, or using L'Amigo (the "Extension"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Extension.</p>
-      <p>These Terms constitute a legally binding agreement between you ("User," "you," or "your") and the L'Amigo project ("we," "us," or "our").</p>
-
-      <h2>2. Description of Service</h2>
-      <p>L'Amigo is a Chrome browser extension that provides:</p>
-      <ul>
-        <li>Tracking of LeetCode user profiles and progress</li>
-        <li>Comparison of statistics between multiple users</li>
-        <li>Automatic synchronization of accepted submissions to GitHub repositories</li>
-        <li>Real-time detection of accepted submissions on leetcode.com</li>
-        <li>Local caching and data management</li>
-      </ul>
-      <p>The Extension is provided <strong>free of charge</strong> and is <strong>open source</strong> under the MIT License.</p>
-
-      <h2>3. User Responsibilities</h2>
-
-      <h3>3.1 Accurate Information</h3>
-      <p>You are responsible for providing accurate LeetCode usernames, GitHub credentials, and other configuration details. We are not liable for issues caused by incorrect information.</p>
-
-      <h3>3.2 API Compliance</h3>
-      <p>You agree to use the Extension in compliance with:</p>
-      <ul>
-        <li><strong>LeetCode's Terms of Service:</strong> <a href="https://leetcode.com/terms/" target="_blank" rel="noopener">leetcode.com/terms</a></li>
-        <li><strong>GitHub's Terms of Service:</strong> <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" target="_blank" rel="noopener">GitHub Terms</a></li>
-        <li><strong>GitHub API Terms:</strong> <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#api-terms" target="_blank" rel="noopener">API Terms</a></li>
-      </ul>
-      <p>You acknowledge that excessive API usage may result in rate limiting or account restrictions by these services.</p>
-
-      <h3>3.3 Token Security</h3>
-      <p>You are solely responsible for:</p>
-      <ul>
-        <li>Keeping your GitHub Personal Access Token secure</li>
-        <li>Using fine-grained tokens with minimal required permissions</li>
-        <li>Revoking tokens if compromised or no longer needed</li>
-        <li>Understanding that tokens grant write access to your repositories</li>
-      </ul>
-      <p>We store tokens locally on your device but cannot guarantee security if your device is compromised.</p>
-
-      <h3>3.4 Prohibited Uses</h3>
-      <p>You agree <strong>NOT</strong> to:</p>
-      <ul>
-        <li>Use the Extension for automated scraping or data mining beyond personal use</li>
-        <li>Circumvent rate limits or abuse LeetCode/GitHub APIs</li>
-        <li>Reverse engineer, decompile, or modify the Extension for malicious purposes</li>
-        <li>Use the Extension to violate any applicable laws or regulations</li>
-        <li>Track users without their knowledge for harassment or stalking</li>
-        <li>Resell, redistribute modified versions, or claim ownership of the Extension</li>
-      </ul>
-
-      <h2>4. Third-Party Services</h2>
-
-      <h3>4.1 LeetCode</h3>
-      <p>The Extension interacts with LeetCode's public GraphQL API. We are not affiliated with LeetCode. Changes to LeetCode's API, terms, or policies may affect the Extension's functionality. We are not responsible for such changes.</p>
-
-      <h3>4.2 GitHub</h3>
-      <p>GitHub sync requires a Personal Access Token you generate. We are not responsible for:</p>
-      <ul>
-        <li>Data loss or corruption in your GitHub repositories</li>
-        <li>Rate limiting, suspensions, or account actions by GitHub</li>
-        <li>Unauthorized access if your token is compromised</li>
-      </ul>
-
-      <h3>4.3 No Endorsement</h3>
-      <p>L'Amigo is <strong>not endorsed by, sponsored by, or affiliated with LeetCode or GitHub</strong>. All trademarks are property of their respective owners.</p>
-
-      <h2>5. Intellectual Property</h2>
-
-      <h3>5.1 Open Source License</h3>
-      <p>L'Amigo is released under the <strong>MIT License</strong>. You are free to:</p>
-      <ul>
-        <li>Use, copy, modify, merge, publish, and distribute the software</li>
-        <li>Use it for commercial or non-commercial purposes</li>
-      </ul>
-      <p>Subject to the conditions of the MIT License, including attribution and inclusion of the license notice.</p>
-
-      <h3>5.2 Your Content</h3>
-      <p>You retain all rights to your submission codes, notes, and data. By using GitHub sync, you authorize the Extension to push this content to your specified repository on your behalf.</p>
-
-      <h2>6. Disclaimers and Limitation of Liability</h2>
-
-      <h3>6.1 "AS IS" Provision</h3>
-      <p>THE EXTENSION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
-
-      <h3>6.2 No Guarantees</h3>
-      <p>We do not guarantee that the Extension will:</p>
-      <ul>
-        <li>Be error-free, secure, or uninterrupted</li>
-        <li>Continue to function if LeetCode or GitHub changes their APIs</li>
-        <li>Preserve data integrity during syncs or crashes</li>
-        <li>Be compatible with future Chrome or browser updates</li>
-      </ul>
-
-      <h3>6.3 Limitation of Liability</h3>
-      <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR:</p>
-      <ul>
-        <li>Any direct, indirect, incidental, special, or consequential damages</li>
-        <li>Loss of data, profits, or business opportunities</li>
-        <li>Damages arising from API rate limits, account suspensions, or service disruptions</li>
-        <li>Security breaches, token compromises, or unauthorized access to your accounts</li>
-      </ul>
-      <p>YOUR USE OF THE EXTENSION IS AT YOUR OWN RISK.</p>
-
-      <h3>6.4 Indemnification</h3>
-      <p>You agree to indemnify and hold harmless the L'Amigo project, its contributors, and maintainers from any claims, damages, or expenses arising from your use of the Extension or violation of these Terms.</p>
-
-      <h2>7. Data and Privacy</h2>
-      <p>Our handling of your data is governed by our <a href="privacy.html">Privacy Policy</a>, which is incorporated into these Terms by reference. Key points:</p>
-      <ul>
-        <li>All data is stored locally on your device</li>
-        <li>We do not collect, transmit, or sell your data</li>
-        <li>You control data retention and deletion</li>
-      </ul>
-
-      <h2>8. Updates and Modifications</h2>
-
-      <h3>8.1 Extension Updates</h3>
-      <p>We may release updates to:</p>
-      <ul>
-        <li>Fix bugs or security vulnerabilities</li>
-        <li>Add new features or improve performance</li>
-        <li>Adapt to changes in third-party APIs</li>
-      </ul>
-      <p>Updates are delivered through the Chrome Web Store. You may disable auto-updates in Chrome settings, but this may affect functionality.</p>
-
-      <h3>8.2 Changes to Terms</h3>
-      <p>We reserve the right to modify these Terms at any time. Changes will be posted with an updated "Last Updated" date. Continued use after changes constitutes acceptance. Material changes will be noted in release notes.</p>
-
-      <h2>9. Termination</h2>
-      <p>You may stop using the Extension at any time by:</p>
-      <ul>
-        <li>Uninstalling it from Chrome</li>
-        <li>Using the "Clear Data" feature to remove stored information</li>
-        <li>Revoking your GitHub token</li>
-      </ul>
-      <p>We may discontinue the Extension or its features at any time without notice, though we will make reasonable efforts to communicate via GitHub or the Chrome Web Store.</p>
-
-      <h2>10. Support and Communication</h2>
-
-      <h3>10.1 Community Support</h3>
-      <p>Support is provided on a best-effort basis through:</p>
-      <ul>
-        <li><strong>GitHub Issues:</strong> Bug reports and feature requests</li>
-        <li><strong>Documentation:</strong> <a href="docs.html">User guides and FAQs</a></li>
-      </ul>
-      <p>We do not guarantee response times or issue resolution.</p>
-
-      <h3>10.2 Feedback</h3>
-      <p>We welcome feedback, bug reports, and contributions. By submitting feedback, you grant us a non-exclusive, royalty-free license to use and incorporate your suggestions.</p>
-
-      <h2>11. Governing Law and Disputes</h2>
-      <p>These Terms are governed by the laws of [Your Jurisdiction]. Any disputes shall be resolved through good-faith negotiation. If unresolved, disputes shall be subject to the exclusive jurisdiction of the courts in [Your Jurisdiction].</p>
-      <p><strong>Note:</strong> As an open-source project, we encourage resolving issues through GitHub discussions rather than legal action.</p>
-
-      <h2>12. Severability</h2>
-      <p>If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
-
-      <h2>13. Entire Agreement</h2>
-      <p>These Terms, together with the Privacy Policy, constitute the entire agreement between you and L'Amigo regarding the Extension and supersede all prior agreements or understandings.</p>
-
-      <h2>14. Contact Information</h2>
-      <p>Questions, concerns, or feedback about these Terms?</p>
-      <ul>
-        <li><strong>GitHub Repository:</strong> <a href="#">github.com/yourrepo</a></li>
-        <li><strong>Issues & Discussions:</strong> <a href="#">github.com/yourrepo/issues</a></li>
-        <li><strong>Email:</strong> legal@lamigo-extension.example</li>
-      </ul>
-
-      <hr style="margin: 40px 0; border: none; border-top: 1px solid var(--gray-light);">
-
-      <p style="text-align: center; color: var(--gray); font-size: 14px;">
-        By using L'Amigo, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.<br>
-        <a href="privacy.html" style="color: var(--primary);">View Privacy Policy</a> | <a href="index.html" style="color: var(--primary);">Back to Home</a>
-      </p>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- Footer (Same as Home) -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <div class="footer-logo">
-            <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
-            <span class="logo-text">L'Amigo</span>
+          <a href="#" class="footer-logo">L'AMIGO</a>
+          <p style="color: #666; font-size: 13px; max-width: 300px;">
+            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            <a href="http://linkedin.com/in/ananaydubey" target="_blank" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+            <a href="https://instagram.com/ananay_dubey" target="_blank" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+            <a href="mailto:dubeyananay@gmail.com" target="_blank" aria-label="Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+            </a>
+            <a href="tel:+917719767324" target="_blank" aria-label="Phone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.27-.27.35-.66.24-1.01-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.33 3 3.24 3 7.5c0 6.62 5.38 12 12 12 4.26 0 4.17-.65 4.17-1.19v-2.93c0-.54-.45-.99-.99-.99z" />
+              </svg>
+            </a>
           </div>
-          <p class="footer-tagline">Track friends. Compare stats. Stay motivated.</p>
         </div>
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>Legal</h4>
-            <ul>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-            </ul>
-          </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="https://github.com/FTS18/l-amigo" target="_blank">Chrome Store</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html#quick-start">Install Guide</a></li>
+            <li><a href="docs.html#sync">GitHub Setup</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="https://github.com/FTS18/l-amigo/blob/main/LICENSE" target="_blank">License</a></li>
+          </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 L'Amigo. Open source under MIT License.</p>
-        <p>Not affiliated with LeetCode or GitHub.</p>
+      <div class="footer-btm">
+        <p>&copy; 2026 L'Amigo. Free & Open Source.</p>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
 </body>
+
 </html>

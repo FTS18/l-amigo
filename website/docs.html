@@ -8,308 +8,377 @@
   <meta name="description" content="Complete documentation for L'Amigo Chrome extension.">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="stylesheet" href="styles.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
 
-<body>
+<body class="docs-body">
   <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-container">
+    <div class="container nav-container">
       <a href="index.html" class="nav-logo">
-        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="32" height="32">
-        <span class="logo-text">L'AMIGO</span>
+        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24" style="margin-right: 8px;">
+        L'AMIGO
       </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
       <ul class="nav-links">
         <li><a href="index.html#features">Features</a></li>
         <li><a href="index.html#how-it-works">How It Works</a></li>
-        <li><a href="docs.html">Docs</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="#" class="btn-primary">ADD TO CHROME</a></li>
+        <li><a href="docs.html" style="color: var(--white);">Docs</a></li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Documentation</li>
+        <li class="mobile-only"><a href="#dashboard">Dashboard & Friends</a></li>
+        <li class="mobile-only"><a href="#recommendations">Problem Recommendations</a></li>
+        <li class="mobile-only"><a href="#analytics">Deep Analytics</a></li>
+        <li class="mobile-only"><a href="#compare">Head-to-Head Comparison</a></li>
+        <li class="mobile-only"><a href="#sync">GitHub Sync Setup</a></li>
+        <li class="mobile-only"><a href="#troubleshooting">Troubleshooting & FAQ</a></li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Resources</li>
+        <li class="mobile-only"><a href="index.html#faq">FAQ</a></li>
+        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo" target="_blank">GitHub Repository</a></li>
+        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo/issues" target="_blank">Report an Issue</a>
+        </li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only nav-section-title">Legal & About</li>
+        <li class="mobile-only"><a href="privacy.html">Privacy Policy</a></li>
+        <li class="mobile-only"><a href="terms.html">Terms of Service</a></li>
+        <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
+
+        <li class="mobile-only nav-divider"></li>
+        <li class="mobile-only">
+          <a href="https://github.com/FTS18/l-amigo" target="_blank" class="btn-cta">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
+            </svg>
+            Add to Chrome
+          </a>
+        </li>
       </ul>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </nav>
 
-  <!-- Documentation Content -->
+  <!-- Docs Layout (Single Column) -->
   <div class="docs-page">
-    <!-- Sidebar -->
-    <aside class="docs-sidebar">
-      <ul class="docs-nav">
-        <li><a href="#installation" class="active">Installation</a></li>
-        <li><a href="#getting-started">Getting Started</a></li>
-        <li><a href="#friends">Managing Friends</a></li>
-        <li><a href="#compare">Compare Tab</a></li>
-        <li><a href="#github-sync">GitHub Sync</a></li>
-        <li><a href="#settings">Settings</a></li>
-        <li><a href="#troubleshooting">Troubleshooting</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-    </aside>
-
-    <!-- Main Content -->
     <main class="docs-content">
-      <!-- Installation -->
-      <section id="installation" class="docs-section">
-        <h2>Installation</h2>
-        <p>Get started in under 2 minutes.</p>
 
-        <h3>FROM CHROME WEB STORE</h3>
-        <ol>
-          <li>Visit the <a href="#" style="color: var(--yellow);">L'Amigo Chrome Web Store page</a></li>
-          <li>Click <strong>"Add to Chrome"</strong></li>
-          <li>Confirm by clicking <strong>"Add extension"</strong></li>
-          <li>The extension icon appears in your toolbar</li>
-        </ol>
-
-        <h3>FROM SOURCE</h3>
-        <pre><code>git clone https://github.com/yourusername/lamigo.git
-cd lamigo
-npm install
-npm run build
-
-# Load in Chrome:
-# 1. Go to chrome://extensions/
-# 2. Enable "Developer mode"
-# 3. Click "Load unpacked"
-# 4. Select the dist folder</code></pre>
+      <!-- Quick Start -->
+      <section id="quick-start" class="docs-section">
+        <h1 style="margin-bottom: 24px;">Documentation</h1>
+        <p style="font-size: 20px; max-width: 600px; margin-bottom: 48px; color: var(--text-muted);">
+          Master L'Amigo: Track friends, compare stats, get problem recommendations, export data, and sync solutions to
+          GitHub.
+        </p>
 
         <div class="info-box">
-          <p><strong>REQUIREMENTS:</strong> Chrome 88+ or Chromium-based browser</p>
+          <h3 style="margin-top: 0;">⚡ Quick Start Guide</h3>
+          <ol style="margin-left: 20px;">
+            <li><strong>Install</strong>: Add L'Amigo from the Chrome Web Store</li>
+            <li><strong>Setup</strong>: Enter your LeetCode username when prompted</li>
+            <li><strong>Add Friends</strong>: Start tracking friends using their username or profile URL</li>
+            <li><strong>Explore</strong>: Use the three tabs to view Friends, Compare stats, and configure Settings</li>
+          </ol>
+          <p style="margin: 12px 0 0; font-size: 14px;">💡 <strong>Tip:</strong> You can paste full LeetCode profile
+            URLs - the extension extracts the username automatically!</p>
+        </div>
+
+        <img src="screenshots/7.png" alt="L'Amigo Extension Dashboard" class="doc-img" style="margin-top: 32px;">
+      </section>
+
+      <!-- Friends Tab -->
+      <section id="dashboard" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>1. Friends Tab</h2>
+          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
+          </div>
+          <p style="max-width: 700px;">Your main dashboard for tracking up to <strong>50 friends</strong> and viewing
+            their LeetCode progress in real-time.</p>
+        </div>
+
+        <h3>Managing Friends</h3>
+
+        <p>To <strong>add a friend</strong>, type their username or paste their LeetCode profile URL in the input field,
+          then press <kbd>Enter</kbd> or click the + button. Profiles load instantly with cached data and refresh in the
+          background.</p>
+
+        <p>To <strong>remove a friend</strong>, hover over their card and click the trash icon, then confirm deletion.
+          To <strong>refresh</strong>, click the individual refresh icon on any card, use the ↻ button to refresh all
+          friends, or press <kbd>R</kbd> as a keyboard shortcut.</p>
+
+        <img src="screenshots/7.png" alt="Friend Cards Display" class="doc-img">
+
+        <h3>Sorting & Filtering</h3>
+        <p>Use the <strong>Sort by</strong> dropdown to organize by <strong>Name</strong>, <strong>Problems
+            Solved</strong>, or <strong>Last Submitted</strong> (default).</p>
+
+        <div class="warning-box" style="margin-top: 32px;">
+          <p style="margin: 0;"><strong>Caching & Rate Limits:</strong> Friend profiles are cached for <strong>15
+              minutes</strong> to avoid triggering LeetCode's rate limits. Stale profiles automatically refresh in the
+            background. Manual refresh available anytime.</p>
         </div>
       </section>
 
-      <!-- Getting Started -->
-      <section id="getting-started" class="docs-section">
-        <h2>Getting Started</h2>
-
-        <h3>INITIAL SETUP</h3>
-        <ol>
-          <li>Click the L'Amigo icon in your toolbar</li>
-          <li>Click <strong>"Get Started"</strong></li>
-          <li>Enter your <strong>LeetCode username</strong></li>
-          <li>Choose theme preference</li>
-          <li>Click <strong>"Save & Continue"</strong></li>
-        </ol>
-
-        <h3>INTERFACE</h3>
-        <ul>
-          <li><strong>Friends Tab:</strong> View tracked friends with stats</li>
-          <li><strong>Compare Tab:</strong> Head-to-head comparison</li>
-          <li><strong>Settings Tab:</strong> Configure sync and data</li>
-        </ul>
-      </section>
-
-      <!-- Managing Friends -->
-      <section id="friends" class="docs-section">
-        <h2>Managing Friends</h2>
-
-        <h3>ADDING A FRIEND</h3>
-        <ol>
-          <li>Go to <strong>Friends</strong> tab</li>
-          <li>Click <strong>"+ Add Friend"</strong></li>
-          <li>Enter LeetCode username</li>
-          <li>Click <strong>"Add"</strong></li>
-        </ol>
-
-        <div class="info-box">
-          <p><strong>CACHE:</strong> Profiles cached for 15 minutes. Auto-refresh in background.</p>
+      <!-- Problem Recommendations -->
+      <section id="recommendations" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>2. Problem Recommendations</h2>
+          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
+          </div>
+          <p style="max-width: 700px;">Discover problems your friends have solved but you haven't attempted yet. Learn
+            from your peer group's solving patterns and stay motivated.</p>
         </div>
 
-        <h3>FRIEND CARDS</h3>
-        <ul>
-          <li>Username & Avatar</li>
-          <li>🔥 Streak count</li>
-          <li>Total solved</li>
-          <li>Easy/Medium/Hard breakdown</li>
-          <li>Recent submissions</li>
-        </ul>
+        <img src="screenshots/11.png" alt="Problem Recommendations" class="doc-img" style="margin-bottom: 32px;">
 
-        <h3>REMOVING A FRIEND</h3>
-        <ol>
-          <li>Find the friend card</li>
-          <li>Click trash icon</li>
-          <li>Confirm deletion</li>
-        </ol>
+        <h3>How It Works</h3>
+        <p>The recommendation engine scans all your friends' recent submissions, filters out problems you've already
+          solved, ranks by popularity (how many friends solved each problem), and returns the top 10 most-solved
+          problems by your friend group.</p>
 
-        <div class="warning-box">
-          <p><strong>LIMIT:</strong> 50 friends max</p>
+        <p>Each recommended problem displays the <strong>problem title</strong> (clickable link to LeetCode),
+          <strong>difficulty badge</strong> (Easy/Medium/Hard), the number of friends who solved it, and their names.
+        </p>
+
+
+
+        <div class="info-box" style="margin-top: 32px;">
+          <p style="margin: 0;"><strong>Pro Tip:</strong> The recommendation engine <strong>dynamically
+              analyzes</strong> patterns across your entire friend group. As you add more friends, it fetches deeper
+            solve history to provide more accurate, peer-based suggestions!</p>
         </div>
       </section>
 
       <!-- Compare Tab -->
       <section id="compare" class="docs-section">
-        <h2>Compare Tab</h2>
-
-        <h3>COMPARING FRIENDS</h3>
-        <ol>
-          <li>Go to <strong>Compare</strong> tab</li>
-          <li>Select up to 3 friends</li>
-          <li>Charts appear automatically</li>
-        </ol>
-
-        <h3>AVAILABLE CHARTS</h3>
-        <h4>DIFFICULTY DISTRIBUTION</h4>
-        <p>Easy/Medium/Hard counts side-by-side.</p>
-
-        <h4>STREAK COMPARISON</h4>
-        <p>Current and longest streak for each friend.</p>
-
-        <h4>TOPICS SOLVED</h4>
-        <p>Problem counts by topic. Top 10 shown by default.</p>
-
-        <h4>LANGUAGES USED</h4>
-        <p>Submission counts by programming language.</p>
-
-        <h4>ACTIVITY OVER TIME</h4>
-        <p>Problems solved over the past year.</p>
-
-        <h4>SUBMISSION VELOCITY</h4>
-        <p>Submissions per week, last 90 days.</p>
-      </section>
-
-      <!-- GitHub Sync -->
-      <section id="github-sync" class="docs-section">
-        <h2>GitHub Sync</h2>
-
-        <h3>PREREQUISITES</h3>
-        <ul>
-          <li>GitHub account</li>
-          <li>Personal Access Token with <code>repo</code> scope</li>
-        </ul>
-
-        <h3>CREATE TOKEN</h3>
-        <ol>
-          <li>Go to <a href="https://github.com/settings/tokens" style="color: var(--yellow);">GitHub Settings →
-              Tokens</a></li>
-          <li>Click <strong>"Generate new token (classic)"</strong></li>
-          <li>Name: <code>LeetCode Sync - L'Amigo</code></li>
-          <li>Check <code>repo</code> scope only</li>
-          <li>Generate and copy immediately</li>
-        </ol>
-
-        <div class="warning-box">
-          <p><strong>SECURITY:</strong> Token stored locally only. Never shared.</p>
+        <div style="margin-bottom: 40px;">
+          <h2>3. Compare Tab</h2>
+          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
+          </div>
+          <p style="max-width: 700px;">Compare your performance against your friends with detailed metrics, difficulty
+            breakdowns, and activity charts.</p>
         </div>
 
-        <h3>CONFIGURE</h3>
-        <ol>
-          <li>Open <strong>Settings</strong> tab</li>
-          <li>Paste token</li>
-          <li>Enter repo name</li>
-          <li>Click <strong>"Save"</strong></li>
-        </ol>
+        <img src="screenshots/8.png" alt="Compare Tab - Side-by-Side Comparison" class="doc-img">
 
-        <h3>FOLDER STRUCTURE</h3>
-        <pre><code>your-repo/
-├── Easy/
-│   ├── 1-two-sum.py
-│   └── 13-roman-to-integer.js
-├── Medium/
-│   └── 2-add-two-numbers.py
-├── Hard/
-│   └── 4-median-of-two-sorted-arrays.py
-└── Unknown/</code></pre>
+        <h3>Features</h3>
 
-        <div class="info-box">
-          <p><strong>INCREMENTAL:</strong> After first sync, only new submissions fetched.</p>
+        <p>The Compare tab displays side-by-side metrics including <strong>Total Problems Solved</strong> with visual
+          bars, <strong>Easy/Medium/Hard breakdown</strong> showing difficulty distribution, <strong>current
+            streak</strong> for consistency tracking, <strong>contest rating</strong> comparison, and <strong>global
+            rank</strong> positions on LeetCode leaderboards.</p>
+
+        <p>Visual <strong>pie charts</strong> show each person's problem difficulty distribution using color coding
+          (green for Easy, yellow/orange for Medium, red for Hard problems).</p>
+
+        <p><strong>Activity timeline</strong> line graphs display submission activity over time, allowing you to spot
+          activity spikes and lulls, compare consistency between users, and identify solving patterns.</p>
+
+        <div class="docs-card" style="margin-top: 32px;">
+          <h4>How to Use</h4>
+          <p>Switch to the <strong>Compare</strong> tab (or press <kbd>2</kbd>), select friends from the dropdown to add
+            them to comparison, and compare up to any number of friends simultaneously. Scroll down to view detailed
+            charts and graphs.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: 32px;">
+          <p style="margin: 0;"><strong>Competitive Tip:</strong> Use the Compare tab for study groups or friendly
+            competition. Metrics are color-coded – the highest values are highlighted for quick spotting!</p>
         </div>
       </section>
 
-      <!-- Settings -->
-      <section id="settings" class="docs-section">
-        <h2>Settings</h2>
+      <!-- Settings Tab -->
+      <section id="sync" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>4. Settings Tab</h2>
+          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
+          </div>
+          <p style="max-width: 700px;">Configure GitHub sync, manage your profile, toggle dark mode, export data, and
+            customize auto-refresh settings.</p>
+        </div>
 
-        <h3>GENERAL</h3>
-        <ul>
-          <li><strong>LeetCode Username:</strong> Required</li>
-          <li><strong>Theme:</strong> Light/Dark toggle</li>
-        </ul>
+        <img src="screenshots/10.png" alt="Settings Tab - GitHub Sync" class="doc-img">
 
-        <h3>GITHUB</h3>
-        <ul>
-          <li>Personal Access Token</li>
-          <li>Repository Name</li>
-          <li>Sync Button</li>
-        </ul>
+        <h3>General Settings</h3>
 
-        <h3>DATA</h3>
-        <ul>
-          <li><strong>Export:</strong> Download as JSON</li>
-          <li><strong>Clear:</strong> Delete all local data</li>
-        </ul>
+        <p>Update your <strong>LeetCode username</strong> for problem recommendations and profile tracking. Toggle
+          <strong>Dark Mode</strong> between light and dark themes. Enable <strong>Notifications</strong> to get alerts
+          when friends solve new problems. Configure <strong>Auto-Refresh</strong> with intervals of 15min, 30min, 1hr,
+          or 2hr to keep friend data fresh automatically.
+        </p>
 
-        <div class="warning-box">
-          <p><strong>CLEAR:</strong> Cannot be undone. Re-add friends after.</p>
+        <h3>Export Data</h3>
+        <p>Export your friends' data in <strong>CSV</strong> (simple format), <strong>Detailed CSV</strong>
+          (comprehensive export), or <strong>JSON</strong> (raw data for developers). Access via the menu in the header
+          → Export Data.</p>
+
+        <h3>GitHub Sync Setup</h3>
+        <p>Automatically sync all your accepted LeetCode solutions to a GitHub repository.</p>
+
+        <img src="screenshots/9.png" alt="GitHub Sync Configuration" class="doc-img" style="margin: 24px 0;">
+
+        <p>Go to <a href="https://github.com/settings/tokens" target="_blank" style="color: var(--primary);">GitHub
+            Settings → Developer Settings → Personal Access Tokens</a>, click <strong>Generate new token
+            (classic)</strong>, give it a name like "L'Amigo Sync", check the <strong>repo</strong> scope, and
+          generate/copy the token. Return to L'Amigo <strong>Settings</strong> tab, paste the token, enter your
+          repository in format <code>username/repo-name</code>, click <strong>Connect</strong>, then click <strong>Sync
+            with GitHub</strong>.</p>
+
+        <p>The sync engine <strong>dynamically fetches</strong> your complete historical submission data on the first
+          run. For subsequent updates, it uses a <strong>fast incremental mode</strong> that only pushes new solves.
+          Live progress tracking shows (X/Y) problems synced to your repository.</p>
+
+        <h4>Repository Structure</h4>
+        <pre style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px; overflow-x: auto;">
+repo-name/
+├── 1. Two Sum/
+│   └── solution.py
+├── 2. Add Two Numbers/
+│   └── solution.cpp
+├── 3. Longest Substring Without Repeating Characters/
+│   └── solution.java
+└── ...</pre>
+
+        <div class="warning-box" style="margin-top: 32px;">
+          <p style="margin: 0;"><strong>Privacy & Security:</strong> Your GitHub token is stored
+            <strong>locally</strong> in Chrome's secure storage. It's never sent to any third-party server – only
+            directly to GitHub's API. You can disconnect anytime to revoke access.
+          </p>
+        </div>
+
+        <h3>Clear All Data</h3>
+        <p>Remove all stored friends, profiles, and settings. This action cannot be undone.</p>
+      </section>
+
+      <!-- Keyboard Shortcuts -->
+      <section id="shortcuts" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>5. Keyboard Shortcuts</h2>
+          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
+          </div>
+          <p style="max-width: 700px;">Navigate L'Amigo faster with built-in keyboard shortcuts.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="docs-card">
+            <h4>Tab Navigation</h4>
+            <ul style="margin: 0; list-style: none; padding: 0;">
+              <li><kbd>1</kbd> → Friends tab</li>
+              <li><kbd>2</kbd> → Compare tab</li>
+              <li><kbd>3</kbd> → Settings tab</li>
+            </ul>
+          </div>
+
+          <div class="docs-card">
+            <h4>Actions</h4>
+            <ul style="margin: 0; list-style: none; padding: 0;">
+              <li><kbd>R</kbd> → Refresh all friends</li>
+              <li><kbd>Esc</kbd> → Close menus</li>
+            </ul>
+          </div>
+
+          <div class="docs-card">
+            <h4>Navigation (Friends Tab)</h4>
+            <ul style="margin: 0; list-style: none; padding: 0;">
+              <li><kbd>J</kbd> → Select next friend</li>
+              <li><kbd>K</kbd> → Select previous friend</li>
+            </ul>
+          </div>
         </div>
       </section>
 
       <!-- Troubleshooting -->
       <section id="troubleshooting" class="docs-section">
-        <h2>Troubleshooting</h2>
+        <h2>Troubleshooting & FAQ</h2>
 
-        <h3>POPUP WON'T OPEN</h3>
-        <ol>
-          <li>Check extension enabled at <code>chrome://extensions/</code></li>
-          <li>Reload extension</li>
-          <li>Clear browser cache</li>
-        </ol>
+        <h3>Common Issues</h3>
 
-        <h3>FRIEND NOT LOADING</h3>
-        <ul>
-          <li>Invalid username</li>
-          <li>Private profile</li>
-          <li>Rate limited - wait a few minutes</li>
-        </ul>
+        <div class="docs-card">
+          <h4>Extension Not Loading?</h4>
+          <p>Navigate to <code>chrome://extensions</code>, click the <strong>Reload</strong> icon under L'Amigo. If
+            issue persists, toggle it off and back on.</p>
+        </div>
 
-        <h3>GITHUB SYNC FAILING</h3>
-        <h4>"BAD CREDENTIALS"</h4>
-        <p>Token invalid or expired. Generate new token.</p>
+        <div class="docs-card">
+          <h4>GitHub Sync Failed?</h4>
+          <p>Verify your Personal Access Token hasn't expired, ensure the token has <code>repo</code> scope, check
+            repository name format (<code>username/repo-name</code>), and confirm the repository exists with write
+            access.</p>
+        </div>
 
-        <h4>"NOT FOUND" (404)</h4>
-        <p>Wrong repo name or no permission.</p>
+        <div class="docs-card">
+          <h4>Friend Profile Not Loading?</h4>
+          <p>Double-check the username spelling, ensure their profile is <strong>public</strong> (private profiles can't
+            be tracked), wait a few seconds for initial load, and try the refresh button on their card.</p>
+        </div>
 
-        <h4>SYNC STUCK</h4>
-        <p>First sync of 500+ problems takes 5-10 minutes. Don't close popup.</p>
+        <div class="docs-card">
+          <h4>Data Seems Stale?</h4>
+          <p>Profiles are cached for 15 minutes. Click the individual refresh icon on friend cards, use the batch
+            refresh (↻) to update everyone, or press <kbd>R</kbd> keyboard shortcut.</p>
+        </div>
 
-        <h3>STILL STUCK?</h3>
-        <p><a href="#" style="color: var(--yellow);">Open a GitHub issue</a></p>
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px;">
+          <div class="premium-card">
+            <h4>Is L'Amigo free?</h4>
+            <p>Built for the community. 100% free and open-source with no premium tiers or tracking.</p>
+          </div>
+
+          <div class="premium-card">
+            <h4>Security</h4>
+            <p>All data is stored locally. Tokens and profiles are never sent to external servers.</p>
+          </div>
+
+          <div class="premium-card">
+            <h4>Friend Limit</h4>
+            <p>Track up to 50 friends. Optimized to maintain performance and respect API limits.</p>
+          </div>
+
+          <div class="premium-card">
+            <h4>Auto-Refresh</h4>
+            <p>Profiles update in the background. Customizable intervals available in settings.</p>
+          </div>
+
+          <div class="premium-card">
+            <h4>Offline Support</h4>
+            <p>Cached data remains accessible. Internet is only required for syncing new data.</p>
+          </div>
+
+          <div class="premium-card">
+            <h4>Mobile Support</h4>
+            <p>Currently desktop-only. Browser extensions are not yet natively supported on mobile Chrome.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 48px;">Contribute & Support</h3>
+        <p>L'Amigo is a community-driven project. Help us grow by starring the repo, reporting bugs, or submitting
+          features!</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px;">
+          <a href="https://github.com/FTS18/l-amigo" target="_blank" class="premium-card"
+            style="text-decoration: none; text-align: left;">
+            <h4>Star on GitHub</h4>
+            <p>Support the project with a star. Helps more developers discover this tool.</p>
+          </a>
+          <a href="https://github.com/FTS18/l-amigo/issues" target="_blank" class="premium-card"
+            style="text-decoration: none; text-align: left;">
+            <h4>Report Issue</h4>
+            <p>Encountered a bug or have a suggestion? Open an issue on GitHub to help us improve.</p>
+          </a>
+        </div>
       </section>
 
-      <!-- FAQ -->
-      <section id="faq" class="docs-section">
-        <h2>FAQ</h2>
-
-        <h3>IS IT FREE?</h3>
-        <p>Yes. Open source. MIT License. No ads.</p>
-
-        <h3>WORKS WITH PREMIUM?</h3>
-        <p>Yes. Premium problems sync normally.</p>
-
-        <h3>TRACK PRIVATE PROFILES?</h3>
-        <p>No. Only public profiles accessible via API.</p>
-
-        <h3>REFRESH FREQUENCY?</h3>
-        <ul>
-          <li>Manual: Anytime</li>
-          <li>Auto background: Every 4 hours</li>
-          <li>Real-time: On "Accepted" verdict</li>
-        </ul>
-
-        <h3>DATA SENT ANYWHERE?</h3>
-        <p>No. All local. Only LeetCode and GitHub APIs contacted.</p>
-
-        <h3>WILL I GET BANNED?</h3>
-        <p>No. Uses public API with rate limiting.</p>
-
-        <h3>PRIVATE GITHUB REPOS?</h3>
-        <p>Yes. Works with <code>repo</code> scope token.</p>
-
-        <h3>FIREFOX VERSION?</h3>
-        <p>Not yet. Contributions welcome.</p>
-      </section>
     </main>
   </div>
 
@@ -318,51 +387,78 @@ npm run build
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <div class="footer-logo">
-            <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24">
-            <span>L'AMIGO</span>
+          <a href="#" class="footer-logo">L'AMIGO</a>
+          <p style="color: #666; font-size: 13px; max-width: 300px;">
+            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            <a href="http://linkedin.com/in/ananaydubey" target="_blank" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+            <a href="https://instagram.com/ananay_dubey" target="_blank" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+            <a href="mailto:dubeyananay@gmail.com" target="_blank" aria-label="Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+            </a>
+            <a href="tel:+917719767324" target="_blank" aria-label="Phone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.27-.27.35-.66.24-1.01-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.33 3 3.24 3 7.5c0 6.62 5.38 12 12 12 4.26 0 4.17-.65 4.17-1.19v-2.93c0-.54-.45-.99-.99-.99z" />
+              </svg>
+            </a>
           </div>
-          <p class="footer-tagline">Track friends. Compare stats. Stay motivated.</p>
         </div>
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>RESOURCES</h4>
-            <ul>
-              <li><a href="#installation">Installation</a></li>
-              <li><a href="#github-sync">GitHub Setup</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="https://github.com/FTS18/l-amigo" target="_blank">Chrome Store</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html#quick-start">Install Guide</a></li>
+            <li><a href="docs.html#sync">GitHub Setup</a></li>
+            <li><a href="docs.html#troubleshooting">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="https://github.com/FTS18/l-amigo/blob/main/LICENSE" target="_blank">License</a></li>
+          </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 L'Amigo. MIT License.</p>
+      <div class="footer-btm">
+        <p>&copy; 2026 L'Amigo. Free & Open Source.</p>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    const sections = document.querySelectorAll('.docs-section');
-    const navLinks = document.querySelectorAll('.docs-nav a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (window.pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-    });
-  </script>
 </body>
 
 </html>
