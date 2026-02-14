@@ -98,6 +98,12 @@ The codebase is structured into specialized modules to facilitate development sc
 - **src/services**: Abstraction layer for API communications and internal data persistence.
 - **website**: Source for the product landing page and promotional assets.
 
+## Documentation
+For more detailed information, please refer to:
+- [Contributing Guidelines](docs/CONTRIBUTING.md)
+- [Changelog](docs/CHANGELOG.md)
+- [Privacy Policy](docs/PRIVACY_POLICY.md)
+
 ## Keyboard Shortcuts
 
 L'Amigo includes built-in keyboard shortcuts for power users:
