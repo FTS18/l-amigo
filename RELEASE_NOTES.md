@@ -1,33 +1,24 @@
-# 🚀 v1.5.0: The "Production-Refined" Release
+# v1.5.0
 
-This release elevates L'Amigo from a functional prototype to an **enterprise-grade extension**, featuring a fully modular architecture, fortified security layers, and comprehensive test coverage.
+Major stability and architecture update. We've hardened the extension for production and completely refactored the background service.
 
-## 🛡️ Key Highlights
+### 🛡️ Security
+- **Content Security Policy**: Added strict CSP headers to `manifest.json`.
+- **Sanitization**: All user inputs and storage data are now sanitized to prevent injection.
+- **Rate Limiting**: Added throttling to API requests to prevent bans.
 
-### 🔒 Enterprise-Grade Security
-- **Content Security Policy (CSP)**: Strict headers enforced in `manifest.json` to prevent XSS.
-- **Input Sanitization**: All storage and API inputs are rigorously sanitized.
-- **Rate Limiting**: Intelligent request throttling implemented to prevent API abuse.
+### 🏗️ Architecture
+- **SOLID Refactoring**: Split the monolithic `background.ts` into small, testable handlers (`FriendHandler`, `SyncHandler`, etc.) using the Command pattern.
+- **Type Safety**: Fixed all `any` types. Full strict mode compliance.
 
-### 🏗️ SOLID Architecture Refactor
-We've completely rewritten the core `background.ts` service worker using the **Command Pattern**:
-- **Modular Handlers**: Logic split into dedicated `FriendHandler`, `ProfileHandler`, `SyncHandler`, etc.
-- **Type Safety**: Full TypeScript strict mode compliance.
-- **Maintainability**: New structure allows for plugin-like feature additions.
+### ⚡ Reliability
+- **Retry Logic**: Network requests now use exponential backoff.
+- **Circuit Breaker**: Stops failing requests automatically when APIs are down.
+- **Performance**: Added `React.memo` to `FriendCard` to stop unnecessary re-renders.
 
-### ⚡ Reliability & Performance
-- **Resiliency**: Added **Exponential Backoff** retry logic for network requests.
-- **Circuit Breaker**: Fails fast during API outages to prevent resource exhaustion.
-- **Optimization**: `React.memo` implemented on high-frequency components (`FriendCard`).
+### 📊 Tests
+- Added **58 unit tests** reaching **89% code coverage**.
 
-## 📊 Quality Assurance
-- **Test Coverage**: **89%** Unit Test Coverage across core utilities and services.
-- **CI/CD**: Automated GitHub Actions workflow for build verification.
-
-## 📦 Installation
-1. Download `lamigo_v1.5.0_release.zip` below.
-2. Unzip the archive.
-3. Load unpacked in Chrome (`chrome://extensions` → Developer Mode → Load Unpacked).
-
-### 🤝 Contributing
-For developers, check out the new `CONTRIBUTING.md` guide to get started with the new modular architecture!
+### 📦 Install
+1. Download `lamigo_v1.5.0_release.zip`.
+2. Load unpacked in Chrome.
