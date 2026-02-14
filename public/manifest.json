@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "L'Amigo",
   "version": "1.5.0",
-  "description": "Track friends' LeetCode progress with tabbed interface and comprehensive sync settings",
+  "description": "Elevate your LeetCode experience with L'Amigo, the ultimate companion for competitive programmers and job seekers.",
   "permissions": [
     "storage",
     "unlimitedStorage",

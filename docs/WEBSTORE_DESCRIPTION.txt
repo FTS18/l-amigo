@@ -1,0 +1,16 @@
+Elevate your LeetCode experience with L'Amigo, the ultimate companion for competitive programmers and job seekers. 
+
+🚀 CORE FEATURES:
+- Squad Dashboard: Track up to 50 friends' solving progress in real-time.
+- Native Profile Integration: "Track" and "Compare" buttons injected directly into LeetCode profile pages.
+- Deep Comparison: View side-by-side metrics including Contest Ratings, Global Rank, and Topic-wise Mastery (DP, Arrays, Strings, etc.).
+- Smart Recommendations: Discover coding problems your friends have solved that you haven't touched yet.
+- GitHub Auto-Sync: Automatically backup every successful submission to your personal GitHub repository.
+- Data Portability: Export your squad's data to CSV for custom analysis.
+- Detailed Logs: View recent submission history and streaks for every friend.
+- Premium UI: Sleek dark mode, interactive activity charts, and lightning-fast performance.
+
+🔒 PRIVACY FIRST:
+L'Amigo respects your data. All tokens and profiles are stored locally in your browser. We never use external servers for your private data.
+
+Free and Open Source. Join the squad today!
