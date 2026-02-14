@@ -18,12 +18,19 @@ export class RecommendationService {
     const friendProblems = new Map<string, string[]>();
 
     Object.values(profiles).forEach((profile) => {
+      const uniqueSolved = new Set<string>();
       profile.recentSubmissions?.forEach((sub) => {
-        if (!currentUserSolvedProblems.has(sub.titleSlug)) {
-          if (!friendProblems.has(sub.titleSlug)) {
-            friendProblems.set(sub.titleSlug, []);
+        if (sub.statusDisplay === 'Accepted') {
+          uniqueSolved.add(sub.titleSlug);
+        }
+      });
+
+      uniqueSolved.forEach(titleSlug => {
+        if (!currentUserSolvedProblems.has(titleSlug)) {
+          if (!friendProblems.has(titleSlug)) {
+            friendProblems.set(titleSlug, []);
           }
-          friendProblems.get(sub.titleSlug)!.push(profile.username);
+          friendProblems.get(titleSlug)!.push(profile.username);
         }
       });
     });

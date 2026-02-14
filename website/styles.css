@@ -29,6 +29,24 @@
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.support-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.premium-card.link-card {
+  text-decoration: none;
+  text-align: left;
+}
+
+.footer-desc {
+  color: #666;
+  font-size: 13px;
+  max-width: 300px;
+}
+
 /* Reset & Base */
 *,
 *::before,
@@ -184,11 +202,10 @@ a:hover {
 /* ==========================================
    HERO SECTION
    ========================================== */
-.hero {
-  min-height: 100vh;
-  padding-top: 100px;
-  display: flex;
-  align-items: center;
+.hero.main-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bg1.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .hero-layout {
@@ -461,6 +478,18 @@ a:hover {
    ========================================== */
 .features {
   padding: 140px 0;
+}
+
+.features-bg-1 {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('bg2.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.features-bg-2 {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('bg3.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .section-head {
@@ -798,6 +827,33 @@ a:hover {
   transform: scale(1.01);
 }
 
+.docs-title {
+  margin-bottom: 24px;
+}
+
+.docs-hero-desc {
+  font-size: 20px;
+  max-width: 600px;
+  margin: 0 auto 48px;
+  color: var(--text-muted);
+}
+
+.section-title-wrap {
+  margin-bottom: 40px;
+}
+
+.section-accent {
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  margin: 16px 0 24px;
+  border-radius: 2px;
+}
+
+.section-desc {
+  max-width: 700px;
+}
+
 /* Enhanced docs formatting utilities */
 .docs-card {
   background: rgba(255, 255, 255, 0.03);
@@ -855,6 +911,10 @@ a:hover {
   display: inline-block;
   min-width: 28px;
   text-align: center;
+}
+
+.faq-grid {
+  margin: 32px 0;
 }
 
 .feature-grid {

@@ -3755,6 +3755,7 @@ body.dark {
 
 .settings-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 12px;
 }
@@ -3992,4 +3993,213 @@ body.dark {
 
 .app.dark .sync-error-text {
   color: #ff6b6b !important;
+}
+
+/* Health Check and Sync History Styles */
+.settings-status.connected {
+  color: #00b8a3;
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.settings-status.error {
+  color: #ff4444;
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.sync-history-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.app.dark .sync-history-section {
+  border-top-color: #2a2a2a;
+}
+
+.submenu-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.app.dark .submenu-title {
+  color: #e0e0e0;
+}
+
+.sync-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sync-history-item {
+  background: #f9f9f9;
+  padding: 10px 12px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.app.dark .sync-history-item {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+.sync-history-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.sync-history-date {
+  font-size: 11px;
+  color: #999;
+}
+
+.sync-history-status {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sync-history-status.success {
+  color: #00b8a3;
+}
+
+.sync-history-status.error {
+  color: #ff4444;
+}
+
+.sync-history-details {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app.dark .sync-history-details {
+  color: #aaa;
+}
+
+/* Global Activity Feed Styles */
+.activity-feed-section {
+  margin-bottom: 2px;
+}
+
+.global-activity-feed {
+  background: #fff;
+  border: 1.5px solid #d0d0d0;
+  padding: 12px 16px;
+  margin: 0 16px 16px 16px;
+  border-radius: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.app.dark .global-activity-feed {
+  background: #111;
+  border-color: #2a2a2a;
+}
+
+.feed-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app.dark .feed-title {
+  color: #e0e0e0;
+}
+
+.recommendations-toggle .live-indicator {
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(255, 68, 68, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+  }
+}
+
+.feed-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feed-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.feed-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+
+.feed-item-content {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed-username {
+  font-weight: 400;
+  color: #555;
+  margin-right: 4px;
+}
+
+.app.dark .feed-username {
+  color: #ccc;
+}
+
+.feed-problem {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.app.dark .feed-problem {
+  color: #4a9eff;
+}
+
+.feed-time {
+  font-size: 11px;
+  color: #999;
 }

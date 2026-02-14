@@ -148,3 +148,12 @@ export const FriendCard: React.FC<FriendCardProps> = ({ friend, profile, onRemov
     </div>
   );
 };
+
+export default React.memo(FriendCard, (prevProps, nextProps) => {
+  return (
+    prevProps.friend.username === nextProps.friend.username &&
+    prevProps.profile?.lastFetched === nextProps.profile?.lastFetched &&
+    prevProps.refreshing === nextProps.refreshing &&
+    prevProps.isDarkMode === nextProps.isDarkMode
+  );
+});

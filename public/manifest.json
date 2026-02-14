@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "L'Amigo",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Track friends' LeetCode progress with tabbed interface and comprehensive sync settings",
   "permissions": [
     "storage",
@@ -14,6 +14,9 @@
     "https://leetcode.com/*",
     "https://api.github.com/*"
   ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

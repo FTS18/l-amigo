@@ -1,12 +1,15 @@
 {
   "name": "lamigo",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "description": "Track your friends' LeetCode progress with tabbed interface, charts, streaks, and GitHub sync",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -14,13 +17,19 @@
     "recharts": "^3.7.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/chrome": "^0.0.268",
+    "@types/jest": "^30.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.10.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "mini-css-extract-plugin": "^2.7.6",
     "style-loader": "^3.3.4",
+    "ts-jest": "^29.4.6",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.90.0",

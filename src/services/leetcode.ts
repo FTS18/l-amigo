@@ -1,5 +1,6 @@
 import { FriendProfile, RecentSubmission } from "../types";
 import { API_CONSTANTS, DATA_LIMITS } from "../constants";
+import { CircuitBreaker } from "../utils/circuit-breaker";
 
 /**
  * Represents a single accepted submission fetched from LeetCode's GraphQL API.
@@ -12,10 +13,16 @@ export interface AcceptedSubmission {
   timestamp: number; // ms
   lang: string;
   statusDisplay: string;
+  runtimeBeats?: string;
+  memoryBeats?: string;
 }
 
 export class LeetCodeService {
   private static readonly GQL = API_CONSTANTS.LEETCODE_GRAPHQL;
+  private static circuitBreaker = new CircuitBreaker({
+    failureThreshold: 5,
+    resetTimeout: 60000,
+  });
 
   // ── Helpers ────────────────────────────────────────────────────────
 

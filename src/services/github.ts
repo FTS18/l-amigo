@@ -31,6 +31,40 @@ export class GitHubSyncService {
     await chrome.storage.local.remove(this.CFG_KEY);
   }
 
+  static async checkHealth(): Promise<{ status: 'ok' | 'error'; message: string }> {
+    try {
+      const config = await this.getConfig();
+      if (!config?.token) throw new Error("No token configured");
+      
+      const username = await this.getGitHubUsername(config.token);
+      if (config.repoName) {
+        const exists = await this.repoExists(config.token, username, config.repoName);
+        if (!exists) throw new Error(`Repository "${config.repoName}" not found`);
+      }
+      
+      return { status: 'ok', message: `Connected as ${username}` };
+    } catch (err: any) {
+      return { status: 'error', message: err.message || "Unknown error" };
+    }
+  }
+
+  static async logSyncEvent(problemsSynced: number, problems: string[] = [], status: 'success' | 'error' = 'success', error?: string): Promise<void> {
+    const r = await chrome.storage.local.get('sync_history');
+    const history = (r.sync_history || []) as any[];
+    
+    const entry = {
+      timestamp: Date.now(),
+      problemsSynced,
+      problems: problems.slice(0, 5), // Keep it small
+      status,
+      error
+    };
+    
+    // Keep last 10 entries
+    const newHistory = [entry, ...history].slice(0, 10);
+    await chrome.storage.local.set({ sync_history: newHistory });
+  }
+
   // ── Synced-set helpers ──────────────────────────────────────────────
 
   static async getSyncedIds(): Promise<Set<string>> {
@@ -109,33 +143,33 @@ export class GitHubSyncService {
       // O(1) try number lookup
       const tryIndex = tryIndexMap.get(sub.id) || 1;
 
-      // Problem metadata (number + difficulty)
-      if (!metaCache.has(sub.titleSlug)) {
-        metaCache.set(sub.titleSlug, await this.getProblemMeta(sub.titleSlug));
-      }
-      const meta = metaCache.get(sub.titleSlug)!;
+      // Parallelize fetching code and metadata
+      const [code, meta] = await Promise.all([
+        LeetCodeService.fetchSubmissionCode(sub.id),
+        metaCache.has(sub.titleSlug) 
+          ? Promise.resolve(metaCache.get(sub.titleSlug)!)
+          : this.getProblemMeta(sub.titleSlug).then(m => {
+              metaCache.set(sub.titleSlug, m);
+              return m;
+            })
+      ]);
+
       const num = meta.num;
-      const difficulty = meta.difficulty; // "Easy" | "Medium" | "Hard" | "Unknown"
+      const difficulty = meta.difficulty; 
       const problemFolder = num ? `${num}-${sub.titleSlug}` : sub.titleSlug;
 
       const ext = this.ext(sub.lang);
       const fileName = `try-${tryIndex}${ext}`;
       const filePath = `${difficulty}/${problemFolder}/${fileName}`;
 
-      // Fetch actual source code
-      const code = await LeetCodeService.fetchSubmissionCode(sub.id);
-
-      // Throttle to avoid LeetCode WAF
-      await sleep(
-        API_CONSTANTS.SUBMISSION_FETCH_DELAY_MS +
-          Math.random() * API_CONSTANTS.SUBMISSION_FETCH_JITTER_MS,
-      );
-
       const content = this.buildFile(sub, tryIndex, num, difficulty, code);
 
       try {
         await this.upsertFile(config.token, ghUser, repo, filePath, content);
-        newlySyncedIds.push(sub.id);
+        
+        // ★ ATOMIC UPDATE: Mark as synced immediately
+        await this.batchMarkSynced([sub.id]);
+        
         syncedCount++;
         console.log(`[GH] ✓ ${filePath}`);
       } catch (err) {
@@ -143,12 +177,15 @@ export class GitHubSyncService {
       }
 
       onProgress?.(syncedCount, total);
+
+      // Throttle to avoid LeetCode WAF (reduced slightly as we are more efficient)
+      await sleep(
+        API_CONSTANTS.SUBMISSION_FETCH_DELAY_MS / 2 +
+          Math.random() * API_CONSTANTS.SUBMISSION_FETCH_JITTER_MS
+      );
     }
 
-    // Batch write all newly synced IDs at once
-    await this.batchMarkSynced(newlySyncedIds);
-
-    // Update last sync timestamp
+    // config.lastSync is updated in background script if needed, or here
     config.lastSync = Date.now();
     await this.saveConfig(config);
 
@@ -226,10 +263,10 @@ export class GitHubSyncService {
  * Problem ${pid}: ${sub.title}
  * Difficulty: ${difficulty}
  * Submission: Try ${tryNum}
- * Status: ${sub.statusDisplay}
+ * status: ${sub.statusDisplay}
  * Language: ${sub.lang}
  * Date: ${date}
- * Link: https://leetcode.com/problems/${sub.titleSlug}/
+${sub.runtimeBeats ? ` * Runtime Beats: ${sub.runtimeBeats}\n` : ""}${sub.memoryBeats ? ` * Memory Beats: ${sub.memoryBeats}\n` : ""} * Link: https://leetcode.com/problems/${sub.titleSlug}/
  */
 
 ${code || "// Code not available"}

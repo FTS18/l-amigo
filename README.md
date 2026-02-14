@@ -1,5 +1,10 @@
 # L'Amigo - LeetCode Peer Progress and Automation
 
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-orange?logo=googlechrome)](https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue)](https://github.com/FTS18/l-amigo/releases)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/FTS18/l-amigo?style=social)](https://github.com/FTS18/l-amigo)
+
 L'Amigo is a browser extension engineered for competitive programmers and software engineering candidates to monitor peer performance and automate personal progress management. By integrating directly into the LeetCode environment, L'Amigo enables users to track friend activity, perform detailed statistical comparisons, and maintain an automated repository of their own solved problems on GitHub.
 
 ## Core Architectural Components
@@ -48,16 +53,26 @@ L'Amigo automates the preservation of the user's solved problem library by synch
 
 ## Installation and Deployment
 
-### Method 1: End-User Installation (Pre-built Release)
+### Method 1: Chrome Web Store (Recommended)
+The easiest way to install L'Amigo is directly from the Chrome Web Store:
+
+[![Add to Chrome](https://img.shields.io/badge/Add%20to-Chrome-orange?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli)
+
+1. Click the badge above or visit the [Chrome Web Store page](https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli)
+2. Click "Add to Chrome"
+3. Confirm the installation when prompted
+4. The L'Amigo icon will appear in your browser toolbar
+
+### Method 2: Pre-built Release (Manual Installation)
 This method is recommended for users who wish to utilize L'Amigo without maintaining a local development environment.
 1. Navigate to the official L'Amigo GitHub repository and access the **Releases** section.
-2. Download the distribution package: `lamigo_v1.4.0_release.zip`.
+2. Download the distribution package: `lamigo_v1.5.0_release.zip`.
 3. Extract the ZIP archive contents to a persistent local directory.
 4. Open the Google Chrome browser and navigate to `chrome://extensions/`.
 5. Activate **Developer mode** using the toggle in the upper-right corner.
 6. Click the **Load unpacked** button and select the directory containing the extracted release files.
 
-### Method 2: Developer Installation (Build from Source)
+### Method 3: Developer Installation (Build from Source)
 Use this method if you intend to contribute to the codebase or utilize the most recent unreleased features.
 1. Clone the repository and navigate to the project root:
    ```bash
@@ -82,6 +97,20 @@ The codebase is structured into specialized modules to facilitate development sc
 - **src/popup**: React-based architecture for the main user dashboard and configuration views.
 - **src/services**: Abstraction layer for API communications and internal data persistence.
 - **website**: Source for the product landing page and promotional assets.
+
+## Keyboard Shortcuts
+
+L'Amigo includes built-in keyboard shortcuts for power users:
+
+| Shortcut | Action |
+|----------|--------|
+| `r` | Refresh all friends |
+| `j` | Navigate down in friends list |
+| `k` | Navigate up in friends list |
+| `1` | Switch to Friends tab |
+| `2` | Switch to Compare tab |
+| `3` | Switch to Settings tab |
+| `Esc` | Close menu |
 
 ## Future Development Roadmap
 - **Collaborative Squads**: Implementation of optional peer-to-peer data sharing for private community leaderboards.

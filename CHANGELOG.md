@@ -2,6 +2,25 @@
  
  All notable changes to the L'Amigo (formerly LeetCode Friend Tracker) extension.
  
+
+ ## [1.5.0] - 2026-02-14
+
+ ### Added
+- **Production Hardening**: Comprehensive testing suite with 58 unit tests covering critical utilities.
+- **Security**: Content Security Policy (CSP) headers added to `manifest.json`.
+- **Reliability**: Implemented Retry logic with exponential backoff and Circuit Breaker pattern for API calls.
+- **Input Validation**: Added sanitization and rate limiting for storage and network operations.
+- **Architecture**: SOLID refactoring of `background.ts` into modular `MessageHandler` classes using the Command pattern.
+
+ ### Changed
+- **Testing**: Updated Jest configuration with coverage thresholds.
+- **Performance**: Optimized `FriendCard` rendering with `React.memo`.
+- **Documentation**: Updated README with architectural details and installation steps.
+
+ ### Fixed
+- Fixed URL validation edge cases.
+- Fixed type handling in retry logic.
+
  ## [1.4.0] - 2026-02-09
  
  ### Added

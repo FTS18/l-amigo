@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GitHubSyncService } from '../services/github';
 import { REFRESH_CONSTANTS } from '../constants';
+import { validateGitHubToken, validateRepositoryName } from '../utils/sanitize';
 
 interface SettingsTabProps {
   onSync: () => void;
@@ -38,6 +39,9 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState(60);
+  const [syncHistory, setSyncHistory] = useState<any[]>([]);
+  const [healthStatus, setHealthStatus] = useState<{ status: 'idle' | 'checking' | 'ok' | 'error'; message: string }>({ status: 'idle', message: '' });
+  const [dailyGoal, setDailyGoal] = useState(3);
 
   // Poll sync status from storage while sync is running
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -94,13 +98,16 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       'notifications_enabled',
       'auto_refresh',
       'refresh_interval',
-      'own_username'
+      'own_username',
+      'sync_history'
     ]);
     
     setNotificationsEnabled(settings.notifications_enabled ?? true);
     setAutoRefresh(settings.auto_refresh ?? true);
     setRefreshInterval(settings.refresh_interval ?? REFRESH_CONSTANTS.INTERVAL_MINUTES);
     setNewUsername(settings.own_username || '');
+    setSyncHistory(settings.sync_history || []);
+    setDailyGoal(settings.daily_goal || 3);
   };
 
   // Start polling sync progress from chrome.storage.local
@@ -149,16 +156,34 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       return;
     }
 
+    if (!validateGitHubToken(token.trim())) {
+      const msg = 'Invalid GitHub token format. Expected ghp_* or github_pat_*';
+      onToast ? onToast(msg, 'error') : alert(msg);
+      return;
+    }
+
     try {
       await GitHubSyncService.saveConfig({ token: token.trim() });
       setIsTokenSet(true);
       setToken('');
       const msg = 'Token saved! Now enter a repository name.';
       onToast ? onToast(msg, 'success') : alert(msg);
+      handleHealthCheck();
     } catch (error) {
       console.error('GitHub connect error:', error);
       const msg = 'Failed to save token: ' + (error as Error).message;
       onToast ? onToast(msg, 'error') : alert(msg);
+    }
+  };
+
+  const handleHealthCheck = async () => {
+    setHealthStatus({ status: 'checking', message: 'Checking connection...' });
+    const result = await GitHubSyncService.checkHealth();
+    setHealthStatus({ status: result.status, message: result.message });
+    if (result.status === 'ok') {
+      onToast?.('GitHub connection verified!', 'success');
+    } else {
+      onToast?.('GitHub connection error: ' + result.message, 'error');
     }
   };
 
@@ -169,7 +194,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       return;
     }
 
-    // Save repo name first
+    if (!validateRepositoryName(repoName.trim())) {
+      const msg = 'Invalid repository name. Use only letters, numbers, hyphens, and underscores.';
+      onToast ? onToast(msg, 'error') : alert(msg);
+      return;
+    }
+
     try {
       const config = await GitHubSyncService.getConfig();
       if (!config?.token) {
@@ -317,6 +347,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     }
   };
 
+  const handleDailyGoalChange = async (goal: number) => {
+    setDailyGoal(goal);
+    await chrome.storage.local.set({ daily_goal: goal });
+    onToast?.('Daily goal updated!', 'success');
+  };
+
   const handleClearData = async () => {
     if (!confirm('Clear all extension data? This will remove all friends and profiles.')) return;
 
@@ -427,6 +463,22 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             </select>
           </div>
         )}
+
+        <div className="settings-item">
+          <label className="settings-label">Daily Solve Goal</label>
+          <p className="settings-hint">Set your daily target for the progress bar</p>
+          <div className="settings-input-group" style={{ maxWidth: '120px' }}>
+            <input
+              type="number"
+              min="1"
+              max="100"
+              value={dailyGoal}
+              onChange={(e) => handleDailyGoalChange(parseInt(e.target.value) || 3)}
+              className="settings-input"
+            />
+            <span style={{ fontSize: '13px', color: '#888', marginLeft: '8px' }}>solves</span>
+          </div>
+        </div>
       </section>
 
       {/* GitHub Sync */}
@@ -547,6 +599,13 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
             <div className="settings-actions">
               <button 
+                onClick={handleHealthCheck}
+                disabled={healthStatus.status === 'checking'}
+                className="settings-btn settings-btn-secondary"
+              >
+                {healthStatus.status === 'checking' ? 'Checking...' : 'Verify Setup'}
+              </button>
+              <button 
                 onClick={handleFullSync}
                 disabled={isSyncingNow || !repoName.trim()}
                 className="settings-btn settings-btn-primary"
@@ -560,6 +619,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                 Disconnect
               </button>
             </div>
+
+            {healthStatus.status !== 'idle' && (
+              <p className={`settings-status ${healthStatus.status === 'ok' ? 'connected' : 'error'}`}>
+                {healthStatus.status === 'ok' ? '✓' : '⚠'} {healthStatus.message}
+              </p>
+            )}
 
             {/* ── Progress bar ── */}
             {isSyncingNow && (
@@ -579,6 +644,32 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             )}
             {syncPhase === 'error' && (
               <p className="sync-progress-text sync-error-text">⚠ {syncError}</p>
+            )}
+
+            {/* ── Sync History ── */}
+            {syncHistory.length > 0 && (
+              <div className="sync-history-section">
+                <h4 className="submenu-title">Recent Syncs</h4>
+                <div className="sync-history-list">
+                  {syncHistory.map((entry, idx) => (
+                    <div key={idx} className="sync-history-item">
+                      <div className="sync-history-meta">
+                        <span className="sync-history-date">
+                          {new Date(entry.timestamp).toLocaleDateString()} {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                        <span className={`sync-history-status ${entry.status}`}>
+                          {entry.status === 'success' ? `✓ ${entry.problemsSynced} solved` : `⚠ Failed`}
+                        </span>
+                      </div>
+                      {entry.problems && entry.problems.length > 0 && (
+                        <p className="sync-history-details">
+                          {entry.problems.join(', ')}{entry.problemsSynced > 5 ? '...' : ''}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
 
             <p className="settings-hint" style={{ fontSize: '11px', marginTop: '10px' }}>
@@ -656,6 +747,53 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
               Open Source (MIT License)
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Keyboard Shortcuts */}
+      <section className="settings-section">
+        <h3 className="settings-section-title">⌨️ Keyboard Shortcuts</h3>
+        <p className="settings-hint">Power user shortcuts for faster navigation</p>
+        
+        <div style={{ marginTop: '16px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'left' }}>
+                <th style={{ padding: '8px', fontWeight: 600 }}>Shortcut</th>
+                <th style={{ padding: '8px', fontWeight: 600 }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>r</code></td>
+                <td style={{ padding: '8px' }}>Refresh all friends</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>j</code></td>
+                <td style={{ padding: '8px' }}>Navigate down in friends list</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>k</code></td>
+                <td style={{ padding: '8px' }}>Navigate up in friends list</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>1</code></td>
+                <td style={{ padding: '8px' }}>Switch to Friends tab</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>2</code></td>
+                <td style={{ padding: '8px' }}>Switch to Compare tab</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>3</code></td>
+                <td style={{ padding: '8px' }}>Switch to Settings tab</td>
+              </tr>
+              <tr>
+                <td style={{ padding: '8px' }}><code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>Esc</code></td>
+                <td style={{ padding: '8px' }}>Close menu</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
     </div>

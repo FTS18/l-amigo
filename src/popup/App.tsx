@@ -14,6 +14,7 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { Modal } from './Modal';
 import { Toast } from './Toast';
 import { Skeleton } from './Skeleton';
+import { GlobalActivityFeed } from './GlobalActivityFeed';
 import './App.css';
 
 const formatTimestamp = (timestamp: number) => {
@@ -413,10 +414,12 @@ export const App: React.FC = () => {
       <div className="content-area">
         {activeTab === 'friends' ? (
           <>
+            <GlobalActivityFeed profiles={profiles} ownUsername={ownUsername} />
             <Recommendations profiles={profiles} ownUsername={ownUsername} />
 
             {friends.length === 0 ? (
               <div className="empty-state">
+                <img src="empty-state.svg" alt="No friends yet" style={{ width: '150px', height: '150px', marginBottom: '16px', opacity: 0.7 }} />
                 <p className="empty-title">👋 Welcome to L'Amigo!</p>
                 <p className="empty-message">Track your friends' LeetCode progress</p>
                 <p className="hint">💡 Start by adding a friend's LeetCode username or profile URL below</p>

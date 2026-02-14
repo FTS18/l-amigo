@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
-  
+
   return {
     mode: argv.mode || 'production',
     devtool: isProd ? false : 'inline-cheap-source-map',
@@ -27,9 +27,7 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: isProd 
-            ? [MiniCssExtractPlugin.loader, 'css-loader']
-            : ['style-loader', 'css-loader'],
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
       ],
     },
@@ -42,7 +40,7 @@ module.exports = (env, argv) => {
           { from: 'public', to: '.' },
         ],
       }),
-      ...(isProd ? [new MiniCssExtractPlugin({ filename: '[name].css' })] : []),
+      new MiniCssExtractPlugin({ filename: '[name].css' }),
     ],
   };
 };
