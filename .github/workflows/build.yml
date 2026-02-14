@@ -67,6 +67,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: lamigo-${{ github.ref_name }}.zip
+        body_path: RELEASE_NOTES.md
         generate_release_notes: true
         draft: false
         prerelease: false
