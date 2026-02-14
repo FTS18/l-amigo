@@ -1,6 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "L'Amigo",
+  "name": "L'Amigo - LeetCode Friend Tracker & GitHub Sync",
+  "short_name": "L'Amigo",
   "version": "1.5.0",
   "description": "Elevate your LeetCode experience with L'Amigo, the ultimate companion for competitive programmers and job seekers.",
   "permissions": [
