@@ -2,22 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lamigo.netlify.app/</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-14</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lamigo.netlify.app/docs.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lamigo.netlify.app/privacy.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-14</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://lamigo.netlify.app/terms.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-14</lastmod>
     <priority>0.5</priority>
   </url>
 </urlset>

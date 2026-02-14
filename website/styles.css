@@ -56,6 +56,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #000;
   background-image: url('bg3.jpg');
