@@ -108,6 +108,7 @@ a:hover {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
 }
 
 /* ==========================================
@@ -206,6 +207,9 @@ a:hover {
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bg1.jpg');
   background-size: cover;
   background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .hero-layout {
@@ -478,6 +482,9 @@ a:hover {
    ========================================== */
 .features {
   padding: 140px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .features-bg-1 {
