@@ -46,7 +46,7 @@ L'Amigo automates the preservation of the user's solved problem library by synch
 
 ### Data Lifecycle and Security
 1. **Ingestion**: Data is fetched client-side directly from LeetCode servers via secure GraphQL queries.
-2. **Processing**: Raw JSON responses are transformed into normalized Squad Objects within the extension's service layer.
+2. **Processing**: Raw JSON responses are transformed into normalized Friend Objects within the extension's service layer.
 3. **Persistence**: Objects are serialized and stored in `chrome.storage.local`.
 4. **Synchronization**: Solutions are pushed via encrypted HTTPS requests to `api.github.com`.
 5. **Security**: All credentials (GitHub PATs) are obfuscated within local storage. No telemetry or analytics data is ever transmitted to any third-party infrastructure.
@@ -119,7 +119,7 @@ L'Amigo includes built-in keyboard shortcuts for power users:
 | `Esc` | Close menu |
 
 ## Future Development Roadmap
-- **Collaborative Squads**: Implementation of optional peer-to-peer data sharing for private community leaderboards.
+- **Collaborative Communities**: Implementation of optional peer-to-peer data sharing for private community leaderboards.
 - **Advanced Submission Filter**: Capability to filter peer submissions by programming language or specific timeframes.
 - **Integration with Codeforces**: Expansion of tracking capabilities to include other major competitive programming platforms.
 - **Code Execution Analysis**: Statistical tracking of submission success rates (Accepted vs. Runtime Error/TLE).
