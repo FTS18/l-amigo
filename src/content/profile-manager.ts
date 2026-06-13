@@ -73,10 +73,12 @@ export class ProfilePageManager {
       if (sidebar && this.currentUsername) {
         console.log("[L'Amigo] Landmark found: Avatar. Injecting to sidebar.", this.currentUsername);
         
-        const trackedResult = await chrome.storage.local.get('leetcode_friends');
-        const trackedFriends = trackedResult.leetcode_friends || [];
-        const isAlreadyTracked = trackedFriends.some(
-          (f: any) => f.username.toLowerCase() === this.currentUsername?.toLowerCase()
+        const identitiesResult = await chrome.storage.local.get('friend_identities_v2');
+        const identities = identitiesResult.friend_identities_v2 || [];
+        const isAlreadyTracked = identities.some((i: any) => 
+          i.accounts.some((a: any) => 
+            a.platform === 'leetcode' && a.handle.toLowerCase() === this.currentUsername?.toLowerCase()
+          )
         );
 
         this.ensureButtonsPersistent(sidebar, isAlreadyTracked);
@@ -111,7 +113,9 @@ export class ProfilePageManager {
     const trackBtn = document.createElement('button');
     trackBtn.className = `lamigo-btn lamigo-btn-track ${isAlreadyTracked ? 'success' : ''}`;
     trackBtn.disabled = isAlreadyTracked;
-    trackBtn.innerHTML = isAlreadyTracked ? 'Already Tracked ✓' : '<span>+</span> Track with L\'Amigo';
+    const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    const plusIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`;
+    trackBtn.innerHTML = isAlreadyTracked ? `${checkIcon} Already Tracked` : `${plusIcon} Track with L'Amigo`;
     trackBtn.onclick = (e) => {
       e.stopPropagation();
       this.handleTrack();
@@ -119,7 +123,8 @@ export class ProfilePageManager {
 
     const compareBtn = document.createElement('button');
     compareBtn.className = 'lamigo-btn lamigo-btn-compare';
-    compareBtn.innerHTML = '<span>⚡</span> Compare with Me';
+    const zapIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`;
+    compareBtn.innerHTML = `${zapIcon} Compare with Me`;
     compareBtn.onclick = (e) => {
       e.stopPropagation();
       this.handleCompare();
@@ -154,14 +159,16 @@ export class ProfilePageManager {
 
       if (response.success) {
         if (btn) {
-          btn.textContent = 'Tracked ✓';
+          const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+          btn.innerHTML = `${checkIcon} Tracked`;
           btn.classList.add('success');
         }
       } else {
         alert(`Failed to track: ${response.error || 'Unknown error'}`);
         if (btn) {
           btn.disabled = false;
-          btn.innerHTML = '<span>+</span> Track with L\'Amigo';
+          const plusIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`;
+          btn.innerHTML = `${plusIcon} Track with L'Amigo`;
         }
       }
     } catch (err) {
@@ -180,13 +187,13 @@ export class ProfilePageManager {
 
     try {
       const response = await chrome.runtime.sendMessage({ action: 'getOwnProfile' });
-      if (!response.success) {
+      if (!response.success || !response.data) {
         alert('Please configure your own username in L\'Amigo extension first!');
         return;
       }
 
-      const ownProfile = response.profile;
-      const ownUsername = response.username;
+      const ownProfile = response.data.profile;
+      const ownUsername = response.data.username;
 
       // Fetch target profile (we do this via background to get same data structure)
       // Actually, we can just use the background sync to fetch it
@@ -253,8 +260,8 @@ export class ProfilePageManager {
         username: username
       });
       
-      if (response.success && response.profile) {
-        this.updateComparisonCol(username, response.profile, overlay);
+      if (response.success && response.data) {
+        this.updateComparisonCol(username, response.data, overlay);
       } else {
         const targetCol = overlay.querySelector('.target-col');
         if (targetCol) targetCol.innerHTML = `<h4 class="col-title">${username}</h4><p class="loading-msg error">User not found or private.</p>`;
@@ -321,9 +328,9 @@ export class ProfilePageManager {
   }
 
   private async getProfile(username: string): Promise<any> {
-    const result = await chrome.storage.local.get('leetcode_profiles');
-    const profiles = result.leetcode_profiles || {};
-    return profiles[username.toLowerCase()] || null;
+    const key = `profile:v2:leetcode:${username.toLowerCase()}`;
+    const result = await chrome.storage.local.get(key);
+    return result[key] || null;
   }
 
   private waitForElement(selectors: string[], timeout = 10000): Promise<Element | null> {

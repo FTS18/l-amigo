@@ -1,6 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DevExtensionReloadPlugin = require('./scripts/dev-extension-reload-plugin');
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
@@ -12,6 +14,7 @@ module.exports = (env, argv) => {
       popup: './src/popup/popup.tsx',
       background: './src/background/background.ts',
       content: './src/content/leetcode-monitor.ts',
+      codeforces: './src/content/codeforces.ts',
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -35,12 +38,20 @@ module.exports = (env, argv) => {
       extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        __DEV__: JSON.stringify(!isProd),
+      }),
       new CopyPlugin({
         patterns: [
           { from: 'public', to: '.' },
         ],
       }),
       new MiniCssExtractPlugin({ filename: '[name].css' }),
+      ...(isProd
+        ? []
+        : [
+            new DevExtensionReloadPlugin({ port: 9091 }),
+          ]),
     ],
   };
 };

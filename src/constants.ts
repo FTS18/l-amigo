@@ -1,6 +1,7 @@
 // API Configuration
 export const API_CONSTANTS = {
   LEETCODE_GRAPHQL: "https://leetcode.com/graphql",
+  CODEFORCES_API: "https://codeforces.com/api",
   REQUEST_TIMEOUT: 10000, // 10 seconds
   MAX_RETRIES: 3,
   RETRY_DELAY_BASE: 1000, // 1 second for exponential backoff
@@ -21,18 +22,20 @@ export const REFRESH_CONSTANTS = {
 // Data Limits
 export const DATA_LIMITS = {
   MAX_FRIENDS: 50,
-  MAX_RECENT_SUBMISSIONS: 100, // Increased to sync more problems
+  MAX_ALIASES_PER_IDENTITY: 10,
+  MAX_ACCOUNTS_PER_IDENTITY: 5,
+  MAX_RECENT_SUBMISSIONS: 500, // Increased to ensure filters find data across all difficulties
+
   PROFILE_CACHE_DURATION: 3600000, // 1 hour in ms
   PROFILE_STALE_THRESHOLD: 900000, // 15 min — skip refetch if fresher
+  PROFILE_STALE_THRESHOLD_BY_PLATFORM: {
+    leetcode: 900000,
+    codeforces: 900000,
+  },
   MAX_STORAGE_SIZE: 5242880, // 5MB in bytes
 } as const;
 
-// UI Configuration
-export const UI_CONSTANTS = {
-  TOAST_DURATION: 3000, // 3 seconds
-  MODAL_ANIMATION_DURATION: 300, // 0.3 seconds
-  DEBOUNCE_DELAY: 500, // 0.5 seconds
-} as const;
+
 
 // Notification Configuration
 export const NOTIFICATION_CONSTANTS = {

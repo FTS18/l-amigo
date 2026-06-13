@@ -15,6 +15,7 @@ export interface AcceptedSubmission {
   statusDisplay: string;
   runtimeBeats?: string;
   memoryBeats?: string;
+  platform?: string;
 }
 
 export class LeetCodeService {
@@ -25,6 +26,40 @@ export class LeetCodeService {
   });
 
   // ── Helpers ────────────────────────────────────────────────────────
+  
+  static async getUpcomingContests(): Promise<any[]> {
+    try {
+      const data = await this.gql<{
+        topTwoContests: Array<{
+          title: string;
+          titleSlug: string;
+          startTime: number;
+          duration: number;
+        }>;
+      }>(
+        `query topTwoContests {
+          topTwoContests {
+            title
+            titleSlug
+            startTime
+            duration
+          }
+        }`
+      );
+      
+      const contests = data?.topTwoContests || [];
+      return contests.map(c => ({
+        id: c.titleSlug,
+        name: c.title,
+        startTimeSeconds: c.startTime,
+        durationSeconds: c.duration,
+        platform: 'leetcode'
+      }));
+    } catch (err) {
+      console.warn('Failed to fetch LeetCode contests:', err);
+      return [];
+    }
+  }
 
   private static sleep(ms: number): Promise<void> {
     return new Promise((r) => setTimeout(r, ms));
@@ -59,52 +94,101 @@ export class LeetCodeService {
     variables: Record<string, any> = {},
     retries = API_CONSTANTS.MAX_RETRIES,
   ): Promise<T> {
-    const csrf = await this.getCsrfToken();
-    const headers = this.buildHeaders(csrf);
+    const bodyStr = JSON.stringify({ query, variables });
 
-    for (let attempt = 0; attempt <= retries; attempt++) {
-      try {
-        const ctl = new AbortController();
-        const timer = setTimeout(
-          () => ctl.abort(),
-          API_CONSTANTS.REQUEST_TIMEOUT,
-        );
+    // Hash for synthetic Cache API request
+    let hash = 0;
+    for (let i = 0; i < bodyStr.length; i++) {
+      hash = ((hash << 5) - hash) + bodyStr.charCodeAt(i);
+      hash |= 0;
+    }
+    const cacheUrl = new URL(this.GQL);
+    cacheUrl.searchParams.set("hash", hash.toString());
+    const syntheticReq = new Request(cacheUrl.toString(), { method: "GET" });
 
-        const res = await fetch(this.GQL, {
-          method: "POST",
-          headers,
-          credentials: "include",
-          body: JSON.stringify({ query, variables }),
-          signal: ctl.signal,
-        });
-        clearTimeout(timer);
+    let cache: Cache | undefined;
+    try {
+      if (typeof caches !== "undefined") {
+        cache = await caches.open("leetcode-gql-cache");
+      }
+    } catch (e) {
+      console.warn("Cache API not available", e);
+    }
 
-        if (res.status === 429 || res.status === 403) {
-          if (attempt < retries) {
-            const wait = API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt);
-            console.warn(
-              `[LC] ${res.status} – retry in ${wait}ms (${attempt + 1}/${retries})`,
-            );
-            await this.sleep(wait);
-            continue;
-          }
-          throw new Error(
-            `LeetCode ${res.status} after ${retries + 1} attempts`,
+    const fetchPromise = (async () => {
+      const csrf = await this.getCsrfToken();
+      const headers = this.buildHeaders(csrf);
+
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+          const ctl = new AbortController();
+          const timer = setTimeout(
+            () => ctl.abort(),
+            API_CONSTANTS.REQUEST_TIMEOUT,
           );
-        }
 
-        if (!res.ok) throw new Error(`LeetCode HTTP ${res.status}`);
-        const json = await res.json();
-        if (json.errors?.length) {
-          console.warn("[LC] GraphQL errors:", json.errors);
+          const res = await fetch(this.GQL, {
+            method: "POST",
+            headers,
+            credentials: "include",
+            body: bodyStr,
+            signal: ctl.signal,
+          });
+          clearTimeout(timer);
+
+          if (res.status === 429 || res.status === 403) {
+            if (attempt < retries) {
+              const wait = API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt);
+              console.warn(
+                `[LC] ${res.status} – retry in ${wait}ms (${attempt + 1}/${retries})`,
+              );
+              await this.sleep(wait);
+              continue;
+            }
+            throw new Error(
+              `LeetCode ${res.status} after ${retries + 1} attempts`,
+            );
+          }
+
+          if (!res.ok) throw new Error(`LeetCode HTTP ${res.status}`);
+          
+          const resClone = res.clone();
+          const json = await res.json();
+          if (json.errors?.length) {
+            console.warn("[LC] GraphQL errors:", json.errors);
+          }
+          
+          if (cache && !json.errors?.length) {
+            const syntheticRes = new Response(resClone.body, {
+               status: 200,
+               headers: new Headers({ "Content-Type": "application/json" })
+            });
+            cache.put(syntheticReq, syntheticRes).catch(console.error);
+          }
+          
+          return json.data as T;
+        } catch (err) {
+          if (attempt === retries) throw err;
+          await this.sleep(API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt));
         }
-        return json.data as T;
-      } catch (err) {
-        if (attempt === retries) throw err;
-        await this.sleep(API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt));
+      }
+      throw new Error("Max retries exceeded");
+    })();
+
+    if (cache) {
+      try {
+        const cachedRes = await cache.match(syntheticReq);
+        if (cachedRes) {
+          const cachedJson = await cachedRes.json();
+          fetchPromise.catch(err => console.error("SWR background fetch failed:", err));
+          return cachedJson.data as T;
+        }
+      } catch (e) {
+        console.error("Cache match failed", e);
       }
     }
-    throw new Error("Max retries exceeded");
+
+    return fetchPromise;
   }
 
   // ── Paginated ALL accepted submissions ─────────────────────────────
@@ -119,10 +203,12 @@ export class LeetCodeService {
    *
    * @param onProgress optional callback reporting how many *new* found so far
    * @param knownIds   if provided, enables incremental mode
+   * @param minTimestamp optional minimum timestamp for incremental sync (delta sync)
    */
   static async fetchAllAcceptedSubmissions(
     onProgress?: (fetched: number) => void,
     knownIds?: Set<string>,
+    minTimestamp: number = 0
   ): Promise<AcceptedSubmission[]> {
     const PAGE = 20;
     const SAFETY_CAP = 10000;
@@ -157,8 +243,17 @@ export class LeetCodeService {
       const subs = list?.submissions ?? [];
 
       let newInPage = 0;
+      let hitTimestampLimit = false;
+
       for (const s of subs) {
         if (s.statusDisplay !== "Accepted") continue;
+        
+        const timestampMs = Number(s.timestamp) * 1000;
+        if (timestampMs <= minTimestamp) {
+            hitTimestampLimit = true;
+            continue; // We've reached submissions older than our last sync point
+        }
+
         // In incremental mode, skip already-known submissions
         if (knownIds?.has(String(s.id))) continue;
         newInPage++;
@@ -166,7 +261,7 @@ export class LeetCodeService {
           id: String(s.id),
           title: s.title,
           titleSlug: s.titleSlug,
-          timestamp: Number(s.timestamp) * 1000,
+          timestamp: timestampMs,
           lang: s.lang,
           statusDisplay: "Accepted",
         });
@@ -190,6 +285,11 @@ export class LeetCodeService {
         } else {
           consecutiveKnownPages = 0;
         }
+      }
+      
+      if (hitTimestampLimit) {
+        console.log("[LC] Reached submissions older than last_synced_timestamp. Stopping.");
+        break;
       }
 
       if (!list?.hasNext || subs.length === 0) break;
@@ -236,6 +336,7 @@ export class LeetCodeService {
     const data = await this.gql<{
       matchedUser: any;
       userContestRanking: any;
+      userContestRankingHistory: any[] | null;
     }>(
       `query getUserProfile($username: String!) {
         matchedUser(username: $username) {
@@ -253,7 +354,17 @@ export class LeetCodeService {
           }
           languageProblemCount { languageName problemsSolved }
         }
-        userContestRanking(username: $username) { rating globalRanking }
+        userContestRanking(username: $username) { rating globalRanking attendedContestsCount }
+        userContestRankingHistory(username: $username) {
+          attended
+          rating
+          ranking
+          contest {
+            title
+            startTime
+            titleSlug
+          }
+        }
       }`,
       { username },
     );
@@ -322,21 +433,36 @@ export class LeetCodeService {
     }
 
     // Recent AC (for friend cards, max ~20 from LeetCode)
-    const recentSubmissions = await this.fetchRecentAc(username);
+    const recentSubmissions = await this.getRecentSubmissions(username);
+
+    const rawHistory = data.userContestRankingHistory || [];
+    const ratingHistory = rawHistory
+      .filter((h: any) => h.attended)
+      .map((h: any) => ({
+        contestName: h.contest.title,
+        rating: Math.round(h.rating),
+        ranking: h.ranking,
+        timestamp: h.contest.startTime * 1000,
+        contestId: h.contest.titleSlug || h.contest.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      }));
 
     return {
       username: user.username,
+      platform: "leetcode",
+      profileUrl: `https://leetcode.com/${user.username}`,
       realName: user.profile?.realName,
       avatar: user.profile?.userAvatar,
       ranking: user.profile?.ranking,
       reputation: user.profile?.reputation,
       contestRating: contest?.rating,
       contestRanking: contest?.globalRanking,
+      contestCount: contest?.attendedContestsCount,
       problemsSolved: solved,
       recentSubmissions,
       submissionCalendar,
       topicStats,
       languageStats,
+      ratingHistory,
       submissionStats: {
         totalSubmissions: totalSub,
         acSubmissions: totalAc,
@@ -346,8 +472,9 @@ export class LeetCodeService {
   }
 
   /** Quick fetch of recent AC submissions (max ~20) – used only for friend cards. */
-  private static async fetchRecentAc(
+  static async getRecentSubmissions(
     username: string,
+    limit: number = 30
   ): Promise<RecentSubmission[]> {
     try {
       const data = await this.gql<{
@@ -356,27 +483,57 @@ export class LeetCodeService {
           title: string;
           titleSlug: string;
           timestamp: string;
-          statusDisplay: string;
-          lang: string;
         }>;
       }>(
         `query getRecentAc($username: String!, $limit: Int!) {
           recentAcSubmissionList(username: $username, limit: $limit) {
-            id title titleSlug timestamp statusDisplay lang
+            id title titleSlug timestamp
           }
         }`,
-        { username, limit: DATA_LIMITS.MAX_RECENT_SUBMISSIONS },
+        { username, limit },
       );
-      return (data?.recentAcSubmissionList || []).map((s) => ({
+
+      const basicSubmissions = data?.recentAcSubmissionList || [];
+      if (basicSubmissions.length === 0) return [];
+
+      // To get difficulties, we'll fetch them for these specific slugs.
+      // We'll use GraphQL aliases to fetch all 20 in a single request for speed.
+      const slugs = basicSubmissions.map(s => s.titleSlug);
+      const uniqueSlugs = Array.from(new Set(slugs));
+      
+      const difficultyQuery = `
+        query getDifficulties {
+          ${uniqueSlugs.map((slug, idx) => `
+            q${idx}: question(titleSlug: "${slug}") {
+              difficulty
+              titleSlug
+            }
+          `).join('\n')}
+        }
+      `;
+
+      const diffData = await this.gql<any>(difficultyQuery);
+      const diffMap: Record<string, string> = {};
+      
+      Object.keys(diffData || {}).forEach(key => {
+        const q = diffData[key];
+        if (q) diffMap[q.titleSlug] = q.difficulty;
+      });
+
+      return basicSubmissions.map((s) => ({
         title: s.title,
         titleSlug: s.titleSlug,
         timestamp: parseInt(s.timestamp, 10) * 1000,
-        statusDisplay: s.statusDisplay,
-        lang: s.lang,
+        statusDisplay: "Accepted",
+        lang: "Unknown",
         submissionId: s.id,
+        platform: 'leetcode' as const,
+        difficulty: diffMap[s.titleSlug] as any
       }));
-    } catch {
+    } catch (err) {
+      console.error(`[LC] Failed to fetch activity for ${username}:`, err);
       return [];
     }
   }
+
 }

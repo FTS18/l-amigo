@@ -50,15 +50,7 @@ export class RateLimiter {
   }
 }
 
-export const syncRateLimiter = new RateLimiter({
-  maxRequests: 5,
-  windowMs: 60000,
-});
 
-export const apiRateLimiter = new RateLimiter({
-  maxRequests: 20,
-  windowMs: 60000,
-});
 
 export const friendAddRateLimiter = new RateLimiter({
   maxRequests: 10,

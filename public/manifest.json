@@ -9,14 +9,18 @@
     "unlimitedStorage",
     "alarms",
     "notifications",
-    "cookies"
+    "cookies",
+    "identity"
   ],
   "host_permissions": [
     "https://leetcode.com/*",
-    "https://api.github.com/*"
+    "https://codeforces.com/*",
+    "https://www.codechef.com/*",
+    "https://api.github.com/*",
+    "https://github.com/*"
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"
   },
   "action": {
     "default_popup": "popup.html",
@@ -42,6 +46,18 @@
         "content.css"
       ],
       "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://codeforces.com/*"
+      ],
+      "js": [
+        "codeforces.js"
+      ],
+      "css": [
+        "codeforces.css"
+      ],
+      "run_at": "document_start"
     }
   ],
   "icons": {

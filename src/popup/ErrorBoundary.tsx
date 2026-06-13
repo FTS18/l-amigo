@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
@@ -33,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="error-boundary">
           <div className="error-content">
-            <h2>⚠️ Something went wrong</h2>
+            <h2><AlertTriangle size={24} style={{ verticalAlign: 'middle', marginRight: '8px' }} /> Something went wrong</h2>
             <p>The application encountered an unexpected error.</p>
             <details>
               <summary>Error details</summary>

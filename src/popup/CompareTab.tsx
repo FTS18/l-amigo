@@ -1,20 +1,175 @@
-import React, { useState, useMemo } from 'react';
-import { Friend, FriendProfile } from '../types';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { Friend, FriendProfile, Platform } from '../types';
 import { DifficultyChart } from './DifficultyChart';
 import { StreakCalculator, StreakInfo } from '../services/streak';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import { Toast } from './Toast'; // for error handling UI
+import { Modal } from './Modal'; // documentation overlay
+
+
 
 interface CompareTabProps {
   friends: Friend[];
   profiles: Record<string, FriendProfile>;
   isDarkMode: boolean;
   ownUsername?: string;
+  ownCodeforcesHandle?: string;
+  ownCodechefHandle?: string;
 }
 
-export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDarkMode, ownUsername }) => {
+export const CompareTab: React.FC<CompareTabProps> = ({
+  friends,
+  profiles,
+  isDarkMode,
+  ownUsername,
+  ownCodeforcesHandle,
+  ownCodechefHandle,
+}) => {
   const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
   const [showAllTopics, setShowAllTopics] = useState(false);
   const [showAllLangs, setShowAllLangs] = useState(false);
+  const [activePlatform, setActivePlatform] = useState<Platform>('leetcode');
+  const [hideUnrated, setHideUnrated] = useState(false);
+  const [isLoadingPlatform, setIsLoadingPlatform] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [showDocs, setShowDocs] = useState(false);
+
+  // Debounced platform toggle to avoid rapid clicks
+  const debounceTimeout = useRef<number | null>(null);
+  const setPlatformDebounced = useCallback((platform: Platform) => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = window.setTimeout(() => {
+      setIsLoadingPlatform(true);
+      setActivePlatform(platform);
+      // Placeholder timeout – actual data fetch should clear loading when done
+      setTimeout(() => setIsLoadingPlatform(false), 300);
+    }, 300);
+  }, []);
+
+  // Helper to determine the platform-specific handle for a user
+  const getActiveHandle = (username: string, isOwn: boolean, platform: Platform): string | undefined => {
+    if (isOwn) {
+      if (platform === 'leetcode') return ownUsername;
+      if (platform === 'codeforces') return ownCodeforcesHandle;
+      if (platform === 'codechef') return ownCodechefHandle;
+      return undefined;
+    }
+    const friend = friends.find(f => f.username.toLowerCase() === username.toLowerCase());
+    if (!friend) return undefined;
+
+    const account = friend.accounts?.find(a => a.platform === platform);
+    if (account) return account.handle;
+
+    // Fallback for LeetCode if accounts array is not set or empty
+    if (platform === 'leetcode') {
+      if (!friend.accounts || friend.accounts.length === 0) {
+        return friend.username;
+      }
+    }
+
+    return undefined;
+  };
+
+  // Helper to retrieve the active profile
+  const getActiveProfile = (username: string, isOwn: boolean, platform: Platform): FriendProfile | undefined => {
+    const handle = getActiveHandle(username, isOwn, platform);
+    if (!handle) return undefined;
+
+    const prefixedKey = `${platform}:${handle.toLowerCase()}`;
+    return profiles[prefixedKey] || profiles[handle.toLowerCase()];
+  };
+
+  // Helper to check if a profile is rated on the current platform
+  const isProfileRated = (profile: FriendProfile | undefined): boolean => {
+    if (!profile) return false;
+    if (profile.platform === 'codeforces') {
+      if (!profile.contestRating || profile.contestRating <= 0) return false;
+      if (profile.codeforcesStats?.rankLabel === 'unrated') return false;
+      return true;
+    } else if (profile.platform === 'codechef') {
+      return !!(profile.contestRating && profile.contestRating > 0);
+    } else {
+      return !!(profile.contestRating && profile.contestRating > 0);
+    }
+  };
+
+  // Persist UI state to chrome.storage.local
+  useEffect(() => {
+    // Load persisted state on mount
+    chrome.storage.local.get(['activePlatform', 'hideUnrated'], items => {
+      if (items.activePlatform) setActivePlatform(items.activePlatform as Platform);
+      if (typeof items.hideUnrated === 'boolean') setHideUnrated(items.hideUnrated);
+    });
+  }, []);
+
+  // Save state whenever it changes
+  useEffect(() => {
+    chrome.storage.local.set({ activePlatform, hideUnrated });
+  }, [activePlatform, hideUnrated]);
+
+  // Synchronize and clean up selected friends when activePlatform changes
+  useEffect(() => {
+    setSelectedFriends(prev => {
+      return prev.filter(username => {
+        const isOwn = (ownUsername && username.toLowerCase() === ownUsername.toLowerCase()) ||
+                      (ownCodeforcesHandle && username.toLowerCase() === ownCodeforcesHandle.toLowerCase()) ||
+                      (ownCodechefHandle && username.toLowerCase() === ownCodechefHandle.toLowerCase());
+        const handle = getActiveHandle(username, !!isOwn, activePlatform);
+        return !!handle;
+      });
+    });
+  }, [activePlatform, ownUsername, ownCodeforcesHandle, ownCodechefHandle, friends]);
+
+  // Build the list of all users that have an account on the active platform
+  const allPlatformUsers = useMemo(() => {
+    const list = [];
+    const ownHandle = activePlatform === 'leetcode' ? ownUsername : activePlatform === 'codeforces' ? ownCodeforcesHandle : ownCodechefHandle;
+    if (ownHandle) {
+      list.push({ username: ownHandle, isOwn: true });
+    }
+
+    for (const f of friends) {
+      const handle = getActiveHandle(f.username, false, activePlatform);
+      if (handle) {
+        // Prevent duplicate own user if they are also in the friends list
+        const isDuplicateOfOwn = ownHandle && f.username.toLowerCase() === ownHandle.toLowerCase();
+        if (!isDuplicateOfOwn) {
+          list.push({ username: f.username, isOwn: false });
+        }
+      }
+    }
+    return list;
+  }, [friends, activePlatform, ownUsername, ownCodeforcesHandle, ownCodechefHandle]);
+
+  // Filter selectable users based on the "Hide Unrated" checkbox
+  const filteredComparableUsers = useMemo(() => {
+    return allPlatformUsers.filter(user => {
+      const profile = getActiveProfile(user.username, user.isOwn, activePlatform);
+      if (!profile) {
+        return !hideUnrated; // Keep if not hiding unrated, otherwise filter out empty profiles
+      }
+      if (hideUnrated && !isProfileRated(profile)) {
+        return false;
+      }
+      return true;
+    });
+  }, [allPlatformUsers, hideUnrated, activePlatform, profiles]);
+
+  // Filter selected profiles based on selected platform and unrated filter
+  const selectedProfiles = useMemo(() => {
+    return selectedFriends
+      .map(username => {
+        const isOwn = (ownUsername && username.toLowerCase() === ownUsername.toLowerCase()) ||
+                      (ownCodeforcesHandle && username.toLowerCase() === ownCodeforcesHandle.toLowerCase()) ||
+                      (ownCodechefHandle && username.toLowerCase() === ownCodechefHandle.toLowerCase());
+        return getActiveProfile(username, !!isOwn, activePlatform);
+      })
+      .filter((p): p is FriendProfile => {
+        if (!p) return false;
+        if (hideUnrated && !isProfileRated(p)) return false;
+        return true;
+      });
+  }, [selectedFriends, activePlatform, hideUnrated, ownUsername, ownCodeforcesHandle, ownCodechefHandle, profiles]);
 
   const handleToggleFriend = (username: string) => {
     setSelectedFriends(prev => {
@@ -28,15 +183,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     });
   };
 
-  const selectedProfiles = useMemo(() => {
-    return selectedFriends
-      .map(username => profiles[username.toLowerCase()])
-      .filter(Boolean);
-  }, [selectedFriends, profiles]);
-
   // ── Memoize expensive calculations ──────────────────────────────────
 
-  /** Cache streak calculations — avoids recalculating 4× per profile per render */
+  /** Cache streak calculations */
   const streakMap = useMemo(() => {
     const map = new Map<string, StreakInfo>();
     for (const p of selectedProfiles) {
@@ -45,7 +194,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     return map;
   }, [selectedProfiles]);
 
-  /** Single-pass activity stats per profile — uses submissionCalendar (full year) when available */
+  /** Single-pass activity stats per profile */
   const activityMap = useMemo(() => {
     const DAY = 86400000;
     const now = Date.now();
@@ -57,7 +206,6 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
       const cal = p.submissionCalendar;
 
       if (cal && Object.keys(cal).length > 0) {
-        // Use full-year calendar data — far more accurate
         let last7 = 0, last30 = 0;
         const daySet = new Set<string>();
         for (const [tsStr, count] of Object.entries(cal)) {
@@ -77,7 +225,6 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
           monthlyAvg: last30,
         });
       } else {
-        // Fallback to recentSubmissions
         const subs = p.recentSubmissions;
         if (!subs || subs.length === 0) {
           map.set(p.username, { last7Days: 0, last30Days: 0, activeDays: 0, weeklyAvg: '0', monthlyAvg: 0 });
@@ -127,22 +274,19 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     return maps;
   }, [selectedProfiles]);
 
-  /** Pre-bucket submissions by dateString per profile for velocity chart.
-   *  Uses submissionCalendar (full year) when available, falls back to recentSubmissions. */
+  /** Pre-bucket submissions by dateString per profile for velocity chart */
   const submissionBuckets = useMemo(() => {
     const buckets = new Map<string, Map<string, number>>();
     for (const p of selectedProfiles) {
       const m = new Map<string, number>();
       const cal = p.submissionCalendar;
       if (cal && Object.keys(cal).length > 0) {
-        // Calendar keys are Unix timestamps in seconds
         for (const [tsStr, count] of Object.entries(cal)) {
           if (count <= 0) continue;
           const key = new Date(parseInt(tsStr, 10) * 1000).toDateString();
           m.set(key, (m.get(key) || 0) + count);
         }
       } else {
-        // Fallback to recentSubmissions
         for (const sub of p.recentSubmissions || []) {
           const key = new Date(sub.timestamp).toDateString();
           m.set(key, (m.get(key) || 0) + 1);
@@ -153,33 +297,108 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     return buckets;
   }, [selectedProfiles]);
 
+  // Define dynamic metrics based on the active platform
+  const metrics = useMemo(() => {
+    if (activePlatform === 'codeforces') {
+      return [
+        { key: 'Total Problems', label: 'Total Problems', getValue: (p: FriendProfile) => p.problemsSolved?.total ?? '-' },
+        { key: 'Easy', label: 'Easy (<1200)', getValue: (p: FriendProfile) => p.problemsSolved?.easy ?? '-' },
+        { key: 'Medium', label: 'Medium (<1900)', getValue: (p: FriendProfile) => p.problemsSolved?.medium ?? '-' },
+        { key: 'Hard', label: 'Hard (≥1900)', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
+        { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
+            const streak = streakMap.get(p.username);
+            return streak && streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
+          },
+          getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
+        },
+        { key: 'Best Streak', label: 'Best Streak', getValue: (p: FriendProfile) => {
+            const streak = streakMap.get(p.username);
+            return streak && streak.longestStreak > 0 ? streak.longestStreak : '-';
+          },
+          getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.longestStreak ?? 0
+        },
+        { key: 'Submissions', label: 'Total Submissions', getValue: (p: FriendProfile) => p.submissionStats?.totalSubmissions ?? '-' },
+        { key: 'Acceptance Rate', label: 'Acceptance Rate', getValue: (p: FriendProfile) => p.submissionStats?.acceptanceRate ? `${p.submissionStats.acceptanceRate.toFixed(1)}%` : '-' },
+        { key: 'Contest Rating', label: 'Contest Rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
+        { key: 'Max Rating', label: 'Max Rating', getValue: (p: FriendProfile) => p.codeforcesStats?.maxRating ?? '-' },
+        { key: 'Rank Label', label: 'Rank', getValue: (p: FriendProfile) => p.codeforcesStats?.rankLabel ?? 'unrated' },
+        { key: 'Contest Count', label: 'Contests Participated', getValue: (p: FriendProfile) => p.contestCount ?? '-' },
+      ];
+    } else if (activePlatform === 'codechef') {
+      return [
+        { key: 'Stars', label: 'Stars', getValue: (p: FriendProfile) => {
+            const stars = Math.floor((p.contestRating || 0) / 200) - 2; // Approximate stars calculation if needed, or simply extract from profile if we saved it
+            return p.contestRating ? `${Math.max(1, Math.min(7, Math.floor((p.contestRating - 1200) / 200) + 1))}★` : '-';
+          }
+        },
+        { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
+            const streak = streakMap.get(p.username);
+            return streak && streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
+          },
+          getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
+        },
+        { key: 'Best Streak', label: 'Best Streak', getValue: (p: FriendProfile) => {
+            const streak = streakMap.get(p.username);
+            return streak && streak.longestStreak > 0 ? streak.longestStreak : '-';
+          },
+          getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.longestStreak ?? 0
+        },
+        { key: 'Contest Rating', label: 'Contest Rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
+        { key: 'Max Rating', label: 'Max Rating', getValue: (p: FriendProfile) => p.contributionPoints ?? '-' }, // using contributionPoints for Max Rating
+        { key: 'Global Rank', label: 'Global Rank', getValue: (p: FriendProfile) => p.contestRanking ? `#${p.contestRanking.toLocaleString()}` : '-',
+          getRawValue: (p: FriendProfile) => p.contestRanking ? 100000000 - p.contestRanking : 0
+        },
+        { key: 'Contest Count', label: 'Contests Participated', getValue: (p: FriendProfile) => p.contestCount ?? '-' },
+      ];
+    } else {
+      return [
+        { key: 'Total Problems', label: 'Total Problems', getValue: (p: FriendProfile) => p.problemsSolved?.total ?? '-' },
+        { key: 'Easy', label: 'Easy', getValue: (p: FriendProfile) => p.problemsSolved?.easy ?? '-' },
+        { key: 'Medium', label: 'Medium', getValue: (p: FriendProfile) => p.problemsSolved?.medium ?? '-' },
+        { key: 'Hard', label: 'Hard', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
+        { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
+            const streak = streakMap.get(p.username);
+            return streak && streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
+          },
+          getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
+        },
+        { key: 'Best Streak', label: 'Best Streak', getValue: (p: FriendProfile) => {
+            const streak = streakMap.get(p.username);
+            return streak && streak.longestStreak > 0 ? streak.longestStreak : '-';
+          },
+          getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.longestStreak ?? 0
+        },
+        { key: 'Submissions', label: 'Total Submissions', getValue: (p: FriendProfile) => p.submissionStats?.totalSubmissions ?? '-' },
+        { key: 'Acceptance Rate', label: 'Acceptance Rate', getValue: (p: FriendProfile) => p.submissionStats?.acceptanceRate ? `${p.submissionStats.acceptanceRate.toFixed(1)}%` : '-' },
+        { key: 'Contest Rating', label: 'Contest Rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
+        { key: 'Rank', label: 'Global Rank', getValue: (p: FriendProfile) => p.ranking ? `#${p.ranking.toLocaleString()}` : '-',
+          getRawValue: (p: FriendProfile) => p.ranking ? 100000000 - p.ranking : 0
+        },
+        { key: 'Reputation', label: 'Reputation', getValue: (p: FriendProfile) => p.reputation ?? '-' },
+      ];
+    }
+  }, [activePlatform, streakMap]);
+
   /** Precompute all max values in a single pass */
   const maxValues = useMemo(() => {
     const mv: Record<string, number> = {};
-    const metrics = ['Total Problems', 'Easy', 'Medium', 'Hard', 'Submissions', 'Acceptance Rate', 'Contest Rating', 'Rank', 'Reputation', 'Current Streak', 'Best Streak'];
-    for (const m of metrics) mv[m] = -Infinity;
-
-    for (const p of selectedProfiles) {
-      const streak = streakMap.get(p.username);
-      const vals: Record<string, number> = {
-        'Total Problems': p.problemsSolved?.total || 0,
-        'Easy': p.problemsSolved?.easy || 0,
-        'Medium': p.problemsSolved?.medium || 0,
-        'Hard': p.problemsSolved?.hard || 0,
-        'Submissions': p.submissionStats?.totalSubmissions || 0,
-        'Acceptance Rate': p.submissionStats?.acceptanceRate || 0,
-        'Contest Rating': p.contestRating ? Math.round(p.contestRating) : 0,
-        'Rank': p.ranking ? Math.max(0, 100000000 - p.ranking) : 0,
-        'Reputation': p.reputation || 0,
-        'Current Streak': streak?.currentStreak || 0,
-        'Best Streak': streak?.longestStreak || 0,
-      };
-      for (const m of metrics) {
-        if (vals[m] > mv[m]) mv[m] = vals[m];
+    for (const metric of metrics) {
+      mv[metric.key] = -Infinity;
+      for (const p of selectedProfiles) {
+        let val: number;
+        if (metric.getRawValue) {
+          val = metric.getRawValue(p);
+        } else {
+          const raw = metric.getValue(p);
+          val = typeof raw === 'number' ? raw : parseFloat(String(raw));
+        }
+        if (!isNaN(val) && val > mv[metric.key]) {
+          mv[metric.key] = val;
+        }
       }
     }
     return mv;
-  }, [selectedProfiles, streakMap]);
+  }, [selectedProfiles, metrics]);
 
   /** Precompute activity max values */
   const maxActivity = useMemo(() => {
@@ -194,10 +413,21 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     return mx;
   }, [selectedProfiles, activityMap]);
 
-  const isMax = (metric: string, value: number | string): boolean => {
-    if (!value || value === '-') return false;
-    const mv = maxValues[metric];
-    return mv > -Infinity && String(value) === String(mv);
+  const isMax = (metricKey: string, p: FriendProfile): boolean => {
+    const metric = metrics.find(m => m.key === metricKey);
+    if (!metric) return false;
+    if (metricKey === 'Rank Label') return false;
+
+    let val: number;
+    if (metric.getRawValue) {
+      val = metric.getRawValue(p);
+    } else {
+      const raw = metric.getValue(p);
+      val = typeof raw === 'number' ? raw : parseFloat(String(raw));
+    }
+    if (isNaN(val) || val === -Infinity || val <= 0) return false;
+
+    return val === maxValues[metricKey];
   };
 
   const isMaxAct = (metric: string, value: number): boolean => {
@@ -210,7 +440,6 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     for (const p of selectedProfiles) {
       for (const t of p.topicStats || []) allNames.add(t.topicName);
     }
-    // Compute total per topic for sorting + max per topic for highlighting
     const totals = new Map<string, number>();
     const maxMap = new Map<string, number>();
     for (const name of allNames) {
@@ -249,7 +478,23 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     return { sortedLangs: sorted, langMaxMap: maxMap };
   }, [selectedProfiles, langMaps]);
 
-  /** Build velocity chart data using pre-bucketed submissions — O(30 × profiles) instead of O(30 × profiles × subs) */
+  /** Build radar chart data using the top 8 topics */
+  const radarData = useMemo(() => {
+    if (selectedProfiles.length === 0 || sortedTopics.length === 0) return [];
+    
+    // Take top 8 topics to make a clean hexagon/octagon
+    const topTopics = sortedTopics.slice(0, 8);
+    
+    return topTopics.map(topic => {
+      const dataPoint: any = { topic };
+      for (const p of selectedProfiles) {
+        dataPoint[p.username] = topicMaps.get(p.username)?.get(topic) || 0;
+      }
+      return dataPoint;
+    });
+  }, [selectedProfiles, sortedTopics, topicMaps]);
+
+  /** Build velocity chart data using pre-bucketed submissions */
   const velocityData = useMemo(() => {
     if (selectedProfiles.length === 0) return [];
     const DAY = 86400000;
@@ -268,20 +513,48 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
     return data;
   }, [selectedProfiles, submissionBuckets]);
 
-  // Create a list that includes own profile if available
-  const allComparableUsers = ownUsername && profiles[ownUsername.toLowerCase()] 
-    ? [{ username: ownUsername, isOwn: true }, ...friends.map(f => ({ username: f.username, isOwn: false }))]
-    : friends.map(f => ({ username: f.username, isOwn: false }));
-
   return (
     <div className="compare-tab">
+      <div className="compare-header-controls">
+        <div className="platform-toggle-group">
+          <button
+            className={`platform-toggle-btn leetcode ${activePlatform === 'leetcode' ? 'active' : ''}`}
+            onClick={() => setActivePlatform('leetcode')}
+          >
+            LeetCode
+          </button>
+          <button
+            className={`platform-toggle-btn codeforces ${activePlatform === 'codeforces' ? 'active' : ''}`}
+            onClick={() => setActivePlatform('codeforces')}
+          >
+            Codeforces
+          </button>
+          <button
+            className={`platform-toggle-btn codechef ${activePlatform === 'codechef' ? 'active' : ''}`}
+            onClick={() => setActivePlatform('codechef')}
+          >
+            CodeChef
+          </button>
+        </div>
+        <div className="unrated-filter-control">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={hideUnrated}
+              onChange={(e) => setHideUnrated(e.target.checked)}
+            />
+            <span>Hide Unrated</span>
+          </label>
+        </div>
+      </div>
+
       <div className="compare-selector">
         <h3>Select profiles to compare (max 3)</h3>
         <div className="friend-selector-list">
-          {allComparableUsers.map(user => {
-            const profile = profiles[user.username.toLowerCase()];
+          {filteredComparableUsers.map(user => {
+            const profile = getActiveProfile(user.username, user.isOwn, activePlatform);
             const isSelected = selectedFriends.includes(user.username);
-            
+
             return (
               <button
                 key={user.username}
@@ -305,257 +578,175 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
         </div>
       ) : (
         <>
-        
-        <div className="compare-table">
+          <div className="compare-table">
             <h3>Quick Comparison Table</h3>
-            <table className="stats-table">
-              <thead>
-                <tr>
-                  <th>Metric</th>
-                  {selectedProfiles.map(profile => (
-                    <th key={profile.username}>{profile.username}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="metric-label">Total Problems</td>
-                  {selectedProfiles.map(profile => {
-                    const val = profile?.problemsSolved?.total || '-';
-                    const mx = isMax('Total Problems', val);
-                    return (
-                      <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <td className="metric-label">Easy</td>
-                  {selectedProfiles.map(profile => {
-                    const val = profile?.problemsSolved?.easy || '-';
-                    const mx = isMax('Easy', val);
-                    return (
-                      <td key={profile.username} className={`metric-value easy ${mx ? 'max-value' : ''}`}>
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <td className="metric-label">Medium</td>
-                  {selectedProfiles.map(profile => {
-                    const val = profile?.problemsSolved?.medium || '-';
-                    const mx = isMax('Medium', val);
-                    return (
-                      <td key={profile.username} className={`metric-value medium ${mx ? 'max-value' : ''}`}>
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <td className="metric-label">Hard</td>
-                  {selectedProfiles.map(profile => {
-                    const val = profile?.problemsSolved?.hard || '-';
-                    const mx = isMax('Hard', val);
-                    return (
-                      <td key={profile.username} className={`metric-value hard ${mx ? 'max-value' : ''}`}>
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <td className="metric-label">Current Streak</td>
-                  {selectedProfiles.map(profile => {
-                    const streak = streakMap.get(profile.username)!;
-                    const val = streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
-                    const mx = isMax('Current Streak', streak.currentStreak);
-                    return (
-                      <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <td className="metric-label">Best Streak</td>
-                  {selectedProfiles.map(profile => {
-                    const streak = streakMap.get(profile.username)!;
-                    const val = streak.longestStreak > 0 ? streak.longestStreak : '-';
-                    const mx = isMax('Best Streak', streak.longestStreak);
-                    return (
-                      <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-                {selectedProfiles.some(p => p.submissionStats) && (
-                  <>
-                    <tr>
-                      <td className="metric-label">Total Submissions</td>
-                      {selectedProfiles.map(profile => {
-                        const val = profile?.submissionStats?.totalSubmissions || '-';
-                        const mx = isMax('Submissions', val);
-                        return (
-                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                            {val}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                    <tr>
-                      <td className="metric-label">Acceptance Rate</td>
-                      {selectedProfiles.map(profile => {
-                        const val = profile?.submissionStats?.acceptanceRate ? `${profile.submissionStats.acceptanceRate.toFixed(1)}%` : '-';
-                        const mx = isMax('Acceptance Rate', profile?.submissionStats?.acceptanceRate || 0);
-                        return (
-                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                            {val}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </>
-                )}
-                {selectedProfiles.some(p => p.contestRating) && (
-                  <tr>
-                    <td className="metric-label">Contest Rating</td>
-                    {selectedProfiles.map(profile => {
-                      const val = profile?.contestRating ? Math.round(profile.contestRating) : '-';
-                      const mx = isMax('Contest Rating', val);
-                      return (
-                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                          {val}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                )}
-                {selectedProfiles.some(p => p.ranking) && (
-                  <tr>
-                    <td className="metric-label">Global Rank</td>
-                    {selectedProfiles.map(profile => {
-                      const val = profile?.ranking ? `#${profile.ranking.toLocaleString()}` : '-';
-                      const mx = isMax('Rank', profile?.ranking ? 100000000 - profile.ranking : 0);
-                      return (
-                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                          {val}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                )}
-                {selectedProfiles.some(p => p.reputation) && (
-                  <tr>
-                    <td className="metric-label">Reputation</td>
-                    {selectedProfiles.map(profile => {
-                      const val = profile?.reputation || '-';
-                      const mx = isMax('Reputation', val);
-                      return (
-                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                          {val}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {selectedProfiles.length > 0 && selectedProfiles.some(p => p.recentSubmissions && p.recentSubmissions.length > 0) && (
-            <div className="activity-table-section">
-              <h3>Recent Activity</h3>
+            <div className="compare-table-wrapper">
               <table className="stats-table">
                 <thead>
                   <tr>
-                    <th>Activity Metric</th>
+                    <th>Metric</th>
                     {selectedProfiles.map(profile => (
                       <th key={profile.username}>{profile.username}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="metric-label">Last 7 Days</td>
-                    {selectedProfiles.map(profile => {
-                      const activityStats = activityMap.get(profile.username)!;
-                      const mx = isMaxAct('Last 7 Days', activityStats.last7Days);
-                      return (
-                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                          {activityStats.last7Days}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                  <tr>
-                    <td className="metric-label">Last 30 Days</td>
-                    {selectedProfiles.map(profile => {
-                      const activityStats = activityMap.get(profile.username)!;
-                      const mx = isMaxAct('Last 30 Days', activityStats.last30Days);
-                      return (
-                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                          {activityStats.last30Days}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                  <tr>
-                    <td className="metric-label">Active Days</td>
-                    {selectedProfiles.map(profile => {
-                      const activityStats = activityMap.get(profile.username)!;
-                      const mx = isMaxAct('Active Days', activityStats.activeDays);
-                      return (
-                        <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
-                          {activityStats.activeDays}/30
-                        </td>
-                      );
-                    })}
-                  </tr>
+                  {metrics.map(metric => (
+                    <tr key={metric.key}>
+                      <td className="metric-label">{metric.label}</td>
+                      {selectedProfiles.map(profile => {
+                        const val = metric.getValue(profile);
+                        const mx = isMax(metric.key, profile);
+
+                        let diffClass = '';
+                        if (metric.key === 'Easy') diffClass = 'easy';
+                        else if (metric.key === 'Medium') diffClass = 'medium';
+                        else if (metric.key === 'Hard') diffClass = 'hard';
+
+                        return (
+                          <td key={profile.username} className={`metric-value ${diffClass} ${mx ? 'max-value' : ''}`}>
+                            {val}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          {selectedProfiles.length > 0 && selectedProfiles.some(p => p.recentSubmissions && p.recentSubmissions.length > 0) && (
+            <div className="activity-table-section">
+              <h3>Recent Activity</h3>
+              <div className="compare-table-wrapper">
+                <table className="stats-table">
+                  <thead>
+                    <tr>
+                      <th>Activity Metric</th>
+                      {selectedProfiles.map(profile => (
+                        <th key={profile.username}>{profile.username}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="metric-label">Last 7 Days</td>
+                      {selectedProfiles.map(profile => {
+                        const activityStats = activityMap.get(profile.username);
+                        const last7 = activityStats?.last7Days ?? 0;
+                        const mx = isMaxAct('Last 7 Days', last7);
+                        return (
+                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
+                            {last7}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                    <tr>
+                      <td className="metric-label">Last 30 Days</td>
+                      {selectedProfiles.map(profile => {
+                        const activityStats = activityMap.get(profile.username);
+                        const last30 = activityStats?.last30Days ?? 0;
+                        const mx = isMaxAct('Last 30 Days', last30);
+                        return (
+                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
+                            {last30}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                    <tr>
+                      <td className="metric-label">Active Days</td>
+                      {selectedProfiles.map(profile => {
+                        const activityStats = activityMap.get(profile.username);
+                        const activeDaysVal = activityStats?.activeDays ?? 0;
+                        const mx = isMaxAct('Active Days', activeDaysVal);
+                        return (
+                          <td key={profile.username} className={`metric-value ${mx ? 'max-value' : ''}`}>
+                            {activeDaysVal}/30
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </>
       )}
 
+      {selectedProfiles.length > 0 && radarData.length > 0 && (
+        <div className="radar-chart-section" style={{ marginTop: '24px', marginBottom: '24px' }}>
+          <h3>Topic Strengths (Top 8 Topics)</h3>
+          <ResponsiveContainer width="100%" height={350} minWidth={1}>
+            <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+              <PolarGrid stroke={isDarkMode ? '#444' : '#e0e0e0'} />
+              <PolarAngleAxis dataKey="topic" tick={{ fill: isDarkMode ? '#aaa' : '#555', fontSize: 11 }} />
+              <PolarRadiusAxis angle={30} domain={[0, 'auto']} tick={{ fill: isDarkMode ? '#888' : '#666', fontSize: 10 }} />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: isDarkMode ? '#2a2a2a' : '#f9f9f9',
+                  border: `1px solid ${isDarkMode ? '#555' : '#e0e0e0'}`,
+                  color: isDarkMode ? '#e0e0e0' : '#333',
+                }}
+              />
+              <Legend />
+              {selectedProfiles.map((profile, idx) => {
+                const colors = ['#22c55e', '#eab308', '#ef4444'];
+                return (
+                  <Radar
+                    key={profile.username}
+                    name={profile.username}
+                    dataKey={profile.username}
+                    stroke={colors[idx % 3]}
+                    fill={colors[idx % 3]}
+                    fillOpacity={0.3}
+                    isAnimationActive={false}
+                  />
+                );
+              })}
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.topicStats && p.topicStats.length > 0) && (
         <div className="topics-table-section">
-          <h3>Topics Solved <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedTopics.length} total)</span></h3>
-          <table className="topics-data-table">
-            <thead>
-              <tr>
-                <th>Topic</th>
-                {selectedProfiles.map(profile => (
-                  <th key={profile.username}>{profile.username}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {(showAllTopics ? sortedTopics : sortedTopics.slice(0, 10)).map((topicName, idx) => (
-                <tr key={idx}>
-                  <td className="topic-name-cell">{topicName}</td>
-                  {selectedProfiles.map(profile => {
-                    const count = topicMaps.get(profile.username)?.get(topicName) || 0;
-                    const mx = count > 0 && count === topicMaxMap.get(topicName);
-                    return (
-                      <td key={profile.username} className={`topic-count-cell ${mx ? 'max-value' : ''}`}>
-                        {count || '-'}
-                      </td>
-                    );
-                  })}
+          <h3>Topics Sol <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedTopics.length} total)</span></h3>
+          <div className="compare-table-wrapper">
+            <table className="topics-data-table">
+              <thead>
+                <tr>
+                  <th>Topic</th>
+                  {selectedProfiles.map(profile => (
+                    <th key={profile.username}>{profile.username}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {(showAllTopics ? sortedTopics : sortedTopics.slice(0, 10)).map((topicName, idx) => (
+                  <tr key={idx}>
+                    <td className="topic-name-cell">{topicName}</td>
+                    {selectedProfiles.map(profile => {
+                      const count = topicMaps.get(profile.username)?.get(topicName) || 0;
+                      const mx = count > 0 && count === topicMaxMap.get(topicName);
+                      return (
+                        <td key={profile.username} className={`topic-count-cell ${mx ? 'max-value' : ''}`}>
+                          {count || '-'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {sortedTopics.length > 10 && (
             <button
               className="show-all-btn"
               onClick={() => setShowAllTopics(!showAllTopics)}
-              style={{ margin: '8px auto', display: 'block', padding: '4px 16px', fontSize: '12px', cursor: 'pointer', borderRadius: '6px', border: `1px solid ${isDarkMode ? '#555' : '#ddd'}`, background: isDarkMode ? '#2a2a2a' : '#f5f5f5', color: isDarkMode ? '#ccc' : '#555' }}
             >
               {showAllTopics ? 'Show Less' : `Show All ${sortedTopics.length} Topics`}
             </button>
@@ -566,37 +757,38 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.languageStats && p.languageStats.length > 0) && (
         <div className="language-table-section">
           <h3>Languages Used <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedLangs.length} total)</span></h3>
-          <table className="language-data-table">
-            <thead>
-              <tr>
-                <th>Language</th>
-                {selectedProfiles.map(profile => (
-                  <th key={profile.username}>{profile.username}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {(showAllLangs ? sortedLangs : sortedLangs.slice(0, 10)).map((langName, idx) => (
-                <tr key={idx}>
-                  <td className="language-name-cell">{langName}</td>
-                  {selectedProfiles.map(profile => {
-                    const count = langMaps.get(profile.username)?.get(langName) || 0;
-                    const mx = count > 0 && count === langMaxMap.get(langName);
-                    return (
-                      <td key={profile.username} className={`language-count-cell ${mx ? 'max-value' : ''}`}>
-                        {count || '-'}
-                      </td>
-                    );
-                  })}
+          <div className="compare-table-wrapper">
+            <table className="language-data-table">
+              <thead>
+                <tr>
+                  <th>Language</th>
+                  {selectedProfiles.map(profile => (
+                    <th key={profile.username}>{profile.username}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {(showAllLangs ? sortedLangs : sortedLangs.slice(0, 10)).map((langName, idx) => (
+                  <tr key={idx}>
+                    <td className="language-name-cell">{langName}</td>
+                    {selectedProfiles.map(profile => {
+                      const count = langMaps.get(profile.username)?.get(langName) || 0;
+                      const mx = count > 0 && count === langMaxMap.get(langName);
+                      return (
+                        <td key={profile.username} className={`language-count-cell ${mx ? 'max-value' : ''}`}>
+                          {count || '-'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {sortedLangs.length > 10 && (
             <button
               className="show-all-btn"
               onClick={() => setShowAllLangs(!showAllLangs)}
-              style={{ margin: '8px auto', display: 'block', padding: '4px 16px', fontSize: '12px', cursor: 'pointer', borderRadius: '6px', border: `1px solid ${isDarkMode ? '#555' : '#ddd'}`, background: isDarkMode ? '#2a2a2a' : '#f5f5f5', color: isDarkMode ? '#ccc' : '#555' }}
             >
               {showAllLangs ? 'Show Less' : `Show All ${sortedLangs.length} Languages`}
             </button>
@@ -607,14 +799,14 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.recentSubmissions && p.recentSubmissions.length > 0) && (
         <div className="velocity-chart-section">
           <h3>Submission Velocity (Last 30 Days)</h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={300} minWidth={1}>
             <LineChart data={velocityData}>
               <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#444' : '#e0e0e0'} />
               <XAxis dataKey="date" stroke={isDarkMode ? '#aaa' : '#999'} tick={{ fontSize: 11 }} />
               <YAxis stroke={isDarkMode ? '#aaa' : '#999'} allowDecimals={false} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: isDarkMode ? '#2a2a2a' : '#f9f9f9', 
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: isDarkMode ? '#2a2a2a' : '#f9f9f9',
                   border: `1px solid ${isDarkMode ? '#555' : '#e0e0e0'}`,
                   color: isDarkMode ? '#e0e0e0' : '#333',
                 }}
@@ -624,11 +816,11 @@ export const CompareTab: React.FC<CompareTabProps> = ({ friends, profiles, isDar
               {selectedProfiles.map((profile, idx) => {
                 const colors = ['#22c55e', '#eab308', '#ef4444'];
                 return (
-                  <Line 
+                  <Line
                     key={profile.username}
-                    type="monotone" 
-                    dataKey={profile.username} 
-                    stroke={colors[idx % 3]} 
+                    type="monotone"
+                    dataKey={profile.username}
+                    stroke={colors[idx % 3]}
                     strokeWidth={2}
                     dot={false}
                     isAnimationActive={false}
