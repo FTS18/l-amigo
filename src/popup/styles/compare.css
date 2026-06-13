@@ -411,3 +411,66 @@
   border: 1px solid var(--border-strong);
   border-radius: 0px !important;
 }
+
+/* ─── Compare Tab Heatmap Overlap Styles ──────────────────────────── */
+.heatmap-wrapper {
+  overflow-x: auto;
+  padding: 10px 0;
+  margin-top: 10px;
+}
+.heatmap-grid {
+  display: flex;
+  gap: 3px;
+  /* Support for scrolling from right */
+  flex-direction: row-reverse;
+}
+.heatmap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: var(--border-primary);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.heatmap-cell:hover {
+  opacity: 1;
+}
+
+.heatmap-wrapper::-webkit-scrollbar { display: none; }
+.heatmap-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Base styles for split background */
+.heatmap-cell.active-user-0, .heatmap-legend-color.active-user-0 { background-color: var(--color-blue); opacity: 1; }
+.heatmap-cell.active-user-1, .heatmap-legend-color.active-user-1 { background-color: var(--color-yellow); opacity: 1; }
+.heatmap-cell.active-user-2, .heatmap-legend-color.active-user-2 { background-color: var(--color-red); opacity: 1; }
+
+.heatmap-cell.overlap-01, .heatmap-legend-color.overlap-01 { background-color: var(--color-green); opacity: 1; }
+.heatmap-cell.overlap-02, .heatmap-legend-color.overlap-02 { background-color: var(--color-purple); opacity: 1; }
+.heatmap-cell.overlap-12, .heatmap-legend-color.overlap-12 { background-color: #ff9800; opacity: 1; }
+.heatmap-cell.overlap-012, .heatmap-legend-color.overlap-012 { background-color: var(--text-primary); opacity: 1; }
+
+.heatmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.heatmap-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.heatmap-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}

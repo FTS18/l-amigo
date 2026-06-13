@@ -23,6 +23,13 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
       const ownProfile = ownUsername ? profiles[ownUsername.toLowerCase()] : undefined;
       const ownSolvedProblems = new Set<string>();
       
+      // Load all accepted submissions from local storage to ensure 100% accurate filtering
+      const storedData = await chrome.storage.local.get("all_accepted_submissions");
+      const storedSubs = storedData.all_accepted_submissions || [];
+      storedSubs.forEach((sub: any) => {
+        ownSolvedProblems.add(sub.titleSlug);
+      });
+      
       if (ownProfile?.recentSubmissions) {
         ownProfile.recentSubmissions.forEach(sub => {
           if (sub.statusDisplay === 'Accepted') {

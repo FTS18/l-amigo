@@ -142,6 +142,21 @@ export class CodeforcesService {
     }
 
     const accepted = submissions.filter((s) => s.verdict === "OK");
+    
+    const verdictCounts: Record<string, number> = {};
+    for (const sub of submissions) {
+      if (sub.verdict) {
+        verdictCounts[sub.verdict] = (verdictCounts[sub.verdict] || 0) + 1;
+      }
+    }
+
+    let bestGlobalRank: number | undefined = undefined;
+    for (const c of contests) {
+      if (c.rank && (!bestGlobalRank || c.rank < bestGlobalRank)) {
+        bestGlobalRank = c.rank;
+      }
+    }
+
     // Calculate accurate difficulty counts and divisions
     const uniqueSolved = new Set<string>();
     let easyCount = 0;
@@ -238,6 +253,7 @@ export class CodeforcesService {
       avatar: user.titlePhoto,
       contestRating: user.rating,
       contestRanking: user.rank ? 0 : undefined,
+      bestGlobalRank,
       contributionPoints: user.maxRating,
       problemsSolved: {
         total: uniqueSolved.size,
@@ -271,7 +287,8 @@ export class CodeforcesService {
         divisionCounts: { div1, div2, div3, div4 },
         globalContests: contests.length,
         maxRating: user.maxRating || 0,
-        latestRank: latestContest?.rank,
+        latestRank: latestContest ? latestContest.rank : undefined,
+        verdictCounts,
       },
     };
   }

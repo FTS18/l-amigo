@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Friend, FriendProfile, RecentSubmission, Platform } from '../types';
-import { X } from 'lucide-react';
+import { X, ChevronLeft } from 'lucide-react';
 import { StreakCalculator } from '../services/streak';
 import { LeetCodeService } from '../services/leetcode';
 import { CodeforcesService } from '../services/codeforces';
 import { CodeChefService } from '../services/codechef';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { getPlatformRankColor, getPlatformRankLabel, getProfileQualityColor, getProfileQualityBorderColor, getProfileQualityTextColor } from './FriendCard';
 import { SkeletonList, SkeletonRecItem } from './Skeleton';
 
@@ -35,7 +35,8 @@ const RatingChart: React.FC<{
   }
 
   const sortedHistory = [...history].sort((a, b) => a.timestamp - b.timestamp);
-  const data = sortedHistory.map(h => ({
+  const data = sortedHistory.map((h, i) => ({
+    id: i,
     name: h.contestName,
     rating: h.rating,
     rank: h.ranking,
@@ -58,12 +59,13 @@ const RatingChart: React.FC<{
           <AreaChart data={data} margin={{ top: 5, right: 10, left: -25, bottom: 0 }}>
             <defs>
               <linearGradient id={`colorRating-${platform}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={themeColor} stopOpacity={0.4}/>
+                <stop offset="5%" stopColor={themeColor} stopOpacity={0.6}/>
                 <stop offset="95%" stopColor={themeColor} stopOpacity={0.0}/>
               </linearGradient>
             </defs>
             <XAxis 
-              dataKey="date" 
+              dataKey="id" 
+              tickFormatter={(val) => data[val]?.date || ''}
               stroke={labelColor} 
               fontSize={9} 
               tickLine={false} 
@@ -80,27 +82,32 @@ const RatingChart: React.FC<{
               allowDecimals={false}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: 'var(--bg-tertiary)',
-                borderColor: themeColor,
-                borderRadius: '0px',
-                fontSize: '11px',
-                padding: '8px 12px',
-                boxShadow: 'none',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border)'
-              }}
-              labelStyle={{ fontWeight: 'bold', marginBottom: '4px', color: 'var(--text-primary)' }}
-              formatter={(value: any, name: any, props: any) => {
-                const rank = props.payload.rank;
-                const pointColor = getPlatformRankColor({ ...activeProfile, contestRating: value });
-                return [
-                  <div key="details">
-                    <div>Rating: <span style={{ fontWeight: 'bold', color: pointColor }}>{value}</span></div>
-                    {rank ? <div>Rank: <span style={{ fontWeight: 'bold' }}>#{rank}</span></div> : null}
-                  </div>,
-                  ''
-                ];
+              content={({ active, payload, label }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0].payload;
+                  const pointColor = getPlatformRankColor({ ...activeProfile, contestRating: data.rating });
+                  return (
+                    <div style={{
+                      backgroundColor: 'var(--bg-tertiary)',
+                      borderRadius: '4px',
+                      padding: '8px 12px',
+                      border: '1px solid var(--border)',
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                      color: 'var(--text-primary)',
+                      fontSize: '11px',
+                      minWidth: '150px'
+                    }}>
+                      <div style={{ fontWeight: 'bold', marginBottom: '6px', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)', paddingBottom: '4px' }}>
+                        {data.name}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                        <div>Rating: <span style={{ fontWeight: 'bold', color: pointColor }}>{data.rating}</span></div>
+                        {data.rank ? <div>Rank: <span style={{ fontWeight: 'bold' }}>#{data.rank}</span></div> : null}
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
               }}
             />
             <Area 
@@ -108,9 +115,10 @@ const RatingChart: React.FC<{
               dataKey="rating" 
               stroke={themeColor} 
               strokeWidth={2} 
-              fillOpacity={0.4} 
+              fillOpacity={1} 
               fill={`url(#colorRating-${platform})`} 
               isAnimationActive={false}
+              activeDot={{ r: 5, fill: themeColor, stroke: 'var(--bg-primary)', strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -204,7 +212,20 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
 
   const activeChartProfile = activePlatform === 'leetcode' ? leetcodeProfile : activePlatform === 'codechef' ? codechefProfile : codeforcesProfile;
   const platformSubmissions = submissions.filter(sub => sub.platform === activePlatform);
-  const hasOverviewData = !!(activeChartProfile?.ratingHistory && activeChartProfile.ratingHistory.length > 0);
+  
+  const deduplicatedPlatformSubmissions = useMemo(() => {
+    const deduplicated = new Map<string, RecentSubmission>();
+    for (const sub of [...platformSubmissions].sort((a, b) => b.timestamp - a.timestamp)) {
+      const key = `${sub.platform}-${sub.titleSlug}`;
+      if (!deduplicated.has(key)) deduplicated.set(key, sub);
+    }
+    return Array.from(deduplicated.values());
+  }, [platformSubmissions]);
+  const hasOverviewData = !!(
+    (activeChartProfile?.ratingHistory && activeChartProfile.ratingHistory.length > 0) ||
+    (activeChartProfile?.topicStats && activeChartProfile.topicStats.length > 0) ||
+    (activeChartProfile?.submissionStats)
+  );
 
   useEffect(() => {
     if (!hasOverviewData && activeTab === 'overview') {
@@ -264,9 +285,16 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
 
   return (
     <div className="friend-profile-view" style={{ '--platform-theme-color': themeColor } as React.CSSProperties}>
-      <div className="profile-hero">
+      <div 
+        className="profile-hero"
+        style={{
+          background: `radial-gradient(ellipse at 50% 0%, color-mix(in srgb, ${themeColor} 15%, transparent) 0%, transparent 70%), var(--bg-secondary)`
+        }}
+      >
         <div className="profile-hero-top">
-          <button className="back-button-arrow" onClick={onBack}>← Back</button>
+          <button className="back-button-arrow" onClick={onBack} title="Back">
+            <ChevronLeft size={20} strokeWidth={2.5} />
+          </button>
 
           {activeChartProfile ? (
             <div className="profile-hero-identity">
@@ -277,20 +305,77 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                 onError={(e) => { (e.target as HTMLImageElement).src = 'default-avatar.png'; }}
               />
               <div className="profile-hero-names">
-                <a
-                  className="profile-header-name-link"
-                  href={activePlatform === 'leetcode'
-                    ? `https://leetcode.com/${activeChartProfile.username}`
-                    : activePlatform === 'codechef'
-                    ? `https://www.codechef.com/users/${activeChartProfile.username}`
-                    : `https://codeforces.com/profile/${activeChartProfile.username}`
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {friend.displayName || activeChartProfile.username}
-                </a>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <a
+                    className="profile-header-name-link"
+                    href={activePlatform === 'leetcode'
+                      ? `https://leetcode.com/${activeChartProfile.username}`
+                      : activePlatform === 'codechef'
+                      ? `https://www.codechef.com/users/${activeChartProfile.username}`
+                      : `https://codeforces.com/profile/${activeChartProfile.username}`
+                    }
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {friend.displayName || activeChartProfile.username}
+                  </a>
+                  {activeChartProfile && StreakCalculator.calculateStreak(activeChartProfile).currentStreak > 0 && (
+                    <span 
+                      className="name-streak-badge" 
+                      title={`${StreakCalculator.calculateStreak(activeChartProfile).currentStreak} Day Streak on ${activePlatform}`}
+                      style={{ fontSize: '13px', fontWeight: 600, color: '#ff9800', display: 'flex', alignItems: 'center', gap: '2px', cursor: 'default' }}
+                    >
+                      {StreakCalculator.calculateStreak(activeChartProfile).currentStreak} <span style={{ fontSize: '13px' }}>🔥</span>
+                    </span>
+                  )}
+                </div>
                 <span className="profile-header-handle-text">@{activeChartProfile.username}</span>
+              </div>
+              <div className="profile-hero-tags" style={{ display: 'flex', gap: '6px', marginLeft: 'auto', marginRight: '4px', alignItems: 'center' }}>
+                {activePlatform === 'leetcode' && leetcodeProfile?.contestCount && (
+                  <span 
+                    className="contest-tag" 
+                    style={{ color: isDarkMode ? '#fff' : 'var(--text-primary)', border: 'none', backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)', whiteSpace: 'nowrap', fontWeight: 600 }}
+                    onClick={openExternalProfile}
+                    title="Number of LeetCode Contests"
+                  >
+                    {leetcodeProfile.contestCount} Contests
+                  </span>
+                )}
+                {activePlatform === 'codeforces' && codeforcesProfile?.contestCount && (
+                  <span 
+                    className="contest-tag" 
+                    style={{ color: isDarkMode ? '#fff' : 'var(--text-primary)', border: 'none', backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)', whiteSpace: 'nowrap', fontWeight: 600 }}
+                    onClick={openExternalProfile}
+                    title="Number of Codeforces Contests"
+                  >
+                    {codeforcesProfile.contestCount} Contests
+                  </span>
+                )}
+                {activePlatform === 'codechef' && codechefProfile && (
+                  <>
+                    {codechefProfile.contestCount && (
+                      <span 
+                        className="contest-tag" 
+                        style={{ color: isDarkMode ? '#fff' : 'var(--text-primary)', border: 'none', backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)', whiteSpace: 'nowrap', fontWeight: 600 }}
+                        onClick={openExternalProfile}
+                        title="Number of CodeChef Contests"
+                      >
+                        {codechefProfile.contestCount} Contests
+                      </span>
+                    )}
+                    {codechefProfile.contributionPoints && (
+                      <span 
+                        className="div-tag div3" 
+                        style={{ color: themeColor, border: 'none', backgroundColor: `${themeColor}1a`, fontSize: '10px', padding: '3px 8px' }}
+                        onClick={openExternalProfile} 
+                        title="Maximum CodeChef Rating achieved"
+                      >
+                        Max Rating: {codechefProfile.contributionPoints}
+                      </span>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           ) : (
@@ -333,8 +418,8 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               <div 
                 className="detailed-rating-box"
                 style={{ 
-                  borderColor: lcRankColor,
-                  background: `linear-gradient(135deg, ${lcRankColor}1a, ${lcRankColor}05)`
+                  borderColor: 'transparent',
+                  background: isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.05)'
                 }}
                 onClick={() => setActiveTab('overview')}
                 title="Click to view rating chart"
@@ -355,15 +440,15 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               <div 
                 className="solved-pill total" 
                 style={{ 
-                  backgroundColor: getProfileQualityColor(leetcodeProfile, isDarkMode),
-                  borderColor: getProfileQualityBorderColor(leetcodeProfile, isDarkMode),
-                  color: getProfileQualityTextColor(leetcodeProfile, isDarkMode)
+                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.05)',
+                  border: 'none',
+                  color: getProfileQualityColor(leetcodeProfile, isDarkMode)
                 }}
                 onClick={() => { setActiveTab('submissions'); setFilterLevel('all'); }}
                 title="Click to view all submissions"
               >
-                <span className="count" style={{ color: getProfileQualityTextColor(leetcodeProfile, isDarkMode) }}>{leetcodeProfile.problemsSolved.total}</span>
-                <span className="lbl" style={{ color: getProfileQualityTextColor(leetcodeProfile, isDarkMode) }}>Total</span>
+                <span className="count" style={{ color: getProfileQualityColor(leetcodeProfile, isDarkMode) }}>{leetcodeProfile.problemsSolved.total}</span>
+                <span className="lbl" style={{ color: getProfileQualityColor(leetcodeProfile, isDarkMode) }}>Total</span>
               </div>
               <div 
                 className="solved-pill easy"
@@ -392,35 +477,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
             </div>
           </div>
 
-          <div className="bottom-meta-row">
-            <span 
-              className="streak-tag" 
-              style={{ 
-                borderColor: `${lcRankColor}40`, 
-                color: lcRankColor, 
-                backgroundColor: `${lcRankColor}0d` 
-              }}
-              onClick={openExternalProfile}
-              title="View profile on LeetCode"
-            >
-               {StreakCalculator.calculateStreak(leetcodeProfile).currentStreak} Day Streak
-            </span>
-            {leetcodeProfile.contestCount && (
-              <span 
-                className="contest-tag" 
-                style={{ 
-                  borderColor: `${lcRankColor}40`, 
-                  color: lcRankColor, 
-                  backgroundColor: `${lcRankColor}0d` 
-                }}
-                onClick={openExternalProfile}
-                title="View profile on LeetCode"
-              >
-                {leetcodeProfile.contestCount} Contests
-              </span>
-            )}
           </div>
-        </div>
       )}
 
       {/* Detailed Stats Row for Codeforces */}
@@ -431,8 +488,8 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               <div 
                 className="detailed-rating-box"
                 style={{ 
-                  borderColor: cfRankColor,
-                  background: `linear-gradient(135deg, ${cfRankColor}1a, ${cfRankColor}05)`
+                  borderColor: 'transparent',
+                  background: isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.05)'
                 }}
                 onClick={() => setActiveTab('overview')}
                 title="Click to view rating chart"
@@ -440,7 +497,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                 <span className="value" style={{ color: cfRankColor }}>
                   {Math.round(codeforcesProfile.contestRating)}
                   {codeforcesProfile.codeforcesStats?.ratingDelta !== undefined && codeforcesProfile.codeforcesStats.ratingDelta !== 0 && (
-                    <span className={`delta ${codeforcesProfile.codeforcesStats.ratingDelta > 0 ? 'pos' : 'neg'}`}>
+                    <span className={`delta ${codeforcesProfile.codeforcesStats.ratingDelta > 0 ? 'pos' : 'neg'}`} style={{ color: cfRankColor }}>
                       {codeforcesProfile.codeforcesStats.ratingDelta > 0 ? `+${codeforcesProfile.codeforcesStats.ratingDelta}` : codeforcesProfile.codeforcesStats.ratingDelta}
                     </span>
                   )}
@@ -458,15 +515,15 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               <div 
                 className="solved-pill total" 
                 style={{ 
-                  backgroundColor: getProfileQualityColor(codeforcesProfile, isDarkMode),
-                  borderColor: getProfileQualityBorderColor(codeforcesProfile, isDarkMode),
-                  color: getProfileQualityTextColor(codeforcesProfile, isDarkMode)
+                  backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.05)',
+                  border: 'none',
+                  color: getProfileQualityColor(codeforcesProfile, isDarkMode)
                 }}
                 onClick={() => { setActiveTab('submissions'); setFilterLevel('all'); }}
                 title="Click to view all submissions"
               >
-                <span className="count" style={{ color: getProfileQualityTextColor(codeforcesProfile, isDarkMode) }}>{codeforcesProfile.problemsSolved.total}</span>
-                <span className="lbl" style={{ color: getProfileQualityTextColor(codeforcesProfile, isDarkMode) }}>Total</span>
+                <span className="count" style={{ color: getProfileQualityColor(codeforcesProfile, isDarkMode) }}>{codeforcesProfile.problemsSolved.total}</span>
+                <span className="lbl" style={{ color: getProfileQualityColor(codeforcesProfile, isDarkMode) }}>Total</span>
               </div>
               <div 
                 className="solved-pill easy"
@@ -496,39 +553,29 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
           </div>
 
           <div className="bottom-meta-row-cf">
-            <span 
-              className="streak-tag" 
-              style={{ 
-                borderColor: `${cfRankColor}40`, 
-                color: cfRankColor, 
-                backgroundColor: `${cfRankColor}0d` 
-              }}
-              onClick={openExternalProfile}
-              title="View profile on Codeforces"
-            >
-               {StreakCalculator.calculateStreak(codeforcesProfile).currentStreak} Day Streak
-            </span>
-            {codeforcesProfile.contestCount && (
-              <span 
-                className="contest-tag" 
-                style={{ 
-                  borderColor: `${cfRankColor}40`, 
-                  color: cfRankColor, 
-                  backgroundColor: `${cfRankColor}0d` 
-                }}
-                onClick={openExternalProfile}
-                title="View profile on Codeforces"
-              >
-                {codeforcesProfile.contestCount} Contests
-              </span>
-            )}
+
             {codeforcesProfile.codeforcesStats?.divisionCounts && (
-              <div className="cf-divisions-row">
-                {codeforcesProfile.codeforcesStats.divisionCounts.div1 > 0 && <span className="div-tag div1" onClick={openExternalProfile} title="View profile on Codeforces">D1: {codeforcesProfile.codeforcesStats.divisionCounts.div1}</span>}
-                {codeforcesProfile.codeforcesStats.divisionCounts.div2 > 0 && <span className="div-tag div2" onClick={openExternalProfile} title="View profile on Codeforces">D2: {codeforcesProfile.codeforcesStats.divisionCounts.div2}</span>}
-                {codeforcesProfile.codeforcesStats.divisionCounts.div3 > 0 && <span className="div-tag div3" onClick={openExternalProfile} title="View profile on Codeforces">D3: {codeforcesProfile.codeforcesStats.divisionCounts.div3}</span>}
-                {codeforcesProfile.codeforcesStats.divisionCounts.div4 > 0 && <span className="div-tag div4" onClick={openExternalProfile} title="View profile on Codeforces">D4: {codeforcesProfile.codeforcesStats.divisionCounts.div4}</span>}
-              </div>
+              (() => {
+                const divs = codeforcesProfile.codeforcesStats.divisionCounts;
+                const totalDiv = divs.div1 + divs.div2 + divs.div3 + divs.div4;
+                if (totalDiv === 0) return null;
+                return (
+                  <div className="cf-divisions-wrapper" onClick={openExternalProfile} title="View profile on Codeforces" style={{ cursor: 'pointer', padding: '12px 0px 4px', width: '100%', boxSizing: 'border-box' }}>
+                    <div className="cf-divisions-bar-thin" style={{ display: 'flex', height: '4px', width: '100%', borderRadius: '2px', overflow: 'hidden', marginBottom: '8px' }}>
+                      {divs.div1 > 0 && <div style={{ width: `${(divs.div1 / totalDiv) * 100}%`, background: 'var(--color-hard)' }} />}
+                      {divs.div2 > 0 && <div style={{ width: `${(divs.div2 / totalDiv) * 100}%`, background: 'var(--color-medium)' }} />}
+                      {divs.div3 > 0 && <div style={{ width: `${(divs.div3 / totalDiv) * 100}%`, background: 'var(--accent-codeforces-blue)' }} />}
+                      {divs.div4 > 0 && <div style={{ width: `${(divs.div4 / totalDiv) * 100}%`, background: 'var(--color-easy)' }} />}
+                    </div>
+                    <div className="cf-divisions-legend" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                      {divs.div1 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-hard)' }} /> D1: {divs.div1}</span>}
+                      {divs.div2 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-medium)' }} /> D2: {divs.div2}</span>}
+                      {divs.div3 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-codeforces-blue)' }} /> D3: {divs.div3}</span>}
+                      {divs.div4 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-easy)' }} /> D4: {divs.div4}</span>}
+                    </div>
+                  </div>
+                );
+              })()
             )}
           </div>
         </div>
@@ -542,8 +589,8 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               <div 
                 className="detailed-rating-box"
                 style={{ 
-                  borderColor: ccRankColor,
-                  background: `linear-gradient(135deg, ${ccRankColor}1a, ${ccRankColor}05)`
+                  borderColor: 'transparent',
+                  background: isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.05)'
                 }}
                 onClick={() => setActiveTab('overview')}
                 title="Click to view rating chart"
@@ -575,26 +622,6 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               </div>
             ) : null}
           </div>
-
-          <div className="bottom-meta-row-cf">
-            {codechefProfile.contestCount && (
-              <span 
-                className="contest-tag" 
-                style={{ 
-                  borderColor: `${ccRankColor}40`, 
-                  color: ccRankColor, 
-                  backgroundColor: `${ccRankColor}0d` 
-                }}
-                onClick={openExternalProfile}
-                title="View profile on CodeChef"
-              >
-                {codechefProfile.contestCount} Contests
-              </span>
-            )}
-            {codechefProfile.contributionPoints && (
-              <span className="div-tag div3" onClick={openExternalProfile} title="View profile on Codechef">Max Rating: {codechefProfile.contributionPoints}</span>
-            )}
-          </div>
         </div>
       )}
       </div>  {/* close profile-hero */}
@@ -612,7 +639,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
           className={`profile-tab-btn ${activeTab === 'submissions' ? 'active' : ''}`}
           onClick={() => setActiveTab('submissions')}
         >
-          Submissions Feed {platformSubmissions.length > 0 && `(${platformSubmissions.length})`}
+          Questions Solved {deduplicatedPlatformSubmissions.length > 0 && `(${deduplicatedPlatformSubmissions.length})`}
         </button>
       </div>
 
@@ -621,54 +648,124 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
         {activeTab === 'overview' && activeChartProfile && (
           <div className="overview-tab-pane">
             {activeChartProfile.ratingHistory && activeChartProfile.ratingHistory.length > 0 && (
-              <>
-                <RatingChart 
-                  history={activeChartProfile.ratingHistory || []} 
-                  platform={activePlatform} 
-                  isDarkMode={isDarkMode}
-                  activeProfile={activeChartProfile}
-                />
-
-                {/* Recent Contests Table */}
-                <div className="recent-contests-section">
-                  <h4>Recent Contests</h4>
-                  <div className="contests-list-detailed">
-                    {[...activeChartProfile.ratingHistory].reverse().slice(0, 5).map((c, idx) => {
-                      const delta = getContestDelta(activeChartProfile, c.timestamp);
-                      const contestUrl = activePlatform === 'leetcode'
-                        ? `https://leetcode.com/contest/${c.contestId}/`
-                        : activePlatform === 'codechef'
-                        ? `https://www.codechef.com/${c.contestId}`
-                        : `https://codeforces.com/contest/${c.contestId}`;
-                      return (
-                        <div key={idx} className="contest-row-detailed">
-                          <a 
-                            href={contestUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="contest-name-col contest-link" 
-                            title={c.contestName}
-                          >
-                            {c.contestName}
-                          </a>
-                          <div className="contest-stats-col">
-                            {c.ranking && <span className="rank-tag">#{c.ranking}</span>}
-                            <span className="rating-tag" style={{ color: getPlatformRankColor({ ...activeChartProfile, contestRating: c.rating }) }}>
-                              {c.rating}
-                            </span>
-                            {delta !== 0 && (
-                              <span className={`delta-tag ${delta > 0 ? 'pos' : 'neg'}`}>
-                                {delta > 0 ? `+${delta}` : delta}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
+              <RatingChart 
+                history={activeChartProfile.ratingHistory || []} 
+                platform={activePlatform} 
+                isDarkMode={isDarkMode}
+                activeProfile={activeChartProfile}
+              />
             )}
+
+            <div className="advanced-analytics-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '16px', marginBottom: '24px' }}>
+                  {/* Skills Radar Chart */}
+                  {activeChartProfile.topicStats && activeChartProfile.topicStats.length >= 3 && (
+                    <div className="analytics-card">
+                      <h4>Topic Mastery</h4>
+                      <div style={{ width: '100%', height: 200, marginTop: '-10px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                          <RadarChart cx="50%" cy="50%" outerRadius="65%" data={activeChartProfile.topicStats.slice(0, 6)}>
+                            <PolarGrid stroke="var(--border)" />
+                            <PolarAngleAxis dataKey="topicName" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                            <PolarRadiusAxis angle={30} domain={[0, 'dataMax']} tick={false} axisLine={false} />
+                            <Radar name="Solved" dataKey="problemsSolved" stroke={themeColor} fill={themeColor} fillOpacity={0.3} />
+                            <Tooltip contentStyle={{ backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border)', borderRadius: '6px' }} />
+                          </RadarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Accuracy & Verdicts or Peak Metrics */}
+                  <div className="analytics-card flex-col" style={{ gridColumn: (!activeChartProfile.topicStats || activeChartProfile.topicStats.length < 3) ? '1 / -1' : 'auto' }}>
+                    <h4 style={{ textAlign: (!activeChartProfile.topicStats || activeChartProfile.topicStats.length < 3) ? 'center' : 'left' }}>Peak Performance</h4>
+                    <div className="peak-stats-list" style={{ alignItems: (!activeChartProfile.topicStats || activeChartProfile.topicStats.length < 3) ? 'center' : 'flex-start' }}>
+                      {(activePlatform === 'codeforces' && activeChartProfile.codeforcesStats?.maxRating) ? (
+                        <div className="peak-stat">
+                          <span className="peak-val">{activeChartProfile.codeforcesStats.maxRating}</span>
+                          <span className="peak-lbl">Max Rating</span>
+                        </div>
+                      ) : null}
+                      
+                      {activeChartProfile.bestGlobalRank ? (
+                        <div className="peak-stat">
+                          <span className="peak-val">#{activeChartProfile.bestGlobalRank}</span>
+                          <span className="peak-lbl">Best Global Rank</span>
+                        </div>
+                      ) : null}
+                      
+                      {activeChartProfile.submissionStats ? (
+                        <div className="peak-stat" style={{ marginTop: '12px' }}>
+                          <span className="peak-val" style={{ color: 'var(--color-easy)' }}>
+                            {activeChartProfile.submissionStats.acceptanceRate.toFixed(1)}%
+                          </span>
+                          <span className="peak-lbl">Acceptance Rate</span>
+                        </div>
+                      ) : null}
+                    </div>
+
+                  </div>
+
+                  {/* CF Verdicts Breakdown */}
+                  {activePlatform === 'codeforces' && activeChartProfile.codeforcesStats?.verdictCounts && (
+                    <div className="analytics-card flex-col" style={{ gridColumn: '1 / -1', alignItems: 'center' }}>
+                      <h4>Verdicts (Last 2000)</h4>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '8px' }}>
+                        {Object.entries(activeChartProfile.codeforcesStats.verdictCounts)
+                          .sort((a, b) => b[1] - a[1])
+                          .slice(0, 4)
+                          .map(([verdict, count]) => {
+                            const vLabel = verdict === 'OK' ? 'AC' : verdict === 'WRONG_ANSWER' ? 'WA' : verdict === 'TIME_LIMIT_EXCEEDED' ? 'TLE' : verdict === 'COMPILATION_ERROR' ? 'CE' : verdict === 'RUNTIME_ERROR' ? 'RE' : verdict;
+                            const vColor = verdict === 'OK' ? 'var(--color-easy)' : verdict === 'WRONG_ANSWER' ? 'var(--color-hard)' : 'var(--color-medium)';
+                            return (
+                              <div key={verdict} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-primary)', padding: '6px 12px', borderRadius: '4px', border: '1px solid var(--border)', minWidth: '60px' }}>
+                                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: vColor }}>{vLabel}</span>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', marginTop: '2px' }}>{count}</span>
+                              </div>
+                            );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>                {/* Recent Contests Table */}
+                {activeChartProfile.ratingHistory && activeChartProfile.ratingHistory.length > 0 && (
+                  <div className="recent-contests-section">
+                    <h4>Recent Contests</h4>
+                    <div className="contests-list-detailed">
+                      {[...activeChartProfile.ratingHistory].reverse().slice(0, 5).map((c, idx) => {
+                        const delta = getContestDelta(activeChartProfile, c.timestamp);
+                        const contestUrl = activePlatform === 'leetcode'
+                          ? `https://leetcode.com/contest/${c.contestId}/`
+                          : activePlatform === 'codechef'
+                          ? `https://www.codechef.com/${c.contestId}`
+                          : `https://codeforces.com/contest/${c.contestId}`;
+                        return (
+                          <div key={idx} className="contest-row-detailed">
+                            <a 
+                              href={contestUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="contest-name-col contest-link" 
+                              title={c.contestName}
+                            >
+                              {c.contestName}
+                            </a>
+                            <div className="contest-stats-col">
+                              {c.ranking && <span className="rank-tag">#{c.ranking}</span>}
+                              <span className="rating-tag" style={{ color: getPlatformRankColor({ ...activeChartProfile, contestRating: c.rating }) }}>
+                                {c.rating}
+                              </span>
+                              {delta !== 0 && (
+                                <span className={`delta-tag ${delta > 0 ? 'pos' : 'neg'}`}>
+                                  {delta > 0 ? `+${delta}` : delta}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
           </div>
         )}
 
@@ -709,13 +806,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
               <>
                 <div className="submissions-feed-list">
                   {(() => {
-                  const deduplicated = new Map<string, RecentSubmission>();
-                  for (const sub of platformSubmissions.sort((a, b) => b.timestamp - a.timestamp)) {
-                    const key = `${sub.platform}-${sub.titleSlug}`;
-                    if (!deduplicated.has(key)) deduplicated.set(key, sub);
-                  }
-
-                  const filtered = Array.from(deduplicated.values()).filter(sub => {
+                  const filtered = deduplicatedPlatformSubmissions.filter(sub => {
                     if (filterLevel === 'all') return true;
                     
                     const subDiff = sub.difficulty?.toLowerCase();
@@ -733,7 +824,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                     }
                     
                     return false;
-                  }).slice(0, 30);
+                  }).slice(0, filterLevel === 'all' ? submissionLimit : undefined);
 
                   if (filtered.length === 0) {
                     return (
@@ -743,17 +834,30 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                     );
                   }
 
-                  return filtered.map((sub, idx) => {
-                    const url = sub.platform === 'leetcode'
+                    return filtered.map((sub, idx) => {
+                    const questionUrl = sub.platform === 'leetcode'
                       ? `https://leetcode.com/problems/${sub.titleSlug}/`
                       : sub.platform === 'codechef'
                       ? `https://www.codechef.com/problems/${sub.titleSlug}`
-                      : `https://codeforces.com/problemset/problem/${sub.titleSlug}`;
+                      : `https://codeforces.com/contest/${sub.titleSlug.split('/')[0]}/problem/${sub.titleSlug.split('/')[1]}`;
+                      
+                    let answerUrl: string | undefined = undefined;
+                    if (sub.submissionId) {
+                      if (sub.platform === 'leetcode') {
+                        answerUrl = `https://leetcode.com/submissions/detail/${sub.submissionId}/`;
+                      } else if (sub.platform === 'codeforces') {
+                        answerUrl = `https://codeforces.com/contest/${sub.titleSlug.split('/')[0]}/submission/${sub.submissionId}`;
+                      } else if (sub.platform === 'codechef') {
+                        answerUrl = `https://www.codechef.com/viewsolution/${sub.submissionId}`;
+                      }
+                    }
+
                     const diffClass = sub.difficulty 
                       ? sub.difficulty.toLowerCase() 
                       : (sub.rating 
                           ? (sub.rating < 1300 ? 'easy' : sub.rating < 1800 ? 'medium' : 'hard')
                           : 'unknown');
+                          
                     return (
                       <div key={idx} className={`submission-feed-row compact ${diffClass}`}>
                         <div className="sub-left">
@@ -761,17 +865,17 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                           <span className={`sub-platform-badge ${sub.platform}`}>
                             {sub.platform === 'leetcode' ? 'LC' : sub.platform === 'codechef' ? 'CC' : 'CF'}
                           </span>
-                          <a 
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="sub-title-text sub-link" 
-                            title={sub.title}
-                          >
+                          <span className="sub-title-text" title={sub.title}>
                             {sub.title} {sub.statusDisplay !== 'Accepted' ? <span title="Rejected" style={{ display: 'inline-flex', verticalAlign: 'text-bottom', marginLeft: '4px' }}><X size={12} color="#ff4444" /></span> : null}
-                          </a>
+                          </span>
                         </div>
                         <div className="sub-right">
+                          <div className="sub-action-links">
+                            <a href={questionUrl} target="_blank" rel="noopener noreferrer" className="sub-action-btn" title="Open Question">Q</a>
+                            {answerUrl && (
+                              <a href={answerUrl} target="_blank" rel="noopener noreferrer" className="sub-action-btn" title="View Submission">A</a>
+                            )}
+                          </div>
                           <span className="sub-time-text">{formatTimestamp(sub.timestamp)}</span>
                         </div>
                       </div>
@@ -780,7 +884,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                 })()}
               </div>
               
-              {platformSubmissions.length > 0 && filterLevel === 'all' && (
+              {deduplicatedPlatformSubmissions.length > 0 && filterLevel === 'all' && (
                 <button 
                   className="load-more-btn"
                   onClick={() => setSubmissionLimit(prev => prev + 30)}

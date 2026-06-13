@@ -412,9 +412,7 @@ export class StorageService {
     const identities = await this.getIdentities();
     const target = identities.find((i) =>
       i.accounts.some(
-        (a) =>
-          a.platform === "leetcode" &&
-          a.handle.toLowerCase() === username.toLowerCase(),
+        (a) => a.handle.toLowerCase() === username.toLowerCase(),
       ),
     );
 
@@ -548,7 +546,7 @@ export class StorageService {
   }
 
   private static async cleanupProfiles(index: string[]): Promise<void> {
-    console.log("[StorageService.cleanupProfiles] Starting cleanup process. Input index:", index);
+    // console.log("[StorageService.cleanupProfiles] Starting cleanup process. Input index:", index);
     const identities = await this.getIdentities();
     const allowedRefs = new Set<string>();
     identities.forEach((identity) => {
@@ -574,13 +572,13 @@ export class StorageService {
         this.profileRef("codechef", String(ownCodechefHandle).trim().toLowerCase()),
       );
     }
-    console.log("[StorageService.cleanupProfiles] Allowed profile references:", Array.from(allowedRefs));
+    // console.log("[StorageService.cleanupProfiles] Allowed profile references:", Array.from(allowedRefs));
 
     // To prevent orphaned profiles that aren't even in the index, scan all chrome.storage.local keys
     const allStorage = await chrome.storage.local.get(null);
     const allStorageKeys = Object.keys(allStorage);
     const profileKeysInStorage = allStorageKeys.filter(key => key.startsWith(PROFILE_V2_KEY_PREFIX));
-    console.log("[StorageService.cleanupProfiles] Profile keys currently in storage:", profileKeysInStorage);
+    // console.log("[StorageService.cleanupProfiles] Profile keys currently in storage:", profileKeysInStorage);
 
     const toRemove: string[] = [];
 
@@ -588,7 +586,7 @@ export class StorageService {
     for (const key of profileKeysInStorage) {
       const refPart = key.slice(PROFILE_V2_KEY_PREFIX.length);
       if (!allowedRefs.has(refPart)) {
-        console.log(`[StorageService.cleanupProfiles] Found orphaned profile in storage: ${key}. Queueing for removal.`);
+        // console.log(`[StorageService.cleanupProfiles] Found orphaned profile in storage: ${key}. Queueing for removal.`);
         toRemove.push(key);
       }
     }
@@ -599,7 +597,7 @@ export class StorageService {
       if (allowedRefs.has(ref)) {
         newIndex.push(ref);
       } else {
-        console.log(`[StorageService.cleanupProfiles] Found disallowed index entry: ${ref}`);
+        // console.log(`[StorageService.cleanupProfiles] Found disallowed index entry: ${ref}`);
         const [platform, handle] = ref.split(":");
         const key = this.getProfileV2Key(platform as Platform, handle);
         if (!toRemove.includes(key)) {
@@ -609,13 +607,13 @@ export class StorageService {
     }
 
     if (toRemove.length > 0) {
-      console.log("[StorageService.cleanupProfiles] Removing keys from storage:", toRemove);
+      // console.log("[StorageService.cleanupProfiles] Removing keys from storage:", toRemove);
       await chrome.storage.local.remove(toRemove);
     }
 
-    console.log("[StorageService.cleanupProfiles] Updating profile index to:", newIndex);
+    // console.log("[StorageService.cleanupProfiles] Updating profile index to:", newIndex);
     await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
-    console.log("[StorageService.cleanupProfiles] Cleanup complete.");
+    // console.log("[StorageService.cleanupProfiles] Cleanup complete.");
   }
 
   static async getProfile(username: string): Promise<FriendProfile | null> {
