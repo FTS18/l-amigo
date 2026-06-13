@@ -4,6 +4,24 @@ import { App } from './App';
 import { ErrorBoundary } from './ErrorBoundary';
 
 // Mock Chrome APIs for previewing in local browser
+declare const __DEV__: boolean;
+
+if (typeof __DEV__ !== 'undefined' && __DEV__) {
+  const connect = (): void => {
+    const socket = new WebSocket("ws://localhost:9091");
+    socket.onmessage = (event) => {
+      try {
+        const payload = JSON.parse(String(event.data));
+        if (payload?.type === "reload") {
+          window.location.reload();
+        }
+      } catch {}
+    };
+    socket.onerror = () => socket.close();
+    socket.onclose = () => globalThis.setTimeout(connect, 1000);
+  };
+  connect();
+}
 if (typeof chrome === 'undefined' || !chrome.storage) {
   console.log('Using browser mock of chrome storage APIs');
   const mockStorage: Record<string, any> = {

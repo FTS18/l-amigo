@@ -292,6 +292,34 @@ class LeetCodeMonitor {
   }
 }
 
+// Add global message listener for background notifications (e.g. sync toasts)
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "showSyncToast") {
+    const existing = document.querySelector(".lamigo-toast");
+    if (existing) {
+      existing.remove();
+    }
+
+    const toast = document.createElement("div");
+    toast.className = "lamigo-toast";
+    
+    const icon = document.createElement("span");
+    icon.className = "lamigo-toast-success-icon";
+    icon.textContent = "✓";
+    
+    const text = document.createElement("span");
+    text.textContent = message.message;
+    
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.remove();
+    }, 5000);
+  }
+});
+
 // Kick off
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {

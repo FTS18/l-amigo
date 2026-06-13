@@ -446,6 +446,13 @@ export class LeetCodeService {
         contestId: h.contest.titleSlug || h.contest.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       }));
 
+    let bestGlobalRank: number | undefined = undefined;
+    for (const h of ratingHistory) {
+      if (h.ranking && (!bestGlobalRank || h.ranking < bestGlobalRank)) {
+        bestGlobalRank = h.ranking;
+      }
+    }
+
     return {
       username: user.username,
       platform: "leetcode",
@@ -456,6 +463,7 @@ export class LeetCodeService {
       reputation: user.profile?.reputation,
       contestRating: contest?.rating,
       contestRanking: contest?.globalRanking,
+      bestGlobalRank,
       contestCount: contest?.attendedContestsCount,
       problemsSolved: solved,
       recentSubmissions,

@@ -257,12 +257,12 @@
 .lc-med-box  { background: #FFC01E !important; color: #fff !important; }
 .lc-hard-box { background: #FF375F !important; color: #fff !important; }
 
-.easy-box-item { background: #00af9b !important; }
-.med-box-item  { background: #ffb800 !important; }
-.hard-box-item { background: #ff2d55 !important; }
-.easy-box-item .stats-val, .easy-box-item .stats-lbl,
-.med-box-item  .stats-val, .med-box-item  .stats-lbl,
-.hard-box-item .stats-val, .hard-box-item .stats-lbl { color: #fff !important; }
+.easy-box-item { background: color-mix(in srgb, var(--color-easy) 15%, transparent) !important; }
+.med-box-item  { background: color-mix(in srgb, var(--color-medium) 15%, transparent) !important; }
+.hard-box-item { background: color-mix(in srgb, var(--color-hard) 15%, transparent) !important; }
+.easy-box-item .stats-val, .easy-box-item .stats-lbl { color: var(--color-easy) !important; }
+.med-box-item  .stats-val, .med-box-item  .stats-lbl { color: var(--color-medium) !important; }
+.hard-box-item .stats-val, .hard-box-item .stats-lbl { color: var(--color-hard) !important; }
 
 /* ─── Recent Submissions Compact ──────────────────────────────────── */
 .recent-submissions-compact {

@@ -69,7 +69,7 @@ export class SyncManager {
       }
 
       await chrome.storage.local.set({ sync_status: "syncing" });
-      const count = await GitHubSyncService.syncSubmissions(
+      const { count, syncedSubmissions } = await GitHubSyncService.syncSubmissions(
         allSubs,
         (done, total) => {
           chrome.storage.local.set({
@@ -83,7 +83,11 @@ export class SyncManager {
         sync_status: "idle",
         sync_resume_offset: 0,
       });
-      await GitHubSyncService.logSyncEvent(count, allSubs.slice(0, count).map(s => s.title));
+      await GitHubSyncService.logSyncEvent(count, syncedSubmissions.map(s => s.title));
+
+      if (count > 0) {
+        await this.sendToastToActiveTab(count, syncedSubmissions);
+      }
 
       chrome.notifications.create({
         type: "basic",
@@ -176,7 +180,7 @@ export class SyncManager {
       });
 
       await chrome.storage.local.set({ sync_status: "syncing" });
-      const count = await GitHubSyncService.syncSubmissions(
+      const { count, syncedSubmissions } = await GitHubSyncService.syncSubmissions(
         merged,
         (done, total) => {
           chrome.storage.local.set({
@@ -189,6 +193,7 @@ export class SyncManager {
       await chrome.storage.local.set({ sync_status: "idle" });
 
       if (count > 0) {
+        await this.sendToastToActiveTab(count, syncedSubmissions);
         chrome.notifications.create({
           type: "basic",
           iconUrl: chrome.runtime.getURL("android-chrome-192x192.png"),
@@ -203,6 +208,34 @@ export class SyncManager {
       });
     } finally {
       await chrome.storage.session.remove(SESSION_SYNC_KEY);
+    }
+  }
+
+  private static async sendToastToActiveTab(count: number, syncedSubmissions: Array<{ title: string; lang: string }>) {
+    if (count === 0) return;
+    try {
+      // Group by language
+      const langCounts: Record<string, number> = {};
+      syncedSubmissions.forEach(s => {
+        const lang = s.lang || "Unknown";
+        langCounts[lang] = (langCounts[lang] || 0) + 1;
+      });
+      const parts = Object.entries(langCounts).map(([lang, count]) => `${count} ${lang}`);
+      const details = parts.join(', ');
+      
+      const message = `Synced ${details} solution${count > 1 ? 's' : ''} to GitHub!`;
+      
+      const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: "showSyncToast",
+          message
+        }).catch(() => {
+          // Ignore tab messaging error when injected context is not active/available
+        });
+      }
+    } catch (err) {
+      console.warn("[SyncManager] Failed to send toast message to content script:", err);
     }
   }
 }

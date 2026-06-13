@@ -357,3 +357,61 @@
 .lamigo-sync-badge:hover {
     background: #34d06a;
 }
+
+/* Sync Notification Toast */
+.lamigo-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    padding: 12px 20px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    z-index: 100000 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    animation: lamigo-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1), lamigo-toast-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) 4.7s forwards;
+    pointer-events: none;
+}
+
+.lamigo-toast-success-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    background: rgba(44, 187, 93, 0.1) !important;
+    color: #2cbb5d !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    margin-right: 2px !important;
+}
+
+@keyframes lamigo-toast-in {
+    from {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes lamigo-toast-out {
+    from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+    }
+}

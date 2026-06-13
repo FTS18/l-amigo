@@ -96,8 +96,12 @@ export class CodeChefService {
   }
 
   static async getUpcomingContests(): Promise<any[]> {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 10000);
     try {
-      const res = await fetch("https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=premium");
+      const res = await fetch("https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=premium", {
+        signal: ctl.signal
+      });
       const data = await res.json();
       
       const futureContests = data.future_contests || [];
@@ -111,6 +115,34 @@ export class CodeChefService {
     } catch (err) {
       console.warn('Failed to fetch CodeChef contests:', err);
       return [];
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  static async fetchSubmissionCode(submissionId: string | number): Promise<string | null> {
+    try {
+      const url = `https://www.codechef.com/viewplaintext/${submissionId}`;
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      
+      const html = await res.text();
+      const match = html.match(/<pre[^>]*>([\s\S]*?)<\/pre>/i);
+      
+      if (match && match[1]) {
+        let code = match[1];
+        code = code.replace(/&lt;/g, '<')
+                   .replace(/&gt;/g, '>')
+                   .replace(/&amp;/g, '&')
+                   .replace(/&quot;/g, '"')
+                   .replace(/&#39;/g, "'")
+                   .replace(/&#039;/g, "'");
+        return code;
+      }
+      return null;
+    } catch (e) {
+      console.warn(`Failed to fetch CodeChef submission code for ${submissionId}`, e);
+      return null;
     }
   }
 }

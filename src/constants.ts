@@ -19,6 +19,9 @@ export const REFRESH_CONSTANTS = {
   MAX_CONCURRENT_REQUESTS: 3,
 } as const;
 
+// GitHub auto-sync alarm interval (minutes)
+export const GITHUB_SYNC_INTERVAL_MINUTES = 360; // 6 hours
+
 // Data Limits
 export const DATA_LIMITS = {
   MAX_FRIENDS: 50,
@@ -28,10 +31,6 @@ export const DATA_LIMITS = {
 
   PROFILE_CACHE_DURATION: 3600000, // 1 hour in ms
   PROFILE_STALE_THRESHOLD: 900000, // 15 min — skip refetch if fresher
-  PROFILE_STALE_THRESHOLD_BY_PLATFORM: {
-    leetcode: 900000,
-    codeforces: 900000,
-  },
   MAX_STORAGE_SIZE: 5242880, // 5MB in bytes
 } as const;
 

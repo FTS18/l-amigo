@@ -2,6 +2,12 @@ import { AcceptedSubmission, LeetCodeService } from "./leetcode";
 import { CodeforcesService } from "./codeforces";
 import { CodeChefService } from "./codechef";
 import { API_CONSTANTS } from "../constants";
+import { StorageService } from "./storage";
+
+export interface SyncResult {
+  count: number;
+  syncedSubmissions: Array<{ title: string; lang: string }>;
+}
 
 export interface GitHubSyncConfig {
   token: string;
@@ -17,6 +23,8 @@ export class GitHubSyncService {
   private static readonly API = "https://api.github.com";
   private static readonly CFG_KEY = "github_sync_config";
   private static readonly SYNCED_KEY = "synced_submissions";
+  private static readonly DEVICE_CODE_URL = "https://github.com/login/device/code";
+  private static readonly ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
 
   // OAuth Constants
   private static readonly PROD_EXT_ID = "pakknkopmiakipmbjmfejcejehmgieli";
@@ -126,6 +134,96 @@ export class GitHubSyncService {
     });
   }
 
+  static async requestDeviceCode(): Promise<{
+    device_code: string;
+    user_code: string;
+    verification_uri: string;
+    expires_in: number;
+    interval: number;
+  }> {
+    const isProd = chrome.runtime.id === this.PROD_EXT_ID;
+    const clientId = isProd ? this.PROD_CLIENT_ID : this.DEV_CLIENT_ID;
+
+    const r = await fetch(this.DEVICE_CODE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        client_id: clientId,
+        scope: "repo",
+      }),
+    });
+
+    if (!r.ok) {
+      const errText = await r.text();
+      throw new Error(`Failed to request device code: ${errText || r.statusText}`);
+    }
+
+    return await r.json();
+  }
+
+  static async pollForToken(
+    deviceCode: string,
+    interval: number,
+    abortSignal?: AbortSignal
+  ): Promise<string> {
+    const isProd = chrome.runtime.id === this.PROD_EXT_ID;
+    const clientId = isProd ? this.PROD_CLIENT_ID : this.DEV_CLIENT_ID;
+    let pollInterval = interval || 5;
+
+    while (true) {
+      if (abortSignal?.aborted) {
+        throw new Error("Device authorization cancelled.");
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, pollInterval * 1000));
+
+      if (abortSignal?.aborted) {
+        throw new Error("Device authorization cancelled.");
+      }
+
+      const r = await fetch(this.ACCESS_TOKEN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          client_id: clientId,
+          device_code: deviceCode,
+          grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+        }),
+      });
+
+      if (!r.ok) {
+        throw new Error("Failed polling for access token");
+      }
+
+      const data = await r.json();
+
+      if (data.error) {
+        if (data.error === "authorization_pending") {
+          continue;
+        } else if (data.error === "slow_down") {
+          pollInterval = (data.interval || pollInterval) + 2;
+          continue;
+        } else if (data.error === "expired_token") {
+          throw new Error("The device code has expired. Please try again.");
+        } else if (data.error === "access_denied") {
+          throw new Error("Access denied by the user.");
+        } else {
+          throw new Error(data.error_description || data.error);
+        }
+      }
+
+      if (data.access_token) {
+        return data.access_token;
+      }
+    }
+  }
+
   // ── Synced-set helpers ──────────────────────────────────────────────
 
   static async getSyncedIds(): Promise<Set<string>> {
@@ -153,7 +251,7 @@ export class GitHubSyncService {
   static async syncSubmissions(
     submissions: AcceptedSubmission[],
     onProgress?: (synced: number, total: number) => void,
-  ): Promise<number> {
+  ): Promise<SyncResult> {
     const config = await this.getConfig();
     if (!config?.token) throw new Error("GitHub token not configured");
     const repo = config.repoName;
@@ -193,9 +291,9 @@ export class GitHubSyncService {
     >();
 
     let syncedCount = 0;
+    const syncedDetails: Array<{ title: string; lang: string }> = [];
     const toSync = submissions.filter((s) => !synced.has(s.id));
     const total = toSync.length;
-    const newlySyncedIds: string[] = [];
     console.log(
       `[GH] ${total} new submissions to sync (${synced.size} already synced)`,
     );
@@ -226,7 +324,7 @@ export class GitHubSyncService {
         code = await CodeforcesService.fetchSubmissionCode(contestId, sub.id); 
         meta.difficulty = (sub as any).difficulty || 'Unknown';
       } else if (sub.platform === 'codechef') {
-        // CodeChef code scraping logic to be added
+        code = await CodeChefService.fetchSubmissionCode(sub.id);
         meta.difficulty = (sub as any).difficulty || 'Unknown';
       }
 
@@ -247,6 +345,7 @@ export class GitHubSyncService {
         await this.batchMarkSynced([sub.id]);
         
         syncedCount++;
+        syncedDetails.push({ title: sub.title, lang: sub.lang });
         console.log(`[GH] ✓ ${filePath}`);
       } catch (err) {
         console.error(`[GH] ✗ ${filePath}:`, err);
@@ -261,11 +360,32 @@ export class GitHubSyncService {
       );
     }
 
+    // Auto-generate beautiful README.md and stats badge
+    try {
+      const { own_username } = await chrome.storage.local.get("own_username");
+      if (own_username) {
+        const ownProfile = await StorageService.getProfile(own_username);
+        if (ownProfile) {
+          const storedMeta = await chrome.storage.local.get("leetcode_problem_meta");
+          const metaMap = storedMeta.leetcode_problem_meta || {};
+          
+          const readmeContent = this.generateReadme(ownProfile, submissions, metaMap);
+          const badgeContent = this.generateStatsBadge(ownProfile.problemsSolved.total);
+          
+          await this.upsertFile(config.token, ghUser, repo, "README.md", readmeContent);
+          await this.upsertFile(config.token, ghUser, repo, "leetcode-stats.svg", badgeContent);
+          console.log("[GH] Successfully updated README.md and leetcode-stats.svg");
+        }
+      }
+    } catch (err) {
+      console.error("[GH] Failed to update README/Badge:", err);
+    }
+
     // config.lastSync is updated in background script if needed, or here
     config.lastSync = Date.now();
     await this.saveConfig(config);
 
-    return syncedCount;
+    return { count: syncedCount, syncedSubmissions: syncedDetails };
   }
 
   // ── Utility methods ─────────────────────────────────────────────────
@@ -278,6 +398,12 @@ export class GitHubSyncService {
     slug: string,
   ): Promise<{ num: number | null; difficulty: string }> {
     try {
+      const cache = await chrome.storage.local.get("leetcode_problem_meta");
+      const metaMap = cache.leetcode_problem_meta || {};
+      if (metaMap[slug]) {
+        return metaMap[slug];
+      }
+
       const data = await LeetCodeService.gql<{
         question: { questionFrontendId: string; difficulty: string } | null;
       }>(
@@ -290,14 +416,135 @@ export class GitHubSyncService {
         { titleSlug: slug },
       );
       const q = data?.question;
-      return {
+      const res = {
         num: parseInt(q?.questionFrontendId || "0", 10) || null,
         difficulty: q?.difficulty || "Unknown",
       };
+
+      metaMap[slug] = res;
+      await chrome.storage.local.set({ leetcode_problem_meta: metaMap });
+      return res;
     } catch (err) {
       console.error(`[GH] Failed to fetch meta for ${slug}:`, err);
       return { num: null, difficulty: "Unknown" };
     }
+  }
+
+  private static getProgressBar(percent: number): string {
+    const size = 10;
+    const dots = Math.round((percent / 100) * size);
+    const emptyDots = size - dots;
+    return `\`[` + "█".repeat(dots) + "░".repeat(emptyDots) + `]\` (${percent.toFixed(1)}%)`;
+  }
+
+  static generateReadme(
+    profile: any,
+    submissions: AcceptedSubmission[],
+    metaMap: Record<string, { num: number | null; difficulty: string }>
+  ): string {
+    const total = profile.problemsSolved?.total || 0;
+    const easy = profile.problemsSolved?.easy || 0;
+    const medium = profile.problemsSolved?.medium || 0;
+    const hard = profile.problemsSolved?.hard || 0;
+
+    const easyPct = total > 0 ? (easy / total) * 100 : 0;
+    const mediumPct = total > 0 ? (medium / total) * 100 : 0;
+    const hardPct = total > 0 ? (hard / total) * 100 : 0;
+
+    // Generate topic tag table (top 10 topics)
+    const topTopics = (profile.topicStats || []).slice(0, 10);
+    let topicTable = "| Topic | Solved |\n| :--- | :--- |\n";
+    if (topTopics.length > 0) {
+      topTopics.forEach((t: any) => {
+        topicTable += `| ${t.topicName} | ${t.problemsSolved} |\n`;
+      });
+    } else {
+      topicTable += "| N/A | 0 |\n";
+    }
+
+    // Generate index of solutions
+    const uniqueProblems = new Map<string, { title: string; lang: string; timestamp: number; platform: string; difficulty: string }>();
+    submissions.forEach(s => {
+      const platform = s.platform || 'leetcode';
+      const difficulty = (s as any).difficulty || 'Unknown';
+      if (!uniqueProblems.has(s.titleSlug) || s.timestamp > uniqueProblems.get(s.titleSlug)!.timestamp) {
+        uniqueProblems.set(s.titleSlug, { title: s.title, lang: s.lang, timestamp: s.timestamp, platform, difficulty });
+      }
+    });
+
+    const sortedProblems = Array.from(uniqueProblems.entries())
+      .sort((a, b) => a[1].title.localeCompare(b[1].title));
+
+    let indexTable = "| Platform | Problem | Language | Solution Folder |\n| :--- | :--- | :--- | :--- |\n";
+    if (sortedProblems.length > 0) {
+      sortedProblems.forEach(([slug, p]) => {
+        const meta = metaMap[slug] || { num: null, difficulty: p.difficulty };
+        const difficulty = p.platform === 'leetcode' ? meta.difficulty : p.difficulty;
+        const problemFolder = meta.num ? `${meta.num}-${slug}` : slug;
+        const platformDir = p.platform === 'codeforces' ? 'Codeforces' : p.platform === 'codechef' ? 'CodeChef' : 'LeetCode';
+        const relativePath = `${platformDir}/${difficulty}/${problemFolder}`;
+        
+        let link = `https://leetcode.com/problems/${slug}/`;
+        if (p.platform === 'codeforces') {
+          const parts = slug.split('/');
+          link = `https://codeforces.com/contest/${parts[0]}/problem/${parts[1]}`;
+        } else if (p.platform === 'codechef') {
+          link = `https://www.codechef.com/problems/${slug}`;
+        }
+        
+        indexTable += `| ${platformDir} | [${p.title}](${link}) | ${p.lang} | [View Solution](./${encodeURIComponent(relativePath)}) |\n`;
+      });
+    } else {
+      indexTable += "| N/A | N/A | N/A | N/A |\n";
+    }
+
+    return `# LeetCode Solutions
+
+Showcasing my LeetCode solutions synced automatically by [L'Amigo](https://github.com/FTS18/l-amigo).
+
+## Progress Dashboard
+
+<p align="center">
+  <img src="./leetcode-stats.svg" alt="LeetCode Stats Badge" />
+</p>
+
+| Difficulty | Solved | Progress Bar |
+| :--- | :---: | :--- |
+| **Easy** | ${easy} | ${this.getProgressBar(easyPct)} |
+| **Medium** | ${medium} | ${this.getProgressBar(mediumPct)} |
+| **Hard** | ${hard} | ${this.getProgressBar(hardPct)} |
+
+## Top Topics
+
+${topicTable}
+
+## Synced Solutions Index
+
+${indexTable}
+`;
+  }
+
+  static generateStatsBadge(totalSolved: number): string {
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="190" height="20">
+  <linearGradient id="b" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <mask id="a">
+    <rect width="190" height="20" rx="3" fill="#fff"/>
+  </mask>
+  <g mask="url(#a)">
+    <path fill="#555" d="0 0h110v20H0z"/>
+    <path fill="#ffa116" d="110 0h80v20H110z"/>
+    <path fill="url(#b)" d="0 0h190v20H0z"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+    <text x="55" y="15" fill="#010101" fill-opacity=".3">LeetCode Solved</text>
+    <text x="55" y="14">LeetCode Solved</text>
+    <text x="150" y="15" fill="#010101" fill-opacity=".3">${totalSolved}</text>
+    <text x="150" y="14">${totalSolved}</text>
+  </g>
+</svg>`;
   }
 
   private static ext(lang: string): string {
@@ -445,6 +692,83 @@ ${code || "// Code not available"}
     if (!r.ok) {
       const e = await r.json();
       throw new Error(e.message || `Failed to update ${path}`);
+    }
+  }
+
+  static async backupState(): Promise<void> {
+    const config = await this.getConfig();
+    if (!config?.token || !config.repoName) return;
+
+    try {
+      const ghUser = await this.getGitHubUsername(config.token);
+      const data = await chrome.storage.local.get([
+        "friend_identities_v2",
+        "own_username",
+        "own_codeforces_handle",
+        "own_codechef_handle",
+        "darkMode",
+        "notifications_enabled",
+        "auto_refresh",
+        "refresh_interval",
+        "cf_dark_mode",
+        "daily_goal",
+        "sync_history"
+      ]);
+
+      const backupContent = JSON.stringify(data, null, 2);
+      await this.upsertFile(config.token, ghUser, config.repoName, ".lamigo-backup.json", backupContent);
+      await chrome.storage.local.set({ last_backup_time: Date.now() });
+      console.log("[GH] State backup updated successfully in repository");
+    } catch (err) {
+      console.error("[GH] Failed to backup state to repository:", err);
+    }
+  }
+
+  static async restoreState(token: string, repo: string): Promise<boolean> {
+    try {
+      const ghUser = await this.getGitHubUsername(token);
+      // Fetch file content from GitHub
+      const r = await fetch(`${this.API}/repos/${ghUser}/${repo}/contents/.lamigo-backup.json`, {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: "application/vnd.github.v3+json",
+        },
+      });
+      if (!r.ok) {
+        if (r.status === 404) {
+          console.log("[GH] No backup file .lamigo-backup.json found in repository");
+          return false;
+        }
+        throw new Error(`Failed to fetch backup: ${r.status}`);
+      }
+
+      const fileData = await r.json();
+      const content = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
+      const parsed = JSON.parse(content);
+
+      // Save to chrome.storage.local
+      const keysToSave: Record<string, any> = {};
+      if (parsed.friend_identities_v2) keysToSave.friend_identities_v2 = parsed.friend_identities_v2;
+      if (parsed.own_username) keysToSave.own_username = parsed.own_username;
+      if (parsed.own_codeforces_handle) keysToSave.own_codeforces_handle = parsed.own_codeforces_handle;
+      if (parsed.own_codechef_handle) keysToSave.own_codechef_handle = parsed.own_codechef_handle;
+      if (parsed.darkMode !== undefined) keysToSave.darkMode = parsed.darkMode;
+      if (parsed.notifications_enabled !== undefined) keysToSave.notifications_enabled = parsed.notifications_enabled;
+      if (parsed.auto_refresh !== undefined) keysToSave.auto_refresh = parsed.auto_refresh;
+      if (parsed.refresh_interval !== undefined) keysToSave.refresh_interval = parsed.refresh_interval;
+      if (parsed.cf_dark_mode !== undefined) keysToSave.cf_dark_mode = parsed.cf_dark_mode;
+      if (parsed.daily_goal !== undefined) keysToSave.daily_goal = parsed.daily_goal;
+      if (parsed.sync_history) keysToSave.sync_history = parsed.sync_history;
+
+      keysToSave.onboarding_complete = true;
+      keysToSave.github_sync_config = { token, repoName: repo };
+
+      await chrome.storage.local.set(keysToSave);
+      console.log("[GH] State successfully restored from backup");
+      return true;
+    } catch (err) {
+      console.error("[GH] Failed to restore state:", err);
+      throw err;
     }
   }
 }

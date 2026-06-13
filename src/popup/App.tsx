@@ -4,23 +4,24 @@ import { StorageService } from '../services/storage';
 import { LeetCodeService } from '../services/leetcode';
 import { CodeforcesService } from '../services/codeforces';
 import { PlatformService } from '../services/platform-service';
-import { ExportService } from '../services/export';
 import { DATA_LIMITS } from '../constants';
 import { FriendCard } from './FriendCard';
-import { Recommendations } from './Recommendations';
 import { TabNav } from './TabNav';
-import { SettingsTab } from './SettingsTab';
-import { CompareTab } from './CompareTab';
 import { Onboarding } from './Onboarding';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { Modal } from './Modal';
 import { Toast } from './Toast';
 import { Skeleton } from './Skeleton';
+
+import { Recommendations } from './Recommendations';
+import { SettingsTab } from './SettingsTab';
+import { CompareTab } from './CompareTab';
 import { GlobalActivityFeed } from './GlobalActivityFeed';
 import { FriendProfileView } from './FriendProfileView';
 import { AddEditFriendModal } from './AddEditFriendModal';
 import { UpcomingContests } from './UpcomingContests';
-import { Sun, Moon, MoreVertical, Download } from 'lucide-react';
+import { ImportExportModal } from './ImportExportModal';
+import { Sun, Moon } from 'lucide-react';
 import './App.css';
 const formatTimestamp = (timestamp: number) => {
   const date = new Date(timestamp);
@@ -33,21 +34,7 @@ const formatTimestamp = (timestamp: number) => {
   return `${Math.floor(diff / 86400000)}d ago`;
 };
 
-const extractUsername = (input: string): string => {
-  const trimmed = input.trim();
-  
-  // Check if it's a URL
-  if (trimmed.includes('leetcode.com/')) {
-    // Extract username from URL like: https://leetcode.com/username or leetcode.com/username
-    const match = trimmed.match(/leetcode\.com\/([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) {
-      return match[1];
-    }
-  }
-  
-  // Return as-is if it's just a username
-  return trimmed;
-};
+import { SyncEntry } from '../utils/import-restore';
 
 export const App: React.FC = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -56,10 +43,10 @@ export const App: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshingFriend, setRefreshingFriend] = useState<string | null>(null);
   const [addingFriend, setAddingFriend] = useState(false);
-  const [showExportMenu, setShowExportMenu] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'problems' | 'recent'>('recent');
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
+
   const [activeTab, setActiveTab] = useState<'friends' | 'compare' | 'settings'>('friends');
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [ownUsername, setOwnUsername] = useState<string>('');
@@ -70,7 +57,8 @@ export const App: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<string>('');
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info'; action?: { label: string; onClick: () => void } } | null>(null);
+  const [pendingDeletions, setPendingDeletions] = useState<Set<string>>(new Set());
   const [modal, setModal] = useState<{ isOpen: boolean; title: string; message: string; type: 'info' | 'error' | 'success' }>({
     isOpen: false,
     title: '',
@@ -178,81 +166,40 @@ export const App: React.FC = () => {
 
   const verifyAndReconcileState = async (currentFriends?: Friend[], currentProfiles?: Record<string, FriendProfile>) => {
     try {
-      console.log("[App] Starting deep state verification and reconciliation cycle...");
+      console.log("[App] Starting state verification cycle...");
       const storageFriends = await StorageService.getFriends();
       const storageProfiles = await StorageService.getProfiles();
       
       const friendsToCompare = currentFriends || friends;
       const profilesToCompare = currentProfiles || profiles;
       
-      let isFriendsSynced = true;
-      if (friendsToCompare.length !== storageFriends.length) {
-        isFriendsSynced = false;
-      } else {
-        for (const sf of storageFriends) {
-          const mf = friendsToCompare.find(f => f.id === sf.id || f.username.toLowerCase() === sf.username.toLowerCase());
-          if (!mf) {
-            isFriendsSynced = false;
-            break;
-          }
-          if (sf.username !== mf.username || sf.displayName !== mf.displayName) {
-            isFriendsSynced = false;
-            break;
-          }
-          if ((sf.accounts?.length || 0) !== (mf.accounts?.length || 0)) {
-            isFriendsSynced = false;
-            break;
-          }
-          for (const sa of sf.accounts || []) {
-            const ma = mf.accounts?.find(a => a.platform === sa.platform && a.handle.toLowerCase() === sa.handle.toLowerCase());
-            if (!ma || ma.status !== sa.status) {
-              isFriendsSynced = false;
-              break;
-            }
-          }
-          if (!isFriendsSynced) break;
-        }
-      }
-
-      let isProfilesSynced = true;
-      const storageProfileKeys = Object.keys(storageProfiles);
-      const memoryProfileKeys = Object.keys(profilesToCompare);
-      if (storageProfileKeys.length !== memoryProfileKeys.length) {
-        isProfilesSynced = false;
-      } else {
-        for (const key of storageProfileKeys) {
-          const sp = storageProfiles[key];
-          const mp = profilesToCompare[key];
-          if (!mp) {
-            isProfilesSynced = false;
-            break;
-          }
-          if (sp.problemsSolved?.total !== mp.problemsSolved?.total ||
-              sp.contestRating !== mp.contestRating ||
-              (sp.recentSubmissions?.length || 0) !== (mp.recentSubmissions?.length || 0)) {
-            isProfilesSynced = false;
-            break;
-          }
-        }
-      }
-
-      if (!isFriendsSynced || !isProfilesSynced) {
-        console.warn("[App] Desynchronization detected between React memory state and chrome.storage.local!", {
-          friendsSynced: isFriendsSynced,
-          profilesSynced: isProfilesSynced
-        });
+      // Fast check: length
+      if (friendsToCompare.length !== storageFriends.length || 
+          Object.keys(profilesToCompare).length !== Object.keys(storageProfiles).length) {
+        console.warn("[App] Desynchronization detected (length mismatch).");
         setFriends(storageFriends);
         setProfiles(storageProfiles);
         setLastUpdated(Date.now());
-        console.log("[App] State reconciled with chrome.storage.local successfully.");
         return false;
-      } else {
-        console.log("[App] Deep verification successful: React state matches chrome.storage.local perfectly.");
-        return true;
       }
+
+      // Fast check: friend IDs
+      const memoryIds = friendsToCompare.map(f => f.id).sort().join(',');
+      const storageIds = storageFriends.map(f => f.id).sort().join(',');
+      
+      if (memoryIds !== storageIds) {
+         console.warn("[App] Desynchronization detected (ID mismatch).");
+         setFriends(storageFriends);
+         setProfiles(storageProfiles);
+         setLastUpdated(Date.now());
+         return false;
+      }
+      
+      console.log("[App] State in sync.");
+      return true;
     } catch (error) {
-      console.error("[App] Deep verification failed:", error);
-      return false;
+      console.error("[App] State reconciliation failed:", error);
+      return true; // assume synced to prevent infinite loops
     }
   };
 
@@ -382,42 +329,53 @@ export const App: React.FC = () => {
   };
 
   const handleRemoveFriend = async (username: string) => {
+    // Optimistic removal via pendingDeletions
+    setPendingDeletions(prev => {
+      const newSet = new Set(prev);
+      newSet.add(username);
+      return newSet;
+    });
+    
+    // Create an Undo function that removes it from pendingDeletions
+    let wasUndone = false;
+    const undoRemove = () => {
+      wasUndone = true;
+      setPendingDeletions(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(username);
+        return newSet;
+      });
+      setToast(null);
+    };
+
+    setToast({ 
+      message: `${username} removed`, 
+      type: 'info',
+      action: { label: 'Undo', onClick: undoRemove }
+    });
+
+    // Actually delete from storage after 4 seconds if not undone
+    setTimeout(async () => {
+      if (!wasUndone) {
+        try {
+          await StorageService.removeFriend(username);
+          await loadData();
+        } catch (error) {
+          console.error('Failed to remove friend permanently', error);
+        }
+      }
+    }, 4000);
+  };
+
+  const requestConfirm = (action: () => void, title: string, message: string) => {
     setModal({
       isOpen: true,
-      title: 'Remove Friend',
-      message: `Remove ${username} from your friends list?`,
+      title,
+      message,
       type: 'info'
     });
-    setConfirmAction(() => async () => {
-      try {
-        await StorageService.removeFriend(username);
-        await loadData();
-        setToast({ message: `${username} removed`, type: 'success' });
-      } catch (error) {
-        setToast({ message: 'Failed to remove friend', type: 'error' });
-      }
-    });
+    setConfirmAction(() => action);
   };
-
-  const handleExport = (format: 'csv' | 'detailed' | 'json') => {
-    switch (format) {
-      case 'csv':
-        ExportService.exportToCSV(friends, profiles);
-        setToast({ message: 'Data exported as CSV!', type: 'success' });
-        break;
-      case 'detailed':
-        ExportService.exportDetailedCSV(friends, profiles);
-        setToast({ message: 'Detailed data exported as CSV!', type: 'success' });
-        break;
-      case 'json':
-        ExportService.exportToJSON(friends, profiles);
-        setToast({ message: 'Data exported as JSON!', type: 'success' });
-        break;
-    }
-    setShowExportMenu(false);
-    setShowMenu(false);
-  };
-
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
@@ -536,7 +494,7 @@ export const App: React.FC = () => {
   };
 
   const sortedFriends = useMemo(() => {
-    return [...friends].sort((a, b) => {
+    return [...friends].filter(f => !pendingDeletions.has(f.username)).sort((a, b) => {
       const getProfile = (f: Friend, platform: Platform) => {
         const handle = f.accounts?.find(acc => acc.platform === platform)?.handle || (profiles[f.username.toLowerCase()]?.platform === platform ? f.username : undefined);
         if (!handle) return undefined;
@@ -567,7 +525,7 @@ export const App: React.FC = () => {
           return a.username.localeCompare(b.username);
       }
     });
-  }, [friends, profiles, sortBy]);
+  }, [friends, profiles, sortBy, pendingDeletions]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts([
@@ -609,11 +567,6 @@ export const App: React.FC = () => {
       handler: () => setActiveTab('settings'),
       description: 'Go to Settings tab',
     },
-    {
-      key: 'Escape',
-      handler: () => setShowMenu(false),
-      description: 'Close menu',
-    },
   ]);
 
   if (showOnboarding) {
@@ -639,27 +592,38 @@ export const App: React.FC = () => {
         />
 
         <div className="content-area">
-          <FriendProfileView
-            friend={selectedFriend}
-            leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
-            codeforcesProfile={cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined}
-            codechefProfile={ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined}
-            initialPlatform={selectedPlatform as 'leetcode' | 'codeforces' | 'codechef'}
-            initialFilter={selectedFilter as 'all' | 'Easy' | 'Medium' | 'Hard'}
-            onBack={() => {
-              setSelectedFriend(null);
-              setSelectedPlatform('');
-              setSelectedFilter('all');
-            }}
-            isDarkMode={isDarkMode}
-          />
+          <React.Suspense fallback={<Skeleton />}>
+            <FriendProfileView
+              friend={selectedFriend}
+              leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
+              codeforcesProfile={cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined}
+              codechefProfile={ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined}
+              initialPlatform={selectedPlatform as 'leetcode' | 'codeforces' | 'codechef'}
+              initialFilter={selectedFilter as 'all' | 'Easy' | 'Medium' | 'Hard'}
+              onBack={() => {
+                setSelectedFriend(null);
+                setSelectedPlatform('');
+                setSelectedFilter('all');
+              }}
+              isDarkMode={isDarkMode}
+            />
+          </React.Suspense>
         </div>
 
-        <header className="header header-bottom">
-          <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-            <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" />
+        <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px' }}>
+          <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+            <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
           </a>
-          <div className="header-search-add" style={{ display: 'flex', justifyContent: 'flex-end', flex: 1, paddingRight: '12px' }}>
+          <div className="header-search-add" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flex: 1, paddingRight: '12px', gap: '8px' }}>
+            <button
+              className="add-friend-btn-header"
+              id="import-export-btn-profile"
+              title="Import / Export friends and data"
+              onClick={() => setShowImportExport(true)}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px' }}
+            >
+              Import / Export
+            </button>
             <button
               className="add-friend-btn-header"
               title="Add friend"
@@ -673,38 +637,6 @@ export const App: React.FC = () => {
             <button className="theme-toggle" onClick={toggleDarkMode} title="Toggle dark mode">
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <div className="menu-container">
-              <button 
-                className="menu-btn" 
-                onClick={() => setShowMenu(!showMenu)}
-                title="Options"
-              >
-                <MoreVertical size={18} />
-              </button>
-              {showMenu && (
-                <div className="menu-dropdown">
-                  <button onClick={handleRefresh} disabled={refreshing}>
-                    {refreshing ? 'Refreshing...' : 'Refresh All'}
-                  </button>
-                  <button onClick={() => setShowExportMenu(!showExportMenu)}>
-                    Export Data {showExportMenu ? '▴' : '▾'}
-                  </button>
-                  {showExportMenu && (
-                    <div className="submenu">
-                      <button onClick={() => handleExport('csv')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Download size={14} /> Export CSV
-                      </button>
-                      <button onClick={() => handleExport('detailed')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Download size={14} /> Export Detailed CSV
-                      </button>
-                      <button onClick={() => handleExport('json')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Download size={14} /> Export JSON
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
           </div>
         </header>
 
@@ -720,8 +652,13 @@ export const App: React.FC = () => {
         />
 
         {toast && (
-          <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
-        )}
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          action={toast.action}
+          onClose={() => setToast(null)} 
+        />
+      )}
       </div>
     );
   }
@@ -771,92 +708,110 @@ export const App: React.FC = () => {
 
       <div className="content-area">
         <div key={activeTab} className="tab-content-enter" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          {activeTab === 'friends' ? (
-            <>
-              <GlobalActivityFeed profiles={profiles} ownUsername={ownUsername} />
-              <Recommendations profiles={profiles} ownUsername={ownUsername} />
-              <UpcomingContests />
+          <React.Suspense fallback={<Skeleton />}>
+            {activeTab === 'friends' ? (
+              <>
+                <GlobalActivityFeed profiles={profiles} ownUsername={ownUsername} />
+                <Recommendations profiles={profiles} ownUsername={ownUsername} />
+                <UpcomingContests />
 
-              {friends.length === 0 ? (
-                <div className="empty-state">
-                  <img src="empty-state.svg" alt="No friends yet" style={{ width: '150px', height: '150px', marginBottom: '16px', opacity: 0.7 }} />
-                  <p className="empty-title">Welcome to L'Amigo!</p>
-                  <p className="empty-message">Track your friends' LeetCode progress</p>
-                  <p className="hint">Start by adding a friend's LeetCode username or profile URL below</p>
-                  <div className="example-hint">
-                    <small>Examples: "john_doe" or "https://leetcode.com/john_doe"</small>
+                {friends.length === 0 ? (
+                  <div className="empty-state">
+                    <img src="empty-state.svg" alt="No friends yet" style={{ width: '150px', height: '150px', marginBottom: '16px', opacity: 0.7 }} />
+                    <p className="empty-title">Welcome to L'Amigo!</p>
+                    <p className="empty-message">Track your friends' LeetCode progress</p>
+                    <p className="hint">Start by adding a friend's LeetCode username or profile URL below</p>
+                    <div className="example-hint">
+                      <small>Examples: "john_doe" or "https://leetcode.com/john_doe"</small>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="friends-list">
-                  {sortedFriends.map((friend) => {
-                    const lcAccount = friend.accounts?.find(a => a.platform === 'leetcode')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'leetcode' ? friend.username : undefined);
-                    const cfAccount = friend.accounts?.find(a => a.platform === 'codeforces')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'codeforces' ? friend.username : undefined);
-                    const ccAccount = friend.accounts?.find(a => a.platform === 'codechef')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'codechef' ? friend.username : undefined);
+                ) : (
+                  <div className="friends-list">
+                    {sortedFriends.map((friend) => {
+                      const lcAccount = friend.accounts?.find(a => a.platform === 'leetcode')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'leetcode' ? friend.username : undefined);
+                      const cfAccount = friend.accounts?.find(a => a.platform === 'codeforces')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'codeforces' ? friend.username : undefined);
+                      const ccAccount = friend.accounts?.find(a => a.platform === 'codechef')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'codechef' ? friend.username : undefined);
 
-                    return (
-                      <FriendCard
-                        key={friend.username}
-                        friend={friend}
-                        profile={profiles[friend.username.toLowerCase()]}
-                        leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
-                        codeforcesProfile={cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined}
-                        codechefProfile={ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined}
-                        onRemove={() => handleRemoveFriend(friend.username)}
-                        onRefresh={() => handleRefreshFriend(friend.username)}
-                        onEdit={(f) => { setEditingFriend(f); setShowAddModal(true); }}
-                        onViewProfile={(platform, filter) => {
-                          setSelectedFriend(friend);
-                          setSelectedPlatform(platform);
-                          setSelectedFilter(filter || 'all');
-                        }}
-                        refreshing={refreshingFriend === friend.username}
-                        isDarkMode={isDarkMode}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </>
-          ) : activeTab === 'compare' ? (
-            <CompareTab 
-              friends={friends} 
-              profiles={profiles} 
-              isDarkMode={isDarkMode} 
-              ownUsername={ownUsername} 
-              ownCodeforcesHandle={ownCodeforcesHandle}
-              ownCodechefHandle={ownCodechefHandle}
-            />
-          ) : (
-            <SettingsTab 
-              onSync={loadData} 
-              isDarkMode={isDarkMode}
-              onToggleDarkMode={toggleDarkMode}
-              ownUsername={ownUsername}
-              onUsernameChange={setOwnUsername}
-              ownCodeforcesHandle={ownCodeforcesHandle}
-              onCodeforcesHandleChange={setOwnCodeforcesHandle}
-              onToast={(message, type) => setToast({ message, type })}
-            />
-          )}
+                      return (
+                        <FriendCard
+                          key={friend.username}
+                          friend={friend}
+                          profile={profiles[friend.username.toLowerCase()]}
+                          leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
+                          codeforcesProfile={cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined}
+                          codechefProfile={ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined}
+                          onRemove={() => handleRemoveFriend(friend.username)}
+                          onRefresh={() => handleRefreshFriend(friend.username)}
+                          onEdit={(f) => { setEditingFriend(f); setShowAddModal(true); }}
+                          onViewProfile={(platform, filter) => {
+                            setSelectedFriend(friend);
+                            setSelectedPlatform(platform);
+                            setSelectedFilter(filter || 'all');
+                          }}
+                          refreshing={refreshingFriend === friend.username}
+                          isDarkMode={isDarkMode}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </>
+            ) : activeTab === 'compare' ? (
+              <CompareTab 
+                friends={friends} 
+                profiles={profiles} 
+                isDarkMode={isDarkMode} 
+                ownUsername={ownUsername} 
+                ownCodeforcesHandle={ownCodeforcesHandle}
+                ownCodechefHandle={ownCodechefHandle}
+              />
+            ) : (
+              <SettingsTab 
+                onSync={loadData} 
+                isDarkMode={isDarkMode}
+                onToggleDarkMode={toggleDarkMode}
+                ownUsername={ownUsername}
+                onUsernameChange={setOwnUsername}
+                ownCodeforcesHandle={ownCodeforcesHandle}
+                onCodeforcesHandleChange={setOwnCodeforcesHandle}
+                ownCodechefHandle={ownCodechefHandle}
+                onCodechefHandleChange={setOwnCodechefHandle}
+                onToast={(message, type) => setToast({ message, type })}
+                onConfirmAction={requestConfirm}
+                onOpenImportExport={() => setShowImportExport(true)}
+              />
+            )}
+          </React.Suspense>
         </div>
       </div>
 
-      <header className="header header-bottom">
-        <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" />
+      <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px' }}>
+        <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+          <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
         </a>
-        <div className="header-search-add" style={{ display: 'flex', justifyContent: 'flex-end', flex: 1, paddingRight: '12px' }}>
-          <button 
+        <div className="header-search-add" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flex: 1, paddingRight: '12px', gap: '8px' }}>
+          <button
             className="add-friend-btn-header"
-            title="Add friend"
-            onClick={() => {
-              setEditingFriend(null);
-              setShowAddModal(true);
-            }}
+            id="import-export-btn-main"
+            title="Import / Export friends and data"
+            onClick={() => setShowImportExport(true)}
             style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px' }}
           >
-            + Add Friend
+            Import / Export
+          </button>
+          <button 
+            className={`add-friend-btn-header ${addingFriend ? 'disabled' : ''}`}
+            title="Add friend"
+            disabled={addingFriend}
+            onClick={() => {
+              if (!addingFriend) {
+                setEditingFriend(null);
+                setShowAddModal(true);
+              }
+            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: addingFriend ? 'not-allowed' : 'pointer', borderRadius: '0px', opacity: addingFriend ? 0.7 : 1 }}
+          >
+            {addingFriend ? 'Adding...' : '+ Add Friend'}
           </button>
         </div>
         <div className="header-actions">
@@ -867,40 +822,6 @@ export const App: React.FC = () => {
           >
             {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          <div className="menu-container">
-            <button 
-              className="menu-btn" 
-              onClick={() => setShowMenu(!showMenu)}
-              title="Options"
-            >
-              <MoreVertical size={18} />
-            </button>
-            {showMenu && (
-              <div className="menu-dropdown">
-                <button onClick={handleRefresh} disabled={refreshing}>
-                  {refreshing ? 'Refreshing...' : 'Refresh All'}
-                </button>
-                <button onClick={() => {
-                  setShowExportMenu(!showExportMenu);
-                }}>
-                  Export Data {showExportMenu ? '▴' : '▾'}
-                </button>
-                {showExportMenu && (
-                  <div className="submenu">
-                    <button onClick={() => handleExport('csv')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Download size={14} /> Export CSV
-                    </button>
-                    <button onClick={() => handleExport('detailed')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Download size={14} /> Export Detailed CSV
-                    </button>
-                    <button onClick={() => handleExport('json')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Download size={14} /> Export JSON
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
         </div>
       </header>
 
@@ -920,23 +841,37 @@ export const App: React.FC = () => {
         showCancel={!!confirmAction}
       />
       
-      <AddEditFriendModal 
-        isOpen={showAddModal} 
-        onClose={() => setShowAddModal(false)} 
-        onSuccess={async () => {
-          setToast({ message: editingFriend ? 'Friend updated!' : 'Friend added!', type: 'success' });
-          const loaded = await loadData(ownUsername);
-          if (loaded) {
-            await verifyAndReconcileState(loaded.friends, loaded.profiles);
-          }
-        }} 
-        friend={editingFriend as any} 
-      />
+      <React.Suspense fallback={null}>
+        <AddEditFriendModal 
+          isOpen={showAddModal} 
+          onClose={() => setShowAddModal(false)} 
+          onSuccess={async () => {
+            setToast({ message: editingFriend ? 'Friend updated!' : 'Friend added!', type: 'success' });
+            const loaded = await loadData(ownUsername);
+            if (loaded) {
+              await verifyAndReconcileState(loaded.friends, loaded.profiles);
+            }
+          }} 
+          friend={editingFriend as any} 
+        />
+        <ImportExportModal
+          isOpen={showImportExport}
+          onClose={() => setShowImportExport(false)}
+          friends={friends}
+          profiles={profiles}
+          onFriendsImported={async () => {
+            const loaded = await loadData(ownUsername);
+            if (loaded) await verifyAndReconcileState(loaded.friends, loaded.profiles);
+          }}
+          onToast={(message, type) => setToast({ message, type })}
+        />
+      </React.Suspense>
       
       {toast && (
         <Toast
           message={toast.message}
           type={toast.type}
+          action={toast.action}
           onClose={() => setToast(null)}
         />
       )}
