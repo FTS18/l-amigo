@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const DevExtensionReloadPlugin = require('./scripts/dev-extension-reload-plugin');
 
 module.exports = (env, argv) => {
@@ -9,7 +11,7 @@ module.exports = (env, argv) => {
 
   return {
     mode: argv.mode || 'production',
-    devtool: isProd ? false : 'inline-cheap-source-map',
+    devtool: isProd ? false : 'cheap-source-map',
     entry: {
       popup: './src/popup/popup.tsx',
       background: './src/background/background.ts',
@@ -37,14 +39,41 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
+    optimization: {
+      usedExports: true,
+      minimize: isProd,
+      minimizer: [new TerserPlugin()],
+      splitChunks: {
+        chunks: (chunk) => chunk.name === 'popup',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    },
     plugins: [
       new webpack.DefinePlugin({
         __DEV__: JSON.stringify(!isProd),
       }),
       new CopyPlugin({
         patterns: [
-          { from: 'public', to: '.' },
+          { 
+            from: 'public', 
+            to: '.',
+            globOptions: {
+              ignore: ['**/popup.html']
+            }
+          },
         ],
+      }),
+      new HtmlWebpackPlugin({
+        template: 'public/popup.html',
+        filename: 'popup.html',
+        chunks: ['popup'],
+        cache: false,
       }),
       new MiniCssExtractPlugin({ filename: '[name].css' }),
       ...(isProd

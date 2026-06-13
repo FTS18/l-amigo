@@ -54,12 +54,20 @@
   --chart-color-1: #22c55e;
   --chart-color-2: #eab308;
   --chart-color-3: #ef4444;
+  --color-green: #2ecc71;
+  --color-red: #e74c3c;
+  --color-blue: #3498db;
+  --color-yellow: #f1c40f;
+  --color-purple: #9b59b6;
+  --color-pink: #fd79a8;
 
   /* === Rank Colors === */
   --rank-leetcode-guardian:                #FFA116;
   --rank-leetcode-knight:                  #5B9AFF;
   --rank-leetcode-default:                 #57606a;
-  --rank-codeforces-legendary-grandmaster: #FF0000;
+  --rank-codeforces-legendary-grandmaster: #CC0000;
+  --rank-codeforces-international-grandmaster: #E60000;
+  --rank-codeforces-grandmaster:           #FF0000;
   --rank-codeforces-master:                #FF8C00;
   --rank-codeforces-candidate-master:      #AA00AA;
   --rank-codeforces-expert:                #0000FF;

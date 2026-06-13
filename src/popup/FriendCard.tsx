@@ -4,20 +4,20 @@ import { Friend, FriendProfile, Platform, RecentSubmission } from '../types';
 import { StreakCalculator } from '../services/streak';
 import { SkeletonList } from './Skeleton';
 
-export const getProfileQualityColor = (p: FriendProfile, isDarkMode: boolean = true) => {
+const getProfileQualityHue = (p: FriendProfile) => {
   const { easy, medium, hard, total } = p.problemsSolved;
-  if (total === 0) return 'var(--color-total-bg)';
-  
+  if (total === 0) return 0;
   const pMed = medium / total;
   const pHard = hard / total;
   const relativeHardness = (pMed * 0.5) + (pHard * 2.0);
   const hardnessFactor = Math.min(Math.pow(relativeHardness, 0.4), 1);
-  const hue = (1 - hardnessFactor) * 120;
-  
-  const saturation = 85;
-  const lightness = 45;
-  
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  return (1 - hardnessFactor) * 120;
+};
+
+export const getProfileQualityColor = (p: FriendProfile, isDarkMode: boolean = true) => {
+  if (p.problemsSolved.total === 0) return isDarkMode ? 'var(--border-strong)' : 'var(--bg-secondary)';
+  const hue = getProfileQualityHue(p);
+  return isDarkMode ? `hsl(${hue}, 85%, 45%)` : `hsl(${hue}, 90%, 34%)`;
 };
 
 export const getProfileQualityBorderColor = (p: FriendProfile, isDarkMode: boolean = true) => {
@@ -38,10 +38,22 @@ export const getPlatformRankColor = (profile: any): string => {
     if (rating >= 1850) return 'var(--rank-leetcode-knight)'; // Knight Silver/Blue
     return 'var(--rank-leetcode-default)'; // Default Gray
   }
+
+  if (profile.platform === 'codechef') {
+    const stars = Math.max(1, Math.min(7, Math.floor(((rating || 0) - 1200) / 200) + 1));
+    if (stars === 7) return '#D0011B';
+    if (stars === 6) return '#FF7F00';
+    if (stars === 5) return '#FFD819';
+    if (stars === 4) return '#684273';
+    if (stars === 3) return '#3366CC';
+    if (stars === 2) return '#1E7D22';
+    return '#666666';
+  }
   
   // Codeforces Official Colors
-  if (rating >= 3000) return 'var(--rank-codeforces-legendary-grandmaster)'; // LGM Red
-  if (rating >= 2400) return 'var(--rank-codeforces-legendary-grandmaster)'; // GM/IGM Red
+  if (rating >= 3000) return 'var(--rank-codeforces-legendary-grandmaster)'; // LGM Deep Red
+  if (rating >= 2600) return 'var(--rank-codeforces-international-grandmaster)'; // IGM Red
+  if (rating >= 2400) return 'var(--rank-codeforces-grandmaster)'; // GM Bright Red
   if (rating >= 2300) return 'var(--rank-codeforces-master)'; // IM Orange
   if (rating >= 2100) return 'var(--rank-codeforces-master)'; // Master Orange
   if (rating >= 1900) return 'var(--rank-codeforces-candidate-master)'; // CM Violet
@@ -53,7 +65,17 @@ export const getPlatformRankColor = (profile: any): string => {
 
 export const getPlatformRankLabel = (p: FriendProfile) => {
   if (p.platform === 'codeforces' && p.codeforcesStats) {
-    return p.codeforcesStats.rankLabel;
+    const rawLabel = p.codeforcesStats.rankLabel.toLowerCase();
+    const acronymMap: Record<string, string> = {
+      'legendary grandmaster': 'LGM',
+      'international grandmaster': 'IGM',
+      'grandmaster': 'GM',
+      'international master': 'IM',
+      'candidate master': 'CM',
+    };
+    if (acronymMap[rawLabel]) return acronymMap[rawLabel];
+    // Capitalize each word for remaining ranks (e.g. "expert" -> "Expert")
+    return rawLabel.replace(/\b\w/g, l => l.toUpperCase());
   }
   if (p.platform === 'leetcode') {
     const r = p.contestRating || 0;
@@ -277,9 +299,9 @@ export const FriendCard: React.FC<FriendCardProps> = ({
           <div 
             className="stats-item total-item" 
             style={{ 
-              backgroundColor: getProfileQualityColor(activeProfile, !!isDarkMode),
-              borderColor: getProfileQualityBorderColor(activeProfile, !!isDarkMode),
-              color: getProfileQualityTextColor(activeProfile, !!isDarkMode)
+              backgroundColor: `color-mix(in srgb, ${getProfileQualityColor(activeProfile, !!isDarkMode)} 15%, transparent)`,
+              borderColor: `color-mix(in srgb, ${getProfileQualityColor(activeProfile, !!isDarkMode)} 40%, transparent)`,
+              color: getProfileQualityColor(activeProfile, !!isDarkMode)
             }}
             title="Total Solved (Color based on Difficulty Balance)"
             onClick={(e) => {
@@ -287,10 +309,10 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               onViewProfile?.(localActivePlatform, 'all');
             }}
           >
-            <span className="stats-val" style={{ color: getProfileQualityTextColor(activeProfile, !!isDarkMode) }}>
+            <span className="stats-val" style={{ color: getProfileQualityColor(activeProfile, !!isDarkMode) }}>
               {activeProfile.problemsSolved.total}
             </span>
-            <span className="stats-lbl" style={{ color: getProfileQualityTextColor(activeProfile, !!isDarkMode) }}>
+            <span className="stats-lbl" style={{ color: getProfileQualityColor(activeProfile, !!isDarkMode) }}>
               Total
             </span>
           </div>
@@ -344,9 +366,23 @@ export const FriendCard: React.FC<FriendCardProps> = ({
           {expanded && (
             <ul className="submissions-list">
               {sortedSubmissions.map((sub, index) => {
-                const url = sub.platform === 'leetcode' 
+                const questionUrl = sub.platform === 'leetcode' 
                   ? `https://leetcode.com/problems/${sub.titleSlug}/`
-                  : `https://codeforces.com/problemset/problem/${sub.titleSlug}`;
+                  : sub.platform === 'codechef'
+                  ? `https://www.codechef.com/problems/${sub.titleSlug}`
+                  : `https://codeforces.com/contest/${sub.titleSlug.split('/')[0]}/problem/${sub.titleSlug.split('/')[1]}`;
+
+                let answerUrl: string | undefined = undefined;
+                if (sub.submissionId) {
+                  if (sub.platform === 'leetcode') {
+                    answerUrl = `https://leetcode.com/submissions/detail/${sub.submissionId}/`;
+                  } else if (sub.platform === 'codeforces') {
+                    answerUrl = `https://codeforces.com/contest/${sub.titleSlug.split('/')[0]}/submission/${sub.submissionId}`;
+                  } else if (sub.platform === 'codechef') {
+                    answerUrl = `https://www.codechef.com/viewsolution/${sub.submissionId}`;
+                  }
+                }
+
                 return (
                   <li key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 0', fontSize: '11px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
@@ -361,10 +397,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                       }}>
                         {sub.platform === 'leetcode' ? 'LC' : sub.platform === 'codechef' ? 'CC' : 'CF'}
                       </span>
-                      <a 
-                        href={url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                      <span 
                         title={sub.title}
                         className="sub-link"
                         style={{ 
@@ -375,7 +408,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                         }}
                       >
                         {sub.title} {sub.statusDisplay !== 'Accepted' ? <span title="Rejected" style={{ display: 'inline-flex', verticalAlign: 'middle', marginLeft: '4px' }}><X size={10} color="#ff4444" /></span> : null}
-                      </a>
+                      </span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                       {sub.platform === 'leetcode' && sub.difficulty && (
@@ -388,7 +421,13 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                           {sub.rating}
                         </span>
                       )}
-                      <span className="sub-time-text" style={{ fontSize: '9px' }}>
+                      <div className="sub-action-links" style={{ transform: 'scale(0.85)' }}>
+                        <a href={questionUrl} target="_blank" rel="noopener noreferrer" className="sub-action-btn" title="Open Question">Q</a>
+                        {answerUrl && (
+                          <a href={answerUrl} target="_blank" rel="noopener noreferrer" className="sub-action-btn" title="View Submission">A</a>
+                        )}
+                      </div>
+                      <span style={{ color: 'var(--text-secondary)', minWidth: '40px', textAlign: 'right' }}>
                         {formatTimestamp(sub.timestamp)}
                       </span>
                     </div>

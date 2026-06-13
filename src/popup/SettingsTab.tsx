@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Check, AlertTriangle, Keyboard, Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
 import { GitHubSyncService } from '../services/github';
+import { ExportService } from '../services/export';
 import { REFRESH_CONSTANTS } from '../constants';
 import { validateGitHubToken, validateRepositoryName } from '../utils/sanitize';
+import { sendMessageWithRetry } from '../utils/messaging';
+import { SyncEntry } from '../utils/import-restore';
 
 interface SettingsTabProps {
   onSync: () => void;
@@ -15,6 +18,8 @@ interface SettingsTabProps {
   ownCodechefHandle?: string;
   onCodechefHandleChange?: (handle: string) => void;
   onToast?: (message: string, type: 'success' | 'error' | 'info') => void;
+  onConfirmAction?: (action: () => void, title: string, message: string) => void;
+  onOpenImportExport?: () => void;
 }
 
 export const SettingsTab: React.FC<SettingsTabProps> = ({ 
@@ -27,11 +32,13 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   onCodeforcesHandleChange,
   ownCodechefHandle = '',
   onCodechefHandleChange,
-  onToast
+  onToast,
+  onConfirmAction,
+  onOpenImportExport
 }) => {
-  // GitHub Sync
-  const [token, setToken] = useState('');
+  const [activeSection, setActiveSection] = useState<string>('profile');
   const [repoName, setRepoName] = useState('');
+  const [token, setToken] = useState('');
   const [isTokenSet, setIsTokenSet] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
   const [syncPhase, setSyncPhase] = useState<'idle' | 'fetching' | 'syncing' | 'error'>('idle');
@@ -42,6 +49,20 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [syncTotal, setSyncTotal] = useState(0);
   const [syncError, setSyncError] = useState('');
   const [lastSyncTime, setLastSyncTime] = useState<number | null>(null);
+
+  const [deviceFlowState, setDeviceFlowState] = useState<{
+    device_code: string;
+    user_code: string;
+    verification_uri: string;
+    expires_in: number;
+    interval: number;
+  } | null>(null);
+  const [githubError, setGithubError] = useState<string | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [lastBackupTime, setLastBackupTime] = useState<number | null>(null);
+  const [isBackingUp, setIsBackingUp] = useState(false);
+  const [syncHistory, setSyncHistory] = useState<SyncEntry[]>([]);
   
   // Collapsible sections state
   const [expanded, setExpanded] = useState({
@@ -63,7 +84,6 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState(60);
-  const [syncHistory, setSyncHistory] = useState<any[]>([]);
   const [healthStatus, setHealthStatus] = useState<{ status: 'idle' | 'checking' | 'ok' | 'error'; message: string }>({ status: 'idle', message: '' });
   const [dailyGoal, setDailyGoal] = useState(3);
   const [cfDarkMode, setCfDarkMode] = useState(false);
@@ -86,7 +106,18 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     loadAllSettings();
     // Check if a sync was already running (e.g. popup was closed/reopened)
     checkOngoingSync();
-    return () => { if (pollRef.current) clearInterval(pollRef.current); };
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes.last_backup_time) {
+        setLastBackupTime(changes.last_backup_time.newValue || null);
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
   }, []);
 
   /** If the background is mid-sync, pick up where we left off visually */
@@ -127,7 +158,9 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       'own_codeforces_handle',
       'own_codechef_handle',
       'sync_history',
-      'cf_dark_mode'
+      'cf_dark_mode',
+      'last_backup_time',
+      'daily_goal'
     ]);
     
     setNotificationsEnabled(settings.notifications_enabled ?? true);
@@ -139,6 +172,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     setSyncHistory(settings.sync_history || []);
     setCfDarkMode(settings.cf_dark_mode || false);
     setDailyGoal(settings.daily_goal || 3);
+    setLastBackupTime(settings.last_backup_time || null);
   };
 
   // Start polling sync progress from chrome.storage.local
@@ -208,38 +242,75 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   };
 
   const handleOAuthLogin = async () => {
+    setSyncError('');
+    setIsLoggingIn(true);
     try {
-      setSyncError('');
+      const state = await GitHubSyncService.requestDeviceCode();
+      setDeviceFlowState(state);
       
-      const response = await new Promise<any>((resolve, reject) => {
-        chrome.runtime.sendMessage({ action: 'githubOAuthLogin' }, (res) => {
-          if (chrome.runtime.lastError) {
-            reject(new Error(chrome.runtime.lastError.message));
-          } else {
-            resolve(res);
-          }
-        });
-      });
+      chrome.tabs.create({ url: state.verification_uri });
 
-      if (!response.success) {
-        throw new Error(response.error || "Unknown OAuth error");
-      }
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
 
-      await GitHubSyncService.saveConfig({ token: response.token });
+      const accessToken = await GitHubSyncService.pollForToken(
+        state.device_code,
+        state.interval,
+        controller.signal
+      );
+
+      await GitHubSyncService.saveConfig({ token: accessToken });
       setIsTokenSet(true);
       setToken('');
-      const msg = 'OAuth successful! Now enter a repository name.';
+      const msg = 'Authentication successful! Now enter a repository name.';
       onToast ? onToast(msg, 'success') : alert(msg);
       handleHealthCheck();
-      setSyncPhase('idle');
-    } catch (error) {
-      console.error('GitHub OAuth error:', error);
-      const msg = 'OAuth failed: ' + (error as Error).message;
-      onToast ? onToast(msg, 'error') : alert(msg);
-      setSyncPhase('idle');
-      setSyncError((error as Error).message);
+      setDeviceFlowState(null);
+    } catch (err: any) {
+      if (err.message && err.message.includes('device_flow_disabled')) {
+        console.log("Device flow disabled. Falling back to standard OAuth.");
+        chrome.runtime.sendMessage({ action: 'githubOAuthLogin' }, async (res) => {
+          if (res && res.success) {
+            await GitHubSyncService.saveConfig({ token: res.token });
+            setIsTokenSet(true);
+            setToken('');
+            const msg = 'Authentication successful! Now enter a repository name.';
+            onToast ? onToast(msg, 'success') : alert(msg);
+            handleHealthCheck();
+          } else {
+            setSyncError(res?.error || 'OAuth authentication failed.');
+            onToast?.(res?.error || 'OAuth authentication failed.', 'error');
+          }
+          setDeviceFlowState(null);
+          setIsLoggingIn(false);
+        });
+        return;
+      } else {
+        if (err.message !== 'Device authorization cancelled.') {
+          setSyncError(err.message || 'Authentication failed.');
+          onToast?.(err.message || 'Authentication failed.', 'error');
+        }
+        setDeviceFlowState(null);
+      }
     }
+    setIsLoggingIn(false);
   };
+
+  const cancelDeviceFlow = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setDeviceFlowState(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   const handleHealthCheck = async () => {
     setHealthStatus({ status: 'checking', message: 'Checking connection...' });
@@ -314,45 +385,6 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     }
   };
 
-  /**
-   * Send a message to the background service worker with automatic retry.
-   * MV3 service workers can go idle; this wakes them up before sending.
-   */
-  const sendMessageWithRetry = (
-    message: any,
-    maxRetries = 3,
-  ): Promise<any> => {
-    return new Promise(async (resolve, reject) => {
-      for (let attempt = 0; attempt < maxRetries; attempt++) {
-        try {
-          const resp = await new Promise<any>((res, rej) => {
-            chrome.runtime.sendMessage(message, (response) => {
-              if (chrome.runtime.lastError) {
-                rej(new Error(chrome.runtime.lastError.message));
-              } else {
-                res(response);
-              }
-            });
-          });
-          return resolve(resp);
-        } catch (err: any) {
-          const isConnectionError =
-            err.message?.includes('Receiving end does not exist') ||
-            err.message?.includes('Could not establish connection');
-
-          if (isConnectionError && attempt < maxRetries - 1) {
-            console.warn(`[Popup] Service worker not ready, retrying (${attempt + 1}/${maxRetries})…`);
-            // Ping the service worker to wake it up
-            await new Promise<void>((r) => setTimeout(r, 500));
-            continue;
-          }
-          return reject(err);
-        }
-      }
-      reject(new Error('Failed to connect to background service worker'));
-    });
-  };
-
   const handleDisconnect = async () => {
     try {
       await GitHubSyncService.disconnect();
@@ -366,26 +398,40 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     }
   };
 
+  const handleManualBackup = async () => {
+    setIsBackingUp(true);
+    try {
+      await GitHubSyncService.backupState();
+      const settings = await chrome.storage.local.get('last_backup_time');
+      setLastBackupTime(settings.last_backup_time || Date.now());
+      onToast?.('Settings backed up successfully!', 'success');
+    } catch (err: any) {
+      onToast?.('Failed to backup settings: ' + err.message, 'error');
+    } finally {
+      setIsBackingUp(false);
+    }
+  };
+
   // General Settings Functions
   const handleUsernameUpdate = async () => {
     if (!newUsername.trim()) {
-      alert('Please enter a valid username');
+      onToast?.('Please enter a valid username', 'error');
       return;
     }
 
     try {
       await chrome.storage.local.set({ own_username: newUsername.trim().toLowerCase() });
       onUsernameChange(newUsername.trim().toLowerCase());
-      alert('Username updated successfully!');
+      onToast?.('Username updated successfully!', 'success');
       onSync();
     } catch (error) {
-      alert('Failed to update username');
+      onToast?.('Failed to update username', 'error');
     }
   };
 
   const handleCFHandleUpdate = async () => {
     if (!newCFHandle.trim()) {
-      alert('Please enter a valid handle');
+      onToast?.('Please enter a valid handle', 'error');
       return;
     }
 
@@ -395,16 +441,16 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       if (onCodeforcesHandleChange) {
         onCodeforcesHandleChange(handle);
       }
-      alert('Codeforces handle updated successfully!');
+      onToast?.('Codeforces handle updated successfully!', 'success');
       onSync();
     } catch (error) {
-      alert('Failed to update Codeforces handle');
+      onToast?.('Failed to update Codeforces handle', 'error');
     }
   };
 
   const handleCCHandleUpdate = async () => {
     if (!newCCHandle.trim()) {
-      alert('Please enter a valid handle');
+      onToast?.('Please enter a valid handle', 'error');
       return;
     }
 
@@ -414,10 +460,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       if (onCodechefHandleChange) {
         onCodechefHandleChange(handle);
       }
-      alert('CodeChef handle updated successfully!');
+      onToast?.('CodeChef handle updated successfully!', 'success');
       onSync();
     } catch (error) {
-      alert('Failed to update CodeChef handle');
+      onToast?.('Failed to update CodeChef handle', 'error');
     }
   };
 
@@ -458,15 +504,17 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   };
 
   const handleClearData = async () => {
-    if (!confirm('Clear all extension data? This will remove all friends and profiles.')) return;
-
-    try {
-      await chrome.storage.local.clear();
-      alert('All data cleared. Please reload the extension.');
-      window.location.reload();
-    } catch (error) {
-      alert('Failed to clear data');
-    }
+    if (!onConfirmAction) return;
+    
+    onConfirmAction(async () => {
+      try {
+        await chrome.storage.local.clear();
+        onToast?.('All data cleared. Please reload the extension.', 'info');
+        setTimeout(() => window.location.reload(), 1500);
+      } catch (error) {
+        onToast?.('Failed to clear data', 'error');
+      }
+    }, 'Clear All Data', 'Clear all extension data? This will remove all friends and profiles. This action cannot be undone.');
   };
 
   const formatLastSync = () => {
@@ -677,12 +725,37 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
               <div className="settings-item">
                 <label className="settings-label">Step 1: Connect GitHub Account</label>
                 <p className="settings-hint">
-                  Link your GitHub account via OAuth or use a Personal Access Token below.
+                  Link your GitHub account via Device Flow or use a Personal Access Token below.
                 </p>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-                  <button onClick={handleOAuthLogin} className="settings-btn" style={{ flex: 1, backgroundColor: '#2da44e', color: 'white' }}>
-                    Login with GitHub
-                  </button>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexDirection: 'column' }}>
+                  {!deviceFlowState ? (
+                    <button onClick={handleOAuthLogin} className="settings-btn" style={{ flex: 1, backgroundColor: '#2da44e', color: 'white' }} disabled={isLoggingIn}>
+                      {isLoggingIn ? 'Connecting...' : 'Login with GitHub'}
+                    </button>
+                  ) : (
+                    <div style={{ padding: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '4px', textAlign: 'center' }}>
+                      <p style={{ margin: '0 0 8px', fontSize: '13px' }}>
+                        1. Open <a href={deviceFlowState.verification_uri} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 'bold', textDecoration: 'underline' }}>github.com/login/device</a>
+                      </p>
+                      <p style={{ margin: '0 0 12px', fontSize: '13px' }}>
+                        2. Enter code:
+                      </p>
+                      <div style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '2px', margin: '8px 0', color: 'var(--text-primary)', background: 'var(--bg-primary)', padding: '8px', border: '1px solid var(--border)' }}>
+                        {deviceFlowState.user_code}
+                      </div>
+                      <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: '8px 0 0' }}>
+                        Waiting for authorization...
+                      </p>
+                      <button
+                        type="button"
+                        onClick={cancelDeviceFlow}
+                        className="settings-btn"
+                        style={{ marginTop: '12px', padding: '6px 12px', fontSize: '12px', width: 'auto' }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="settings-divider">OR</div>
                 <p className="settings-hint">
@@ -773,6 +846,11 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                   <p className="settings-hint">{repoName || 'Not set'}</p>
                   <p className="settings-status connected">✓ Active - Auto-syncing in background</p>
                   {lastSyncTime && <p className="settings-hint">Last sync: {formatLastSync()}</p>}
+                  {lastBackupTime ? (
+                    <p className="settings-hint">Last backup: {new Date(lastBackupTime).toLocaleString()}</p>
+                  ) : (
+                    <p className="settings-hint">Last backup: Never</p>
+                  )}
                   <p className="settings-hint">Solves auto-sync to GitHub even when popup is closed</p>
                 </div>
 
@@ -799,6 +877,13 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     className="settings-btn settings-btn-secondary"
                   >
                     {healthStatus.status === 'checking' ? 'Checking...' : 'Verify Setup'}
+                  </button>
+                  <button
+                    onClick={handleManualBackup}
+                    disabled={isBackingUp}
+                    className="settings-btn settings-btn-secondary"
+                  >
+                    {isBackingUp ? 'Backing up...' : 'Backup Settings Now'}
                   </button>
                   <button 
                     onClick={handleFullSync}
@@ -876,6 +961,21 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             <hr className="settings-subsection-divider" />
 
             <h4 className="settings-subsection-title">Storage Cleanup</h4>
+            <div className="settings-item">
+              <label className="settings-label">Local Data Backup</label>
+              <p className="settings-hint">Export or import your full friends list and app settings via the Import/Export panel</p>
+              <div className="settings-actions">
+                <button 
+                  onClick={onOpenImportExport}
+                  className="settings-btn settings-btn-primary"
+                >
+                  Open Import / Export
+                </button>
+              </div>
+            </div>
+
+            <hr className="settings-subsection-divider" />
+
             <div className="settings-item">
               <label className="settings-label">Clear All Data</label>
               <p className="settings-hint">Remove all friends, profiles, and settings</p>

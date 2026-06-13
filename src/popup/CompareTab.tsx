@@ -307,7 +307,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
         { key: 'Hard', label: 'Hard (≥1900)', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
         { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
-            return streak && streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
+            return streak && streak.currentStreak > 0 ? `${streak.currentStreak}` : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
         },
@@ -333,7 +333,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
         },
         { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
-            return streak && streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
+            return streak && streak.currentStreak > 0 ? `${streak.currentStreak}` : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
         },
@@ -358,7 +358,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
         { key: 'Hard', label: 'Hard', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
         { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
-            return streak && streak.currentStreak > 0 ? `🔥 ${streak.currentStreak}` : '-';
+            return streak && streak.currentStreak > 0 ? `${streak.currentStreak}` : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
         },
@@ -823,6 +823,131 @@ export const CompareTab: React.FC<CompareTabProps> = ({
                     stroke={colors[idx % 3]}
                     strokeWidth={2}
                     dot={false}
+                    isAnimationActive={false}
+                  />
+                );
+              })}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {selectedProfiles.length > 0 && (
+        <div className="velocity-chart-section">
+          <h3>Overlapped Activity Heatmap</h3>
+          <div className="heatmap-wrapper">
+            <div className="heatmap-grid">
+              {Array.from({ length: 53 }).map((_, colIdx) => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                // With row-reverse, colIdx 0 is rendered on the far right (most recent week)
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - (colIdx * 7) - today.getDay());
+                
+                return (
+                  <div key={colIdx} className="heatmap-col">
+                    {Array.from({ length: 7 }).map((_, rowIdx) => {
+                      const date = new Date(startDate);
+                      date.setDate(startDate.getDate() + rowIdx);
+                      if (date > today) return <div key={rowIdx} className="heatmap-cell" style={{ opacity: 0 }} />;
+                      
+                      const dateStr = date.toDateString();
+                      const activeUsers: number[] = [];
+                      const tooltipParts: string[] = [dateStr];
+
+                      selectedProfiles.forEach((p, i) => {
+                        if (i < 3) {
+                          const count = submissionBuckets.get(p.username)?.get(dateStr);
+                          if (count && count > 0) {
+                            activeUsers.push(i);
+                            tooltipParts.push(`${p.username}: ${count} subs`);
+                          }
+                        }
+                      });
+
+                      let cellClass = '';
+                      if (activeUsers.length === 1) cellClass = `active-user-${activeUsers[0]}`;
+                      else if (activeUsers.length === 2) cellClass = `overlap-${activeUsers[0]}${activeUsers[1]}`;
+                      else if (activeUsers.length === 3) cellClass = 'overlap-012';
+
+                      return (
+                        <div 
+                          key={rowIdx} 
+                          className={`heatmap-cell ${cellClass}`}
+                          title={tooltipParts.join('\n')}
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="heatmap-legend">
+            {selectedProfiles.slice(0, 3).map((p, i) => (
+              <div key={p.username} className="heatmap-legend-item">
+                <div className={`heatmap-legend-color active-user-${i}`} />
+                <span>{p.username}</span>
+              </div>
+            ))}
+            {selectedProfiles.length >= 2 && (
+              <div className="heatmap-legend-item">
+                <div className="heatmap-legend-color overlap-01" />
+                <span>Overlap ({selectedProfiles[0].username} & {selectedProfiles[1].username})</span>
+              </div>
+            )}
+            {selectedProfiles.length >= 3 && (
+              <div className="heatmap-legend-item">
+                <div className="heatmap-legend-color overlap-012" />
+                <span>All 3 Overlap</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {selectedProfiles.length > 0 && selectedProfiles.some(p => p.ratingHistory && p.ratingHistory.length > 0) && (
+        <div className="velocity-chart-section">
+          <h3>Rating Progression History</h3>
+          <ResponsiveContainer width="100%" height={300} minWidth={1}>
+            <LineChart>
+              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#444' : '#e0e0e0'} />
+              <XAxis 
+                dataKey="timestamp" 
+                type="number" 
+                domain={['dataMin', 'dataMax']} 
+                tickFormatter={(tick) => new Date(tick).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
+                stroke={isDarkMode ? '#aaa' : '#999'} 
+                tick={{ fontSize: 11 }} 
+              />
+              <YAxis stroke={isDarkMode ? '#aaa' : '#999'} domain={['auto', 'auto']} />
+              <Tooltip
+                labelFormatter={(label) => new Date(label as number).toLocaleDateString()}
+                contentStyle={{
+                  backgroundColor: isDarkMode ? '#2a2a2a' : '#f9f9f9',
+                  border: `1px solid ${isDarkMode ? '#555' : '#e0e0e0'}`,
+                  color: isDarkMode ? '#e0e0e0' : '#333',
+                }}
+              />
+              <Legend />
+              {selectedProfiles.map((profile, idx) => {
+                if (!profile.ratingHistory || profile.ratingHistory.length === 0) return null;
+                const colors = ['#3498db', '#f1c40f', '#e74c3c']; // Match heatmap base colors
+                
+                // Sort history chronologically for proper rendering
+                const sortedHistory = [...profile.ratingHistory].sort((a, b) => a.timestamp - b.timestamp);
+                
+                return (
+                  <Line
+                    key={profile.username}
+                    data={sortedHistory}
+                    name={profile.username}
+                    type="stepAfter"
+                    dataKey="rating"
+                    stroke={colors[idx % 3]}
+                    strokeWidth={2}
+                    dot={{ r: 2 }}
+                    activeDot={{ r: 4 }}
                     isAnimationActive={false}
                   />
                 );
