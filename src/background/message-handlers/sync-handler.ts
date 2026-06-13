@@ -1,17 +1,21 @@
 import { SyncManager } from '../sync-manager';
+import { GitHubSyncService } from '../../services/github';
 import { MessageHandler, MessageResponse } from './types';
 
 const SESSION_SYNC_KEY = 'sync_in_progress';
 
 export class SyncHandler implements MessageHandler {
   async handle(message: any): Promise<MessageResponse> {
-    switch (message.type) {
+    const action = message.type || message.action;
+    switch (action) {
       case 'newSubmissionDetected':
         return this.handleNewSubmission(message.data);
       case 'fullSync':
         return this.handleFullSync();
       case 'getSyncState':
         return this.handleGetSyncState();
+      case 'githubOAuthLogin':
+        return this.handleGithubOAuthLogin();
       default:
         return { success: false, error: 'Unknown action' };
     }
@@ -66,5 +70,14 @@ export class SyncHandler implements MessageHandler {
   private async handleGetSyncState(): Promise<MessageResponse> {
     const res = await chrome.storage.session.get(SESSION_SYNC_KEY);
     return { success: true, inProgress: !!res[SESSION_SYNC_KEY] };
+  }
+
+  private async handleGithubOAuthLogin(): Promise<MessageResponse> {
+    try {
+      const token = await GitHubSyncService.loginWithOAuth();
+      return { success: true, token };
+    } catch (e: any) {
+      return { success: false, error: e.message };
+    }
   }
 }

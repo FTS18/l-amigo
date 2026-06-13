@@ -11,9 +11,9 @@ export const DifficultyChart: React.FC<DifficultyChartProps> = ({ profile, isDar
   const { problemsSolved } = profile;
   
   const data = [
-    { name: 'Easy', value: problemsSolved.easy, color: 'rgba(0, 184, 163, 0.8)' },
-    { name: 'Medium', value: problemsSolved.medium, color: 'rgba(255, 161, 22, 0.8)' },
-    { name: 'Hard', value: problemsSolved.hard, color: 'rgba(255, 55, 95, 0.8)' },
+    { name: 'Easy', value: problemsSolved.easy, color: 'var(--color-easy)' },
+    { name: 'Medium', value: problemsSolved.medium, color: 'var(--color-medium)' },
+    { name: 'Hard', value: problemsSolved.hard, color: 'var(--color-hard)' },
   ];
 
   const total = problemsSolved.easy + problemsSolved.medium + problemsSolved.hard;
@@ -25,7 +25,7 @@ export const DifficultyChart: React.FC<DifficultyChartProps> = ({ profile, isDar
 
   return (
     <div className="difficulty-chart" style={{ width: '100%', height: 250 }}>
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
         <PieChart>
           <Pie
             data={data}
@@ -37,14 +37,14 @@ export const DifficultyChart: React.FC<DifficultyChartProps> = ({ profile, isDar
             dataKey="value"
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} stroke={entry.color.replace('0.8', '1')} strokeWidth={2} />
+              <Cell key={`cell-${index}`} fill={entry.color} stroke="var(--bg-primary)" strokeWidth={2} />
             ))}
           </Pie>
           <Tooltip 
             contentStyle={{ 
-              backgroundColor: isDarkMode ? '#2a2a2a' : '#fff',
-              color: isDarkMode ? '#e0e0e0' : '#333',
-              border: `1px solid ${isDarkMode ? '#444' : '#ccc'}`
+              backgroundColor: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border)'
             }}
             formatter={(value: any, name?: string) => {
               const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0';
@@ -55,7 +55,7 @@ export const DifficultyChart: React.FC<DifficultyChartProps> = ({ profile, isDar
             verticalAlign="bottom" 
             height={36}
             wrapperStyle={{
-              color: isDarkMode ? '#e0e0e0' : '#333',
+              color: 'var(--text-primary)',
               fontSize: '11px'
             }}
           />

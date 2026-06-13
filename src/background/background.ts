@@ -13,6 +13,36 @@ import { MessageHandler } from "./message-handlers/types";
 const ALL_SUBS_KEY = "all_accepted_submissions";
 const SESSION_SYNC_KEY = "sync_in_progress";
 
+function setupDevAutoReload(): void {
+  if (!__DEV__) {
+    return;
+  }
+
+  const connect = (): void => {
+    const socket = new WebSocket("ws://localhost:9091");
+
+    socket.onmessage = (event) => {
+      try {
+        const payload = JSON.parse(String(event.data));
+        if (payload?.type === "reload") {
+          chrome.runtime.reload();
+        }
+      } catch {
+        // Ignore malformed dev-reload messages.
+      }
+    };
+
+    socket.onerror = () => socket.close();
+    socket.onclose = () => {
+      globalThis.setTimeout(connect, 1000);
+    };
+  };
+
+  connect();
+}
+
+setupDevAutoReload();
+
 // Initialize Handlers
 const handlers: MessageHandler[] = [
   new FriendHandler(),

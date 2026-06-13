@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { CheckCircle2, XCircle, Info } from 'lucide-react';
 
 interface ToastProps {
   message: string;
@@ -15,10 +16,10 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose, duration =
 
   const getIcon = () => {
     switch (type) {
-      case 'success': return '✓';
-      case 'error': return '✕';
-      case 'info': return 'ℹ';
-      default: return '';
+      case 'success': return <CheckCircle2 size={16} />;
+      case 'error': return <XCircle size={16} />;
+      case 'info': return <Info size={16} />;
+      default: return null;
     }
   };
 

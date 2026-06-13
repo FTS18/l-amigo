@@ -1,0 +1,54 @@
+refactor(core): massive multi-platform identity migration and strict UI overhaul
+
+This monumental commit fundamentally rewrites the core architecture of L'Amigo, pivoting from a simple LeetCode tracker into a robust, multi-platform Competitive Programming synchronization suite. It introduces the Identity v2 architecture, completely destroys and rebuilds the CSS engine according to strict new visual guidelines, and drastically improves the local developer experience. 
+
+Below is an exhaustive breakdown of the changes across all sub-systems:
+
+### 1. Unified Multi-Platform Identity System (The `v2` Migration)
+- **Identity Abstraction**: Replaced the legacy single-platform `leetcode_friends` array with `friend_identities_v2`. A single "Identity" entity can now encompass multiple linked accounts across platforms (LeetCode, Codeforces, CodeChef), alongside custom user aliases.
+- **Identity Lifecycle Management**: Scrapped the primitive `addFriend` flow. Implemented a robust CRUD suite in `friend-handler.ts` supporting `createIdentity`, `updateIdentity`, `addAccountToIdentity`, `addAlias`, and `removeIdentity`.
+- **Dynamic Platform Routing**: Overhauled `profile-handler.ts` and `refresh-handler.ts` to be platform-agnostic. They no longer hardcode requests to LeetCode APIs and instead dynamically route background requests through `PlatformService.fetchProfile()` based on the specific account's platform.
+- **Enhanced Data Limits**: Increased `MAX_RECENT_SUBMISSIONS` constant limit to 500 to ensure problem tracking algorithms have enough depth to correctly track friends' attempts across all difficulties and platforms.
+
+### 2. Extension Background Services & Sync Engine
+- **Cross-Platform Sync Manager**: The `SyncManager` has been severely upgraded. During GitHub synchronization tasks, it now concurrently fetches submissions using both `own_username` (LeetCode) and `own_codeforces_handle` (Codeforces), intelligently merging arrays and writing them to the `ALL_SUBS_KEY` registry.
+- **Incremental Polling**: Implemented `last_synced_timestamp` logic for background incremental synchronization, pulling 50 recent submissions instead of the full 500 when syncing incrementally to avoid rate-limiting from Codeforces APIs.
+- **GitHub OAuth Login**: Added a dedicated `handleGithubOAuthLogin` endpoint in `sync-handler.ts`, offloading OAuth token generation directly into the background worker and abstracting it away from the UI.
+
+### 3. CSS Tokenization & Strict UI Enforcement
+- **Destruction of Monolithic CSS**: Completely gutted thousands of lines of legacy styling from `App.css`. Replaced it with a modular, highly-structured CSS Variables System (CSS Tokens).
+- **The "Flat Boxy" Aesthetic**: Updated the visual identity in `README.md` and `CONTRIBUTING.md` to rigidly enforce a flat, minimalist UI. 
+- **Banned Styles**: Glassmorphism, translucent overlays, `border-radius` (now strictly forced to `0px`), gradients, drop shadows, and brutalist elements have been actively stripped from the UI logic. 
+- **Design Tokens**: Standardized Light/Dark mode themes (`--bg-primary`, `--bg-inverse`), Difficulty palettes (`--color-easy`, `--color-hard`), Platform Accents (Codeforces Blue/Red), and Competitor Rank colors (e.g., Codeforces Legendary Grandmaster, Candidate Master).
+
+### 4. React Component UI & Feed Overhaul
+- **Typography Migration**: Upgraded the core typography to utilize `Bricolage Grotesque` over standard system-ui, aligning the app with the new razor-sharp interface philosophy.
+- **Feed Deduplication**: Solved timeline pollution in `FriendCard.tsx` and `FriendProfileView.tsx`. Submissions are now grouped by `platform` + `titleSlug`, ensuring only the latest chronological attempt is rendered to the user.
+- **Negative Feedback Visualization**: The feed now explicitly renders "Wrong Answer" or "Time Limit Exceeded" attempts alongside "Accepted" states to provide an accurate real-time view of a friend's active grind.
+
+### 5. Lucide React Iconography Integration
+- **Icon Swap**: Purged all inconsistent raw text emoji markers (`✓`, `⚡`, `+`, `❌`) across both the React application and DOM-injected content scripts. 
+- **SVG Standardization**: Integrated `lucide-react` to provide sharp, scalable SVG icons (e.g., `<X />` for rejected submissions). Wrapped icons in semantic HTML `<span>` tags with explicit `title` tooltip properties for maximum accessibility and precise vertical-alignment.
+
+### 6. Local Development Auto-Reload Pipeline
+- **Webpack HMR Simulation**: Written a custom `DevExtensionReloadPlugin` inside the webpack compiler. 
+- **Background WebSockets**: Bootstrapped `setupDevAutoReload()` in `background.ts` that acts as a WebSocket client (`ws://localhost:9091`). When Webpack finishes emitting a new bundle, the extension now automatically forces a `chrome.runtime.reload()`, saving developers hundreds of manual refresh clicks per day.
+- **Environment Flags**: Injected `__DEV__` constants via Webpack's `DefinePlugin` to prevent development websockets from shipping to production extension bundles.
+
+### 7. Content Script & DOM Injection Enhancements
+- **LeetCode Monitor**: Updated `leetcode-monitor.ts` to inject inline SVG checkmarks directly into the DOM instead of raw text when rendering the "Synced to GitHub" badge.
+- **Profile Page Manager**: Adapted `profile-manager.ts` to evaluate the newly integrated `friend_identities_v2` storage instead of the legacy array. DOM buttons (e.g., "Track with L'Amigo", "Compare with Me") are now injected with inline SVG primitives and updated classes to match the zero-border-radius design spec.
+
+### 8. Extension Manifest & Security Policies
+- **API Allowlisting**: Appended `https://codeforces.com/*` and `https://www.codechef.com/*` to the `host_permissions` manifest array to permit outbound background fetching.
+- **Strict Content Security**: Updated `content_security_policy` to securely permit `fonts.googleapis.com` and `fonts.gstatic.com` for dynamic font loading without violating Chrome Web Store requirements. Added `identity` to permissions for standard OAuth handling.
+- **Content Script Execution**: Added a dedicated `codeforces.js` entry point explicitly configured with `"run_at": "document_start"` to track behavior on codeforces domains.
+
+### 9. Package Management & Dependency Cleanup
+- **Pruned Dead Code & Asset Purge**: Nuked obsolete legacy release bundles (`lamigo_v1.4.0_release.zip`, `lamigo_v1.5.0_release.zip`), patch logs (`app_css_diff.patch`), and HTML scratchpads (`codechef.html`, `test-codechef.js`).
+- **Orphaned Components**: Deleted React files that were entirely detached from the application tree (`Spinner.tsx`, `StreakBadge.tsx`, `college-stats.ts`, `request-cache.ts`).
+- **Export Cleanup**: Stripped out unused `UI_CONSTANTS`, unimported rate limiters (`syncRateLimiter`), duplicate default exports (`FriendCard`), and unused skeleton modules (`SkeletonLine`, `SkeletonRect`) resulting in a heavily optimized build graph.
+- **Package Manifest**: Purged `@testing-library/react` and `style-loader` while properly locking down newly introduced `lucide-react`, `ws`, and `react-is` dependencies in the `package-lock.json`. 
+
+### 10. Type Safety Verification
+- **Internal Typing Checks**: Preserved necessary internal interfaces (like `RatingHistoryEntry`) and resolved generic prop errors on SVG mappings. The system strictly passes `tsc --noEmit` and passes all `ts-jest` environment configurations.

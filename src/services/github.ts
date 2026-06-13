@@ -1,4 +1,6 @@
 import { AcceptedSubmission, LeetCodeService } from "./leetcode";
+import { CodeforcesService } from "./codeforces";
+import { CodeChefService } from "./codechef";
 import { API_CONSTANTS } from "../constants";
 
 export interface GitHubSyncConfig {
@@ -15,6 +17,14 @@ export class GitHubSyncService {
   private static readonly API = "https://api.github.com";
   private static readonly CFG_KEY = "github_sync_config";
   private static readonly SYNCED_KEY = "synced_submissions";
+
+  // OAuth Constants
+  private static readonly PROD_EXT_ID = "pakknkopmiakipmbjmfejcejehmgieli";
+  private static readonly DEV_CLIENT_ID = "Ov23lieYe8hkM5XO9r1y";
+  private static readonly PROD_CLIENT_ID = "Ov23li9p53LfS0Ule1M0";
+  // The user must insert their client secrets below.
+  private static readonly DEV_CLIENT_SECRET = "6d7d9421286e48b3c2098b18d6bd6281b8c30904";
+  private static readonly PROD_CLIENT_SECRET = "f17a088af033ed7c615c6abcd920a28a2ce981aa";
 
   // ── Config helpers ──────────────────────────────────────────────────
 
@@ -63,6 +73,57 @@ export class GitHubSyncService {
     // Keep last 10 entries
     const newHistory = [entry, ...history].slice(0, 10);
     await chrome.storage.local.set({ sync_history: newHistory });
+  }
+
+  // ── OAuth helpers ───────────────────────────────────────────────────
+
+  static async loginWithOAuth(): Promise<string> {
+    const isProd = chrome.runtime.id === this.PROD_EXT_ID;
+    const clientId = isProd ? this.PROD_CLIENT_ID : this.DEV_CLIENT_ID;
+    const clientSecret = isProd ? this.PROD_CLIENT_SECRET : this.DEV_CLIENT_SECRET;
+    const redirectUri = `https://${chrome.runtime.id}.chromiumapp.org/`;
+
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=repo`;
+
+    return new Promise((resolve, reject) => {
+      chrome.identity.launchWebAuthFlow(
+        { url: authUrl, interactive: true },
+        async (redirectUrl) => {
+          if (chrome.runtime.lastError || !redirectUrl) {
+            return reject(new Error(chrome.runtime.lastError?.message || "OAuth failed or cancelled."));
+          }
+          const urlParams = new URLSearchParams(new URL(redirectUrl).search);
+          const code = urlParams.get("code");
+          if (!code) {
+            return reject(new Error("No auth code returned from GitHub."));
+          }
+
+          try {
+            // Exchange code for access token
+            const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                client_id: clientId,
+                client_secret: clientSecret,
+                code: code,
+                redirect_uri: redirectUri,
+              }),
+            });
+            const data = await tokenResponse.json();
+            if (data.error) {
+              throw new Error(data.error_description || data.error);
+            }
+            resolve(data.access_token);
+          } catch (err: any) {
+            reject(new Error("Token exchange failed: " + err.message));
+          }
+        }
+      );
+    });
   }
 
   // ── Synced-set helpers ──────────────────────────────────────────────
@@ -142,17 +203,32 @@ export class GitHubSyncService {
     for (const sub of toSync) {
       // O(1) try number lookup
       const tryIndex = tryIndexMap.get(sub.id) || 1;
+      
+      let code: string | null = null;
+      let meta = { num: null as number | null, difficulty: "Unknown" };
+      const platformDir = sub.platform === 'codeforces' ? 'Codeforces' : sub.platform === 'codechef' ? 'CodeChef' : 'LeetCode';
 
-      // Parallelize fetching code and metadata
-      const [code, meta] = await Promise.all([
-        LeetCodeService.fetchSubmissionCode(sub.id),
-        metaCache.has(sub.titleSlug) 
-          ? Promise.resolve(metaCache.get(sub.titleSlug)!)
-          : this.getProblemMeta(sub.titleSlug).then(m => {
-              metaCache.set(sub.titleSlug, m);
-              return m;
-            })
-      ]);
+      if (!sub.platform || sub.platform === 'leetcode') {
+        const [fetchedCode, fetchedMeta] = await Promise.all([
+          LeetCodeService.fetchSubmissionCode(sub.id),
+          metaCache.has(sub.titleSlug) 
+            ? Promise.resolve(metaCache.get(sub.titleSlug)!)
+            : this.getProblemMeta(sub.titleSlug).then(m => {
+                metaCache.set(sub.titleSlug, m);
+                return m;
+              })
+        ]);
+        code = fetchedCode;
+        meta = fetchedMeta;
+      } else if (sub.platform === 'codeforces') {
+        const parts = sub.titleSlug.split('/');
+        const contestId = parts[0];
+        code = await CodeforcesService.fetchSubmissionCode(contestId, sub.id); 
+        meta.difficulty = (sub as any).difficulty || 'Unknown';
+      } else if (sub.platform === 'codechef') {
+        // CodeChef code scraping logic to be added
+        meta.difficulty = (sub as any).difficulty || 'Unknown';
+      }
 
       const num = meta.num;
       const difficulty = meta.difficulty; 
@@ -160,7 +236,7 @@ export class GitHubSyncService {
 
       const ext = this.ext(sub.lang);
       const fileName = `try-${tryIndex}${ext}`;
-      const filePath = `${difficulty}/${problemFolder}/${fileName}`;
+      const filePath = `${platformDir}/${difficulty}/${problemFolder}/${fileName}`;
 
       const content = this.buildFile(sub, tryIndex, num, difficulty, code);
 
@@ -225,29 +301,24 @@ export class GitHubSyncService {
   }
 
   private static ext(lang: string): string {
-    const m: Record<string, string> = {
-      cpp: ".cpp",
-      "c++": ".cpp",
-      python: ".py",
-      python3: ".py",
-      java: ".java",
-      javascript: ".js",
-      typescript: ".ts",
-      c: ".c",
-      csharp: ".cs",
-      go: ".go",
-      rust: ".rs",
-      kotlin: ".kt",
-      swift: ".swift",
-      mysql: ".sql",
-      mssql: ".sql",
-      oraclesql: ".sql",
-      ruby: ".rb",
-      scala: ".scala",
-      php: ".php",
-      dart: ".dart",
-    };
-    return m[lang.toLowerCase()] || ".txt";
+    const l = lang.toLowerCase();
+    if (l.includes("c++") || l.includes("cpp")) return ".cpp";
+    if (l.includes("java") && !l.includes("javascript")) return ".java";
+    if (l.includes("python") || l.includes("pypy")) return ".py";
+    if (l.includes("javascript") || l.includes("node")) return ".js";
+    if (l.includes("typescript") || l.includes("ts")) return ".ts";
+    if (l.includes("c#") || l.includes("csharp")) return ".cs";
+    if (l.includes("go")) return ".go";
+    if (l.includes("rust")) return ".rs";
+    if (l.includes("kotlin")) return ".kt";
+    if (l.includes("swift")) return ".swift";
+    if (l.includes("sql")) return ".sql";
+    if (l.includes("ruby")) return ".rb";
+    if (l.includes("scala")) return ".scala";
+    if (l.includes("php")) return ".php";
+    if (l.includes("dart")) return ".dart";
+    if (l === "c") return ".c";
+    return ".txt";
   }
 
   private static buildFile(
@@ -259,6 +330,15 @@ export class GitHubSyncService {
   ): string {
     const date = new Date(sub.timestamp).toLocaleString();
     const pid = problemNum ? `#${problemNum}` : "";
+    
+    let link = `https://leetcode.com/problems/${sub.titleSlug}/`;
+    if (sub.platform === 'codeforces') {
+      const parts = sub.titleSlug.split('/');
+      link = `https://codeforces.com/contest/${parts[0]}/problem/${parts[1]}`;
+    } else if (sub.platform === 'codechef') {
+      link = `https://www.codechef.com/problems/${sub.titleSlug}`;
+    }
+
     return `/*
  * Problem ${pid}: ${sub.title}
  * Difficulty: ${difficulty}
@@ -266,7 +346,7 @@ export class GitHubSyncService {
  * status: ${sub.statusDisplay}
  * Language: ${sub.lang}
  * Date: ${date}
-${sub.runtimeBeats ? ` * Runtime Beats: ${sub.runtimeBeats}\n` : ""}${sub.memoryBeats ? ` * Memory Beats: ${sub.memoryBeats}\n` : ""} * Link: https://leetcode.com/problems/${sub.titleSlug}/
+${sub.runtimeBeats ? ` * Runtime Beats: ${sub.runtimeBeats}\n` : ""}${sub.memoryBeats ? ` * Memory Beats: ${sub.memoryBeats}\n` : ""} * Link: ${link}
  */
 
 ${code || "// Code not available"}

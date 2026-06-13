@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ProblemRecommendation, RecommendationService } from '../services/recommendations';
 import { FriendProfile } from '../types';
+import { SkeletonRecItem } from './Skeleton';
 
 interface RecommendationsProps {
   profiles: Record<string, FriendProfile>;
@@ -54,13 +56,15 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
         className="recommendations-toggle"
         onClick={() => setExpanded(!expanded)}
       >
-        <span className="section-icon"></span> Problem Recommendations {expanded ? '▼' : '▶'}
+        Problem Recommendations {expanded ? <ChevronDown size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} /> : <ChevronRight size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} />}
       </button>
 
       {expanded && (
         <div className="recommendations-content">
           {loading ? (
-            <p className="loading-text">Loading recommendations...</p>
+            <div>
+              <SkeletonRecItem /><SkeletonRecItem /><SkeletonRecItem />
+            </div>
           ) : recommendations.length === 0 ? (
             <p className="empty-text">No recommendations available yet</p>
           ) : (
@@ -68,13 +72,26 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
               {recommendations.map((rec, idx) => (
                 <li key={idx} className="recommendation-item">
                   <a
-                    href={`https://leetcode.com/problems/${rec.titleSlug}/`}
+                    href={rec.platform === 'codeforces' ? `https://codeforces.com/problemset/problem/${rec.titleSlug}` : `https://leetcode.com/problems/${rec.titleSlug}/`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="recommendation-link"
                   >
                     <div className="rec-header">
-                      <span className="rec-title">{rec.title}</span>
+                      <span className="rec-title" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span 
+                          style={{ 
+                            display: 'inline-block',
+                            width: '6px',
+                            height: '6px',
+                            borderRadius: '50%',
+                            backgroundColor: rec.platform === 'codeforces' ? 'var(--accent-codeforces-blue)' : 'var(--accent-leetcode-primary)',
+                            flexShrink: 0
+                          }}
+                          title={rec.platform === 'codeforces' ? 'Codeforces' : 'LeetCode'}
+                        />
+                        {rec.title}
+                      </span>
                       <span className={`rec-difficulty ${rec.difficulty.toLowerCase()}`}>
                         {rec.difficulty}
                       </span>

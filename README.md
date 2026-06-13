@@ -41,7 +41,7 @@ L'Amigo automates the preservation of the user's solved problem library by synch
 - **Data Visualization**: Recharts (SVG)
 - **Bundler**: Webpack 5 with Hot Module Replacement (HMR) capabilities
 - **Storage System**: Chrome Storage Local API (Asynchronous)
-- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation
+- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation. Adheres to a strict **flat, minimalist, boxy UI** design language (no glassmorphism, no rounded corners, no gradients).
 - **API Interfaces**: LeetCode GraphQL API, GitHub REST API v3
 
 ### Data Lifecycle and Security

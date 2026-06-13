@@ -1,0 +1,59 @@
+html.lamigo-cf-dark {
+  background: #fff !important;
+  filter: invert(90%) hue-rotate(180deg) !important;
+}
+
+html.lamigo-cf-dark body {
+  background: #fff !important;
+}
+
+/* Need to revert images so they don't look inverted */
+html.lamigo-cf-dark img,
+html.lamigo-cf-dark iframe,
+html.lamigo-cf-dark video {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* Consistent L'Amigo Link Hover Styles */
+a.lamigo-processed:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+/* L'Amigo Quick Add Button */
+.lamigo-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: #f97316; /* L'Amigo Orange */
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 6px;
+  vertical-align: text-bottom;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.lamigo-add-btn:hover {
+  background-color: #ea580c;
+  transform: scale(1.1);
+}
+
+.lamigo-add-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.lamigo-add-btn.lamigo-success {
+  background-color: #22c55e;
+}

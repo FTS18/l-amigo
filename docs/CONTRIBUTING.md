@@ -35,9 +35,11 @@ Thank you for your interest in contributing to L'Amigo! This document provides g
 
 ### Development Workflow
 
-- **Development Build**: `npm run dev` (with hot reload)
+- **Development Build**: `npm run dev` (watch rebuild + automatic extension/page reload)
 - **Production Build**: `npm run build`
 - **Run Tests**: `npm test`
+
+In development mode, webpack uses a local WebSocket-based reloader to trigger extension reloads after successful rebuilds. This is not full React HMR, but it removes the manual "Reload extension" step for most changes.
 - **Lint Code**: `npm run lint`
 
 ## Code Style Guidelines
@@ -64,6 +66,16 @@ Thank you for your interest in contributing to L'Amigo! This document provides g
 - Use JSDoc for public APIs
 - Explain "why", not "what"
 - Keep comments concise and up-to-date
+
+## Design & UI Guidelines
+
+Our design language prioritizes a strict **flat, boxy** aesthetic. Please adhere to these guidelines for all UI components:
+- **No Glassmorphism**: Avoid background blurs, translucency, or complex overlay effects.
+- **No Rounded Corners**: Use strictly 0px border-radius (`border-radius: 0;`) on all elements (buttons, cards, inputs, dialogs).
+- **No Gradients**: Use solid colors only. Avoid gradient backgrounds, borders, or text.
+- **Flat UI**: Emphasize clean lines and sharp edges over depth, shadows, or 3D effects.
+- **Minimalist & Professional**: Do not use "brutalist" styles. The design should remain sleek, clean, and highly readable, functioning like a modern, minimalist technical tool.
+- **Color Scheme Consistency**: Ensure appropriate contrast and follow the established standard grays/monochromes for table headers and labels without tinting them blue.
 
 ## Project Structure
 

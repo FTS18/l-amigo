@@ -1,5 +1,6 @@
 import { LeetCodeService, AcceptedSubmission } from "../services/leetcode";
 import { GitHubSyncService } from "../services/github";
+import { CodeforcesService } from "../services/codeforces";
 
 const ALL_SUBS_KEY = "all_accepted_submissions";
 const SESSION_SYNC_KEY = "sync_in_progress";
@@ -28,10 +29,31 @@ export class SyncManager {
         stored.length > 0 ? new Set(stored.map((s) => s.id)) : undefined;
 
       const isFirstSync = !knownIds;
-      const newSubs = await LeetCodeService.fetchAllAcceptedSubmissions(
+      const { own_codeforces_handle: cfHandle } = await chrome.storage.local.get("own_codeforces_handle");
+
+      let newSubs = await LeetCodeService.fetchAllAcceptedSubmissions(
         (n) => chrome.storage.local.set({ sync_progress_fetch: n }),
         knownIds,
       );
+
+      if (cfHandle) {
+        try {
+          const cfSubsRaw = await CodeforcesService.getRecentSubmissions(cfHandle, 500);
+          const cfSubs = cfSubsRaw.map(s => ({
+            title: s.title,
+            titleSlug: s.titleSlug,
+            timestamp: s.timestamp,
+            statusDisplay: s.statusDisplay,
+            lang: s.lang,
+            id: s.submissionId || '',
+            platform: s.platform
+          }));
+          const newCfSubs = cfSubs.filter(s => !knownIds?.has(s.id));
+          newSubs = [...newSubs, ...newCfSubs];
+        } catch (e) {
+          console.warn("Failed to fetch CF subs for sync", e);
+        }
+      }
 
       const allSubs = isFirstSync ? newSubs : [...newSubs, ...stored];
       await chrome.storage.local.set({ [ALL_SUBS_KEY]: allSubs });
@@ -103,14 +125,37 @@ export class SyncManager {
         sync_error: "",
       });
 
+      const { last_synced_timestamp } = await chrome.storage.local.get("last_synced_timestamp");
       const stored: AcceptedSubmission[] =
         (await chrome.storage.local.get(ALL_SUBS_KEY))[ALL_SUBS_KEY] || [];
       const knownIds = new Set(stored.map((s) => s.id));
 
-      const newSubs = await LeetCodeService.fetchAllAcceptedSubmissions(
+      const { own_codeforces_handle: cfHandle } = await chrome.storage.local.get("own_codeforces_handle");
+
+      let newSubs = await LeetCodeService.fetchAllAcceptedSubmissions(
         (n) => chrome.storage.local.set({ sync_progress_fetch: n }),
         knownIds,
+        last_synced_timestamp || 0
       );
+
+      if (cfHandle) {
+        try {
+          const cfSubsRaw = await CodeforcesService.getRecentSubmissions(cfHandle, 50); // smaller limit for incremental
+          const cfSubs = cfSubsRaw.map(s => ({
+            title: s.title,
+            titleSlug: s.titleSlug,
+            timestamp: s.timestamp,
+            statusDisplay: s.statusDisplay,
+            lang: s.lang,
+            id: s.submissionId || '',
+            platform: s.platform
+          }));
+          const newCfSubs = cfSubs.filter(s => !knownIds.has(s.id));
+          newSubs = [...newSubs, ...newCfSubs];
+        } catch (e) {
+          console.warn("Failed to fetch CF subs for incremental sync", e);
+        }
+      }
 
       if (newSubs.length === 0) {
         await chrome.storage.local.set({ sync_status: "idle" });
@@ -125,7 +170,10 @@ export class SyncManager {
       }
 
       const merged = [...newSubs, ...stored];
-      await chrome.storage.local.set({ [ALL_SUBS_KEY]: merged });
+      await chrome.storage.local.set({ 
+        [ALL_SUBS_KEY]: merged,
+        last_synced_timestamp: Date.now()
+      });
 
       await chrome.storage.local.set({ sync_status: "syncing" });
       const count = await GitHubSyncService.syncSubmissions(

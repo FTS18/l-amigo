@@ -7,6 +7,7 @@ export interface ProblemRecommendation {
   difficulty: string;
   reason: string;
   solvedByFriends: string[];
+  platform?: string;
 }
 
 export class RecommendationService {
@@ -15,76 +16,85 @@ export class RecommendationService {
     currentUserSolvedProblems: Set<string> = new Set(),
   ): Promise<ProblemRecommendation[]> {
     // Collect all problems solved by friends
-    const friendProblems = new Map<string, string[]>();
+    // Key: "platform:titleSlug", Value: { sub: RecentSubmission, friends: string[] }
+    const friendProblems = new Map<string, { sub: RecentSubmission, friends: string[] }>();
 
-    Object.values(profiles).forEach((profile) => {
-      const uniqueSolved = new Set<string>();
-      profile.recentSubmissions?.forEach((sub) => {
-        if (sub.statusDisplay === 'Accepted') {
-          uniqueSolved.add(sub.titleSlug);
-        }
-      });
-
-      uniqueSolved.forEach(titleSlug => {
-        if (!currentUserSolvedProblems.has(titleSlug)) {
-          if (!friendProblems.has(titleSlug)) {
-            friendProblems.set(titleSlug, []);
+    Object.entries(profiles)
+      .filter(([key]) => key.includes(':'))
+      .map(([_, p]) => p)
+      .forEach((profile) => {
+        const uniqueSolved = new Map<string, RecentSubmission>();
+        profile.recentSubmissions?.forEach((sub) => {
+          if (sub.statusDisplay === 'Accepted') {
+            const platform = sub.platform || profile.platform || 'leetcode';
+            const key = `${platform}:${sub.titleSlug}`;
+            uniqueSolved.set(key, sub);
           }
-          friendProblems.get(titleSlug)!.push(profile.username);
-        }
+        });
+
+        uniqueSolved.forEach((sub, key) => {
+          if (!currentUserSolvedProblems.has(sub.titleSlug)) { // user's solved uses titleSlug, but we might want to ensure cross-platform compatibility if needed, though they don't overlap much. Let's assume titleSlug is safe.
+            if (!friendProblems.has(key)) {
+              friendProblems.set(key, { sub, friends: [] });
+            }
+            friendProblems.get(key)!.friends.push(profile.username);
+          }
+        });
       });
-    });
 
     // Calculate difficulty distribution from friends
     const difficultyPreference = this.calculateDifficultyPreference(profiles);
 
     // Sort problems by number of friends who solved them
-    const sortedProblems = Array.from(friendProblems.entries())
-      .sort((a, b) => b[1].length - a[1].length)
+    const sortedProblems = Array.from(friendProblems.values())
+      .sort((a, b) => b.friends.length - a.friends.length)
       .slice(0, 10);
 
-    // Fetch problem details in parallel (all at once – max 10 requests)
-    const results = await Promise.allSettled(
-      sortedProblems.map(async ([titleSlug, friendsWhoSolved]) => {
-        const data = await LeetCodeService.gql<{
-          question: { title: string; difficulty: string } | null;
-        }>(
-          `query getProblemDetails($titleSlug: String!) {
-            question(titleSlug: $titleSlug) {
-              title
-              difficulty
-            }
-          }`,
-          { titleSlug },
-        );
+    const results = await Promise.all(
+      sortedProblems.map(async ({ sub, friends }) => {
+        let title = sub.title;
+        let difficulty = sub.difficulty || 'Medium';
+        const platform = sub.platform || 'leetcode';
 
-        const problemDetails = data?.question;
-        if (!problemDetails) return null;
+        // For LeetCode, if difficulty isn't in RecentSubmission, fetch it (fallback)
+        if (platform === 'leetcode' && !sub.difficulty) {
+           try {
+              const data = await LeetCodeService.gql<{
+                question: { title: string; difficulty: string } | null;
+              }>(
+                `query getProblemDetails($titleSlug: String!) {
+                  question(titleSlug: $titleSlug) {
+                    title
+                    difficulty
+                  }
+                }`,
+                { titleSlug: sub.titleSlug },
+              );
+              if (data?.question) {
+                 title = data.question.title;
+                 difficulty = data.question.difficulty;
+              }
+           } catch(e) {}
+        }
 
         const reason = this.generateReason(
-          friendsWhoSolved.length,
-          problemDetails.difficulty,
+          friends.length,
+          difficulty,
           difficultyPreference,
         );
+
         return {
-          titleSlug,
-          title: problemDetails.title,
-          difficulty: problemDetails.difficulty,
+          titleSlug: sub.titleSlug,
+          title,
+          difficulty,
           reason,
-          solvedByFriends: friendsWhoSolved,
+          solvedByFriends: friends,
+          platform
         } as ProblemRecommendation;
       }),
     );
 
-    const recommendations = results
-      .filter(
-        (r): r is PromiseFulfilledResult<ProblemRecommendation | null> =>
-          r.status === "fulfilled",
-      )
-      .map((r) => r.value)
-      .filter((v): v is ProblemRecommendation => v !== null);
-
-    return recommendations;
+    return results;
   }
 
   private static calculateDifficultyPreference(
@@ -94,11 +104,14 @@ export class RecommendationService {
       mediumCount = 0,
       hardCount = 0;
 
-    Object.values(profiles).forEach((profile) => {
-      easyCount += profile.problemsSolved.easy;
-      mediumCount += profile.problemsSolved.medium;
-      hardCount += profile.problemsSolved.hard;
-    });
+    Object.entries(profiles)
+      .filter(([key]) => key.includes(':'))
+      .map(([_, p]) => p)
+      .forEach((profile) => {
+        easyCount += profile.problemsSolved.easy;
+        mediumCount += profile.problemsSolved.medium;
+        hardCount += profile.problemsSolved.hard;
+      });
 
     const total = easyCount + mediumCount + hardCount;
     return {

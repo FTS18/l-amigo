@@ -28,13 +28,15 @@ The recommended deployment workflow utilizes a headless content delivery network
 
 ## Visual Identity and Brand Guidelines
 
-The L'Amigo visual identity is anchored in a "Modern Dark" aesthetic:
-- **Typography**: Primary headers utilize high-legibility sans-serif faces (Inter/System Stack).
+The L'Amigo visual identity is anchored in a strict "Flat Boxy" minimalist aesthetic:
+- **Typography**: Primary headers and body text utilize the high-legibility sans-serif face **Bricolage Grotesque** without excessive bolding or uppercase transformations.
 - **Color Palette**: 
-  - Background: Deep Obsidian (#0a0a0a)
-  - Accent: High-saturation Gradients (Indigo/Azure interface)
-  - Text: High-contrast Slate (#f9f9f9)
-- **Glassmorphism**: Header and navigation elements utilize `backdrop-filter: blur()` to provide depth and professional visual layering.
+  - Emphasizes a neutral monochrome scheme with strict functional colors.
+  - Background: High-contrast solid shades (e.g., #333333, #0a0a0a for dark mode).
+  - Text: High-contrast readable grays and whites.
+  - Accent: Solid, functional colors. Absolutely no blue-tinted grays or blue-y UI components.
+- **Form Factor**: Strictly flat and boxy. All components must have 0px border-radius (`border-radius: 0;`).
+- **Forbidden Styles**: The design strictly prohibits the use of "glassmorphism", rounded corners, gradients, drop shadows, or brutalist styling. It is a sleek, professional, and minimal technical tool.
 
 ---
 This infrastructure is maintained by the L'Amigo core development team. For asset contributions or documentation updates, please refer to the main technical README.
