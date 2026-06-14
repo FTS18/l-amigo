@@ -1,6 +1,6 @@
 {
   "name": "lamigo",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "description": "Track your friends' LeetCode progress with tabbed interface, charts, streaks, and GitHub sync",
   "scripts": {

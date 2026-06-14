@@ -7,7 +7,6 @@ html.lamigo-cf-dark body {
   background: #fff !important;
 }
 
-/* Need to revert images so they don't look inverted */
 html.lamigo-cf-dark img,
 html.lamigo-cf-dark iframe,
 html.lamigo-cf-dark video {
@@ -28,7 +27,7 @@ a.lamigo-processed:hover {
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  background-color: #f97316; /* L'Amigo Orange */
+  background-color: #f97316;
   color: white;
   border: none;
   font-size: 14px;
@@ -57,3 +56,151 @@ a.lamigo-processed:hover {
 .lamigo-add-btn.lamigo-success {
   background-color: #22c55e;
 }
+
+/* College Standings bookmark button */
+.lamigo-bookmark-btn {
+  background-color: #f0f0f0;
+  color: #3b5998;
+  border: 1px solid #ccc;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
+  border-radius: 0;
+  font-weight: bold;
+  transition: all 0.2s;
+  box-shadow: none;
+}
+
+.lamigo-bookmark-btn:hover {
+  background-color: #e4e4e4;
+  border-color: #bbb;
+}
+
+.lamigo-bookmark-btn.bookmarked {
+  background-color: #3b5998;
+  color: white;
+  border-color: #2e4575;
+}
+
+.lamigo-bookmark-btn.bookmarked:hover {
+  background-color: #2e4575;
+}
+
+/* Small inline bookmark button for profiles */
+.lamigo-bookmark-btn-sm {
+  background-color: #f0f0f0;
+  color: #3b5998;
+  border: 1px solid #ccc;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  margin-left: 6px;
+  vertical-align: middle;
+  border-radius: 0;
+  font-weight: bold;
+  transition: all 0.2s;
+  box-shadow: none;
+}
+
+.lamigo-bookmark-btn-sm:hover {
+  background-color: #e4e4e4;
+  border-color: #bbb;
+}
+
+.lamigo-bookmark-btn-sm.bookmarked {
+  background-color: #3b5998;
+  color: white;
+  border-color: #2e4575;
+}
+
+.lamigo-bookmark-btn-sm.bookmarked:hover {
+  background-color: #2e4575;
+}
+
+
+/* Use CF's own verdict classes so colors auto-match dark/light theme */
+.verdict-accepted {
+  color: #090 !important;
+  font-weight: bold;
+}
+
+.verdict-rejected {
+  color: #900 !important;
+  font-weight: bold;
+}
+
+.cell-time {
+  font-size: 10px;
+  color: #888;
+}
+
+/* College tab highlight stays on click */
+.lamigo-college-tab-li.current a,
+.lamigo-college-tab-li.current a:hover {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+/* Rating-based Heatmap Toggle */
+.lamigo-heatmap-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 15px;
+  float: right;
+  height: 24px;
+}
+
+.lamigo-heatmap-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  color: #3b5998;
+  user-select: none;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.lamigo-heatmap-toggle-label:hover {
+  color: #2e4575;
+}
+
+.lamigo-heatmap-toggle-label input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  accent-color: #3b5998;
+}
+
+/* Heatmap Legend styling */
+.lamigo-heatmap-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #555;
+  margin-top: 5px;
+  padding-right: 10px;
+  font-family: Arial, sans-serif;
+}
+
+/* Invert overrides for dark mode compatibility */
+html.lamigo-cf-dark .lamigo-heatmap-toggle-label {
+  color: #8bb2f0;
+}
+
+html.lamigo-cf-dark .lamigo-heatmap-toggle-label:hover {
+  color: #a3c4f7;
+}
+
+html.lamigo-cf-dark .lamigo-heatmap-legend {
+  color: #ccc;
+}
+

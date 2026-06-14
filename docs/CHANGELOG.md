@@ -3,19 +3,31 @@
  All notable changes to the L'Amigo (formerly LeetCode Friend Tracker) extension.
  
 
- ## [1.5.1] - 2026-06-14
+ ## [1.6.0] - 2026-06-15
 ### Added
-- Triple-Platform Integration (LeetCode, Codeforces, CodeChef)
-- Premium Glassmorphic UI Overhaul
-- Advanced Recharts Data Visualization with Neon Area Charts
-- Automated Debounced GitHub State Backups
-- Complete Import/Export Configuration Tools
-- Lucide React Iconography Integration
+- **CF College Standings Tab**: Injects a custom tab into Codeforces standings (`/contest/*/standings`) using `_standingsCache` memory lookup for instant rendering. Replicates Codeforces' exact native table structure (`class="standings"`, `tr class="dark"`, `verdict-accepted` with timestamp) showing team links, problem details, Legendary Grandmaster rendering (`.legendary-first-letter` coloring the first letter black), and falls back to a page scraping crawling mechanism if the members cache is empty.
+- **Organization Bookmarking & Profile Shortcuts**: Added bookmarking controls on ratings page (`/ratings/organization/*`) supporting parallel page 2 fetching (up to 400 members) and profile bookmarks next to organization links. Injected Quick-Add buttons next to handles (`a[href^="/profile/"]`) in standings, rankings, and comment pages sending background message `createIdentity` on click. Hooks a `cf_dark_mode` theme listener to add `lamigo-cf-dark` class on the root element.
+- **Rating-based Heatmap**: Color-codes activity graph squares based on the difficulty of the hardest problem solved on each day using Codeforces rating colors. Includes a toggle checkbox inside `_UserActivityFrame_header`, preference persistence, an interactive HSL color scale legend, memory variable resetting upon profile swaps to prevent rating leaks, and observer-safe re-draw handling for year selectors.
+- **Triple-Platform Identity System**: Refactored `storage.ts` to manage `friend_identities_v2`, enabling a single friend card to track LeetCode, Codeforces, and CodeChef handles in parallel.
+- **Codeforces REST API Integration**: Engineered `CodeforcesService` (`src/services/codeforces.ts`) with a static promise-chain queuing mechanism `requestQueue` enforcing a `1000ms` rate limit interval. Wrapped endpoints in a `CircuitBreaker` (threshold: 5, reset: 60s) to request basic user info, submission statuses, and rating changes concurrently. Features a 1h cache (`CACHE_TTL = 3600000` ms) mapping contest IDs to divisions (Div 1-4) by keyword filtering contest titles, dynamic difficulty evaluation (Easy: <1200, Medium: <1900, Hard: >=1900), and a plaintext solution fetcher via HTML regex match on `program-source-text`.
+- **CodeChef Scraper Integration**: Built a DOM scraper in `src/services/codechef.ts` (`CodeChefService`) targeting public profiles. Extracts contest rating history arrays from the page source using regular expression matches `/jQuery\.extend\(Drupal\.settings,\s*(\{.*?\})\);/s` on the Drupal settings payload. RegEx parses user's real name via `class="h2-style"`, star ratings (1★ to 7★) via `<span class='rating'>`, max ratings by analyzing history records, and pulls plaintext solution codes using regex on `/viewplaintext/` endpoints.
+- **Glassmorphic Popup Redesign**: Split monolithic `App.css` into separate base, cards, chrome, compare, settings, and profile stylesheets. Implemented blurred translucent backgrounds (`backdrop-filter: blur(12px)`), pure-CSS border shadows, and modern Bricolage Grotesque typography.
+- **Advanced Recharts Graphs**: Swapped simple charts with dark-mode optimized area graphs comparing friend rating history and global ranking progressions.
+- **Friend Card Performance & Contrast Adjustments**: Wrapped dashboard cards in `React.memo` using custom comparators to avoid redundant renders, and adjusted `getProfileQualityColor` HSL lightness to 34% (originally 45%) in Light Mode to meet WCAG AA contrast standards.
+- **Automated GitHub State Backup**: Implemented debounced backups of settings/friends directly to user GitHub repositories, complete with background-sync notification toasts.
+- **Lucide Icons**: Substituted raw emoji markers with sharp, scalable SVG primitives using `lucide-react`.
+- **JSON Import/Export & Onboarding Flows**: Added backup/restore tools and integrated GitHub OAuth Device Flow (`Verification Link` and `8-character User Code`) directly in `Onboarding.tsx`, alongside local JSON import backup recovery options.
+- **HMR Pipeline & Webpack Build Optimizations**: Configured `DevExtensionReloadPlugin` with WebSockets reloader, integrated `html-webpack-plugin` for dynamic asset injection in `popup.html`, configured code-splitting to isolate dependencies into a distinct `vendors.js` chunk, enabled Terser minification in production, and speeded up compilation via `cheap-source-map` devtools.
+- **Dynamic Toast Notifications (`src/popup/Toast.tsx`)**: Upgraded toast alerts to support interactive action buttons (`action?: { label: string; onClick: () => void }`) styled with CSS theme tokens.
+- **LeetCode Verdict Expansion & Submission Interception**: Expanded GraphQL queries in `src/services/leetcode.ts` to request `statusDisplay` alongside standard fields. Configured content script `leetcode-monitor.ts` with a MutationObserver to capture non-Accepted results (Wrong Answer, TLE). Injects green checkmark SVGs and sync state anchors on success, and enforces a `5000ms` debounce threshold to avoid sync floods. Handled negative feedback in popup feeds (`FriendCard.tsx`, `FriendProfileView.tsx`) by rendering red Lucide `<X size={12} color="#ff4444" />` icons next to problems.
+- **Upcoming Contest Notifications (`src/services/alarms.ts` & `src/background/background.ts`)**: Built a multi-tier Chrome Alarms reminder system scheduling alerts at three intervals (24h, 1h, and 10m before start time) via `chrome.alarms.create` with corresponding cleanup listeners via `chrome.alarms.clear`. Handled in `background.ts` by generating high-priority chrome notifications with custom requirements (e.g. `requireInteraction` for 10-minute warnings).
 
 ### Fixed
-- Codeforces contest graph overlapping bug
-- Light mode contrast legibility issues
-- Duplicate timeline submission rendering
+- **Contest Hover Overlap**: Fixed overlapping hover target bugs on Codeforces contest graphs.
+- **Light Mode Legibility**: Corrected contrast issues on cards and settings views under light themes.
+- **Unified Identity Schema Upgrade & Migrator (`src/services/storage.ts`)**: Built a migration path for legacy storage entries on startup to safely map handles to the new `friend_identities_v2` schema.
+- **Release CI Automation**: Fixed Actions workflows by removing hardcoded release notes file dependencies.
+- **Codebase Cleanups**: Purged obsolete release ZIP archives, draft patch files, unimported rate limiters, unused React components, and skeleton modules.
 
 ## [1.5.0] - 2026-02-14
 
