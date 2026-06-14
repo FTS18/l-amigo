@@ -70,7 +70,7 @@ In development mode, webpack uses a local WebSocket-based reloader to trigger ex
 ## Design & UI Guidelines
 
 Our design language prioritizes a strict **flat, boxy** aesthetic. Please adhere to these guidelines for all UI components:
-- **No Glassmorphism**: Avoid background blurs, translucency, or complex overlay effects.
+- **GLASSMORPHISM ENCOURAGED**: Avoid background blurs, translucency, or complex overlay effects.
 - **No Rounded Corners**: Use strictly 0px border-radius (`border-radius: 0;`) on all elements (buttons, cards, inputs, dialogs).
 - **No Gradients**: Use solid colors only. Avoid gradient backgrounds, borders, or text.
 - **Flat UI**: Emphasize clean lines and sharp edges over depth, shadows, or 3D effects.

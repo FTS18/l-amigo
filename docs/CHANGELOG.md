@@ -3,7 +3,21 @@
  All notable changes to the L'Amigo (formerly LeetCode Friend Tracker) extension.
  
 
- ## [1.5.0] - 2026-02-14
+ ## [1.5.1] - 2026-06-14
+### Added
+- Triple-Platform Integration (LeetCode, Codeforces, CodeChef)
+- Premium Glassmorphic UI Overhaul
+- Advanced Recharts Data Visualization with Neon Area Charts
+- Automated Debounced GitHub State Backups
+- Complete Import/Export Configuration Tools
+- Lucide React Iconography Integration
+
+### Fixed
+- Codeforces contest graph overlapping bug
+- Light mode contrast legibility issues
+- Duplicate timeline submission rendering
+
+## [1.5.0] - 2026-02-14
 
  ### Added
 - **Production Hardening**: Comprehensive testing suite with 58 unit tests covering critical utilities.

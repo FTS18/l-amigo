@@ -1,11 +1,11 @@
-# L'Amigo - LeetCode Peer Progress and Automation
+# L'Amigo - Multi-Platform Peer Progress and Automation
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-orange?logo=googlechrome)](https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli)
-[![Version](https://img.shields.io/badge/version-1.5.0-blue)](https://github.com/FTS18/l-amigo/releases)
+[![Version](https://img.shields.io/badge/version-1.5.1-blue)](https://github.com/FTS18/l-amigo/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/FTS18/l-amigo?style=social)](https://github.com/FTS18/l-amigo)
 
-L'Amigo is a browser extension engineered for competitive programmers and software engineering candidates to monitor peer performance and automate personal progress management. By integrating directly into the LeetCode environment, L'Amigo enables users to track friend activity, perform detailed statistical comparisons, and maintain an automated repository of their own solved problems on GitHub.
+L'Amigo is a browser extension engineered for competitive programmers and software engineering candidates to monitor peer performance and automate personal progress management. By integrating directly into LeetCode, Codeforces, and CodeChef environments, L'Amigo enables users to track friend activity, perform detailed statistical comparisons, and maintain an automated repository of their own solved problems on GitHub.
 
 ## Core Architectural Components
 
@@ -21,7 +21,13 @@ The extension popup serves as a centralized interface for monitoring your tracke
 - **Visual Pattern Analysis**: Uses Recharts to render SVG-based distribution charts, helping users identify their peers' solving habits.
 - **Submission History**: Extracts and displays the five most recent accepted problems for each tracked friend, including direct links to problem statements.
 
-### Head-to-Head Comparison
+### Multi-Platform Engine
+L'Amigo natively supports concurrent tracking across three major competitive programming platforms:
+- **LeetCode**: GraphQL pipelines with advanced submission verdict tracking (Accepted, WA, TLE).
+- **Codeforces**: Direct REST API integration for global ratings, ranks, and live verdicts.
+- **CodeChef**: Real-time extraction of global ratings, divisions, and solved problem counts.
+
+## Head-to-Head Comparison
 The Comparison module allows users to perform deep-dive analytics by selecting multiple friends for side-by-side evaluation.
 - **Topic Proficiency**: Analyzes public solve data to identify a user's top five mastered topics (e.g., Dynamic Programming, Graph Theory).
 - **Competitiveness Index**: Compares LeetCode Contest Ratings and Global Rankings in a unified grid.
@@ -41,8 +47,8 @@ L'Amigo automates the preservation of the user's solved problem library by synch
 - **Data Visualization**: Recharts (SVG)
 - **Bundler**: Webpack 5 with Hot Module Replacement (HMR) capabilities
 - **Storage System**: Chrome Storage Local API (Asynchronous)
-- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation. Adheres to a strict **flat, minimalist, boxy UI** design language (no glassmorphism, no rounded corners, no gradients).
-- **API Interfaces**: LeetCode GraphQL API, GitHub REST API v3
+- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation. Features a premium glassmorphic aesthetic with pure CSS frosted glass effects and dynamic Recharts SVG charts.
+- **API Interfaces**: LeetCode GraphQL, Codeforces REST, CodeChef Scraper, GitHub REST API v3
 
 ### Data Lifecycle and Security
 1. **Ingestion**: Data is fetched client-side directly from LeetCode servers via secure GraphQL queries.
@@ -66,7 +72,7 @@ The easiest way to install L'Amigo is directly from the Chrome Web Store:
 ### Method 2: Pre-built Release (Manual Installation)
 This method is recommended for users who wish to utilize L'Amigo without maintaining a local development environment.
 1. Navigate to the official L'Amigo GitHub repository and access the **Releases** section.
-2. Download the distribution package: `lamigo_v1.5.0_release.zip`.
+2. Download the distribution package: `lamigo-v1.5.1.zip`.
 3. Extract the ZIP archive contents to a persistent local directory.
 4. Open the Google Chrome browser and navigate to `chrome://extensions/`.
 5. Activate **Developer mode** using the toggle in the upper-right corner.
