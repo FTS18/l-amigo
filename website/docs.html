@@ -5,15 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation - L'Amigo</title>
-  <meta name="description" content="Complete documentation for L'Amigo Chrome extension.">
+  <meta name="description" content="Complete documentation for L'Amigo Chrome extension. Technical reference, architecture, and usage guide.">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="stylesheet" href="styles.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="docs-body">
+  <div id="scroll-progress" class="scroll-progress"></div>
   <!-- Navigation -->
   <nav class="nav">
     <div class="container nav-container">
@@ -32,463 +31,458 @@
         <li><a href="index.html#features">Features</a></li>
         <li><a href="index.html#how-it-works">How It Works</a></li>
         <li><a href="docs.html" style="color: var(--white);">Docs</a></li>
-
         <li class="mobile-only nav-divider"></li>
-        <li class="mobile-only nav-section-title">Documentation</li>
-        <li class="mobile-only"><a href="#dashboard">Dashboard & Friends</a></li>
-        <li class="mobile-only"><a href="#recommendations">Problem Recommendations</a></li>
-        <li class="mobile-only"><a href="#analytics">Deep Analytics</a></li>
-        <li class="mobile-only"><a href="#compare">Head-to-Head Comparison</a></li>
-        <li class="mobile-only"><a href="#native-integration">Native Profile Integration</a></li>
-        <li class="mobile-only"><a href="#sync">GitHub Sync Setup</a></li>
-        <li class="mobile-only"><a href="#troubleshooting">Troubleshooting & FAQ</a></li>
-
-        <li class="mobile-only nav-divider"></li>
-        <li class="mobile-only nav-section-title">Resources</li>
-        <li class="mobile-only"><a href="index.html#faq">FAQ</a></li>
-        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo" target="_blank">GitHub Repository</a></li>
-        <li class="mobile-only"><a href="https://github.com/FTS18/l-amigo/issues" target="_blank">Report an Issue</a>
+        <li class="desktop-only">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
         </li>
-
-        <li class="mobile-only nav-divider"></li>
-        <li class="mobile-only nav-section-title">Legal & About</li>
-        <li class="mobile-only"><a href="privacy.html">Privacy Policy</a></li>
-        <li class="mobile-only"><a href="terms.html">Terms of Service</a></li>
-        <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
-
-        <li class="mobile-only nav-divider"></li>
-        <li class="mobile-only">
-          <a href="https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli" target="_blank" class="btn-cta">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
-            </svg>
-            Add to Chrome
-          </a>
-        </li>
+        <li class="mobile-only"><a href="https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli?utm_source=item-share-cb" target="_blank" class="btn-cta">Add to Chrome</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Docs Layout (Single Column) -->
+  <!-- Docs Layout -->
   <div class="docs-page">
+    
+    <!-- STICKY SIDEBAR -->
+    <aside class="docs-sidebar">
+      <div class="search-btn" id="searchTrigger">
+        <span>Search docs...</span>
+        <kbd>Ctrl+K</kbd>
+      </div>
+      <div class="sidebar-title">Getting Started</div>
+      <nav class="sidebar-nav">
+        <a href="#quick-start" class="sidebar-link active">Quick Start</a>
+        <a href="#keyboard-shortcuts" class="sidebar-link">Keyboard Shortcuts</a>
+      </nav>
+      <div class="sidebar-title" style="margin-top: 24px;">Core Features</div>
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="sidebar-link">1. Dashboard & Friends</a>
+        <a href="#analytics" class="sidebar-link">2. Deep Analytics</a>
+        <a href="#smart-tools" class="sidebar-link">3. Smart Tools</a>
+        <a href="#native-injections" class="sidebar-link">4. Native Injections</a>
+        <a href="#deep-dives" class="sidebar-link">5. Profile Deep-Dives</a>
+        <a href="#settings" class="sidebar-link">6. Settings & Sync</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
     <main class="docs-content">
 
       <!-- Quick Start -->
       <section id="quick-start" class="docs-section">
         <h1 class="docs-title">Documentation</h1>
         <p class="docs-hero-desc">
-          Master L'Amigo: Track friends, compare stats, get problem recommendations, export data, and sync solutions to
-          GitHub.
+          Technical specifications, configuration details, and architecture guidelines for the L'Amigo multi-platform competitive programming tracker.
         </p>
 
-        <div class="info-box">
-          <h3 style="margin-top: 0;">⚡ Quick Start Guide</h3>
-          <ol style="margin-left: 20px;">
-            <li><strong>Install</strong>: Add L'Amigo from the Chrome Web Store</li>
-            <li><strong>Setup</strong>: Enter your LeetCode username when prompted</li>
-            <li><strong>Add Friends</strong>: Start tracking friends using their username or profile URL</li>
-            <li><strong>Explore</strong>: Use the three tabs to view Friends, Compare stats, and configure Settings</li>
+        <div class="callout tip">
+          <div class="callout-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ea043" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            System Prerequisites & Setup
+          </div>
+          <ol style="margin: 8px 0 0 20px; font-size: 14px; line-height: 1.8;">
+            <li><strong>Installation</strong>: Obtain the compiled extension package from the Chrome Web Store. Once loaded, the extension runs background listeners using Chrome's service worker context.</li>
+            <li><strong>Onboarding</strong>: Provide your personal handles during first-time startup. This initializes your personal baseline data storage under the keys <code>own_username</code> (LeetCode), <code>own_codeforces_handle</code>, and <code>own_codechef_handle</code>.</li>
+            <li><strong>Peer Setup</strong>: Add peer handles in the "Add Friend" overlay. Profiles can link handles for multiple platforms under a single unified identity.</li>
+            <li><strong>Authentication</strong>: Configure the optional GitHub Sync utilizing either the standard OAuth authorization grant flow or by manually generating a personal access token.</li>
           </ol>
-          <p style="margin: 12px 0 0; font-size: 14px;">💡 <strong>Tip:</strong> You can paste full LeetCode profile
-            URLs - the extension extracts the username automatically!</p>
         </div>
-
-        <img src="screenshots/7.png" alt="L'Amigo Extension Dashboard" class="doc-img" style="margin-top: 32px;">
-      </section>
-
-      <!-- Friends Tab -->
-      <section id="dashboard" class="docs-section">
-        <div class="section-title-wrap">
-          <h2>1. Friends Tab</h2>
-          <div class="section-accent"></div>
-          <p class="section-desc">Your main dashboard for tracking up to <strong>50 friends</strong> and viewing
-            their LeetCode progress in real-time.</p>
-        </div>
-
-        <h3>Managing Friends</h3>
-
-        <p>To <strong>add a friend</strong>, type their username or paste their LeetCode profile URL in the input field,
-          then press <kbd>Enter</kbd> or click the + button. Profiles load instantly with cached data and refresh in the
-          background.</p>
-
-        <p>To <strong>remove a friend</strong>, hover over their card and click the trash icon, then confirm deletion.
-          To <strong>refresh</strong>, click the individual refresh icon on any card, use the ↻ button to refresh all
-          friends, or press <kbd>R</kbd> as a keyboard shortcut.</p>
-
-        <img src="screenshots/7.png" alt="Friend Cards Display" class="doc-img">
-
-        <h3>Sorting & Filtering</h3>
-        <p>Use the <strong>Sort by</strong> dropdown to organize by <strong>Name</strong>, <strong>Problems
-            Solved</strong>, or <strong>Last Submitted</strong> (default).</p>
-
-        <div class="warning-box" style="margin-top: 32px;">
-          <p style="margin: 0;"><strong>Caching & Rate Limits:</strong> Friend profiles are cached for <strong>15
-              minutes</strong> to avoid triggering LeetCode's rate limits. Stale profiles automatically refresh in the
-            background. Manual refresh available anytime.</p>
-        </div>
-      </section>
-
-      <!-- Problem Recommendations -->
-      <section id="recommendations" class="docs-section">
-        <div style="margin-bottom: 40px;">
-          <h2>2. Problem Recommendations</h2>
-          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
-          </div>
-          <p style="max-width: 700px;">Discover problems your friends have solved but you haven't attempted yet. Learn
-            from your peer group's solving patterns and stay motivated.</p>
-        </div>
-
-        <img src="screenshots/11.png" alt="Problem Recommendations" class="doc-img" style="margin-bottom: 32px;">
-
-        <h3>How It Works</h3>
-        <p>The recommendation engine scans all your friends' recent submissions, filters out problems you've already
-          solved, ranks by popularity (how many friends solved each problem), and returns the top 10 most-solved
-          problems by your friend group.</p>
-
-        <p>Each recommended problem displays the <strong>problem title</strong> (clickable link to LeetCode),
-          <strong>difficulty badge</strong> (Easy/Medium/Hard), the number of friends who solved it, and their names.
-        </p>
-
-
-
-        <div class="info-box" style="margin-top: 32px;">
-          <p style="margin: 0;"><strong>Pro Tip:</strong> The recommendation engine <strong>dynamically
-              analyzes</strong> patterns across your entire friend group. As you add more friends, it fetches deeper
-            solve history to provide more accurate, peer-based suggestions!</p>
-        </div>
-      </section>
-
-      <!-- Compare Tab -->
-      <section id="compare" class="docs-section">
-        <div style="margin-bottom: 40px;">
-          <h2>3. Compare Tab</h2>
-          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
-          </div>
-          <p style="max-width: 700px;">Compare your performance against your friends with detailed metrics, difficulty
-            breakdowns, and activity charts.</p>
-        </div>
-
-        <img src="screenshots/8.png" alt="Compare Tab - Side-by-Side Comparison" class="doc-img">
-
-        <h3>Features</h3>
-
-        <p>The Compare tab displays side-by-side metrics including <strong>Total Problems Solved</strong> with visual
-          bars, <strong>Easy/Medium/Hard breakdown</strong> showing difficulty distribution, <strong>current
-            streak</strong> for consistency tracking, <strong>contest rating</strong> comparison, and <strong>global
-            rank</strong> positions on LeetCode leaderboards.</p>
-
-        <p>Visual <strong>pie charts</strong> show each person's problem difficulty distribution using color coding
-          (green for Easy, yellow/orange for Medium, red for Hard problems).</p>
-
-        <p><strong>Activity timeline</strong> line graphs display submission activity over time, allowing you to spot
-          activity spikes and lulls, compare consistency between users, and identify solving patterns.</p>
-
-        <div class="docs-card" style="margin-top: 32px;">
-          <h4>How to Use</h4>
-          <p>Switch to the <strong>Compare</strong> tab (or press <kbd>2</kbd>), select friends from the dropdown to add
-            them to comparison, and compare up to any number of friends simultaneously. Scroll down to view detailed
-            charts and graphs.</p>
-        </div>
-
-        <div class="info-box" style="margin-top: 32px;">
-          <p style="margin: 0;"><strong>Competitive Tip:</strong> Use the Compare tab for study groups or friendly
-            competition. Metrics are color-coded – the highest values are highlighted for quick spotting!</p>
-        </div>
-      </section>
-
-      <!-- Native Integration -->
-      <section id="native-integration" class="docs-section">
-        <div style="margin-bottom: 40px;">
-          <h2>4. LeetCode Profile Integration</h2>
-          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
-          </div>
-          <p style="max-width: 700px;">L'Amigo injects native buttons directly into LeetCode profile pages for a
-            seamless experience. No need to copy-paste usernames!</p>
-        </div>
-
-        <img src="screenshots/13.png" alt="LeetCode Profile Integration" class="doc-img" style="margin-bottom: 32px;">
-
-        <h3>Direct Actions</h3>
-        <p>When you visit any LeetCode user's profile page, L'Amigo adds two premium buttons to their sidebar:</p>
-
-        <ul style="margin-bottom: 24px;">
-          <li><strong>Track with L'Amigo</strong>: Instantly adds the user to your tracked friends list. If the user is
-            already
-            tracked, the button updates to show a checkmark status.</li>
-          <li><strong>Compare with Me</strong>: Opens a sleek side-by-side modal showing your stats vs theirs, including
-            <strong>Contest Ratings</strong> and <strong>Topic-wise mastery</strong>.
-          </li>
-        </ul>
-
-        <div class="info-box" style="margin-top: 32px;">
-          <p style="margin: 0;"><strong>Persistent Integration:</strong> Our injection engine is built to handle
-            LeetCode's dynamic React UI. Even if the page re-renders, the L'Amigo buttons remain firmly in place and
-            ready for action.</p>
-        </div>
-      </section>
-
-      <!-- Settings Tab -->
-      <section id="sync" class="docs-section">
-        <div style="margin-bottom: 40px;">
-          <h2>5. Settings Tab</h2>
-          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
-          </div>
-          <p style="max-width: 700px;">Configure GitHub sync, manage your profile, toggle dark mode, export data, and
-            customize auto-refresh settings.</p>
-        </div>
-
-        <img src="screenshots/10.png" alt="Settings Tab - GitHub Sync" class="doc-img">
-
-        <h3>General Settings</h3>
-
-        <p>Update your <strong>LeetCode username</strong> for problem recommendations and profile tracking. Toggle
-          <strong>Dark Mode</strong> between light and dark themes. Enable <strong>Notifications</strong> to get alerts
-          when friends solve new problems. Configure <strong>Auto-Refresh</strong> with intervals of 15min, 30min, 1hr,
-          or 2hr to keep friend data fresh automatically.
-        </p>
-
-        <h3>Export Data</h3>
-        <p>Export your friends' data in <strong>CSV</strong> (simple format), <strong>Detailed CSV</strong>
-          (comprehensive export), or <strong>JSON</strong> (raw data for developers). Access via the menu in the header
-          → Export Data.</p>
-
-        <h3>GitHub Sync Setup</h3>
-        <p>Automatically sync all your accepted LeetCode solutions to a GitHub repository.</p>
-
-        <img src="screenshots/9.png" alt="GitHub Sync Configuration" class="doc-img" style="margin: 24px 0;">
-
-        <p>Go to <a href="https://github.com/settings/tokens" target="_blank" style="color: var(--primary);">GitHub
-            Settings → Developer Settings → Personal Access Tokens</a>, click <strong>Generate new token
-            (classic)</strong>, give it a name like "L'Amigo Sync", check the <strong>repo</strong> scope, and
-          generate/copy the token. Return to L'Amigo <strong>Settings</strong> tab, paste the token, enter your
-          repository in format <code>username/repo-name</code>, click <strong>Connect</strong>, then click <strong>Sync
-            with GitHub</strong>.</p>
-
-        <p>The sync engine <strong>dynamically fetches</strong> your complete historical submission data on the first
-          run. For subsequent updates, it uses a <strong>fast incremental mode</strong> that only pushes new solves.
-          Live progress tracking shows (X/Y) problems synced to your repository.</p>
-
-        <h4>Repository Structure</h4>
-        <pre style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px; overflow-x: auto;">
-repo-name/
-├── 1. Two Sum/
-│   └── solution.py
-├── 2. Add Two Numbers/
-│   └── solution.cpp
-├── 3. Longest Substring Without Repeating Characters/
-│   └── solution.java
-└── ...</pre>
-
-        <div class="warning-box" style="margin-top: 32px;">
-          <p style="margin: 0;"><strong>Privacy & Security:</strong> Your GitHub token is stored
-            <strong>locally</strong> in Chrome's secure storage. It's never sent to any third-party server – only
-            directly to GitHub's API. You can disconnect anytime to revoke access.
-          </p>
-        </div>
-
-        <h3>Clear All Data</h3>
-        <p>Remove all stored friends, profiles, and settings. This action cannot be undone.</p>
       </section>
 
       <!-- Keyboard Shortcuts -->
-      <section id="shortcuts" class="docs-section">
-        <div style="margin-bottom: 40px;">
-          <h2>6. Keyboard Shortcuts</h2>
-          <div style="width: 60px; height: 4px; background: var(--primary); margin: 16px 0 24px; border-radius: 2px;">
-          </div>
-          <p style="max-width: 700px;">Navigate L'Amigo faster with built-in keyboard shortcuts.</p>
+      <section id="keyboard-shortcuts" class="docs-section">
+        <div class="section-title-wrap">
+          <h2>Power User Keyboard Shortcuts</h2>
+          <p class="section-desc">Technical specification of global key bindings listener for the popup UI window.</p>
+        </div>
+        <p>
+          L'Amigo features built-in global keybinds registered in the dashboard popup. These hotkeys facilitate instant tab switching, manual data synchronization, and list navigation. The listeners capture keydown events directly inside the React UI tree context when the popup is active:
+        </p>
+        
+        <table class="docs-table" style="width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 14px; border: 1px solid #222;">
+          <thead>
+            <tr style="border-bottom: 2px solid #333; text-align: left; background: #111;">
+              <th style="padding: 12px; font-family: var(--font-mono); font-weight: bold; color: var(--white); border-right: 1px solid #222;">Hotkey</th>
+              <th style="padding: 12px; font-family: var(--font-mono); font-weight: bold; color: var(--white);">Triggered Action Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">r</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Initiates an immediate force refresh of all tracked peers, bypassing default caching mechanisms and calling platform APIs.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">j</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Navigates/scrolls focus downward in the friends list.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">k</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Navigates/scrolls focus upward in the friends list.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">1</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Switches popup window tab view to the <strong>Friends & Dashboard</strong> tab.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">2</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Switches popup window tab view to the <strong>Compare Analysis</strong> tab.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">3</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Switches popup window tab view to the <strong>Configuration & Settings</strong> tab.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 12px; font-weight: bold; font-family: var(--font-mono); border-right: 1px solid #222;"><kbd style="background: #222; color: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #444;">Esc</kbd></td>
+              <td style="padding: 12px; color: #aaa;">Instantly dismisses any open modals (such as settings import/export, profile edit windows, or comparison screens).</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 1. Dashboard & Friends -->
+      <section id="dashboard" class="docs-section">
+        <div class="section-title-wrap">
+          <h2>1. Dashboard & Multi-Platform Friends</h2>
+          <p class="section-desc">Technical implementation of unified profile cards and cron-like activity aggregation across multiple systems.</p>
         </div>
 
-        <div class="feature-grid">
-          <div class="docs-card">
-            <h4>Tab Navigation</h4>
-            <ul style="margin: 0; list-style: none; padding: 0;">
-              <li><kbd>1</kbd> → Friends tab</li>
-              <li><kbd>2</kbd> → Compare tab</li>
-              <li><kbd>3</kbd> → Settings tab</li>
-            </ul>
+        <!-- Carousel for Dashboard & Add Friend -->
+        <div class="carousel-container" data-index="0">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/12.webp" alt="Multi-platform friend cards" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/34.webp" alt="Triple Platform Card" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/10.webp" alt="Add Friend Modal" class="doc-img"></div>
           </div>
+          <div class="carousel-btn next">&#10095;</div>
+        </div>
 
-          <div class="docs-card">
-            <h4>Actions</h4>
-            <ul style="margin: 0; list-style: none; padding: 0;">
-              <li><kbd>R</kbd> → Refresh all friends</li>
-              <li><kbd>Esc</kbd> → Close menus</li>
-            </ul>
-          </div>
+        <h3>Platform Account Unified Identities</h3>
+        <p>L'Amigo unifies data schemas across distinct platforms into a single cohesive client entity model. Each added friend is represented in storage as a <code>FriendIdentity</code> schema object. Accounts associated with this identity transit through status states of <code>pending</code>, <code>active</code>, and <code>invalid</code> based on API verification.</p>
+        
+        <div class="code-wrapper">
+          <button class="copy-btn" aria-label="Copy code">Copy</button>
+          <div class="code-block">
+export interface FriendIdentity {
+  id: string;            // UUID v4 identifier
+  displayName: string;   // Local alias
+  aliases: string[];     // Alternative names
+  accounts: Array<{
+    platform: "leetcode" | "codeforces" | "codechef";
+    handle: string;
+    status: "active" | "pending" | "invalid";
+    lastFetched?: number; // epoch milliseconds
+  }>;
+  addedAt: number;
+  updatedAt: number;
+}
+        </div>
+        </div>
 
-          <div class="docs-card">
-            <h4>Navigation (Friends Tab)</h4>
-            <ul style="margin: 0; list-style: none; padding: 0;">
-              <li><kbd>J</kbd> → Select next friend</li>
-              <li><kbd>K</kbd> → Select previous friend</li>
-            </ul>
+        <p>The dashboard renders these unified accounts dynamically. Solved counts from LeetCode are categorized by difficulty and accepted status. Codeforces accounts retrieve the user's latest rating and division ranking. CodeChef accounts resolve active star tiers and rating levels. This provides a single panel showing multi-platform stats without manual context switching.</p>
+
+        <h3>Daily Solve Goal Tracking</h3>
+        <p>L'Amigo tracks daily target progress by evaluating users' solved problem counts for the current day against their configured <code>daily_goal</code> value in local storage. This runs synchronizations and keeps progress metrics updated continuously.</p>
+
+        <h3>Live Chronological Activity Feed</h3>
+        
+        <!-- Carousel for Live Activity Feed -->
+        <div class="carousel-container" data-index="0" style="margin: 24px 0;">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/36.webp" alt="Live Feed" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/1.webp" alt="Recent Solves" class="doc-img"></div>
           </div>
+          <div class="carousel-btn next">&#10095;</div>
+        </div>
+
+        <p>Stay updated with the <strong>Recent Activity Feed</strong>. The feed gathers raw user submission logs from both LeetCode and Codeforces API endpoints. Submissions are filtered to include only accepted verdicts (e.g. <code>Accepted</code> on LeetCode and <code>OK</code> on Codeforces), combined into a single feed collection, sorted descending by epoch timestamps, and rendered with relative time indicators. To protect client memory and local storage structures, the feed aggregates and displays up to a maximum limit of 50 total records.</p>
+      </section>
+
+      <!-- 2. Deep Analytics & Comparison -->
+      <section id="analytics" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>2. Deep Analytics & Head-to-Head Comparison</h2>
+          <p style="max-width: 700px;">Enterprise-grade comparative metrics and custom data visualization modules built to evaluate algorithmic strengths and solve velocities.</p>
+        </div>
+
+        <!-- Carousel for 4 images -->
+        <div class="carousel-container" data-index="0">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/24.webp" alt="Topic Radar Chart" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/20.webp" alt="Overlapped Heatmap" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/22.webp" alt="Velocity Chart" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/19.webp" alt="Rating History" class="doc-img"></div>
+          </div>
+          <div class="carousel-btn next">&#10095;</div>
+        </div>
+
+        <h3>Algorithmic Topic Radar Charts</h3>
+        <p>By extracting problem tags from users' lists of solved questions, the radar charts map problem-solving distribution across major CS domains (e.g. dynamic programming, graphs, greedy algorithms, trees, and math). The chart compares multi-point polygon surfaces for the user and their peers, highlighting which coder dominates specific algorithmic fields.</p>
+
+        <h3>Overlapped Heatmap Matrices</h3>
+        <p>The overlapped submission heatmap merges daily calendar submission counts for up to 5 users on a single matrix calendar. Squares are color-coded based on density, allowing teams to determine consistency and find periods of synchronized development activity.</p>
+
+        <h3>Contest Rating Trajectories</h3>
+        <div class="docs-card">
+          <h4 style="margin:0 0 12px 0;">Tracked Metric Indexes</h4>
+          <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+            <li><strong>Historical Progression:</strong> Compares contest rating history over time for LeetCode (weekly/biweekly contests) and Codeforces round results.</li>
+            <li><strong>Solved Velocity:</strong> Measures the rate of solves (quantity divided by days) over the previous 30-day window, indicating current algorithmic momentum.</li>
+            <li><strong>Accuracy Profiles:</strong> Evaluates acceptance rates, comparing total submissions against accepted codes to determine debugging efficiency.</li>
+          </ul>
+        </div>
+
+        <h3>Granular Head-to-Head Breakdowns</h3>
+        
+        <!-- Carousel for 3 images -->
+        <div class="carousel-container" data-index="0">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/27.webp" alt="Metrics" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/26.webp" alt="Activity" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/23.webp" alt="Topics" class="doc-img"></div>
+          </div>
+          <div class="carousel-btn next">&#10095;</div>
+        </div>
+        
+        <div class="docs-card">
+          <p style="margin: 0; line-height: 1.8;">For numerical analysis, users can access side-by-side matrices detailing exact counts of problems solved per topic, current/best streak counts, and platform-wide rankings. Winning metrics are calculated dynamically and highlighted automatically.</p>
         </div>
       </section>
 
-      <!-- Troubleshooting -->
-      <section id="troubleshooting" class="docs-section">
-        <h2>Troubleshooting & FAQ</h2>
-
-        <h3>Common Issues</h3>
-
-        <div class="docs-card">
-          <h4>Extension Not Loading?</h4>
-          <p>Navigate to <code>chrome://extensions</code>, click the <strong>Reload</strong> icon under L'Amigo. If
-            issue persists, toggle it off and back on.</p>
+      <!-- 3. Smart Tools -->
+      <section id="smart-tools" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>3. Smart Tools & Recommendations</h2>
+          <p style="max-width: 700px;">Peer-driven recommendation pipelines and contest trackers to sync competitive schedules.</p>
         </div>
 
-        <div class="docs-card">
-          <h4>GitHub Sync Failed?</h4>
-          <p>Verify your Personal Access Token hasn't expired, ensure the token has <code>repo</code> scope, check
-            repository name format (<code>username/repo-name</code>), and confirm the repository exists with write
-            access.</p>
+        <!-- Carousel for Recommendations & Contests -->
+        <div class="carousel-container" data-index="0">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/35.webp" alt="Recommendations" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/11.webp" alt="Upcoming Contests" class="doc-img"></div>
+          </div>
+          <div class="carousel-btn next">&#10095;</div>
         </div>
 
-        <div class="docs-card">
-          <h4>Friend Profile Not Loading?</h4>
-          <p>Double-check the username spelling, ensure their profile is <strong>public</strong> (private profiles can't
-            be tracked), wait a few seconds for initial load, and try the refresh button on their card.</p>
+        <h3>Recommendation Engine Mechanics</h3>
+        <p>The problem recommendation system processes lists of solved problems from added friends. It aggregates these solve records, identifies problems solved by your peers that you have not yet attempted, filters them by difficulty preferences, and orders them by popularity (frequency of solve across your friend list). This allows coders to tackle high-yield questions studied by their peers.</p>
+
+        <h3>Contest Schedule Aggregation</h3>
+        <p>The contest schedule panel polls the official LeetCode GraphQL API, the Codeforces API, and CodeChef feeds. It parses dates, normalizes duration parameters, filters out ended contests, and sorts upcoming competitive events. It includes a count-down timer to ensure coders never miss live contest windows.</p>
+      </section>
+
+      <!-- 4. Native Injections -->
+      <section id="native-injections" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>4. Native Codeforces & LeetCode Integration</h2>
+          <p style="max-width: 700px;">Technical architecture of content script injection routines, in-page widgets, and live rating calculations.</p>
         </div>
 
-        <div class="docs-card">
-          <h4>Data Seems Stale?</h4>
-          <p>Profiles are cached for 15 minutes. Click the individual refresh icon on friend cards, use the batch
-            refresh (↻) to update everyone, or press <kbd>R</kbd> keyboard shortcut.</p>
+        <img src="ss/3.webp" alt="Codeforces Standings Predictor" class="doc-img" style="margin-bottom: 24px;">
+
+        <h3>Live Standings delta Predictor</h3>
+        <p>When loading a Codeforces standings page, the content script intercepts standings rows and queries live contest parameters. It runs a Carrot-style rating prediction algorithm directly in the client context. It computes seed parameters, calculates expected rank values based on participant performance, and maps expected rating deltas in real-time. This provides coders with live delta calculations in a new <strong>Δ Pred</strong> column during rounds.</p>
+
+        <h3>Standings Filtering</h3>
+        <p>The extension injects custom standby filters such as <strong>College Standings</strong>. This maps competitor handles against registered college/organization affiliations from user profiles, filtering out unassociated participants to generate custom local rankings.</p>
+
+        <h3>Codeforces Standings Page Delta Upgrades</h3>
+        <p>L'Amigo elevates the Codeforces standings page with two major in-page updates:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>User Own-Row Delta Badge:</strong> Next to the user's handle in the standings table, L'Amigo injects a loading badge (<code>⏳ Δ…</code>) that retrieves official changes (if the contest is rated) or performs a local Elo rating prediction based on top 3000 participant seeds, displaying real-time predictions directly.</li>
+          <li><strong>Native Standings Delta Column (Δ Pred Column):</strong> A new column header is appended to the default standings table, and each participant row receives a prediction cell. This computes expected updates for up to 3000 contestants simultaneously.</li>
+          <li><strong>Automatic Standings Pre-fetching:</strong> A background process automatically triggers standings queries on initial load, warming the local cache to deliver predictions faster when navigating standings pages.</li>
+        </ul>
+
+        <h3>Codeforces DOM Profile Customizations</h3>
+        <p>The content script modifies Codeforces profiles and lists dynamically:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>Quick-Add User Handles (<code>+</code> Button):</strong> Installs small, interactive <code>+</code> buttons next to user handles across rankings, standings, and comments pages. Clicking this button transmits a background message (<code>createIdentity</code>) to sync their credentials without opening the extension popup.</li>
+          <li><strong>Profile Organization Bookmarking:</strong> Places a small <code>☆ Bookmark</code> button adjacent to the organization links on user profiles. Clicking this scrapes members from the organization rankings pages and caches them locally for college standings.</li>
+          <li><strong>Custom Dark Theme Style Override:</strong> If enabled, the extension injects custom stylesheet configurations (<code>codeforces.css</code>) directly into the page head to transform Codeforces into a fully functional dark mode.</li>
+        </ul>
+
+        <h3>Rating-Based Profile Heatmap Recoloring</h3>
+        <p>Under the Codeforces profile page, L'Amigo injects a toggle checkbox (<code>Rating-based Heatmap</code>) at the user activity header. When activated, it retrieves user submission history from the Codeforces status endpoint, computes the maximum rating of solved problems for each calendar date, and overrides the SVG fill colors of the activity graph rectangles to correspond to the official Codeforces rating tier colors (ranging from green/cyan/blue up to master orange and red). A detailed color scale legend is also injected below the activity graph.</p>
+
+        <img src="ss/8.webp" alt="Rating-Based Heatmap" class="doc-img" style="margin: 24px 0;">
+
+        <img src="ss/9.webp" alt="LeetCode Profile Injection" class="doc-img" style="margin: 24px 0;">
+        
+        <h3>LeetCode Profile Injection Hooks</h3>
+        <p>The content script listens for DOM mutations on LeetCode user profile pages. Upon finding sidebar sections, it injects native <strong>Track with L'Amigo</strong> and <strong>Compare with Me</strong> buttons. Clicking these buttons communicates with the background service worker via Chrome runtime messaging, allowing users to add or compare profiles directly without leaving LeetCode.</p>
+
+        <h3>LeetCode Problem Page Integrations</h3>
+        <p>L'Amigo modifies LeetCode problem solving pages to display both peer and progress statistics:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>"Solved by Friends" Avatar Badge:</strong> Under the main question title, L'Amigo injects an avatar panel showing the profiles of up to 3 friends who have successfully solved the current problem, accompanied by time-ago indicators (e.g. <code>Solved by User1, User2 (2h ago)</code>).</li>
+          <li><strong>Daily Goal Progress Bar:</strong> A thin progress tracker element is injected directly into the document body to display the user's progress toward their daily goal (solves today vs daily target).</li>
+          <li><strong>Inline GitHub Sync Badge:</strong> Upon solving a problem and receiving an "Accepted" verdict, a sync indicator badge containing a direct link to the user's synchronized GitHub repository is rendered beside the verdict box.</li>
+          <li><strong>Floating Sync Success Toasts:</strong> If a sync operation completes in the background, a floating success alert toast notifies the user in real-time.</li>
+        </ul>
+      </section>
+
+      <!-- 5. Individual Profiles -->
+      <section id="deep-dives" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>5. Individual Profile Deep-Dives</h2>
+          <p style="max-width: 700px;">Detailed metrics analysis, performance charts, topic mastery radars, and problem-level submission pagination lists compiled from user profiles.</p>
         </div>
 
-        <h3>Frequently Asked Questions</h3>
-        <div class="faq-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px;">
-          <div class="premium-card">
-            <h4>Is L'Amigo free?</h4>
-            <p>Built for the community. 100% free and open-source with no premium tiers or tracking.</p>
+        <!-- Carousel for 3 images -->
+        <div class="carousel-container" data-index="0">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/31.webp" alt="Peak Stats" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/30.webp" alt="Verdicts" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/28.webp" alt="Solved Questions" class="doc-img"></div>
           </div>
-
-          <div class="premium-card">
-            <h4>Security</h4>
-            <p>All data is stored locally. Tokens and profiles are never sent to external servers.</p>
-          </div>
-
-          <div class="premium-card">
-            <h4>Friend Limit</h4>
-            <p>Track up to 50 friends. Optimized to maintain performance and respect API limits.</p>
-          </div>
-
-          <div class="premium-card">
-            <h4>Auto-Refresh</h4>
-            <p>Profiles update in the background. Customizable intervals available in settings.</p>
-          </div>
-
-          <div class="premium-card">
-            <h4>Offline Support</h4>
-            <p>Cached data remains accessible. Internet is only required for syncing new data.</p>
-          </div>
-
-          <div class="premium-card">
-            <h4>Mobile Support</h4>
-            <p>Currently desktop-only. Browser extensions are not yet natively supported on mobile Chrome.</p>
-          </div>
+          <div class="carousel-btn next">&#10095;</div>
         </div>
 
-        <h3 style="margin-top: 48px;">Contribute & Support</h3>
-        <p>L'Amigo is a community-driven project. Help us grow by starring the repo, reporting bugs, or submitting
-          features!</p>
+        <h3>Dynamic Profile Hero & Identity</h3>
+        <p>The individual profile deep-dive view is initialized when selecting a friend from the popup dashboard. The header layout contains several peer identification metrics:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>Platform-based Radial Gradient:</strong> The hero background uses a dynamic radial gradient colored according to the user's active platform ranking (e.g., gold for Knight/Guardian on LeetCode, or color-themed by Codeforces ranks).</li>
+          <li><strong>Active Solve Streak (🔥 Badge):</strong> Integrates with the local <code>StreakCalculator</code> to determine consecutive daily solves across linked platforms, rendering a flame badge next to the display name.</li>
+          <li><strong>Contest and Rating Tags:</strong> Displays total contest count and max platform-specific ratings directly in the header banner.</li>
+        </ul>
 
-        <div class="support-grid">
-          <a href="https://github.com/FTS18/l-amigo" target="_blank" class="premium-card">
-            <h4>Star on GitHub</h4>
-            <p>Support the project with a star. Helps more developers discover this tool.</p>
-          </a>
-          <a href="https://github.com/FTS18/l-amigo/issues" target="_blank" class="premium-card">
-            <h4>Report Issue</h4>
-            <p>Encountered a bug or have a suggestion? Open an issue on GitHub to help us improve.</p>
-          </a>
+        <h3>Platform Selector Tab Segment</h3>
+        <p>If a peer profile connects multiple platform handles (LeetCode, Codeforces, and CodeChef), the interface renders a sliding segment tab control. Switching tabs updates the theme colors, active stats grids, charts, and submission streams instantly.</p>
+
+        <h3>Platform-Specific Metrics & Division Bars</h3>
+        <p>Each platform view displays detailed numeric performance cards:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>Contest Rating & Rank Badges:</strong> Displays active ratings alongside official rank tiers (e.g. Knight, Guardian, Candidate Master, or Stars rating).</li>
+          <li><strong>Solved Category Grid (Filter Shortcuts):</strong> Divides solved counts into Total, Easy, Medium, and Hard pills. Clicking on any difficulty pill acts as a filter shortcut that navigates the user to the Submissions tab and filters problem items by that selection.</li>
+          <li><strong>Codeforces Division Play Breakdown:</strong> In Codeforces view, the profile renders a segmented progress bar illustrating the ratio of contests played in Div 1, Div 2, Div 3, and Div 4 (color-coded as red, yellow, blue, and green, respectively) with exact round counts.</li>
+        </ul>
+
+        <h3>Overview & Contests Dashboard</h3>
+        <p>The Overview pane leverages Recharts to provide deep analytics:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>Contest Rating AreaChart:</strong> An interactive chart mapping rating progress over previous contest rounds, using customized gradient area fills and a custom hover tooltip displaying contest details.</li>
+          <li><strong>Topic Mastery RadarChart:</strong> A radar diagram evaluating solved counts across the top 6 computer science tags (e.g. Dynamic Programming, Greedy, Trees, Graphs, Math) to visualize algorithmic profiles.</li>
+          <li><strong>Peak Performance Stats:</strong> Displays maximum rating, best global rank, and overall submission acceptance accuracy rate.</li>
+          <li><strong>Verdict Distribution Cards:</strong> Aggregates the last 2000 submissions and breaks down verdicts into Accepted (AC), Wrong Answer (WA), Time Limit Exceeded (TLE), and Runtime Error (RE) count cards.</li>
+          <li><strong>Recent Contests Table:</strong> Tabulates the 5 most recent contests with official ranking tags, ratings, and color-coded rating deltas (green for rating gains, red for losses).</li>
+        </ul>
+
+        <h3>Questions Solved & Submissions Feed</h3>
+        <p>The Submissions pane lists detailed problem-solving history:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>Interactive Filter Buttons:</strong> Filters submission items by All, Easy, Medium, or Hard difficulty.</li>
+          <li><strong>Double Action Links:</strong> Each submission card provides a link to the problem page (<code>Q</code> button) and a direct link to the user's specific submission source code (<code>A</code> button).</li>
+          <li><strong>Paginating Load More:</strong> The page loads 30 items initially and provides a dashed "Load More" button to retrieve additional submissions in increments of +30.</li>
+        </ul>
+      </section>
+
+      <!-- 6. Settings & Sync -->
+      <section id="settings" class="docs-section">
+        <div style="margin-bottom: 40px;">
+          <h2>6. Settings, Backup, and GitHub Sync</h2>
+          <p style="max-width: 700px;">Failsafe backup strategies, secure authentication, and solution synchronization architecture across directories.</p>
         </div>
+
+        <!-- Carousel for 4 images -->
+        <div class="carousel-container" data-index="0">
+          <div class="carousel-btn prev">&#10094;</div>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="ss/17.webp" alt="Settings" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/16.webp" alt="GitHub Sync" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/14.webp" alt="Import Export" class="doc-img"></div>
+            <div class="carousel-slide"><img src="ss/15.webp" alt="Backup" class="doc-img"></div>
+          </div>
+          <div class="carousel-btn next">&#10095;</div>
+        </div>
+
+        <h3>GitHub Sync Architecture</h3>
+        <p>The sync engine parses accepted solutions and syncs them directly to a specified GitHub repository. To optimize API performance and prevent rate-limiting, the engine tracks already-synced solutions locally.</p>
+        
+        <div class="callout warning">
+          <div class="callout-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f85149" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            Credential Security Reference
+          </div>
+          <p style="font-size: 14px; line-height: 1.6;">OAuth tokens or personal access tokens (PATs) are stored locally using Chrome's encrypted storage API. Tokens are passed in headers directly to the official GitHub API and are never transmitted to external servers.</p>
+        </div>
+
+        <p>Solutions are committed and organized using a standardized directory hierarchy:</p>
+        
+        <div class="code-wrapper">
+          <button class="copy-btn" aria-label="Copy code">Copy</button>
+          <div class="code-block">
+# Sync Directory Folder Path Schema
+[Platform]/[Difficulty]/[Problem-Number]-[Problem-Slug]/try-[Attempt-Index].[File-Extension]
+
+# Directory Examples:
+LeetCode/Medium/15-3sum/try-1.cpp
+LeetCode/Hard/23-merge-k-sorted-lists/try-2.java
+Codeforces/Easy/158A-next-round/try-1.py
+        </div>
+        </div>
+
+        <h3>Flexible GitHub Authentication Engines</h3>
+        <p>L'Amigo supports multiple modes for linking and authorizing repositories:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>Personal Access Tokens (PAT):</strong> Directly save generated tokens with the <code>repo</code> scope locally.</li>
+          <li><strong>OAuth Device Flow:</strong> The authorization engine connects to <code>https://github.com/login/device/code</code> to retrieve a user code, polls the token exchange endpoint, and establishes authentication without entering passwords.</li>
+        </ul>
+
+        <h3>Detailed Sync Event History Logs</h3>
+        <p>Users can view their sync diagnostics directly under settings. The background worker records the last 10 synchronization events in the local <code>sync_history</code> key. These records store timestamps, quantities, problem names, sync states, and detailed error messages to troubleshoot API failures.</p>
+
+        <h3>Debounced Storage Config Auto-Backups</h3>
+        <p>To protect lists of friends and handles across reinstalls, any updates in local configuration parameters trigger a **5-second debounced background backup process**. The configuration details are gathered and committed as a <code>.lamigo-backup.json</code> file at the root of the synced repository. A Restore button inside the onboarding modal parses this file to reconstruct local storage instantly.</p>
+
+        <h3>Deduplication and Automatic README Generation</h3>
+        <p>The sync engine runs in an incremental mode, comparing submission IDs against the <code>synced_submissions</code> set. In addition to solution files, the engine generates repository enhancements automatically:</p>
+        <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+          <li><strong>leetcode-stats.svg:</strong> A custom vector badge containing total solved counters, dynamically updated with each sync.</li>
+          <li><strong>README.md:</strong> A structured repository index containing a progress dashboard, solved ratios with progress bars, and a clean tabular index mapping problem numbers, platforms, languages, and local solution links.</li>
+        </ul>
+
+        <h3>Development WebSocket Auto-Reload</h3>
+        <p>For contributors running development builds, a WebSocket listener connects to <code>ws://localhost:9091</code> in the background script, responding to hot-reloads dynamically.</p>
       </section>
 
     </main>
   </div>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <a href="#" class="footer-logo">L'AMIGO</a>
-          <p class="footer-desc">
-            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
-          </p>
-          <div class="social-links">
-            <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-            </a>
-            <a href="http://linkedin.com/in/ananaydubey" target="_blank" aria-label="LinkedIn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-              </svg>
-            </a>
-            <a href="https://instagram.com/ananay_dubey" target="_blank" aria-label="Instagram">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </a>
-            <a href="mailto:dubeyananay@gmail.com" target="_blank" aria-label="Email">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-              </svg>
-            </a>
-            <a href="tel:+917719767324" target="_blank" aria-label="Phone">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.27-.27.35-.66.24-1.01-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.33 3 3.24 3 7.5c0 6.62 5.38 12 12 12 4.26 0 4.17-.65 4.17-1.19v-2.93c0-.54-.45-.99-.99-.99z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4>Product</h4>
-          <ul>
-            <li><a href="index.html#features">Features</a></li>
-            <li><a href="docs.html">Documentation</a></li>
-            <li><a href="https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli" target="_blank">Chrome Store</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Resources</h4>
-          <ul>
-            <li><a href="docs.html#quick-start">Install Guide</a></li>
-            <li><a href="docs.html#sync">GitHub Setup</a></li>
-            <li><a href="docs.html#troubleshooting">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="privacy.html">Privacy</a></li>
-            <li><a href="terms.html">Terms</a></li>
-            <li><a href="https://github.com/FTS18/l-amigo/blob/main/LICENSE" target="_blank">License</a></li>
-            <li><a href="https://ananay.netlify.app" target="_blank">Portfolio</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-btm">
+      <div class="footer-btm" style="padding: 24px 0; border-top: 1px solid #222; text-align: center; color: #888;">
         <p>&copy; 2026 L'Amigo. Free & Open Source.</p>
       </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
-</body>
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999; justify-content:center; align-items:flex-start; padding-top:100px; backdrop-filter: blur(8px);">
+    <div style="background:#111; width:100%; max-width:600px; border:1px solid #333; padding:24px; box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
+      <div style="position:relative; display:flex; align-items:center;">
+        <input type="text" placeholder="Search documentation..." style="width:100%; background:#000; border:1px solid #444; color:#fff; padding:12px 40px 12px 12px; font-size:16px; outline:none;" id="searchInput">
+        <span style="position:absolute; right:12px; color:#666; font-size:12px;">ESC</span>
+      </div>
+      <div id="searchResults" style="margin-top:16px; max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
 
+  <script src="script.js"></script>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+</body>
 </html>

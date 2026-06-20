@@ -384,13 +384,13 @@ export class LeetCodeService {
       const d = s.difficulty.toLowerCase();
       if (d === "all") {
         solved.total = s.count;
-        totalAc = s.count;
+        totalAc = s.submissions;
       } else if (d === "easy") solved.easy = s.count;
       else if (d === "medium") solved.medium = s.count;
       else if (d === "hard") solved.hard = s.count;
     }
     for (const s of totalStats) {
-      if (s.difficulty.toLowerCase() === "all") totalSub = s.count;
+      if (s.difficulty.toLowerCase() === "all") totalSub = s.submissions;
     }
 
     // Topic stats

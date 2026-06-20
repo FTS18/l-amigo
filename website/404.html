@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | L'Amigo</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .not-found-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .error-code {
+      font-size: 120px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 24px;
+      text-shadow: 0 0 40px var(--primary-glow);
+    }
+    .error-title {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .error-desc {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 500px;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+
+<body class="docs-body">
+  <!-- Navigation (Same as Home) -->
+  <nav class="nav">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.png" alt="L'Amigo" class="logo-icon" width="24" height="24" style="margin-right: 8px;">
+        L'AMIGO
+      </a>
+      <ul class="nav-links">
+        <li class="desktop-only">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="not-found-container container">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-desc">We couldn't find the page you're looking for. It might have been moved or deleted.</p>
+    <div style="display: flex; gap: 16px;">
+      <a href="index.html" class="btn-hero primary">Return Home</a>
+      <a href="docs.html" class="btn-hero secondary" style="background: var(--glass-surface); border: 1px solid var(--glass-border); color: var(--text-main); padding: 16px 32px; border-radius: var(--radius-pill); font-weight: 600;">View Docs</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

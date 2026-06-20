@@ -22,6 +22,8 @@ The extension popup serves as a centralized interface for monitoring your tracke
 - **Individual Performance Cards**: Provides a granular view of total solved problems, difficulty breakdowns (Easy, Medium, Hard), and current activity streaks.
 - **Visual Pattern Analysis**: Uses Recharts to render SVG-based distribution charts, helping users identify their peers' solving habits.
 - **Submission History**: Extracts and displays the five most recent accepted problems for each tracked friend, including direct links to problem statements.
+- **Problem Recommendations Engine**: Curates and suggests the most popular problems your friends are solving. Includes deep filtering by platform (LeetCode/Codeforces), difficulty, and Codeforces rating ranges.
+- **Global Activity Feed**: A unified, chronological timeline of all recent problem solves across platforms, eliminating the need to check individual profiles.
 - **Upcoming Contest Reminders**: Toggles notifications via a Bell icon next to upcoming contests, scheduling alerts 24h, 1h, and 10m before start time using Chrome Alarms.
 
 ### Multi-Platform Engine
@@ -32,9 +34,9 @@ L'Amigo natively supports concurrent tracking across three major competitive pro
 
 ## Head-to-Head Comparison
 The Comparison module allows users to perform deep-dive analytics by selecting multiple friends for side-by-side evaluation.
-- **Topic Proficiency**: Analyzes public solve data to identify a user's top five mastered topics (e.g., Dynamic Programming, Graph Theory).
-- **Competitiveness Index**: Compares LeetCode Contest Ratings and Global Rankings in a unified grid.
-- **Interactive Metrics**: Highlights highest performers across different statistical categories for rapid comparison.
+- **Topic Proficiency**: Analyzes public solve data to identify a user's top five mastered topics (e.g., Dynamic Programming, Graph Theory) with detailed breakdown tables.
+- **Competitiveness Index**: Compares Contest Ratings, Global Rankings, and Programming Languages in a unified grid.
+- **Interactive Metrics**: Highlights highest performers across different statistical categories and visualizes shared solve overlaps using a dynamic heatmap grid.
 
 ### Automated GitHub Solution Repository Sync & Authentication
 L'Amigo automates the preservation of the user's solved problem library by synchronizing accepted submissions with a dedicated GitHub repository.
@@ -50,7 +52,7 @@ L'Amigo automates the preservation of the user's solved problem library by synch
 - **Data Visualization**: Recharts (SVG)
 - **Bundler**: Webpack 5 with Hot Module Replacement (HMR) capabilities
 - **Storage System**: Chrome Storage Local API (Asynchronous)
-- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation. Features a premium glassmorphic aesthetic with pure CSS frosted glass effects and dynamic Recharts SVG charts.
+- **Style Engine**: Vanilla CSS with CSS Variables for dynamic Dark Mode implementation.
 - **API Interfaces**: LeetCode GraphQL, Codeforces REST, CodeChef Scraper, GitHub REST API v3
 
 ### Data Lifecycle and Security

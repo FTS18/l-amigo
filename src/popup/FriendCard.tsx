@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { RefreshCw, MoreVertical, ChevronUp, X } from 'lucide-react';
 import { Friend, FriendProfile, Platform, RecentSubmission } from '../types';
 import { StreakCalculator } from '../services/streak';
@@ -152,9 +152,13 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   const cf = codeforcesProfile || (profile.platform === 'codeforces' ? profile : undefined);
   const cc = codechefProfile || (profile.platform === 'codechef' ? profile : undefined);
 
-  const [localActivePlatform, setLocalActivePlatform] = useState<Platform>(
-    lc ? 'leetcode' : cf ? 'codeforces' : 'codechef'
+  // useMemo ensures the default platform is computed once and doesn't flicker on re-renders
+  const defaultPlatform = useMemo<Platform>(
+    () => lc ? 'leetcode' : cf ? 'codeforces' : 'codechef',
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
+  const [localActivePlatform, setLocalActivePlatform] = useState<Platform>(defaultPlatform);
 
   const activeProfile = localActivePlatform === 'codeforces' ? (cf || profile) : localActivePlatform === 'codechef' ? (cc || profile) : (lc || profile);
   const streak = StreakCalculator.calculateStreak(activeProfile);
@@ -176,7 +180,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
       deduplicated.set(key, sub);
     }
   }
-  const sortedSubmissions = Array.from(deduplicated.values()).slice(0, 10);
+  const sortedSubmissions = Array.from(deduplicated.values()).slice(0, 50);
 
   const handleCardClick = (e: React.MouseEvent) => {
     if (
@@ -417,7 +421,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                         </span>
                       )}
                       {sub.platform === 'codeforces' && sub.rating && (
-                        <span className="sub-rating-badge" style={{ fontSize: '9px' }}>
+                        <span className={`sub-diff-badge ${sub.difficulty ? sub.difficulty.toLowerCase() : 'unknown'}`} style={{ fontSize: '9px' }}>
                           {sub.rating}
                         </span>
                       )}
@@ -428,7 +432,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                         )}
                       </div>
                       <span style={{ color: 'var(--text-secondary)', minWidth: '40px', textAlign: 'right' }}>
-                        {formatTimestamp(sub.timestamp)}
+                        {formatTimestamp(sub.timestamp < 1000000000000 ? sub.timestamp * 1000 : sub.timestamp)}
                       </span>
                     </div>
                   </li>

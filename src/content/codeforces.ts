@@ -16,13 +16,197 @@ chrome.storage.onChanged.addListener((changes) => {
   }
 });
 
-// Inject quick add button
+// ============================================================
+// RATING PREDICTION ENGINE  (carrot-accurate)
+// ============================================================
+
+/** Session cache: handle (lowercase) -> current CF rating */
+const _handleRatingCache: Record<string, number> = {};
+
+/**
+ * Official rating change info from CF API.
+ */
+interface OfficialRatingChange {
+  delta: number;
+  oldRating: number;
+  newRating: number;
+}
+
+/** Session cache: contestId -> actual rating changes (if contest is already rated) */
+const _actualChangesCache: Record<string, Record<string, OfficialRatingChange> | null> = {};
+
+async function fetchRatingsForHandles(handles: string[]): Promise<Record<string, number>> {
+  const result: Record<string, number> = {};
+  const toFetch: string[] = [];
+
+  for (const h of handles) {
+    const lower = h.toLowerCase();
+    if (_handleRatingCache[lower] !== undefined) {
+      result[lower] = _handleRatingCache[lower];
+    } else {
+      toFetch.push(h);
+    }
+  }
+
+  for (let i = 0; i < toFetch.length; i += 500) {
+    const batch = toFetch.slice(i, i + 500);
+    try {
+      const res = await fetch(
+        `https://codeforces.com/api/user.info?handles=${encodeURIComponent(batch.join(';'))}`
+      );
+      const data = await res.json();
+      if (data.status === 'OK') {
+        for (const u of data.result) {
+          const lower = u.handle.toLowerCase();
+          const rating = u.rating ?? 0;
+          _handleRatingCache[lower] = rating;
+          result[lower] = rating;
+        }
+      }
+    } catch (e) {
+      console.warn('[L\'Amigo] Rating batch failed', e);
+    }
+    if (i + 500 < toFetch.length) await new Promise(r => setTimeout(r, 400));
+  }
+
+  for (const h of handles) {
+    const lower = h.toLowerCase();
+    if (_handleRatingCache[lower] !== undefined && result[lower] === undefined) {
+      result[lower] = _handleRatingCache[lower];
+    }
+  }
+  return result;
+}
+
+/**
+ * Fetch ACTUAL rating changes from CF once the contest is officially rated.
+ * Returns null if the contest hasn't been rated yet.
+ */
+async function fetchActualRatingChanges(contestId: string): Promise<Record<string, OfficialRatingChange> | null> {
+  if (contestId in _actualChangesCache) return _actualChangesCache[contestId];
+
+  try {
+    const res = await fetch(`https://codeforces.com/api/contest.ratingChanges?contestId=${contestId}`);
+    const data = await res.json();
+    if (data.status === 'OK' && Array.isArray(data.result) && data.result.length > 0) {
+      const map: Record<string, OfficialRatingChange> = {};
+      for (const entry of data.result) {
+        map[entry.handle.toLowerCase()] = {
+          delta: entry.newRating - entry.oldRating,
+          oldRating: entry.oldRating,
+          newRating: entry.newRating
+        };
+      }
+      _actualChangesCache[contestId] = map;
+      return map;
+    }
+  } catch (_) { /* silent */ }
+
+  _actualChangesCache[contestId] = null;
+  return null;
+}
+
+/** P(opponent beats target) — Elo formula used by Codeforces */
+function winProbability(opponentRating: number, targetRating: number): number {
+  return 1.0 / (1.0 + Math.pow(6, (targetRating - opponentRating) / 400.0));
+}
+
+/** Expected rank (seed) of myRating against a pool of contestant ratings */
+function calculateSeed(myRating: number, pool: number[]): number {
+  let seed = 1.0;
+  for (const r of pool) seed += winProbability(r, myRating);
+  return seed;
+}
+
+/** Binary-search: find the rating whose seed == targetSeed */
+function getRatingForSeed(targetSeed: number, pool: number[]): number {
+  let lo = 0, hi = 8000;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (calculateSeed(mid, pool) < targetSeed) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo - 1;
+}
+
+interface ContestantInput {
+  handle: string;
+  rating: number; // 0 = unrated/newbie (excluded from computation)
+  rank: number;
+}
+
+/**
+ * Compute predicted deltas for ALL contestants at once — matches carrot's algorithm exactly:
+ *
+ *   Step 1  Raw delta = floor((needRating - rating) / 2)
+ *             where needRating satisfies: seed(needRating) == sqrt(seed(rating) * actualRank)
+ *
+ *   Step 2  Correction 1 (inflation): inc = clamp(-totalDelta/n, -10, 0)
+ *             Add inc to all deltas so total doesn't inflate the rating pool.
+ *
+ *   Step 3  Correction 2 (top-rated): Highest-rated contestant must not lose points.
+ *             If their delta < 0, lift everyone by |delta|.
+ *
+ * Returns Map<handle_lowercase, delta>.
+ */
+function computeBatchDeltas(contestants: ContestantInput[]): Map<string, number> {
+  const rated = contestants.filter(c => c.rating > 0);
+  if (rated.length === 0) return new Map();
+
+  const allRatings = rated.map(c => c.rating);
+
+  // Step 1: raw delta per rated contestant
+  const deltas: number[] = rated.map(c => {
+    let removed = false;
+    const others = allRatings.filter(r => {
+      if (!removed && r === c.rating) { removed = true; return false; }
+      return true;
+    });
+    const seed = calculateSeed(c.rating, others);
+    const needRank = Math.sqrt(seed * c.rank);
+    const needRating = getRatingForSeed(needRank, others);
+    return Math.floor((needRating - c.rating) / 2);
+  });
+
+  // Step 2: Correction 1 — zero-sum inflation fix
+  const sumDelta = deltas.reduce((s, d) => s + d, 0);
+  const inc1 = Math.max(Math.min(Math.floor(-sumDelta / rated.length), 0), -10);
+  for (let i = 0; i < deltas.length; i++) deltas[i] += inc1;
+
+  // Step 3: Correction 2 — top-rated participant must not lose points
+  let topIdx = 0;
+  for (let i = 1; i < rated.length; i++) {
+    if (rated[i].rating > rated[topIdx].rating) topIdx = i;
+  }
+  const inc2 = Math.max(0, -deltas[topIdx]);
+  if (inc2 > 0) for (let i = 0; i < deltas.length; i++) deltas[i] += inc2;
+
+  const result = new Map<string, number>();
+  rated.forEach((c, i) => result.set(c.handle.toLowerCase(), deltas[i]));
+  return result;
+}
+
+function formatDelta(delta: number): string {
+  if (delta > 0) return `+${delta}`;
+  return `${delta}`;
+}
+
+function deltaColor(delta: number): string {
+  if (delta > 0) return '#4caf50';
+  if (delta < 0) return '#f44336';
+  return '#9e9e9e';
+}
+
+// ============================================================
+// INJECT QUICK-ADD BUTTONS
+// ============================================================
+
 function injectAddButtons() {
   const userLinks = document.querySelectorAll<HTMLAnchorElement>('a[href^="/profile/"]:not(.lamigo-processed)');
   if (userLinks.length === 0) return;
 
   userLinks.forEach(link => link.classList.add('lamigo-processed'));
-  
+
   chrome.storage.local.get(['friend_identities_v2', 'friends'], (result) => {
     const friendUsernames = new Set<string>();
     const list = result.friend_identities_v2 || result.friends || [];
@@ -42,7 +226,7 @@ function injectAddButtons() {
     userLinks.forEach(link => {
       const href = link.href;
       if (!href) return;
-      
+
       let username = '';
       try {
         const url = new URL(href);
@@ -53,7 +237,7 @@ function injectAddButtons() {
       } catch (e) {
         username = link.getAttribute('href')?.replace('/profile/', '').split('/')[0] || '';
       }
-      
+
       if (!username || username.trim() === '') return;
       if (friendUsernames.has(username.toLowerCase())) return;
 
@@ -61,13 +245,13 @@ function injectAddButtons() {
       btn.className = 'lamigo-add-btn';
       btn.title = "Add to L'Amigo";
       btn.innerHTML = '+';
-      
+
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         btn.disabled = true;
         btn.innerHTML = '...';
-        
+
         chrome.runtime.sendMessage({
           action: 'createIdentity',
           payload: {
@@ -87,17 +271,19 @@ function injectAddButtons() {
           }
         });
       });
-      
+
       link.insertAdjacentElement('afterend', btn);
     });
   });
 }
 
-// --- College Standings Feature ---
+// ============================================================
+// COLLEGE STANDINGS FEATURE
+// ============================================================
 
 function injectBookmarkButton() {
   if (!window.location.pathname.startsWith('/ratings/organization/')) return;
-  
+
   const match = window.location.pathname.match(/\/ratings\/organization\/(\d+)/);
   if (!match) return;
   const orgId = match[1];
@@ -132,7 +318,7 @@ function injectBookmarkButton() {
 
   const btn = document.createElement('button');
   btn.className = 'lamigo-bookmark-btn';
-  
+
   let isBookmarked = false;
 
   const updateBtnUI = () => {
@@ -195,11 +381,11 @@ function injectBookmarkButton() {
           }
         }
       } catch (err) {
-        console.error("Failed to fetch page 2", err);
+        console.error('Failed to fetch page 2', err);
       }
 
       const membersList = Array.from(membersMap.values());
-      chrome.storage.local.set({ 
+      chrome.storage.local.set({
         cf_bookmarked_org: orgName,
         cf_bookmarked_org_id: orgId,
         cf_bookmarked_org_members: membersList
@@ -219,8 +405,8 @@ function injectBookmarkButton() {
   }
 }
 
-// Per-session standings cache: contestId -> filtered rows + problems
-const _standingsCache: Record<string, { problems: any[]; filteredRows: any[] }> = {};
+// Per-session standings cache: contestId -> problems + all rows (unfiltered)
+const _standingsCache: Record<string, { problems: any[]; filteredRows: any[]; allRows?: any[] }> = {};
 
 function injectCollegeStandingsTab() {
   if (!window.location.pathname.includes('/standings')) return;
@@ -228,7 +414,6 @@ function injectCollegeStandingsTab() {
   const menuList = document.querySelector<HTMLUListElement>('ul.second-level-menu-list');
   if (!menuList) return;
 
-  // FIX: check live DOM, not a stale reference — CF AJAX destroys and recreates the menu
   if (menuList.querySelector('.lamigo-college-tab-li')) return;
 
   const li = document.createElement('li');
@@ -247,7 +432,7 @@ function injectCollegeStandingsTab() {
     }
 
     li.style.display = '';
-    
+
     const a = document.createElement('a');
     a.href = '#';
     a.innerText = 'COLLEGE STANDINGS';
@@ -266,7 +451,6 @@ function injectCollegeStandingsTab() {
         window.history.pushState(null, '', window.location.pathname + '#college-standings');
       }
 
-      // Highlight tab immediately on click
       document.querySelectorAll('.second-level-menu-list li').forEach(el => el.classList.remove('current'));
       li.classList.add('current');
 
@@ -279,13 +463,24 @@ function injectCollegeStandingsTab() {
       }
       const contestId = contestIdMatch[1];
 
-      // --- CACHE HIT: instant render ---
+      // --- CACHE HIT ---
       if (_standingsCache[contestId]) {
-        renderStandings(_standingsCache[contestId].problems, _standingsCache[contestId].filteredRows, cachedMembers, orgName, orgId, a, li);
+        const cached = _standingsCache[contestId];
+        // Pre-fetch stored allRows (unfiltered) — filter now
+        if (cached.allRows && cached.filteredRows === cached.allRows) {
+          a.innerText = 'FILTERING...';
+          const memberHandles = new Set<string>();
+          for (const m of cachedMembers) memberHandles.add(m.handle.toLowerCase());
+          const filteredRows = cached.allRows.filter((row: any) =>
+            row.party.members.some((m: any) => memberHandles.has(m.handle.toLowerCase()))
+          );
+          cached.filteredRows = filteredRows;
+        }
+        await renderCollegeStandings(cached.problems, cached.filteredRows, cachedMembers, orgName, orgId, a, li);
         return;
       }
 
-      // Fallback: if cachedMembers is empty, try to scrape org page
+      // Fallback: scrape org page if members empty
       if (cachedMembers.length === 0) {
         try {
           const membersMap = new Map<string, { handle: string; ratingClass: string }>();
@@ -306,7 +501,7 @@ function injectCollegeStandingsTab() {
             }
           }
         } catch (err) {
-          console.error("Failed fallback scrape", err);
+          console.error('Failed fallback scrape', err);
         }
       }
 
@@ -326,9 +521,8 @@ function injectCollegeStandingsTab() {
       a.innerText = 'FETCHING...';
 
       try {
-        // CF only allows contestId (no handles param for non-gym contests).
-        // from=1 & count=5000 keeps the response payload small vs full default.
-        const apiRes = await fetch(`https://codeforces.com/api/contest.standings?contestId=${contestId}&from=1&count=5000`);
+        // CF only allows contestId for non-gym contests (anonymous GET, no extra params)
+        const apiRes = await fetch(`https://codeforces.com/api/contest.standings?contestId=${contestId}`);
         const apiData = await apiRes.json();
 
         if (apiData.status !== 'OK') {
@@ -342,7 +536,6 @@ function injectCollegeStandingsTab() {
         const problems = apiData.result.problems;
         const allRows = apiData.result.rows;
 
-        // Build O(1) lookup set
         const memberHandles = new Set<string>();
         for (const m of cachedMembers) memberHandles.add(m.handle.toLowerCase());
 
@@ -350,19 +543,17 @@ function injectCollegeStandingsTab() {
           row.party.members.some((m: any) => memberHandles.has(m.handle.toLowerCase()))
         );
 
-        // Cache so switching tabs → back is instant
-        _standingsCache[contestId] = { problems, filteredRows };
+        _standingsCache[contestId] = { problems, filteredRows, allRows: filteredRows };
 
-        renderStandings(problems, filteredRows, cachedMembers, orgName, orgId, a, li);
+        await renderCollegeStandings(problems, filteredRows, cachedMembers, orgName, orgId, a, li, allRows);
       } catch (err: any) {
-        console.error("Standings error", err);
+        console.error('Standings error', err);
         a.innerText = 'COLLEGE STANDINGS';
       }
     });
 
     li.appendChild(a);
 
-    // Auto-trigger on hash
     const shouldAutoTrigger = window.location.hash === '#college-standings' || window.location.search.includes('college=true');
     if (shouldAutoTrigger && !(window as any)._lamigoCollegeTriggered) {
       (window as any)._lamigoCollegeTriggered = true;
@@ -382,14 +573,19 @@ function buildErrorHtml(title: string, body: string, orgId: string, orgName: str
     </div>`;
 }
 
-function renderStandings(
+/**
+ * Render college standings table, then asynchronously add Δ column for all members.
+ * `allContestRows` = every row in the contest (needed to compute seeds accurately).
+ */
+async function renderCollegeStandings(
   problems: any[],
   filteredRows: any[],
   cachedMembers: any[],
   orgName: string,
   orgId: string,
   a: HTMLAnchorElement,
-  li: HTMLLIElement
+  li: HTMLLIElement,
+  allContestRows?: any[]
 ) {
   const membersLookup: Record<string, { handle: string; ratingClass: string }> = {};
   for (const m of cachedMembers) membersLookup[m.handle.toLowerCase()] = m;
@@ -407,7 +603,7 @@ function renderStandings(
     return;
   }
 
-  // Build table matching CF's native standings markup exactly
+  // Build table (native CF markup) — with extra Δ column header
   let html = '<div style="overflow-x:auto;"><table class="standings"><thead><tr>';
   html += '<th class="top-pagination-box" style="width:2em;">#</th>';
   html += '<th style="width:12em;">Who</th>';
@@ -416,6 +612,7 @@ function renderStandings(
   for (const p of problems) {
     html += `<th><a title="${p.name}">${p.index}</a></th>`;
   }
+  html += '<th style="width:4em;color:#aaa;font-size:11px;" title="Predicted rating delta">Δ Pred</th>';
   html += '</tr></thead><tbody>';
 
   let isDark = false;
@@ -423,9 +620,9 @@ function renderStandings(
   for (const row of filteredRows) {
     const trClass = isDark ? 'dark' : '';
     isDark = !isDark;
-    html += `<tr class="${trClass}">`;
+    html += `<tr class="${trClass}" data-lamigo-rank="${row.rank}">`;
     html += `<td>${rank++}</td>`;
-    
+
     const memberLinks = row.party.members.map((m: any) => {
       const lower = m.handle.toLowerCase();
       const info = membersLookup[lower] || { handle: m.handle, ratingClass: 'user-gray' };
@@ -435,10 +632,11 @@ function renderStandings(
       return `<a href="/profile/${info.handle}" class="rated-user ${info.ratingClass}">${info.handle}</a>`;
     });
 
-    html += `<td class="contestant-cell">${row.party.teamName || memberLinks.join(', ')}</td>`;
+    const handles = row.party.members.map((m: any) => m.handle.toLowerCase()).join(',');
+    html += `<td class="contestant-cell" data-lamigo-handles="${handles}">${row.party.teamName || memberLinks.join(', ')}</td>`;
     html += `<td>${row.points}</td>`;
     html += `<td>${row.penalty}</td>`;
-    
+
     for (const pr of row.problemResults) {
       let cell = '';
       if (pr.points > 0) {
@@ -454,6 +652,9 @@ function renderStandings(
       }
       html += `<td style="text-align:center;">${cell}</td>`;
     }
+
+    // Δ column placeholder — will be filled after rating fetch
+    html += `<td class="lamigo-delta-cell" style="text-align:center;font-size:11px;color:#aaa;">…</td>`;
     html += '</tr>';
   }
   html += '</tbody></table></div>';
@@ -464,7 +665,343 @@ function renderStandings(
     document.querySelectorAll('.pagination').forEach(el => el.remove());
   }
   a.innerText = 'COLLEGE STANDINGS';
+
+  // ---- Async: compute Δ for all college members ----
+  const memberHandlesInContest: string[] = [];
+  for (const row of filteredRows) {
+    for (const m of row.party.members) memberHandlesInContest.push(m.handle);
+  }
+  if (memberHandlesInContest.length === 0) return;
+
+  const contestIdForDelta = window.location.pathname.match(/\/contest\/(\d+)\//)?.[1] || '';
+
+  try {
+    // 1. Check if contest is already rated — use actual deltas if so
+    const actualChanges = contestIdForDelta ? await fetchActualRatingChanges(contestIdForDelta) : null;
+
+    // 2. Fetch ratings for college members
+    const memberRatings = await fetchRatingsForHandles(memberHandlesInContest);
+
+    // 3. Build full contestant pool for batch computation (top 3000 for seed accuracy)
+    let contestantPool: ContestantInput[] = [];
+    if (!actualChanges && allContestRows && allContestRows.length > 0) {
+      const top3000 = allContestRows.slice(0, 3000);
+      const allHandles = top3000.flatMap((row: any) => row.party.members.map((m: any) => m.handle));
+      const allRatingsMap = await fetchRatingsForHandles(allHandles);
+      contestantPool = top3000.map((row: any) => ({
+        handle: row.party.members[0]?.handle || '',
+        rating: allRatingsMap[(row.party.members[0]?.handle || '').toLowerCase()] ?? 0,
+        rank: row.rank
+      })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+    }
+    if (!actualChanges && contestantPool.length === 0) {
+      // Fallback: use only college members for seed calculation
+      contestantPool = filteredRows.map((row: any) => ({
+        handle: row.party.members[0]?.handle || '',
+        rating: memberRatings[(row.party.members[0]?.handle || '').toLowerCase()] ?? 0,
+        rank: row.rank
+      })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+    }
+
+    // 4. Compute batch deltas (with both corrections) — or use actual if already rated
+    const batchDeltas = actualChanges ? null : computeBatchDeltas(contestantPool);
+
+    // 5. Update DOM
+    for (const row of filteredRows) {
+      const handles = row.party.members.map((m: any) => m.handle.toLowerCase()).join(',');
+      const tr = datatable?.querySelector(`td[data-lamigo-handles="${handles}"]`)?.closest('tr');
+      if (!tr) continue;
+      const lastTd = tr.querySelector('td.lamigo-delta-cell');
+      if (!lastTd) continue;
+
+      const firstHandle = row.party.members[0]?.handle?.toLowerCase();
+      const myRating = memberRatings[firstHandle] ?? 0;
+
+      if (myRating === 0) {
+        lastTd.textContent = 'N/A';
+        (lastTd as HTMLElement).style.color = '#888';
+        continue;
+      }
+
+      let delta = 0;
+      let newRating = myRating;
+      let isOfficial = false;
+
+      if (actualChanges && actualChanges[firstHandle]) {
+        delta = actualChanges[firstHandle].delta;
+        newRating = actualChanges[firstHandle].newRating; // Exact official new rating
+        isOfficial = true;
+      } else if (batchDeltas && batchDeltas.has(firstHandle)) {
+        delta = batchDeltas.get(firstHandle) ?? 0;
+        newRating = myRating + delta; // Predicted new rating based on current rating
+      } else {
+        // Fallback if not found in prediction
+      }
+
+      const label = isOfficial ? '✓' : '~';
+      lastTd.innerHTML = `<span style="color:${deltaColor(delta)};font-weight:700;" title="${isOfficial ? 'Official' : 'Predicted'}">${label}${formatDelta(delta)}</span><br><span style="font-size:10px;color:#888;">${newRating}</span>`;
+    }
+  } catch (err) {
+    console.warn('[L\'Amigo] Delta computation failed', err);
+  }
 }
+
+// ============================================================
+// NATIVE STANDINGS DELTA COLUMN (e.g. Friends Standings)
+// ============================================================
+
+async function injectNativeStandingsDeltaColumn() {
+  if (!window.location.pathname.includes('/standings')) return;
+  if (window.location.search.includes('lamigo_college=true')) return; // handled by renderCollegeStandings
+
+  const contestIdMatch = window.location.pathname.match(/\/contest\/(\d+)\/standings/);
+  if (!contestIdMatch) return;
+  const contestId = contestIdMatch[1];
+
+  const table = document.querySelector('table.standings');
+  if (!table) return;
+
+  if (table.hasAttribute('data-lamigo-native-delta')) return;
+
+  const headerTr = table.querySelector('tr:first-child');
+  if (!headerTr || headerTr.querySelector('.lamigo-native-delta-col-header')) return;
+
+  const rows = Array.from(table.querySelectorAll('tr[participantid]'));
+  if (rows.length === 0) return;
+
+  table.setAttribute('data-lamigo-native-delta', 'true');
+
+  // 1. Add header
+  const th = document.createElement('th');
+  th.className = 'lamigo-native-delta-col-header';
+  th.style.cssText = 'text-align:center;width:4em;font-size:11px;color:#aaa;padding-top:4px;vertical-align:middle;';
+  th.textContent = 'Δ Pred';
+  headerTr.appendChild(th);
+
+  // 2. Add cells and collect handles
+  const pageContestants: { handle: string; td: HTMLElement }[] = [];
+  for (const tr of rows) {
+    if (!tr.querySelector('.lamigo-native-delta-cell')) {
+      const td = document.createElement('td');
+      td.className = 'lamigo-native-delta-cell';
+      td.style.cssText = 'text-align:center;font-size:11px;color:#aaa;vertical-align:middle;';
+      td.innerHTML = '⏳';
+      tr.appendChild(td);
+
+      // Handle might be in a regular a.rated-user or inside a team
+      const a = tr.querySelector('td.contestant-cell a.rated-user');
+      const handle = a?.textContent?.trim();
+      if (handle) {
+        pageContestants.push({ handle, td });
+      } else {
+        td.innerHTML = '';
+      }
+    }
+  }
+
+  if (pageContestants.length === 0) return;
+
+  try {
+    const actualChanges = await fetchActualRatingChanges(contestId);
+    let batchDeltas: Map<string, number> | null = null;
+    let ratingsMap: Record<string, number> = {};
+
+    if (!actualChanges) {
+      if (!_standingsCache[contestId]) {
+        const apiRes = await fetch(`https://codeforces.com/api/contest.standings?contestId=${contestId}`);
+        const apiData = await apiRes.json();
+        if (apiData.status === 'OK') {
+          _standingsCache[contestId] = {
+            problems: apiData.result.problems,
+            filteredRows: apiData.result.rows,
+            allRows: apiData.result.rows
+          };
+        } else {
+          return;
+        }
+      }
+      const allRows = _standingsCache[contestId].allRows || _standingsCache[contestId].filteredRows;
+      const top3000 = allRows.slice(0, 3000);
+      const allHandles = top3000.flatMap((r: any) => r.party.members.map((m: any) => m.handle));
+      const extraHandles = pageContestants.map(c => c.handle);
+      ratingsMap = await fetchRatingsForHandles([...allHandles, ...extraHandles]);
+
+      const contestantPool: ContestantInput[] = top3000.map((r: any) => ({
+        handle: r.party.members[0]?.handle || '',
+        rating: ratingsMap[(r.party.members[0]?.handle || '').toLowerCase()] ?? 0,
+        rank: r.rank
+      })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+
+      batchDeltas = computeBatchDeltas(contestantPool);
+    } else {
+      ratingsMap = await fetchRatingsForHandles(pageContestants.map(c => c.handle));
+    }
+
+    for (const { handle, td } of pageContestants) {
+      const lower = handle.toLowerCase();
+      const myRating = ratingsMap[lower] ?? 0;
+
+      if (myRating === 0) {
+        td.textContent = 'N/A';
+        td.style.color = '#888';
+        continue;
+      }
+
+      let delta = 0;
+      let newRating = myRating;
+      let isOfficial = false;
+
+      if (actualChanges && actualChanges[lower]) {
+        delta = actualChanges[lower].delta;
+        newRating = actualChanges[lower].newRating;
+        isOfficial = true;
+      } else if (batchDeltas && batchDeltas.has(lower)) {
+        delta = batchDeltas.get(lower) ?? 0;
+        newRating = myRating + delta;
+      } else {
+        td.textContent = '-';
+        continue;
+      }
+
+      const label = isOfficial ? '✓' : '~';
+      td.innerHTML = `<span style="color:${deltaColor(delta)};font-weight:700;" title="${isOfficial ? 'Official' : 'Predicted'}">${label}${formatDelta(delta)}</span><br><span style="font-size:10px;color:#888;">${newRating}</span>`;
+    }
+
+  } catch (err) {
+    console.warn('[L\'Amigo] Native standings delta failed', err);
+    pageContestants.forEach(c => c.td.innerHTML = '?');
+  }
+}
+
+// ============================================================
+// MAIN STANDINGS: OWN-ROW DELTA BADGE
+// ============================================================
+
+let _ownRowInjected = false;
+
+async function injectOwnRowDeltaBadge() {
+  if (!window.location.pathname.includes('/standings')) return;
+  if (_ownRowInjected) return;
+
+  const contestIdMatch = window.location.pathname.match(/\/contest\/(\d+)\/standings/);
+  if (!contestIdMatch) return;
+  const contestId = contestIdMatch[1];
+
+  // Get own CF handle from settings
+  const stored = await chrome.storage.local.get(['own_codeforces_handle']);
+  const ownHandle: string = (stored.own_codeforces_handle || '').toLowerCase().trim();
+  if (!ownHandle) return;
+
+  // Find own row in DOM: look for a link to /profile/<ownHandle>
+  const selector = `a[href="/profile/${ownHandle}"], a[href="/profile/${ownHandle.charAt(0).toUpperCase() + ownHandle.slice(1)}"]`;
+  const ownLink = document.querySelector<HTMLAnchorElement>(selector)
+    || Array.from(document.querySelectorAll<HTMLAnchorElement>('a[href^="/profile/"]'))
+        .find(a => a.getAttribute('href')?.split('/profile/')[1]?.toLowerCase() === ownHandle);
+
+  if (!ownLink) return;
+
+  const ownRow = ownLink.closest('tr');
+  if (!ownRow) return;
+
+  // Don't double-inject
+  if (ownRow.querySelector('.lamigo-own-delta')) return;
+  _ownRowInjected = true;
+
+  // Extract rank from first cell
+  const rankCell = ownRow.querySelector<HTMLTableCellElement>('td:first-child');
+  const rank = parseInt(rankCell?.textContent?.trim() || '0');
+  if (!rank) return;
+
+  // Show a loading badge immediately
+  const badge = document.createElement('span');
+  badge.className = 'lamigo-own-delta';
+  badge.style.cssText = `
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #555;
+    color: #aaa;
+    background: rgba(0,0,0,0.15);
+    vertical-align: middle;
+    cursor: default;
+  `;
+  badge.textContent = '⏳ Δ…';
+  ownLink.insertAdjacentElement('afterend', badge);
+
+  try {
+    // 1. Check if contest is already officially rated
+    badge.textContent = 'checking…';
+    const actualChanges = await fetchActualRatingChanges(contestId);
+
+    if (actualChanges) {
+      // Contest already rated — show exact official delta
+      const change = actualChanges[ownHandle] ?? null;
+      if (change === null) { badge.remove(); _ownRowInjected = false; return; }
+      
+      const delta = change.delta;
+      const newRating = change.newRating;
+      const color = deltaColor(delta);
+      badge.style.color = color;
+      badge.style.borderColor = color;
+      badge.style.background = `${color}18`;
+      badge.title = `Official delta: ${formatDelta(delta)} → ${newRating}`;
+      badge.innerHTML = `✓${formatDelta(delta)} <span style="font-size:10px;opacity:0.8;">(→${newRating})</span>`;
+      return;
+    }
+
+    // 2. Contest not yet rated — predict
+    if (!_standingsCache[contestId]) {
+      badge.textContent = 'fetching…';
+      const apiRes = await fetch(`https://codeforces.com/api/contest.standings?contestId=${contestId}`);
+      const apiData = await apiRes.json();
+      if (apiData.status !== 'OK') { badge.remove(); _ownRowInjected = false; return; }
+      _standingsCache[contestId] = {
+        problems: apiData.result.problems,
+        filteredRows: apiData.result.rows,
+        allRows: apiData.result.rows
+      };
+    }
+
+    const allRows = _standingsCache[contestId].allRows || _standingsCache[contestId].filteredRows;
+    badge.textContent = 'rating…';
+
+    // Fetch ratings for top 3000 for accurate seed
+    const top3000 = allRows.slice(0, 3000);
+    const allHandles = top3000.flatMap((row: any) => row.party.members.map((m: any) => m.handle));
+    const ratingsMap = await fetchRatingsForHandles(allHandles);
+
+    const ownRating = ratingsMap[ownHandle] ?? 0;
+    if (ownRating === 0) { badge.textContent = 'unrated'; return; }
+
+    // Build contestant pool and use batch computation (with both corrections)
+    const contestantPool: ContestantInput[] = top3000.map((row: any) => ({
+      handle: row.party.members[0]?.handle || '',
+      rating: ratingsMap[(row.party.members[0]?.handle || '').toLowerCase()] ?? 0,
+      rank: row.rank
+    })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+
+    const batchDeltas = computeBatchDeltas(contestantPool);
+    const delta = batchDeltas.get(ownHandle) ?? 0;
+    const newRating = ownRating + delta;
+    const color = deltaColor(delta);
+
+    badge.style.color = color;
+    badge.style.borderColor = color;
+    badge.style.background = `${color}18`;
+    badge.title = `Predicted delta: ~${formatDelta(delta)} → ${newRating} (L'Amigo)`;
+    badge.innerHTML = `~${formatDelta(delta)} <span style="font-size:10px;opacity:0.8;">(→${newRating})</span>`;
+
+  } catch (err) {
+    badge.textContent = '?';
+    console.warn("[L'Amigo] Own-row delta failed", err);
+  }
+}
+
+// ============================================================
+// PROFILE BOOKMARK BUTTON
+// ============================================================
 
 function injectProfileBookmarkButton() {
   if (!window.location.pathname.startsWith('/profile/')) return;
@@ -472,7 +1009,6 @@ function injectProfileBookmarkButton() {
   const orgLink = document.querySelector<HTMLAnchorElement>('a[href*="/ratings/organization/"]');
   if (!orgLink) return;
 
-  // Prevent double injection
   if (orgLink.parentNode?.querySelector('.lamigo-profile-bookmark-btn')) return;
 
   const match = orgLink.getAttribute('href')?.match(/\/ratings\/organization\/(\d+)/);
@@ -482,7 +1018,7 @@ function injectProfileBookmarkButton() {
 
   const btn = document.createElement('button');
   btn.className = 'lamigo-bookmark-btn-sm lamigo-profile-bookmark-btn';
-  
+
   let isBookmarked = false;
 
   const updateBtnUI = () => {
@@ -541,14 +1077,13 @@ function injectProfileBookmarkButton() {
         }
       };
 
-      // Fetch page 1 and 2 of the org ratings
       await Promise.all([
         scrapePage(`/ratings/organization/${orgId}`),
         scrapePage(`/ratings/organization/${orgId}/page/2`)
       ]);
 
       const membersList = Array.from(membersMap.values());
-      chrome.storage.local.set({ 
+      chrome.storage.local.set({
         cf_bookmarked_org: orgName,
         cf_bookmarked_org_id: orgId,
         cf_bookmarked_org_members: membersList
@@ -562,6 +1097,10 @@ function injectProfileBookmarkButton() {
 
   orgLink.insertAdjacentElement('afterend', btn);
 }
+
+// ============================================================
+// RATING HEATMAP
+// ============================================================
 
 interface CFSubmission {
   creationTimeSeconds: number;
@@ -579,13 +1118,13 @@ let maxRatingByDate = new Map<string, number>();
 let isFetching = false;
 
 function getRatingColor(rating: number): string {
-  if (rating < 1200) return '#888888'; // Gray (Newbie)
-  if (rating < 1400) return '#008000'; // Green (Pupil)
-  if (rating < 1600) return '#03a89e'; // Cyan (Specialist)
-  if (rating < 1900) return '#0000ff'; // Blue (Expert)
-  if (rating < 2100) return '#aa00aa'; // Purple (Candidate Master)
-  if (rating < 2400) return '#ff8c00'; // Orange (Master)
-  return '#ff0000'; // Red (Grandmaster+)
+  if (rating < 1200) return '#888888';
+  if (rating < 1400) return '#008000';
+  if (rating < 1600) return '#03a89e';
+  if (rating < 1900) return '#0000ff';
+  if (rating < 2100) return '#aa00aa';
+  if (rating < 2400) return '#ff8c00';
+  return '#ff0000';
 }
 
 async function fetchSubmissions(handle: string): Promise<CFSubmission[]> {
@@ -595,7 +1134,7 @@ async function fetchSubmissions(handle: string): Promise<CFSubmission[]> {
   if (currentHandle === handle && fetchPromise) {
     return fetchPromise;
   }
-  
+
   currentHandle = handle;
   fetchPromise = (async () => {
     isFetching = true;
@@ -617,7 +1156,7 @@ async function fetchSubmissions(handle: string): Promise<CFSubmission[]> {
       isFetching = false;
     }
   })();
-  
+
   return fetchPromise;
 }
 
@@ -625,13 +1164,13 @@ function calculateRatingsByDate(submissions: CFSubmission[]) {
   const map = new Map<string, number>();
   for (const sub of submissions) {
     if (sub.verdict !== 'OK') continue;
-    
+
     const date = new Date(sub.creationTimeSeconds * 1000);
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const year = date.getFullYear();
     const dateStr = `${month}/${day}/${year}`;
-    
+
     const rating = sub.problem.rating || 0;
     const currentMax = map.get(dateStr);
     if (currentMax === undefined || rating > currentMax) {
@@ -651,7 +1190,7 @@ async function updateHeatmap(useRating: boolean, handle: string) {
   if (!useRating) {
     if (legend) legend.style.display = 'none';
     if (toggleText) toggleText.innerText = 'Rating-based Heatmap';
-    
+
     rects.forEach(rect => {
       if (rect.hasAttribute('data-lamigo-colored')) {
         const dateStr = rect.getAttribute('data-date');
@@ -725,7 +1264,7 @@ async function updateHeatmap(useRating: boolean, handle: string) {
 
 function injectRatingHeatmap() {
   if (!window.location.pathname.startsWith('/profile/')) return;
-  
+
   const header = document.querySelector<HTMLDivElement>('._UserActivityFrame_header');
   const graph = document.querySelector<HTMLDivElement>('#userActivityGraph');
   if (!header || !graph) return;
@@ -801,13 +1340,43 @@ function injectRatingHeatmap() {
   });
 }
 
-// Observe DOM for dynamic content
+// ============================================================
+// SILENT PRE-FETCH: warms standings cache on page load
+// ============================================================
+async function prefetchCollegeStandings() {
+  if (!window.location.pathname.includes('/standings')) return;
+
+  const contestIdMatch = window.location.pathname.match(/\/contest\/(\d+)\/standings/);
+  if (!contestIdMatch) return;
+  const contestId = contestIdMatch[1];
+
+  if (_standingsCache[contestId]) return;
+
+  try {
+    const apiRes = await fetch(`https://codeforces.com/api/contest.standings?contestId=${contestId}`);
+    const apiData = await apiRes.json();
+    if (apiData.status !== 'OK') return;
+
+    const problems = apiData.result.problems;
+    const allRows = apiData.result.rows;
+    _standingsCache[contestId] = { problems, filteredRows: allRows, allRows };
+  } catch (_) {
+    // Silent
+  }
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+
 const observer = new MutationObserver(() => {
   injectAddButtons();
   injectBookmarkButton();
   injectProfileBookmarkButton();
   injectCollegeStandingsTab();
   injectRatingHeatmap();
+  injectOwnRowDeltaBadge();
+  injectNativeStandingsDeltaColumn();
 });
 
 if (document.body) {
@@ -816,6 +1385,9 @@ if (document.body) {
   injectProfileBookmarkButton();
   injectCollegeStandingsTab();
   injectRatingHeatmap();
+  prefetchCollegeStandings();
+  injectOwnRowDeltaBadge();
+  injectNativeStandingsDeltaColumn();
   observer.observe(document.body, { childList: true, subtree: true });
 } else {
   document.addEventListener('DOMContentLoaded', () => {
@@ -824,8 +1396,9 @@ if (document.body) {
     injectProfileBookmarkButton();
     injectCollegeStandingsTab();
     injectRatingHeatmap();
+    prefetchCollegeStandings();
+    injectOwnRowDeltaBadge();
+    injectNativeStandingsDeltaColumn();
     observer.observe(document.body, { childList: true, subtree: true });
   });
 }
-
-

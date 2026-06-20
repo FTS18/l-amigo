@@ -291,11 +291,20 @@
   margin: 0;
   max-height: 250px;
   overflow-y: auto;
+  margin: 0; padding: 0; list-style: none;
   scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
 }
-.submissions-list::-webkit-scrollbar       { width: 4px; }
-.submissions-list::-webkit-scrollbar-track { background: transparent; }
-.submissions-list::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+.submissions-list::-webkit-scrollbar {
+  width: 6px;
+}
+.submissions-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.submissions-list::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+  border-radius: 0;
+}
 
 /* Submission row layout (inline in TSX) */
 .sub-platform-badge {
@@ -472,7 +481,7 @@
   padding: 12px;
   background-color: var(--bg-tertiary);
   border: 1px solid var(--border-primary);
-  border-radius: 6px;
+  border-radius: 0;
   margin-bottom: 8px;
   transition: all 0.2s ease;
   text-decoration: none !important;
@@ -483,10 +492,10 @@
 .rec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .rec-title  { font-weight: 500; color: var(--text-primary); font-size: 14px; }
 
-.rec-difficulty { padding: 2px 8px; font-size: 11px; font-weight: 600; }
-.rec-difficulty.easy   { background: var(--color-easy-light);   color: var(--color-easy);   }
-.rec-difficulty.medium { background: var(--color-medium-light);  color: var(--color-medium); }
-.rec-difficulty.hard   { background: var(--color-hard-light);    color: var(--color-hard);   }
+.rec-difficulty { padding: 2px 9px; font-size: 10px; font-weight: 700; border-radius: 0; letter-spacing: 0.3px; flex-shrink: 0; }
+.rec-difficulty.easy   { background: var(--color-easy-light);   color: var(--color-easy);   border: 1px solid rgba(0,184,163,0.3); }
+.rec-difficulty.medium { background: var(--color-medium-light);  color: var(--color-medium); border: 1px solid rgba(255,161,22,0.3); }
+.rec-difficulty.hard   { background: var(--color-hard-light);    color: var(--color-hard);   border: 1px solid rgba(255,55,95,0.3); }
 
 .rec-reason  { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
 .rec-friends { font-size: 11px; color: var(--text-muted); }

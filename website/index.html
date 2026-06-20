@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L'Amigo - LeetCode Friends Tracker</title>
+  <title>L'Amigo - Coding Friends Network</title>
   <meta name="description"
-    content="Track your friends' LeetCode progress, compare stats, sync to GitHub. Stay motivated together with L'Amigo.">
+    content="Stay connected with your friends' coding progress, compare stats, sync to GitHub. Stay motivated together with L'Amigo.">
   <meta name="keywords"
     content="LeetCode, Friend Tracker, Competitive Programming, GitHub Sync, LeetCode Stats, Coding Interview, Software Engineering">
   <meta name="theme-color" content="#0a0a0a">
@@ -15,9 +15,9 @@
   <link rel="canonical" href="https://lamigo.netlify.app/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="L'Amigo - LeetCode Friends Tracker">
+  <meta property="og:title" content="L'Amigo - Coding Friends Network">
   <meta property="og:description"
-    content="Track your friends' LeetCode progress, compare stats, and sync to GitHub automatically.">
+    content="Stay connected with your friends' coding progress, compare stats, and sync to GitHub automatically.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lamigo.netlify.app/">
   <meta property="og:image" content="https://lamigo.netlify.app/logo.png">
@@ -35,7 +35,7 @@
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "A browser extension to track LeetCode friends, compare statistics, and sync solutions to GitHub.",
+      "description": "A browser extension to connect with coding friends, compare statistics, and sync solutions to GitHub.",
       "image": "https://lamigo.netlify.app/logo.png",
       "author": {
         "@type": "Person",
@@ -47,17 +47,16 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="L'Amigo - LeetCode Friends Tracker">
-  <meta name="twitter:description" content="Stay motivated and track your friends' LeetCode progress.">
+  <meta name="twitter:title" content="L'Amigo - Coding Friends Network">
+  <meta name="twitter:description" content="Stay motivated and code alongside your friends.">
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="home-page">
+<body class="home-body">
+  <div id="scroll-progress" class="scroll-progress"></div>
   <!-- Navigation -->
   <nav class="nav">
     <div class="container nav-container">
@@ -103,10 +102,15 @@
         <li class="mobile-only"><a href="terms.html">Terms of Service</a></li>
         <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
 
+        <li class="desktop-only">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+        </li>
         <!-- Mobile: CTA Button -->
         <li class="mobile-only nav-divider"></li>
         <li class="mobile-only">
-          <a href="https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli" target="_blank"
+          <a href="https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli?utm_source=item-share-cb" target="_blank"
             class="btn-cta">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path
@@ -123,17 +127,17 @@
   <section class="hero main-hero">
     <div class="container">
       <div class="hero-layout">
-        <div class="hero-content">
+        <div class="hero-content animate-on-scroll">
           <h1 class="hero-title">
-            Track Your Friends' <br>
-            <span>LeetCode Journey</span>
+            Grind Smarter, <br>
+            <span>Not Alone</span>
           </h1>
           <p class="hero-desc">
-            Monitor your friends' progress. Compare stats, compete on streaks, and auto-sync your solutions to
+            Stay motivated alongside your peers. Compare stats, compete on streaks, and auto-sync your solutions to
             GitHub.
           </p>
           <div class="hero-actions">
-            <a href="https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli" target="_blank"
+            <a href="https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli?utm_source=item-share-cb" target="_blank"
               class="btn-hero primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
@@ -144,104 +148,248 @@
               READ DOCS
             </a>
           </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Stats Ticker -->
+  <section class="stats-ticker">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item animate-on-scroll">
+          <h3 class="stat-number" data-target="2000">0</h3>
+          <p>Problems Tracked</p>
+        </div>
+        <div class="stat-item animate-on-scroll" style="transition-delay: 0.1s;">
+          <h3 class="stat-number" data-target="50">0</h3>
+          <p>Friends Limit</p>
+        </div>
+        <div class="stat-item animate-on-scroll" style="transition-delay: 0.2s;">
+          <h3 class="stat-number" data-target="365">0</h3>
+          <p>Days History</p>
+        </div>
+        <div class="stat-item animate-on-scroll" style="transition-delay: 0.3s;">
+          <h3 class="stat-number" data-target="2">0</h3>
+          <p>Min Setup Time</p>
         </div>
       </div>
     </div>
   </section>
 
+
+
   <!-- Features Section -->
   <section id="features" class="features features-bg-1">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head animate-on-scroll">
         <h2>System Features</h2>
-        <p>Everything you need to track and compete with your friends.</p>
+        <p>Everything you need to stay motivated and compete with your friends.</p>
       </div>
       <div class="grid-3">
-        <div class="feat-card">
-          <div class="icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+        <div class="feat-card animate-on-scroll">
+          <div class="feat-img-wrapper">
+            <div class="mini-window-bar">
+              <span class="mini-dot red"></span>
+              <span class="mini-dot yellow"></span>
+              <span class="mini-dot green"></span>
+            </div>
+            <img src="ss/11.webp" alt="Connect 50 Friends" class="feat-img">
           </div>
-          <h3>Track 50 Friends</h3>
-          <p>Monitor up to 50 friends with live stats, streaks, and velocity metrics all in one place.</p>
+          <div class="feat-card-header">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <h3>Stay Connected</h3>
+          </div>
+          <p>Keep up with your friends' live stats, streaks, and velocity metrics all in one place.</p>
         </div>
-        <div class="feat-card">
-          <div class="icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-            </svg>
+        <div class="feat-card animate-on-scroll" style="transition-delay: 0.1s;">
+          <div class="feat-img-wrapper">
+            <div class="mini-window-bar">
+              <span class="mini-dot red"></span>
+              <span class="mini-dot yellow"></span>
+              <span class="mini-dot green"></span>
+            </div>
+            <img src="ss/12.webp" alt="Values Comparison" class="feat-img">
           </div>
-          <h3>Values Comparison</h3>
+          <div class="feat-card-header">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            </div>
+            <h3>Values Comparison</h3>
+          </div>
           <p>Side-by-side comparison with precision charts for difficulty, topics, and languages.</p>
         </div>
         <div class="feat-card">
-          <div class="icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-            </svg>
+          <div class="feat-img-wrapper">
+            <div class="mini-window-bar">
+              <span class="mini-dot red"></span>
+              <span class="mini-dot yellow"></span>
+              <span class="mini-dot green"></span>
+            </div>
+            <img src="ss/14.webp" alt="Import Export" class="feat-img">
           </div>
-          <h3>Internal GitHub Sync</h3>
-          <p>Auto-push your accepted solutions to GitHub, organized by difficulty level.</p>
+          <div class="feat-card-header">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
+            </div>
+            <h3>Easy Import/Export</h3>
+          </div>
+          <p>Share your friend list seamlessly across multiple devices and browsers with one click.</p>
         </div>
         <div class="feat-card">
-          <div class="icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
+          <div class="feat-img-wrapper">
+            <div class="mini-window-bar">
+              <span class="mini-dot red"></span>
+              <span class="mini-dot yellow"></span>
+              <span class="mini-dot green"></span>
+            </div>
+            <img src="ss/1.webp" alt="Auto Detection" class="feat-img">
           </div>
-          <h3>Auto Detection</h3>
-          <p>Real-time "Accepted" verdict detection. Solutions sync instantly to your repo.</p>
+          <div class="feat-card-header">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <h3>Activity Feed</h3>
+          </div>
+          <p>Real-time "Recent Solves" detection. Know exactly what your peers are tackling.</p>
         </div>
         <div class="feat-card">
-          <div class="icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
+          <div class="feat-img-wrapper">
+            <div class="mini-window-bar">
+              <span class="mini-dot red"></span>
+              <span class="mini-dot yellow"></span>
+              <span class="mini-dot green"></span>
+            </div>
+            <img src="ss/8.webp" alt="365 Days History" class="feat-img">
           </div>
-          <h3>365 Days History</h3>
-          <p>Full year of submission history. Accurate streaks, trends, and activity insights.</p>
+          <div class="feat-card-header">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <h3>365 Days History</h3>
+          </div>
+          <p>Full year of submission history. Accurate streaks, trends, and activity heatmaps.</p>
         </div>
         <div class="feat-card">
-          <div class="icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
+          <div class="feat-img-wrapper">
+            <div class="mini-window-bar">
+              <span class="mini-dot red"></span>
+              <span class="mini-dot yellow"></span>
+              <span class="mini-dot green"></span>
+            </div>
+            <img src="ss/3.webp" alt="Predict Standings" class="feat-img">
           </div>
-          <h3>Discover Problems</h3>
-          <p>Find problems your friends solved that you haven't. Never miss a good challenge.</p>
+          <div class="feat-card-header">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </div>
+            <h3>Predict Standings</h3>
+          </div>
+          <p>See Codeforces rating changes and college standings directly injected into the platform natively.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Deep Features -->
+  <section id="deep-features" class="features features-bg-1" style="padding-top: 40px;">
+    <div class="container">
+      <div class="zebra-row animate-on-scroll">
+        <div class="zebra-text">
+          <h2 style="color:var(--primary); margin-bottom:16px;">Live Standings Prediction</h2>
+          <p>We inject a predictive rating algorithm directly into Codeforces during live contests. Instantly see your expected Elo delta dynamically rendered in the standings table without waiting for system testing to finish.</p>
+          <a href="docs.html#native-injections" class="btn-cta" style="margin-top:24px;">View Technical Details</a>
+        </div>
+        <div class="zebra-image mockup-window">
+          <img src="ss/3.webp" alt="Live Codeforces Predictor" style="width:100%; border-radius:8px;">
+        </div>
+      </div>
+      <div class="zebra-row animate-on-scroll row-reverse" style="margin-top:120px;">
+        <div class="zebra-text">
+          <h2 style="color:var(--primary); margin-bottom:16px;">Automated GitHub Sync</h2>
+          <p>Never manually push code again. L'Amigo automatically syncs your accepted LeetCode and Codeforces solutions to a structured GitHub repository. It even generates an auto-updating README and stats badge.</p>
+          <a href="docs.html#settings" class="btn-cta" style="margin-top:24px;">Setup Git Sync</a>
+        </div>
+        <div class="zebra-image mockup-window">
+          <img src="ss/16.webp" alt="GitHub Sync Output" style="width:100%; border-radius:8px;">
+        </div>
+      </div>
+
+      <!-- New Zebra 1: Dashboard -->
+      <div class="zebra-row animate-on-scroll" style="margin-top:120px;">
+        <div class="zebra-text">
+          <h2 style="color:var(--primary); margin-bottom:16px;">Unified Dashboard & Activity Feed</h2>
+          <p>Track your friends' progress across LeetCode, Codeforces, and CodeChef in one centralized dashboard. See exactly who solved what problem in real-time, giving you the motivation to keep your streak alive.</p>
+        </div>
+        <div class="zebra-image mockup-window">
+          <img src="ss/1.webp" alt="Dashboard Activity Feed" style="width:100%; border-radius:8px;">
+        </div>
+      </div>
+
+      <!-- New Zebra 2: Analytics -->
+      <div class="zebra-row animate-on-scroll row-reverse" style="margin-top:120px;">
+        <div class="zebra-text">
+          <h2 style="color:var(--primary); margin-bottom:16px;">Deep Analytics & Insights</h2>
+          <p>Analyze your problem-solving patterns with beautiful charts. View breakdowns by difficulty, topics, and languages to understand your strengths and weaknesses compared to your peers.</p>
+        </div>
+        <div class="zebra-image mockup-window">
+          <img src="ss/12.webp" alt="Analytics View" style="width:100%; border-radius:8px;">
+        </div>
+      </div>
+
+      <!-- New Zebra 3: Friend Compare -->
+      <div class="zebra-row animate-on-scroll" style="margin-top:120px;">
+        <div class="zebra-text">
+          <h2 style="color:var(--primary); margin-bottom:16px;">Head-to-Head Comparison</h2>
+          <p>Go head-to-head with any friend. Compare your total solves, active streaks, and recent activity. Our algorithm even suggests problems your friend has solved that you haven't, giving you a curated list of challenges to tackle.</p>
+        </div>
+        <div class="zebra-image mockup-window">
+          <img src="ss/6.webp" alt="Head to Head Compare" style="width:100%; border-radius:8px;">
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- How It Works -->
   <section id="how-it-works" class="features features-bg-2">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head animate-on-scroll">
         <h2>Quick Start</h2>
         <p>Get up and running in less than 2 minutes.</p>
       </div>
       <div class="grid-3">
-        <div class="feat-card">
+        <div class="feat-card animate-on-scroll">
           <h3 style="color: var(--primary); font-size: 32px; margin-bottom: 16px;">01</h3>
           <h3>Install</h3>
-          <p>Add from Chrome Web Store. Enter your LeetCode username to get started.</p>
+          <p>Add from Chrome Web Store. Enter your platform usernames to get started.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card animate-on-scroll" style="transition-delay: 0.1s;">
           <h3 style="color: var(--primary); font-size: 32px; margin-bottom: 16px;">02</h3>
           <h3>Add Friends</h3>
-          <p>Enter LeetCode usernames. Profiles load instantly with full stats.</p>
+          <p>Enter coding platform usernames. Profiles load instantly with full stats.</p>
         </div>
-        <div class="feat-card">
+        <div class="feat-card animate-on-scroll" style="transition-delay: 0.2s;">
           <h3 style="color: var(--primary); font-size: 32px; margin-bottom: 16px;">03</h3>
           <h3>Compete</h3>
           <p>View cards, compare stats, track streaks. Stay motivated with your friends.</p>
@@ -250,29 +398,90 @@
     </div>
   </section>
 
+  <!-- Testimonials -->
+  <section id="testimonials" class="features features-bg-2">
+    <div class="container">
+      <div class="section-head animate-on-scroll">
+        <h2>Loved by Competitors</h2>
+        <p>See what engineers and algorithmic programmers are saying.</p>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card animate-on-scroll">
+          <p class="quote">"This extension fundamentally changed how our coding club tracks progress. The GitHub sync feature alone saves me hours of manual pushes."</p>
+          <div class="user-info">
+            <div class="avatar" style="background:#FFA116; color:#000;">S</div>
+            <div>
+              <h4>CS Sophomore</h4>
+              <p>University Tech Club</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-on-scroll" style="transition-delay: 0.1s;">
+          <p class="quote">"The live Codeforces delta prediction is incredibly helpful. It's so nice having everything built natively into my browser without any complex setup."</p>
+          <div class="user-info">
+            <div class="avatar" style="background:#00b8a3; color:#000;">C</div>
+            <div>
+              <h4>Competitive Programmer</h4>
+              <p>Early Adopter</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-on-scroll" style="transition-delay: 0.2s;">
+          <p class="quote">"Being able to see exactly when my friends solve a problem keeps me incredibly motivated. The UI is absolutely gorgeous too."</p>
+          <div class="user-info">
+            <div class="avatar" style="background:#ff375f; color:#000;">A</div>
+            <div>
+              <h4>CS Undergrad</h4>
+              <p>IIT Delhi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Source CTA -->
+  <section class="oss-cta">
+    <div class="container">
+      <div class="oss-banner animate-on-scroll">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom:20px;">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+        </svg>
+        <h2 style="font-size:36px; margin-bottom:12px;">Proudly Open Source</h2>
+        <p style="font-size:18px; color:var(--text-muted); max-width:500px; margin:0 auto;">L'Amigo is built by developers, for developers. Check out the source code, contribute, or just drop a star.</p>
+        <div class="oss-stats">
+          <a href="https://github.com/FTS18/l-amigo" target="_blank" class="btn-hero primary" style="width:auto; margin-top:24px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span id="github-stars-count" style="margin:0 6px;">Star</span> on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ Section (Premium Cards) -->
   <section id="faq" class="features" style="background: #000; padding: 120px 0;">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head animate-on-scroll">
         <h2>Frequently Asked Questions</h2>
         <p>Common questions about L'Amigo and how it works.</p>
       </div>
 
       <div class="faq-grid">
-        <div class="premium-card">
+        <div class="premium-card animate-on-scroll">
           <h4>Is L'Amigo free?</h4>
           <p>100% free and open-source. No premium features, ads, or tracking. Built by developers for developers.</p>
         </div>
 
-        <div class="premium-card">
+        <div class="premium-card animate-on-scroll" style="transition-delay: 0.1s;">
           <h4>Data Privacy</h4>
           <p>Local storage only. Nothing is sent to third-party servers except direct API calls to platform providers.
           </p>
         </div>
 
         <div class="premium-card">
-          <h4>Friend Tracking</h4>
-          <p>Track up to 50 friends simultaneously with real-time updates and performance optimization.</p>
+          <h4>Peer Network</h4>
+          <p>Connect up to 50 friends simultaneously with real-time updates and performance optimization.</p>
         </div>
 
         <div class="premium-card">
@@ -314,7 +523,7 @@
         <div class="footer-brand">
           <a href="#" class="footer-logo">L'AMIGO</a>
           <p style="color: #666; font-size: 13px; max-width: 300px;">
-            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
+            Open source extension to connect friends, compare stats, and stay motivated on LeetCode & Codeforces.
           </p>
           <div class="social-links">
             <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
@@ -355,7 +564,7 @@
           <ul>
             <li><a href="#features">Features</a></li>
             <li><a href="docs.html">Documentation</a></li>
-            <li><a href="https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli"
+            <li><a href="https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli?utm_source=item-share-cb"
                 target="_blank">Chrome Store</a></li>
           </ul>
         </div>
@@ -385,7 +594,65 @@
     </div>
   </footer>
 
+  <!-- Floating Social Bar -->
+  <div class="floating-social-bar">
+    <div class="proof-item">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>5.0 (2 ratings)</span>
+    </div>
+    <div class="proof-item">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      <span>50+ Active Users</span>
+    </div>
+    <button onclick="document.getElementById('customShareModal').classList.add('active')" class="proof-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+      <span>Share L'Amigo</span>
+    </button>
+  </div>
+
+  <!-- Custom Share Modal -->
+  <div class="custom-share-modal" id="customShareModal" onclick="this.classList.remove('active')">
+    <div class="share-modal-box" onclick="event.stopPropagation()">
+      <div class="share-header">
+        <h3>L'Amigo - LeetCode Friend Tracker & GitHub Sync</h3>
+        <button class="close-share" onclick="document.getElementById('customShareModal').classList.remove('active')">&times;</button>
+      </div>
+      <p class="share-subtitle">Share this item</p>
+      <div class="share-icons">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli" target="_blank" class="share-icon linkedin" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli" target="_blank" class="share-icon facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+        </a>
+        <a href="https://reddit.com/submit?url=https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli&title=L'Amigo" target="_blank" class="share-icon reddit" title="Reddit">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/></svg>
+        </a>
+        <a href="https://twitter.com/intent/tweet?url=https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli&text=Check%20out%20L'Amigo!" target="_blank" class="share-icon x-twitter" title="X (Twitter)">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://api.whatsapp.com/send?text=Check%20out%20L'Amigo%20https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli" target="_blank" class="share-icon whatsapp" title="WhatsApp">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12.01 0C5.386 0 0 5.386 0 12.01c0 2.126.554 4.195 1.603 6.002L.156 24l6.14-1.611A11.944 11.944 0 0 0 12.01 24c6.623 0 12.008-5.385 12.008-12.01C24.018 5.386 18.633 0 12.01 0zm0 22a9.966 9.966 0 0 1-5.1-1.398l-.366-.217-3.791.994.998-3.69-.239-.382A9.957 9.957 0 0 1 2.012 12.01 9.99 9.99 0 0 1 12.01 2c5.514 0 10 4.486 10 10.01s-4.486 10.01-10 10.01zm5.5-7.1c-.302-.15-1.782-.878-2.057-.978-.276-.1-.478-.15-.678.15-.201.3-.778.978-.953 1.178-.176.2-.351.225-.653.075-2.01-.986-3.415-2.22-4.116-3.428-.175-.3-.018-.462.133-.611.135-.133.301-.351.452-.526.151-.176.201-.3.301-.5.101-.201.05-.376-.025-.526-.075-.15-.678-1.636-.928-2.241-.242-.591-.489-.511-.678-.521h-.578c-.201 0-.527.075-.803.376-.276.301-1.053 1.028-1.053 2.508 0 1.48 1.078 2.91 1.229 3.111.15.201 2.122 3.238 5.14 4.538 2.046.88 2.825.952 3.824.8 1.13-.172 2.628-1.074 2.997-2.112.37-.103.37-.192.259-.211z"/></svg>
+        </a>
+      </div>
+      <div class="share-copy">
+        <input type="text" id="shareUrl" value="https://chromewebstore.google.com/detail/pakknkopmiakipmbjmfejcejehmgieli?utm_source=item-share-cb" readonly>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('shareUrl').value); this.innerHTML='Copied!'; setTimeout(()=>this.innerHTML='Copy <svg width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><rect x=\'9\' y=\'9\' width=\'13\' height=\'13\' rx=\'2\' ry=\'2\'></rect><path d=\'M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\'></path></svg>', 2000)" class="copy-btn">
+          Copy 
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 </body>
 
 </html>

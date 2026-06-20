@@ -8,6 +8,7 @@ export interface ProblemRecommendation {
   reason: string;
   solvedByFriends: string[];
   platform?: string;
+  rating?: number; // CF problem rating
 }
 
 export class RecommendationService {
@@ -48,7 +49,7 @@ export class RecommendationService {
     // Sort problems by number of friends who solved them
     const sortedProblems = Array.from(friendProblems.values())
       .sort((a, b) => b.friends.length - a.friends.length)
-      .slice(0, 10);
+      .slice(0, 100);
 
     const results = await Promise.all(
       sortedProblems.map(async ({ sub, friends }) => {
@@ -89,7 +90,8 @@ export class RecommendationService {
           difficulty,
           reason,
           solvedByFriends: friends,
-          platform
+          platform,
+          rating: sub.rating,
         } as ProblemRecommendation;
       }),
     );

@@ -13,6 +13,7 @@
 </head>
 
 <body class="docs-body">
+  <div id="scroll-progress"></div>
   <!-- Navigation (Same as Home) -->
   <nav class="nav">
     <div class="container nav-container">
@@ -54,6 +55,12 @@
         <li class="mobile-only"><a href="terms.html">Terms of Service</a></li>
         <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
 
+        <li class="desktop-only">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+        </li>
+
         <li class="mobile-only nav-divider"></li>
         <li class="mobile-only">
           <a href="https://github.com/FTS18/l-amigo" target="_blank" class="btn-cta">
@@ -76,7 +83,7 @@
         <p style="text-align: center; margin-bottom: 40px; color: var(--text-muted);">Last Updated: February 8, 2026</p>
 
         <p>Hey there! 👋</p>
-        <p>I built L'Amigo because I wanted a cool way to track my friends on LeetCode. Since I'm just a developer like
+        <p>I built L'Amigo because I wanted a cool way to track my friends on coding platforms. Since I'm just a developer like
           you and not a big scary corporation, I like to keep things simple and transparent.</p>
 
         <h2>The "No-BS" Summary</h2>
@@ -94,7 +101,7 @@
         <ul>
           <li><strong>Storage:</strong> To save your friend list and settings so you don't have to re-enter them every
             time.</li>
-          <li><strong>LeetCode.com:</strong> To fetch those sweet, sweet stats.</li>
+          <li><strong>Coding Platforms:</strong> To fetch those sweet, sweet stats from LeetCode, Codeforces, etc.</li>
           <li><strong>GitHub API:</strong> To push your solutions (but only if you explicitly enable Sync and provide a
             token).</li>
         </ul>
@@ -105,7 +112,7 @@
           sends it directly to GitHub's API to authenticate your uploads. That's it.</p>
 
         <h2>Third Parties</h2>
-        <p>The only "third parties" involved are LeetCode (where we get data from) and GitHub (where we send data to).
+        <p>The only "third parties" involved are coding platforms like LeetCode and Codeforces (where we get data from) and GitHub (where we send data to).
           You're already subject to their policies when you use their sites.</p>
 
         <h2>Changes</h2>
@@ -127,7 +134,7 @@
         <div class="footer-brand">
           <a href="#" class="footer-logo">L'AMIGO</a>
           <p style="color: #666; font-size: 13px; max-width: 300px;">
-            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
+            Open source extension to connect friends, compare stats, and stay motivated on LeetCode & Codeforces.
           </p>
           <div class="social-links">
             <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
@@ -196,6 +203,11 @@
     </div>
   </footer>
 
+  <button id="backToTop" class="back-to-top" aria-label="Back to Top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
   <script src="script.js"></script>
 </body>
 

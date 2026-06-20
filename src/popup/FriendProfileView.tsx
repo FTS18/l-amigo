@@ -861,7 +861,6 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                     return (
                       <div key={idx} className={`submission-feed-row compact ${diffClass}`}>
                         <div className="sub-left">
-                          <span className="sub-diff-dot" />
                           <span className={`sub-platform-badge ${sub.platform}`}>
                             {sub.platform === 'leetcode' ? 'LC' : sub.platform === 'codechef' ? 'CC' : 'CF'}
                           </span>
@@ -869,14 +868,24 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                             {sub.title} {sub.statusDisplay !== 'Accepted' ? <span title="Rejected" style={{ display: 'inline-flex', verticalAlign: 'text-bottom', marginLeft: '4px' }}><X size={12} color="#ff4444" /></span> : null}
                           </span>
                         </div>
-                        <div className="sub-right">
+                        <div className="sub-right" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          {sub.platform === 'leetcode' && sub.difficulty && (
+                            <span className={`sub-diff-badge ${sub.difficulty.toLowerCase()}`}>
+                              {sub.difficulty}
+                            </span>
+                          )}
+                          {sub.platform === 'codeforces' && sub.rating && (
+                            <span className={`sub-diff-badge ${diffClass}`}>
+                              {sub.rating}
+                            </span>
+                          )}
                           <div className="sub-action-links">
                             <a href={questionUrl} target="_blank" rel="noopener noreferrer" className="sub-action-btn" title="Open Question">Q</a>
                             {answerUrl && (
                               <a href={answerUrl} target="_blank" rel="noopener noreferrer" className="sub-action-btn" title="View Submission">A</a>
                             )}
                           </div>
-                          <span className="sub-time-text">{formatTimestamp(sub.timestamp)}</span>
+                          <span className="sub-time-text" style={{ minWidth: '45px', textAlign: 'right' }}>{formatTimestamp(sub.timestamp)}</span>
                         </div>
                       </div>
                     );

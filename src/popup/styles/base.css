@@ -65,7 +65,8 @@ a[style*="display:flex"]:hover {
 .compare-tab::-webkit-scrollbar,
 .sync-tab::-webkit-scrollbar,
 .friends-container::-webkit-scrollbar,
-.settings-tab::-webkit-scrollbar {
+.settings-tab::-webkit-scrollbar,
+.recommendations-list::-webkit-scrollbar {
   width: 6px;
 }
 
@@ -73,21 +74,25 @@ a[style*="display:flex"]:hover {
 .content-area::-webkit-scrollbar-track,
 .compare-tab::-webkit-scrollbar-track,
 .sync-tab::-webkit-scrollbar-track,
-.friends-container::-webkit-scrollbar-track {
+.friends-container::-webkit-scrollbar-track,
+.recommendations-list::-webkit-scrollbar-track {
   background: transparent;
 }
 
 .app::-webkit-scrollbar-thumb,
 .compare-tab::-webkit-scrollbar-thumb,
 .sync-tab::-webkit-scrollbar-thumb,
-.friends-container::-webkit-scrollbar-thumb {
+.friends-container::-webkit-scrollbar-thumb,
+.recommendations-list::-webkit-scrollbar-thumb {
   background: var(--border-strong);
+  border-radius: 0;
 }
 
 .app::-webkit-scrollbar-thumb:hover,
 .compare-tab::-webkit-scrollbar-thumb:hover,
 .sync-tab::-webkit-scrollbar-thumb:hover,
-.friends-container::-webkit-scrollbar-thumb:hover {
+.friends-container::-webkit-scrollbar-thumb:hover,
+.recommendations-list::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
@@ -299,6 +304,41 @@ a[style*="display:flex"]:hover {
 .error-content { text-align: center; max-width: 350px; }
 .error-content h2 { font-size: 24px; margin: 0 0 12px; color: var(--color-hard); }
 .error-content p  { font-size: 14px; color: var(--text-secondary); margin: 0 0 16px; }
+
+/* ─── Micro-UX Additions ─────────────────────────────────────────── */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  border-radius: 0;
+}
+
+.brutalist-btn {
+  transition: transform 0.1s, box-shadow 0.1s !important;
+}
+.brutalist-btn:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--border-strong);
+}
+.brutalist-btn:active:not(:disabled) {
+  transform: translate(0, 0);
+  box-shadow: 0 0 0 transparent;
+}
 .error-content details {
   margin: 16px 0; padding: 12px;
   background: var(--bg-secondary); text-align: left;

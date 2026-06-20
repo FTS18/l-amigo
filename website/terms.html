@@ -13,6 +13,7 @@
 </head>
 
 <body class="docs-body">
+  <div id="scroll-progress"></div>
   <!-- Navigation (Same as Home) -->
   <nav class="nav">
     <div class="container nav-container">
@@ -54,6 +55,12 @@
         <li class="mobile-only"><a href="terms.html" style="color: var(--white);">Terms of Service</a></li>
         <li class="mobile-only"><a href="https://ananay.netlify.app" target="_blank">Portfolio - Ananay</a></li>
 
+        <li class="desktop-only">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+        </li>
+
         <li class="mobile-only nav-divider"></li>
         <li class="mobile-only">
           <a href="https://github.com/FTS18/l-amigo" target="_blank" class="btn-cta">
@@ -85,8 +92,8 @@
           try to fix it, but I can't promise anything.</p>
 
         <h2>2. Use Responsibly</h2>
-        <p>This extension hits LeetCode's public API. Please don't use it to spam requests or do anything sketchy. If
-          you get rate-limited by LeetCode, that's on you (though the extension tries its best to prevent this with
+        <p>This extension hits public APIs of platforms like LeetCode and Codeforces. Please don't use it to spam requests or do anything sketchy. If
+          you get rate-limited by a platform, that's on you (though the extension tries its best to prevent this with
           caching).</p>
 
         <h2>3. Your GitHub Token</h2>
@@ -95,7 +102,7 @@
           safe.</p>
 
         <h2>4. Disclaimer</h2>
-        <p>I am not affiliated with LeetCode or GitHub. This is a third-party tool made by a fan of both platforms. Use
+        <p>I am not affiliated with LeetCode, Codeforces, or GitHub. This is a third-party tool made by a fan of these platforms. Use
           it at your own risk.</p>
 
         <h2>5. Don't Be Evil</h2>
@@ -113,7 +120,7 @@
         <div class="footer-brand">
           <a href="#" class="footer-logo">L'AMIGO</a>
           <p style="color: #666; font-size: 13px; max-width: 300px;">
-            Open source extension to track friends, compare stats, and stay motivated on LeetCode.
+            Open source extension to connect friends, compare stats, and stay motivated on LeetCode & Codeforces.
           </p>
           <div class="social-links">
             <a href="https://github.com/FTS18/l-amigo" target="_blank" aria-label="GitHub">
@@ -182,6 +189,11 @@
     </div>
   </footer>
 
+  <button id="backToTop" class="back-to-top" aria-label="Back to Top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
   <script src="script.js"></script>
 </body>
 
