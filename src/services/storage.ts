@@ -27,7 +27,36 @@ type UpdateIdentityInput = {
 
 export class StorageService {
   private static async ensureMigration(): Promise<void> {
-    // Migration is fully deprecated and pruned.
+    const res = await chrome.storage.local.get(["friends", IDENTITIES_KEY]);
+    
+    // If legacy friends exist but the new identities array has not been created yet
+    if (res.friends && Array.isArray(res.friends) && res.friends.length > 0 && !res[IDENTITIES_KEY]) {
+      const identities: FriendIdentity[] = res.friends.map((f: any) => {
+        const username = f.username || f.displayName || String(f);
+        let normalized = username;
+        try {
+            normalized = this.normalizeHandle("leetcode", username);
+        } catch {
+            normalized = username;
+        }
+
+        return {
+          id: this.makeId(),
+          displayName: username,
+          aliases: [],
+          accounts: [{
+            platform: "leetcode",
+            handle: normalized,
+            status: "active",
+            lastFetched: Date.now()
+          }],
+          addedAt: f.addedAt || Date.now(),
+          updatedAt: Date.now()
+        };
+      });
+      
+      await chrome.storage.local.set({ [IDENTITIES_KEY]: identities });
+    }
   }
 
   private static normalizeAlias(alias: string): string {

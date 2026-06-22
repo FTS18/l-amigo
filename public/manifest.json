@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "L'Amigo - LeetCode & Codeforces Friend Tracker & GitHub Sync",
   "short_name": "L'Amigo",
-  "version": "1.6.0",
-  "description": "Track friends across LeetCode, Codeforces, and CodeChef. Features problem recommendations, global activity feeds, head-to-head comparisons, and automated GitHub sync.",
+  "version": "1.6.1",
+  "description": "Track friends across LeetCode & Codeforces. Compare stats, get recommendations, view activity, and sync with GitHub.",
   "permissions": [
     "storage",
     "unlimitedStorage",
