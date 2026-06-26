@@ -24,10 +24,12 @@ class LeetCodeMonitor {
   private async init() {
     if (!window.location.pathname.includes("/problems/")) return;
 
-    console.log(
-      "[L'Amigo] Monitoring submissions on",
-      window.location.pathname,
-    );
+    if (__DEV__) {
+      console.log(
+        "[L'Amigo] Monitoring submissions on",
+        window.location.pathname,
+      );
+    }
     try {
       await this.waitForElement(
         LeetCodeMonitor.SELECTORS.submitButton,
@@ -79,7 +81,9 @@ class LeetCodeMonitor {
         }
       }
     } catch (err) {
-      console.error("[L'Amigo] Failed to check submission page:", err);
+      if (__DEV__) {
+        console.error("[L'Amigo] Failed to check submission page:", err);
+      }
     }
   }
 
@@ -137,7 +141,9 @@ class LeetCodeMonitor {
         fill.title = `L'Amigo: ${response.count}/${response.goal} solved today`;
       }
     } catch (err) {
-      console.error("[L'Amigo] Failed to inject progress bar:", err);
+      if (__DEV__) {
+        console.error("[L'Amigo] Failed to inject progress bar:", err);
+      }
     }
   }
 
@@ -186,7 +192,9 @@ class LeetCodeMonitor {
 
       titleEl.parentElement?.appendChild(badge);
     } catch (err) {
-      console.error("[L'Amigo] Failed to inject solved badge:", err);
+      if (__DEV__) {
+        console.error("[L'Amigo] Failed to inject solved badge:", err);
+      }
     }
   }
 
@@ -213,7 +221,9 @@ class LeetCodeMonitor {
     const runtimeBeats = document.querySelector(LeetCodeMonitor.SELECTORS.runtimeBeats)?.textContent?.trim();
     const memoryBeats = document.querySelector(LeetCodeMonitor.SELECTORS.memoryBeats)?.textContent?.trim();
 
-    console.log("[L'Amigo] Accepted!", title, { runtimeBeats, memoryBeats });
+    if (__DEV__) {
+      console.log("[L'Amigo] Accepted!", title, { runtimeBeats, memoryBeats });
+    }
 
     chrome.runtime.sendMessage({
         type: "newSubmissionDetected",
@@ -254,7 +264,9 @@ class LeetCodeMonitor {
       
       resultEl.parentElement?.appendChild(badge);
     } catch (err) {
-      console.error("[L'Amigo] Sync badge error:", err);
+      if (__DEV__) {
+        console.error("[L'Amigo] Sync badge error:", err);
+      }
     }
   }
 

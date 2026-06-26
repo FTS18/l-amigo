@@ -1,0 +1,219 @@
+[
+  {
+    "title": "2A - Winner",
+    "titleSlug": "2A",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "10B - Cinema Cashier",
+    "titleSlug": "10B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "17B - Hierarchy",
+    "titleSlug": "17B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "18A - Triangle",
+    "titleSlug": "18A",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "22B - Bargaining Table",
+    "titleSlug": "22B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "24B - F1 Champions",
+    "titleSlug": "24B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "29B - Traffic Lights",
+    "titleSlug": "29B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "31B - Sysadmin Bob",
+    "titleSlug": "31B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "35C - Fire Again",
+    "titleSlug": "35C",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39J - Spelling Check",
+    "titleSlug": "39J",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44B - Cola",
+    "titleSlug": "44B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "48D - Permutations",
+    "titleSlug": "48D",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "49B - Sum",
+    "titleSlug": "49B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "50B - Choosing Symbol Pairs",
+    "titleSlug": "50B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "53D - Physical Education",
+    "titleSlug": "53D",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64B - Expression",
+    "titleSlug": "64B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "72I - Goofy Numbers",
+    "titleSlug": "72I",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "74B - Train",
+    "titleSlug": "74B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "75B - Facetook Priority Wall",
+    "titleSlug": "75B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "87A - Trains",
+    "titleSlug": "87A",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "88B - Keyboard",
+    "titleSlug": "88B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "91B - Queue",
+    "titleSlug": "91B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "91A - Newspaper Headline",
+    "titleSlug": "91A",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "100I - Rotation",
+    "titleSlug": "100I",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "100D - World of Mouth",
+    "titleSlug": "100D",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "100B - Friendly Numbers",
+    "titleSlug": "100B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "103B - Cthulhu",
+    "titleSlug": "103B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "114B - PFAST Inc.",
+    "titleSlug": "114B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "115B - Lawnmower",
+    "titleSlug": "115B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "121B - Lucky Transformation",
+    "titleSlug": "121B",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "128A - Statues",
+    "titleSlug": "128A",
+    "difficulty": "Medium",
+    "category": "1500 Rating",
+    "platform": "codeforces"
+  }
+]

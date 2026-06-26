@@ -1,0 +1,5084 @@
+[
+  {
+    "title": "Array Search",
+    "titleSlug": "search-an-element-in-an-array-1587115621",
+    "difficulty": "Basic",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check Equal Arrays",
+    "titleSlug": "check-if-two-arrays-are-equal-or-not3847",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Missing element of AP",
+    "titleSlug": "missing-element-of-ap2228",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rotate Array by One",
+    "titleSlug": "cyclically-rotate-an-array-by-one2614",
+    "difficulty": "Basic",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Min and Max in Array",
+    "titleSlug": "find-minimum-and-maximum-element-in-an-array4428",
+    "difficulty": "Basic",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Array Sorting",
+    "titleSlug": "binary-array-sorting-1587115620",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Move all negative elements to end",
+    "titleSlug": "move-all-negative-elements-to-end1813",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Missing number",
+    "titleSlug": "missing-number4257",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Search a 2D Matrix",
+    "titleSlug": "search-a-2d-matrix",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the fine",
+    "titleSlug": "find-the-fine4353",
+    "difficulty": "Basic",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Greatest on right side",
+    "titleSlug": "greater-on-right-side4305",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove Duplicates Sorted Array",
+    "titleSlug": "remove-duplicate-elements-from-sorted-array",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Indexes of Subarray Sum",
+    "titleSlug": "subarray-with-given-sum-1587115621",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort 0s, 1s and 2s",
+    "titleSlug": "sort-an-array-of-0s-1s-and-2s4231",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Equilibrium Point",
+    "titleSlug": "equilibrium-point-1587115620",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Peak element",
+    "titleSlug": "peak-element",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find Transition Point",
+    "titleSlug": "find-transition-point-1587115620",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Alternate Positive Negative",
+    "titleSlug": "array-of-alternate-ve-and-ve-nos1401",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Union of 2 Sorted Arrays",
+    "titleSlug": "union-of-two-sorted-arrays-1587115621",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Three way partitioning",
+    "titleSlug": "three-way-partitioning",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Frogs and Jumps",
+    "titleSlug": "frogs-and-jumps--170647",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Min Subsets with Consecutive Numbers",
+    "titleSlug": "min-subsets-with-consecutive-numbers0601",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Missing And Repeating",
+    "titleSlug": "find-missing-and-repeating2512",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rearrange Array Alternately",
+    "titleSlug": "-rearrange-array-alternately-1587115620",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pythagorean Triplet",
+    "titleSlug": "pythagorean-triplet3018",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rearrange an array with O(1) extra space",
+    "titleSlug": "rearrange-an-array-with-o1-extra-space3142",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Triplets with Smaller Sum",
+    "titleSlug": "count-triplets-with-sum-smaller-than-x5549",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Boolean Matrix",
+    "titleSlug": "boolean-matrix-problem-1587115620",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Row with Max 1s in Rowwise Sorted",
+    "titleSlug": "row-with-max-1s0023",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Container With Most Water",
+    "titleSlug": "container-with-most-water0535",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Triplet product",
+    "titleSlug": "maximum-triplet-product--170647",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Sum Submatrix of Size K x K",
+    "titleSlug": "coins-of-geekland--141631",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Next Permutation",
+    "titleSlug": "next-permutation",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rotate Image",
+    "titleSlug": "rotate-image",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Primes",
+    "titleSlug": "count-primes",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Watering Plants",
+    "titleSlug": "watering-plants",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Arithmetic Subarrays",
+    "titleSlug": "arithmetic-subarrays",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Majority Element",
+    "titleSlug": "majority-element",
+    "difficulty": "Easy",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Circular Subarray Sum",
+    "titleSlug": "max-circular-subarray-sum-1587115620",
+    "difficulty": "Hard",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Subarrays Product Less than K",
+    "titleSlug": "count-the-subarrays-having-product-less-than-k1708",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Subset XOR",
+    "titleSlug": "maximum-subset-xor",
+    "difficulty": "Hard",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Next Smallest Palindrome",
+    "titleSlug": "next-smallest-palindrome4740",
+    "difficulty": "Hard",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Subarrays with Sum in Range",
+    "titleSlug": "count-the-number-of-subarrays",
+    "difficulty": "Hard",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest rectangle of 1s with swapping of columns allowed",
+    "titleSlug": "find-the-largest-rectangle-of-1s-with-swapping-of-columns-allowed0243",
+    "difficulty": "Hard",
+    "category": "Array",
+    "platform": "gfg"
+  },
+  {
+    "title": "N/3 Repeat Number",
+    "titleSlug": "n3-repeat-number",
+    "difficulty": "Medium",
+    "category": "Array",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse a String",
+    "titleSlug": "reverse-a-string",
+    "difficulty": "Basic",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Strings Rotations of Each Other",
+    "titleSlug": "check-if-strings-are-rotations-of-each-other-or-not-1587115620",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Most Frequent Character",
+    "titleSlug": "maximum-occuring-character-1587115620",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Substrings with Corners as 1",
+    "titleSlug": "binary-string-1587115620",
+    "difficulty": "Basic",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Make Anagram with Removals",
+    "titleSlug": "anagram-of-string",
+    "difficulty": "Basic",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Alternate Merge two strings",
+    "titleSlug": "merge-two-strings2736",
+    "difficulty": "Basic",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse Words",
+    "titleSlug": "reverse-words-in-a-given-string5459",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Palindrome String",
+    "titleSlug": "palindrome-string0817",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Common Prefix of Strings",
+    "titleSlug": "longest-common-prefix-in-an-array5129",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Roman to Integer",
+    "titleSlug": "roman-number-to-integer3201",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Length of Last Word",
+    "titleSlug": "length-of-last-word",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest substring with distinct characters",
+    "titleSlug": "longest-distinct-characters-in-string5848",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "String Duplicates Removal",
+    "titleSlug": "remove-all-duplicates-from-a-given-string4321",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Min Number of Flips",
+    "titleSlug": "min-number-of-flips3210",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Meta Strings",
+    "titleSlug": "meta-strings5713",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest window containing 0, 1 and 2",
+    "titleSlug": "smallest-window-containing-0-1-and-2--170637",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Generate Grey Code Sequences",
+    "titleSlug": "generate-grey-code-sequences",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of two large numbers",
+    "titleSlug": "sum-of-numbers-or-number1219",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Length of the longest substring",
+    "titleSlug": "length-of-the-longest-substring3036",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Prefix Suffix",
+    "titleSlug": "longest-prefix-suffix2527",
+    "difficulty": "Hard",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest distinct window",
+    "titleSlug": "smallest-distant-window3132",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Case-specific Sorting of Strings",
+    "titleSlug": "case-specific-sorting-of-strings4845",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Excel Column Name from Number",
+    "titleSlug": "excel-sheet5448",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Transform String",
+    "titleSlug": "transform-string5648",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove and Reverse",
+    "titleSlug": "remove-and-reverse--170634",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "String formation from substring",
+    "titleSlug": "string-formation-from-substring2734",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Days",
+    "titleSlug": "minimum-days--170646",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove Consecutive Characters",
+    "titleSlug": "remove-consecutive-characters",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Bulls and Cows",
+    "titleSlug": "bulls-and-cows",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Atoi",
+    "titleSlug": "atoi",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Ip Addresses",
+    "titleSlug": "valid-ip-addresses",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Integer To Roman",
+    "titleSlug": "integer-to-roman",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Min Chars to Add for Palindrome",
+    "titleSlug": "minimum-characters-to-be-added-at-front-to-make-string-palindrome",
+    "difficulty": "Hard",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Wildcard string matching",
+    "titleSlug": "wildcard-string-matching1126",
+    "difficulty": "Hard",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "titleSlug": "longest-palindromic-substring-in-linear-time",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Numbers with one absolute difference",
+    "titleSlug": "numbers-with-one-absolute-difference2416",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stringoholics",
+    "titleSlug": "stringoholics",
+    "difficulty": "Hard",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Power of 2",
+    "titleSlug": "power-of-2",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Justified Text",
+    "titleSlug": "justified-text",
+    "difficulty": "Hard",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Search",
+    "titleSlug": "who-will-win-1587115621",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Last index of One",
+    "titleSlug": "last-index-of-15847",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count the Zeros",
+    "titleSlug": "count-the-zeros2550",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Elements in the Range",
+    "titleSlug": "elements-in-the-range2834",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Bubble Sort",
+    "titleSlug": "bubble-sort",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Insertion Sort",
+    "titleSlug": "insertion-sort",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "First and Last in Sorted",
+    "titleSlug": "first-and-last-occurrences-of-x2041",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count zeros in a sorted matrix",
+    "titleSlug": "count-zeros-in-a-sorted-matrix",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Array Subset",
+    "titleSlug": "array-subset-of-another-array2317",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Selection Sort",
+    "titleSlug": "selection-sort",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Floor in a Sorted Array",
+    "titleSlug": "floor-in-a-sorted-array-1587115620",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Radix Sort",
+    "titleSlug": "radix-sort",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Search in a Row-Column Sorted",
+    "titleSlug": "search-in-a-matrix17201720",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Bitonic Point",
+    "titleSlug": "maximum-value-in-a-bitonic-array3001",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Two Repeated Elements",
+    "titleSlug": "two-repeated-elements-1587115621",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "More than n/k Occurrences",
+    "titleSlug": "count-element-occurences",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number and the Digit Sum",
+    "titleSlug": "number-and-the-digit-sum4021",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find triplets with zero sum",
+    "titleSlug": "find-triplets-with-zero-sum",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort Array",
+    "titleSlug": "sort-the-array0055",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort in specific order",
+    "titleSlug": "sort-in-specific-order2422",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort a String",
+    "titleSlug": "sort-a-string2943",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Triplet Family",
+    "titleSlug": "triplet-family",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge and Sort",
+    "titleSlug": "merge-and-sort5821",
+    "difficulty": "Basic",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge two Unsorted Arrays",
+    "titleSlug": "merging-two-unsorted-arrays-in-sorted-order1020",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rope Cutting",
+    "titleSlug": "rope-cutting3334",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Make array elements unique",
+    "titleSlug": "make-array-elements-unique--170645",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kth Smallest",
+    "titleSlug": "kth-smallest-element5635",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest Positive Missing",
+    "titleSlug": "smallest-positive-missing-number-1587115621",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort according to an Array",
+    "titleSlug": "relative-sorting4323",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Square Root",
+    "titleSlug": "square-root",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Search in a sorted Matrix",
+    "titleSlug": "search-in-a-matrix-1587115621",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest number with at least n trailing zeroes in factorial",
+    "titleSlug": "smallest-factorial-number5929",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge Sort",
+    "titleSlug": "merge-sort",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Quick Sort",
+    "titleSlug": "quick-sort",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Inversions",
+    "titleSlug": "inversion-of-array-1587115620",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "4 Sum - All Quadruples",
+    "titleSlug": "find-all-four-sum-numbers1732",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Swaps to Sort",
+    "titleSlug": "minimum-swaps",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number of pairs",
+    "titleSlug": "number-of-pairs3422",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort an Array",
+    "titleSlug": "sort-an-array",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort Elements by Decreasing Frequency",
+    "titleSlug": "sorting-elements-of-an-array-by-frequency-1587115621",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Overlapping Intervals",
+    "titleSlug": "overlapping-intervals--170633",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find minimum number of Laptops required",
+    "titleSlug": "find-minimum-number-of-laptops-required--170645",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Common Prefix of Strings",
+    "titleSlug": "lcp--170637",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reach a Number",
+    "titleSlug": "reach-a-number",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Heaters",
+    "titleSlug": "heaters",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Friends Of Appropriate Ages",
+    "titleSlug": "friends-of-appropriate-ages",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Koko Eating Bananas",
+    "titleSlug": "koko-eating-bananas",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "3Sum",
+    "titleSlug": "3sum",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "3Sum Closest",
+    "titleSlug": "3sum-closest",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Nth Digit",
+    "titleSlug": "nth-digit",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort a 2D vector diagonally",
+    "titleSlug": "diagonal-morning-assembly0028",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Intersecting Lines",
+    "titleSlug": "maximum-intersecting-lines--170647",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge Without Extra Space",
+    "titleSlug": "merge-two-sorted-arrays-1587115620",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Median of the Subarrays",
+    "titleSlug": "median-of-the-subarrays--170647",
+    "difficulty": "Hard",
+    "category": "Searching and Sorting",
+    "platform": "gfg"
+  },
+  {
+    "title": "Median of Array",
+    "titleSlug": "median-of-array",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Implement Power Function",
+    "titleSlug": "implement-power-function",
+    "difficulty": "Easy",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "WoodCutting Made Easy!",
+    "titleSlug": "woodcutting-made-easy",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Matrix Median",
+    "titleSlug": "matrix-median",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Allocate Books",
+    "titleSlug": "allocate-books",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Painter's Partition Problem",
+    "titleSlug": "painters-partition-problem",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Red Zone",
+    "titleSlug": "red-zone",
+    "difficulty": "Hard",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max Sum of Rectangle No Larger Than K",
+    "titleSlug": "max-sum-of-rectangle-no-larger-than-k",
+    "difficulty": "Hard",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Smallest Good Base",
+    "titleSlug": "smallest-good-base",
+    "difficulty": "Hard",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "House Robber IV",
+    "titleSlug": "house-robber-iv",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Gap",
+    "titleSlug": "maximum-gap",
+    "difficulty": "Medium",
+    "category": "Searching and Sorting",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Print Linked List",
+    "titleSlug": "print-linked-list-elements",
+    "difficulty": "Basic",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Linked List End Insertion",
+    "titleSlug": "linked-list-insertion-1587115620",
+    "difficulty": "Basic",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Length of Linked List",
+    "titleSlug": "count-nodes-of-linked-list",
+    "difficulty": "Basic",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check If Circular Linked List",
+    "titleSlug": "circular-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Identical Linked Lists",
+    "titleSlug": "identical-linked-lists",
+    "difficulty": "Basic",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Insert in a Sorted List",
+    "titleSlug": "insert-in-a-sorted-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Insert at Middle of Linked List",
+    "titleSlug": "insert-in-middle-of-linked-list",
+    "difficulty": "Basic",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete in a Doubly Linked List",
+    "titleSlug": "delete-node-in-doubly-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse a Doubly Linked List",
+    "titleSlug": "reverse-a-doubly-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete Alternate Nodes",
+    "titleSlug": "delete-alternate-nodes",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of Last n Nodes of a Linked List",
+    "titleSlug": "find-the-sum-of-last-n-nodes-of-the-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find n/k th in Linked list",
+    "titleSlug": "find-nk-th-node-in-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Detect Loop in linked list",
+    "titleSlug": "detect-loop-in-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Move Last to Front of a Linked List",
+    "titleSlug": "move-last-element-to-front-of-a-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kth from End of Linked List",
+    "titleSlug": "nth-node-from-end-of-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Middle of a Linked List",
+    "titleSlug": "finding-middle-element-in-a-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse a linked list",
+    "titleSlug": "reverse-a-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove Duplicates from a Sorted Linked List",
+    "titleSlug": "remove-duplicate-element-from-sorted-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete without head pointer",
+    "titleSlug": "delete-without-head-pointer",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove duplicates from a linked list",
+    "titleSlug": "remove-duplicates-from-an-unsorted-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete in a Singly Linked List",
+    "titleSlug": "delete-a-node-in-single-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort a linked list of 0s, 1s and 2s",
+    "titleSlug": "given-a-linked-list-of-0s-1s-and-2s-sort-it",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find length of Loop",
+    "titleSlug": "find-length-of-loop",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Intersection Sorted Linked Lists",
+    "titleSlug": "intersection-of-two-sorted-linked-lists",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pairwise swap elements of a linked list",
+    "titleSlug": "pairwise-swap-elements-of-a-linked-list-by-swapping-data",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Insert in Sorted Circular Linked List",
+    "titleSlug": "sorted-insert-for-circular-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pair Sum Count in Two Linked Lists",
+    "titleSlug": "count-pairs-whose-sum-is-equal-to-x",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Intersection of Two Linked Lists",
+    "titleSlug": "intersection-of-two-linked-list",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Split a Linked List into two halves",
+    "titleSlug": "split-a-circular-linked-list-into-two-halves",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Union of Two Linked Lists",
+    "titleSlug": "union-of-two-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Linked List Representation of a Matrix",
+    "titleSlug": "linked-list-matrix",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "XOR Linked List",
+    "titleSlug": "xor-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove loop in Linked List",
+    "titleSlug": "remove-loop-in-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Intersection in Y Shaped Lists",
+    "titleSlug": "intersection-point-in-y-shapped-linked-lists",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Palindrome Linked List",
+    "titleSlug": "check-if-linked-list-is-pallindrome",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rotate a Linked List",
+    "titleSlug": "rotate-a-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge two sorted linked lists",
+    "titleSlug": "merge-two-sorted-linked-lists",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete Nodes with Greater on Right",
+    "titleSlug": "delete-nodes-having-greater-value-on-right",
+    "difficulty": "Easy",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge Sort for Linked List",
+    "titleSlug": "sort-a-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rearrange a linked list",
+    "titleSlug": "rearrange-a-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Prime List",
+    "titleSlug": "prime-list--170646",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Palindrome in Linked List",
+    "titleSlug": "length-of-longest-palindrome-in-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse alternate in Link List",
+    "titleSlug": "given-a-linked-list-reverse-alternate-nodes-and-append-at-the-end",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge Sort on Doubly Linked List",
+    "titleSlug": "merge-sort-on-doubly-linked-list",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Quick Sort on Linked List",
+    "titleSlug": "quick-sort-on-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "QuickSort on Doubly Linked List",
+    "titleSlug": "quicksort-on-doubly-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove All  Duplicates in a Linked List",
+    "titleSlug": "remove-all-occurences-of-duplicates-in-a-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort Singly Linked List",
+    "titleSlug": "insertion-sort-for-singly-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse Alternate K Nodes",
+    "titleSlug": "reverse-alternate-k-nodes",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Linked List Cycle II",
+    "titleSlug": "linked-list-cycle-ii",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "LRU Cache",
+    "titleSlug": "lru-cache",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Flatten a Multilevel Doubly Linked List",
+    "titleSlug": "flatten-a-multilevel-doubly-linked-list",
+    "difficulty": "Medium",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Clone List with Next and Random",
+    "titleSlug": "clone-a-linked-list-with-next-and-random-pointer",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reorder List",
+    "titleSlug": "reorder-list",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse a sublist of a linked list",
+    "titleSlug": "reverse-a-sublist-of-a-linked-list",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "LFU Cache",
+    "titleSlug": "lfu-cache",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse Nodes in k-Group",
+    "titleSlug": "reverse-nodes-in-k-group",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Design Skiplist",
+    "titleSlug": "design-skiplist",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Subtraction in Linked List",
+    "titleSlug": "subtraction-in-linked-list",
+    "difficulty": "Hard",
+    "category": "LinkedList",
+    "platform": "gfg"
+  },
+  {
+    "title": "Next Smaller Element",
+    "titleSlug": "immediate-smaller-element1142",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Implement stack using array",
+    "titleSlug": "implement-stack-using-array",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stack using Linked List",
+    "titleSlug": "implement-stack-using-linked-list",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pairwise Consecutive Elements",
+    "titleSlug": "pairwise-consecutive-elements",
+    "difficulty": "Basic",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Parenthesis Checker",
+    "titleSlug": "parenthesis-checker2744",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sort a stack",
+    "titleSlug": "sort-a-stack",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete Mid of a Stack",
+    "titleSlug": "delete-middle-element-of-a-stack",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Difference",
+    "titleSlug": "maximum-difference-1587115620",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Print Bracket Number",
+    "titleSlug": "print-bracket-number4058",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Score from Subarray Mins",
+    "titleSlug": "max-sum-in-sub-arrays0824",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove Two Consecutive Same",
+    "titleSlug": "string-manipulation3706",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Make the array beautiful",
+    "titleSlug": "make-the-array-beautiful--170647",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Next Greater Element I",
+    "titleSlug": "next-greater-element-i",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Baseball Game",
+    "titleSlug": "baseball-game",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Backspace String Compare",
+    "titleSlug": "backspace-string-compare",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Next Greater Element",
+    "titleSlug": "next-larger-element-1587115620",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Get Min from Stack",
+    "titleSlug": "get-minimum-element-from-stack",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "The Celebrity Problem",
+    "titleSlug": "the-celebrity-problem",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Previous Smaller Element",
+    "titleSlug": "smallest-number-on-left3403",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Opposite Sign Pair Reduction",
+    "titleSlug": "asteroid-collision",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove K Digits",
+    "titleSlug": "remove-k-digits",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Valid Expression",
+    "titleSlug": "valid-expression1025",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Equal sum of 3 Stacks",
+    "titleSlug": "find-maximum-equal-sum-of-three-stacks",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "MAXSPPROD",
+    "titleSlug": "maxspprod",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Decode String",
+    "titleSlug": "decode-string",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Evaluate Expression",
+    "titleSlug": "evaluate-expression",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Redundant Braces",
+    "titleSlug": "redundant-braces",
+    "difficulty": "Easy",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Next Greater Element II",
+    "titleSlug": "next-greater-element-ii",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Clumsy Factorial",
+    "titleSlug": "clumsy-factorial",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Histogram Max Rectangular Area",
+    "titleSlug": "maximum-rectangular-area-in-a-histogram-1587115620",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max of min for every window size",
+    "titleSlug": "maximum-of-minimum-for-every-window-size3453",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "IPL 2021 - Final",
+    "titleSlug": "ipl-2021-final--141634",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Make Prefix Repetition Concise",
+    "titleSlug": "ipl-2021-match-day-6-semi-final--141634",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rain Water Trapped",
+    "titleSlug": "rain-water-trapped",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Simplify Directory Path",
+    "titleSlug": "simplify-directory-path",
+    "difficulty": "Medium",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Basic Calculator",
+    "titleSlug": "basic-calculator",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Create Maximum Number",
+    "titleSlug": "create-maximum-number",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Tag Validator",
+    "titleSlug": "tag-validator",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max Chunks To Make Sorted II",
+    "titleSlug": "max-chunks-to-make-sorted-ii",
+    "difficulty": "Hard",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Queue Push & Pop",
+    "titleSlug": "queue-designer",
+    "difficulty": "Basic",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Queue Reversal",
+    "titleSlug": "queue-reversal",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Queue Using Array",
+    "titleSlug": "implement-queue-using-array",
+    "difficulty": "Basic",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Queue using Linked List",
+    "titleSlug": "implement-queue-using-linked-list",
+    "difficulty": "Basic",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Generate Binary Numbers",
+    "titleSlug": "generate-binary-numbers-1587115620",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stack using Queue",
+    "titleSlug": "stack-using-two-queues",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Queue using two Stacks",
+    "titleSlug": "queue-using-two-stacks",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reverse first K of a Queue",
+    "titleSlug": "reverse-first-k-elements-of-queue",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Deque Implementations",
+    "titleSlug": "deque-implementations",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Next Right Node",
+    "titleSlug": "next-right-node",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "First Unique Character in a String",
+    "titleSlug": "first-unique-character-in-a-string",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Recent Calls",
+    "titleSlug": "number-of-recent-calls",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Time Needed to Buy Tickets",
+    "titleSlug": "time-needed-to-buy-tickets",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Stream First Non-repeating",
+    "titleSlug": "first-non-repeating-character-in-a-stream1216",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Gas Station",
+    "titleSlug": "circular-tour-1587115620",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count the Reversals",
+    "titleSlug": "count-the-reversals0401",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Validate Stack Operations",
+    "titleSlug": "stack-permutations",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Operations on PriorityQueue",
+    "titleSlug": "operations-on-priorityqueue",
+    "difficulty": "Easy",
+    "category": "Queue",
+    "platform": "gfg"
+  },
+  {
+    "title": "Design Circular Deque",
+    "titleSlug": "design-circular-deque",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "First non-repeating character in a stream of characters",
+    "titleSlug": "first-non-repeating-character-in-a-stream-of-characters",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sliding Window Maximum",
+    "titleSlug": "sliding-window-maximum",
+    "difficulty": "Medium",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Stamping The Sequence",
+    "titleSlug": "stamping-the-sequence",
+    "difficulty": "Hard",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Number of K Consecutive Bit Flips",
+    "titleSlug": "minimum-number-of-k-consecutive-bit-flips",
+    "difficulty": "Hard",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Subarrays With Fixed Bounds",
+    "titleSlug": "count-subarrays-with-fixed-bounds",
+    "difficulty": "Hard",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Inorder Traversal",
+    "titleSlug": "inorder-traversal",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Preorder Traversal",
+    "titleSlug": "preorder-traversal",
+    "difficulty": "Basic",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Postorder Traversal",
+    "titleSlug": "postorder-traversal",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Leaves in Binary Tree",
+    "titleSlug": "count-leaves-in-binary-tree",
+    "difficulty": "Basic",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Size of Binary Tree",
+    "titleSlug": "size-of-binary-tree",
+    "difficulty": "Basic",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of Binary Tree",
+    "titleSlug": "sum-of-binary-tree",
+    "difficulty": "Basic",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Non-Leaf Nodes in Tree",
+    "titleSlug": "count-non-leaf-nodes-in-tree",
+    "difficulty": "Basic",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Left View of Binary Tree",
+    "titleSlug": "left-view-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Right View of Binary Tree",
+    "titleSlug": "right-view-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Height of Binary Tree",
+    "titleSlug": "height-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Root to leaf paths sum",
+    "titleSlug": "root-to-leaf-paths-sum",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Balanced Tree Check",
+    "titleSlug": "check-for-balanced-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Identical Trees",
+    "titleSlug": "determine-if-two-trees-are-identical",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Level order traversal",
+    "titleSlug": "level-order-traversal",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "ZigZag Tree Traversal",
+    "titleSlug": "level-order-traversal-in-spiral-form",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Mirror Tree",
+    "titleSlug": "mirror-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Nodes without a Sibling",
+    "titleSlug": "print-all-nodes-that-dont-have-sibling",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Depth Of Binary Tree",
+    "titleSlug": "maximum-depth-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest distance in infinite tree",
+    "titleSlug": "find-the-distance-between-two-nodes4402",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest value in each level",
+    "titleSlug": "largest-value-in-each-level",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Perfect Binary Tree",
+    "titleSlug": "perfect-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Nodes at Odd Levels",
+    "titleSlug": "nodes-at-odd-levels",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove Half Nodes",
+    "titleSlug": "remove-half-nodes",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Parent of Max GCD Siblings in a Binary Tree",
+    "titleSlug": "find-the-node-with-maximum-gcd-of-the-siblings-of-a-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Node Level",
+    "titleSlug": "maximum-node-level",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Deletion in a Binary Tree",
+    "titleSlug": "deletion-in-a-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check if two Nodes are Cousins",
+    "titleSlug": "check-if-two-nodes-are-cousins",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Vertical Order traversal of Binary Tree",
+    "titleSlug": "vertical-order-traversal-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Diagonal Traversal  ",
+    "titleSlug": "diagonal-traversal",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Flatten Binary Tree to Linked List",
+    "titleSlug": "flatten-binary-tree-to-linked-list",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Merge two Binary Tree",
+    "titleSlug": "merge-two-binary-tree",
+    "difficulty": "Easy",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Edge Removal",
+    "titleSlug": "maximum-edge-removal",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Populate Next Right Pointers Tree",
+    "titleSlug": "populate-next-right-pointers-tree",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Burn a Tree",
+    "titleSlug": "burn-a-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Tree Boundary Traversal",
+    "titleSlug": "boundary-traversal-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Diameter of a Binary Tree",
+    "titleSlug": "diameter-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum Tree",
+    "titleSlug": "sum-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Top View of Binary Tree",
+    "titleSlug": "top-view-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Bottom View of Binary Tree",
+    "titleSlug": "bottom-view-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "LCA in  Binary Tree",
+    "titleSlug": "lowest-common-ancestor-in-a-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum difference between node and its ancestor",
+    "titleSlug": "maximum-difference-between-node-and-its-ancestor",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Serialize and deserialize a binary tree",
+    "titleSlug": "serialize-and-deserialize-a-binary-tree",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Non-Adjacent Nodes Sum",
+    "titleSlug": "maximum-sum-of-non-adjacent-nodes",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Foldable Binary Tree",
+    "titleSlug": "foldable-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Construct Binary Tree from Parent Array",
+    "titleSlug": "construct-binary-tree-from-parent-array",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Linked List to Binary Tree",
+    "titleSlug": "make-binary-tree",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check Mirror in N-ary tree",
+    "titleSlug": "check-mirror-in-n-ary-tree1528",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Iterative Inorder",
+    "titleSlug": "inorder-traversal-iterative",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Iterative Postorder",
+    "titleSlug": "postorder-traversal-iterative",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Print Nodes having K leaves",
+    "titleSlug": "print-nodes-having-k-leaves",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Traversing Complete Binary Tree Given as Array",
+    "titleSlug": "print-binary-tree-levels-in-sorted-order3241",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Nodes at given distance in binary tree",
+    "titleSlug": "nodes-at-given-distance-in-binary-tree",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Burning Tree",
+    "titleSlug": "burning-tree",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check if all levels of two trees are anagrams or not",
+    "titleSlug": "check-if-all-levels-of-two-trees-are-anagrams-or-not",
+    "difficulty": "Medium",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Tree  to DLL",
+    "titleSlug": "binary-tree-to-dll",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Path Sum 2 Special Nodes",
+    "titleSlug": "maximum-path-sum",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Scrambled String",
+    "titleSlug": "scrambled-string",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check Tree Traversal",
+    "titleSlug": "check-tree-traversal--141628",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Corona Vaccine",
+    "titleSlug": "corona-vaccine--141631",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Recover a Tree From Preorder Traversal",
+    "titleSlug": "recover-a-tree-from-preorder-traversal",
+    "difficulty": "Hard",
+    "category": "Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search a node in BST",
+    "titleSlug": "search-a-node-in-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum in BST",
+    "titleSlug": "minimum-element-in-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check for BST",
+    "titleSlug": "check-for-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "BST Insert",
+    "titleSlug": "insert-a-node-in-a-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kth largest element in BST",
+    "titleSlug": "kth-largest-element-in-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Inorder Traversal and BST",
+    "titleSlug": "inorder-traversal-and-bst5855",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Tree to BST",
+    "titleSlug": "binary-tree-to-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Median of BST",
+    "titleSlug": "median-of-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kth Smallest Element In Tree",
+    "titleSlug": "kth-smallest-element-in-tree",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "BST Iterator",
+    "titleSlug": "bst-iterator",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "2-Sum Binary Tree",
+    "titleSlug": "2sum-binary-tree",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Common Nodes in Two BSTs",
+    "titleSlug": "print-common-nodes-in-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Array to BST",
+    "titleSlug": "array-to-bst4443",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Inorder Successor in BST",
+    "titleSlug": "inorder-successor-in-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "BST Keys in a Range",
+    "titleSlug": "print-bst-elements-in-given-range",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "BST with Dead End",
+    "titleSlug": "check-whether-bst-contains-dead-end",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find Sum Pairs Across Two BSTs",
+    "titleSlug": "brothers-from-different-root",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of k smallest in BST",
+    "titleSlug": "sum-of-k-smallest-elements-in-bst3029",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Distance Between BST Nodes",
+    "titleSlug": "minimum-distance-between-bst-nodes",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Normal BST to Balanced BST",
+    "titleSlug": "normal-bst-to-balanced-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Construct BST from Postorder",
+    "titleSlug": "construct-bst-from-post-order",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Recover Binary Search Tree",
+    "titleSlug": "recover-binary-search-tree",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid BST from Preorder",
+    "titleSlug": "valid-bst-from-preorder",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "k-th Smallest in BST",
+    "titleSlug": "find-k-th-smallest-element-in-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete a node from BST",
+    "titleSlug": "delete-a-node-from-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest BST",
+    "titleSlug": "largest-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Predecessor and Successor",
+    "titleSlug": "predecessor-and-successor",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Preorder to BST",
+    "titleSlug": "preorder-to-postorder4423",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Closest in BST",
+    "titleSlug": "find-the-closest-element-in-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Ceil in BST",
+    "titleSlug": "implementing-ceil-in-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check for Preorder of a  BST",
+    "titleSlug": "preorder-traversal-and-bst4006",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of nodes within k distance from target",
+    "titleSlug": "bheem-wants-ladoos--170647",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Absolute Difference In BST",
+    "titleSlug": "minimum-absolute-difference-in-bst-1665139652",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of nodes within k distance from target",
+    "titleSlug": "valentine-sum--141631",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pairs violating the BST property",
+    "titleSlug": "pairs-violating-bst-property--212515",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Remove BST keys outside given range",
+    "titleSlug": "remove-bst-keys-outside-given-range",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Print leaf nodes from preorder traversal of BST",
+    "titleSlug": "print-leaf-nodes-from-preorder-traversal-of-bst2657",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete nodes greater than k",
+    "titleSlug": "delete-nodes-greater-than-k",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Balance a Binary Search Tree",
+    "titleSlug": "balance-a-binary-search-tree",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Merge two BST 's",
+    "titleSlug": "merge-two-bst-s",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Fixing Two nodes of a BST",
+    "titleSlug": "fixed-two-nodes-of-a-bst",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Fixing Two nodes of a BST",
+    "titleSlug": "fixing-two-swapped-nodes-of-a-bst--170646",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sorted Linked List to BST",
+    "titleSlug": "sorted-list-to-bst",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest Range In BST",
+    "titleSlug": "shortest-range-in-bst--141631",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Heap Operations",
+    "titleSlug": "operations-on-binary-min-heap",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Height of Heap",
+    "titleSlug": "height-of-heap5025",
+    "difficulty": "Basic",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Relative Ranks",
+    "titleSlug": "relative-ranks",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Last Stone Weight",
+    "titleSlug": "last-stone-weight",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Profit Maximisation",
+    "titleSlug": "profit-maximisation",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Product of Two Elements in an Array",
+    "titleSlug": "maximum-product-of-two-elements-in-an-array",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Number After Digit Swaps by Parity",
+    "titleSlug": "largest-number-after-digit-swaps-by-parity",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Amount of Time to Fill Cups",
+    "titleSlug": "minimum-amount-of-time-to-fill-cups",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Take Gifts From the Richest Pile",
+    "titleSlug": "take-gifts-from-the-richest-pile",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Cost of ropes",
+    "titleSlug": "minimum-cost-of-ropes-1587115620",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum of elements between k1'th and k2'th smallest elements",
+    "titleSlug": "sum-of-elements-between-k1th-and-k2th-smallest-elements3133",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge two binary Max heaps",
+    "titleSlug": "merge-two-binary-max-heap0144",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum distinct after removing K",
+    "titleSlug": "maximum-distinct-elements-after-removing-k-elements5906",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Gadgets of Doraland",
+    "titleSlug": "gadgets-of-doraland--141631",
+    "difficulty": "Easy",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Merge K sorted arrays!",
+    "titleSlug": "merge-k-sorted-arrays",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Magician and Chocolates",
+    "titleSlug": "magician-and-chocolates",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Heap Sort",
+    "titleSlug": "heap-sort",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "k largest elements",
+    "titleSlug": "k-largest-elements4206",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kth Largest in a Stream",
+    "titleSlug": "kth-largest-element-in-a-stream2220",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Is Binary Tree Heap",
+    "titleSlug": "is-binary-tree-heap",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kth smallest element in a Matrix",
+    "titleSlug": "kth-element-in-matrix",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Huffman Encoding",
+    "titleSlug": "huffman-encoding3345",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "K-th Smallest Prime Fraction",
+    "titleSlug": "k-th-smallest-prime-fraction",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Exam Room",
+    "titleSlug": "exam-room",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rearrange To Make Adjacent Different",
+    "titleSlug": "rearrange-characters4649",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "BST to max heap",
+    "titleSlug": "bst-to-max-heap",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Design Twitter",
+    "titleSlug": "design-twitter",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum increment/decrement to make array non-Increasing",
+    "titleSlug": "minimum-incrementdecrement-to-make-array-non-increasing--170637",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find median in a stream",
+    "titleSlug": "find-median-in-a-stream-1587115620",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest range in K lists",
+    "titleSlug": "find-smallest-range-containing-elements-from-k-lists",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "gfg"
+  },
+  {
+    "title": "Reachable Nodes In Subdivided Graph",
+    "titleSlug": "reachable-nodes-in-subdivided-graph",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Ways to form Max Heap",
+    "titleSlug": "ways-to-form-max-heap",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Sum Combinations",
+    "titleSlug": "maximum-sum-combinations",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Dinner Plate Stacks",
+    "titleSlug": "dinner-plate-stacks",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Construct Target Array With Multiple Sums",
+    "titleSlug": "construct-target-array-with-multiple-sums",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Time to Visit a Cell In a Grid",
+    "titleSlug": "minimum-time-to-visit-a-cell-in-a-grid",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Bulbs",
+    "titleSlug": "interview-questions",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Last Coin in a Game of Alternates",
+    "titleSlug": "ishaan-loves-chocolates2156",
+    "difficulty": "Basic",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Assign Mice to Holes",
+    "titleSlug": "assign-mice-to-holes",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Majority Element",
+    "titleSlug": "majority-element",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Highest Product",
+    "titleSlug": "highest-product",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Swap and Maximize",
+    "titleSlug": "swap-and-maximize5859",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Good or Bad string",
+    "titleSlug": "good-or-bad-string1417",
+    "difficulty": "Basic",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Activity Selection",
+    "titleSlug": "n-meetings-in-one-room-1587115620",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Palindrome",
+    "titleSlug": "longest-palindrome",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Assign Cookies",
+    "titleSlug": "assign-cookies",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Can Place Flowers",
+    "titleSlug": "can-place-flowers",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Palindrome II",
+    "titleSlug": "valid-palindrome-ii",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Cost to Move Chips",
+    "titleSlug": "minimum-cost-to-move-chips-to-the-same-position",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Missing Count with Sum Limited to K",
+    "titleSlug": "raju-and-coins1932",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Huffman Decoding",
+    "titleSlug": "huffman-decoding",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Huffman Decoding-1",
+    "titleSlug": "huffman-decoding-1",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest number with given sum",
+    "titleSlug": "largest-number-with-given-sum-1587115620",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Disjoint Intervals",
+    "titleSlug": "disjoint-intervals",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Meeting rooms",
+    "titleSlug": "meeting-rooms",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Jumps",
+    "titleSlug": "minimum-number-of-jumps-1587115620",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Majority Element",
+    "titleSlug": "majority-element-1587115620",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimize the Heights I",
+    "titleSlug": "minimize-the-heights-i",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimize the Heights II",
+    "titleSlug": "minimize-the-heights3351",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Platforms",
+    "titleSlug": "minimum-platforms-1587115620",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Fractional Knapsack",
+    "titleSlug": "fractional-knapsack-1587115620",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Page Faults in LRU",
+    "titleSlug": "page-faults-in-lru5603",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Valid Compressed String",
+    "titleSlug": "valid-compressed-string--170647",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "String rp or pr",
+    "titleSlug": "string-rp-or-pr--170647",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Coin Piles",
+    "titleSlug": "coin-piles5152",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Police and Thieves",
+    "titleSlug": "police-and-thieves--141631",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Events to be Attended",
+    "titleSlug": "maximum-number-of-events-that-can-be-attended--170636",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pair with Close Values and Indexes",
+    "titleSlug": "water-the-plants--141631",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Searchable Count",
+    "titleSlug": "binary-searchable-elements",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Decrease Elements To Make Array Zigzag",
+    "titleSlug": "decrease-elements-to-make-array-zigzag",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Cost to Move Chips to The Same Position",
+    "titleSlug": "minimum-cost-to-move-chips-to-the-same-position",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Permutation",
+    "titleSlug": "largest-permutation",
+    "difficulty": "Easy",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Distribute Candy",
+    "titleSlug": "distribute-candy",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Seats",
+    "titleSlug": "seats",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Gas Station",
+    "titleSlug": "gas-station",
+    "difficulty": "Medium",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Candy",
+    "titleSlug": "candy",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "gfg"
+  },
+  {
+    "title": "Patching Array",
+    "titleSlug": "patching-array",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Strong Password Checker",
+    "titleSlug": "strong-password-checker",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "IPO",
+    "titleSlug": "ipo",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Super Washing Machines",
+    "titleSlug": "super-washing-machines",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Course Schedule III",
+    "titleSlug": "course-schedule-iii",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Stamping The Sequence",
+    "titleSlug": "stamping-the-sequence",
+    "difficulty": "Hard",
+    "category": "Greedy",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find all possible paths from top to bottom",
+    "titleSlug": "find-all-possible-paths-from-top-to-bottom",
+    "difficulty": "Easy",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Combinations",
+    "titleSlug": "combinations",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Tree Paths",
+    "titleSlug": "binary-tree-paths",
+    "difficulty": "Easy",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Gray Code",
+    "titleSlug": "gray-code",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Letter Phone",
+    "titleSlug": "letter-phone",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Generate all Parentheses II",
+    "titleSlug": "generate-all-parentheses-ii",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Permutation with Spaces",
+    "titleSlug": "permutation-with-spaces3627",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Binary Watch",
+    "titleSlug": "binary-watch",
+    "difficulty": "Easy",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Generate IP Addresses",
+    "titleSlug": "generate-ip-addresses",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sudoku",
+    "titleSlug": "sudoku",
+    "difficulty": "Hard",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Permutations",
+    "titleSlug": "permutations",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximal String",
+    "titleSlug": "maximal-string",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth Permutation Sequence",
+    "titleSlug": "kth-permutation-sequence",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning",
+    "titleSlug": "palindrome-partitioning",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Distinct Permutations of a String",
+    "titleSlug": "permutations-of-a-given-string2041",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "M-Coloring Problem",
+    "titleSlug": "m-coloring-problem-1587115620",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Target Sum Combinations",
+    "titleSlug": "combination-sum-1587115620",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rat in a Maze",
+    "titleSlug": "rat-in-a-maze-problem",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest number in K swaps",
+    "titleSlug": "largest-number-in-k-swaps-1587115620",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Distinct Subsets",
+    "titleSlug": "subsets-1587115621",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Generate Parentheses",
+    "titleSlug": "generate-all-possible-parentheses",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rat Maze With Multiple Jumps",
+    "titleSlug": "rat-maze-with-multiple-jumps3852",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "Coins and Game",
+    "titleSlug": "coins-and-game4529",
+    "difficulty": "Medium",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "NQueens",
+    "titleSlug": "nqueens",
+    "difficulty": "Hard",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "24 Game",
+    "titleSlug": "24-game",
+    "difficulty": "Hard",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Good People Based on Statements",
+    "titleSlug": "maximum-good-people-based-on-statements",
+    "difficulty": "Hard",
+    "category": "BackTracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Expression Add Operators",
+    "titleSlug": "expression-add-operators",
+    "difficulty": "Hard",
+    "category": "BackTracking",
+    "platform": "gfg"
+  },
+  {
+    "title": "First Repeating element",
+    "titleSlug": "first-repeating-element",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "2 Sum",
+    "titleSlug": "2-sum",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Union of Arrays with Duplicates",
+    "titleSlug": "union-of-two-arrays3538",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "At Least K Occurrences",
+    "titleSlug": "first-element-to-occur-k-times5150",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Diffk II",
+    "titleSlug": "diffk-ii",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Substring Without Repeat",
+    "titleSlug": "longest-substring-without-repeat",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Pairs With Given Xor",
+    "titleSlug": "pairs-with-given-xor",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sum of f(a[i], a[j]) over all pairs in an array of n integers",
+    "titleSlug": "sum-of-fai-aj-over-all-pairs-in-an-array-of-n-integers4057",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Substrings with same first and last characters",
+    "titleSlug": "substrings-with-similar-first-and-last-characters3644",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest subarray with 0 sum",
+    "titleSlug": "largest-subarray-with-0-sum",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count distinct elements in every window",
+    "titleSlug": "count-distinct-elements-in-every-window",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest subarray of 0's and 1's",
+    "titleSlug": "largest-subarray-of-0s-and-1s",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Consecutive Subsequence",
+    "titleSlug": "longest-consecutive-subsequence2449",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Colorful Number",
+    "titleSlug": "colorful-number",
+    "difficulty": "Easy",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Subarray with B odd numbers",
+    "titleSlug": "subarray-with-b-odd-numbers",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "An Increment Problem",
+    "titleSlug": "an-increment-problem",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Substring Concatenation",
+    "titleSlug": "substring-concatenation",
+    "difficulty": "Hard",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Copy List",
+    "titleSlug": "copy-list",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Triplet Sum in Array",
+    "titleSlug": "triplet-sum-in-array-1587115621",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Nuts and Bolts Problem",
+    "titleSlug": "nuts-and-bolts-problem0431",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Subarrays with equal 1s and 0s",
+    "titleSlug": "count-subarrays-with-equal-number-of-1s-and-0s-1587115620",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest subarray with sum divisible by K",
+    "titleSlug": "longest-subarray-with-sum-divisible-by-k1259",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Substring with Equal 0, 1 and 2",
+    "titleSlug": "equal-0-1-and-23208",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "Points on the Straight Line",
+    "titleSlug": "points-on-the-straight-line",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Fraction",
+    "titleSlug": "fraction",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Window String",
+    "titleSlug": "window-string",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "4 Sum",
+    "titleSlug": "4-sum",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Two out of Three",
+    "titleSlug": "two-out-of-three",
+    "difficulty": "Medium",
+    "category": "Hashing",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Joey doesn't share food",
+    "titleSlug": "joey-doesnt-share-food5712",
+    "difficulty": "Hard",
+    "category": "Hashing",
+    "platform": "gfg"
+  },
+  {
+    "title": "BFS of graph",
+    "titleSlug": "bfs-traversal-of-graph",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "DFS of Graph",
+    "titleSlug": "depth-first-traversal-for-a-graph",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest path from 1 to n",
+    "titleSlug": "shortest-path-from-1-to-n0156",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Print adjacency list",
+    "titleSlug": "print-adjacency-list-1587115620",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Weight Node",
+    "titleSlug": "maximum-weight-node--170645",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Disjoint set (Union-Find)",
+    "titleSlug": "union-find",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Euler circuit and Path",
+    "titleSlug": "eulerian-path-in-an-undirected-graph5052",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find the Town Judge",
+    "titleSlug": "find-the-town-judge",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Center of Star Graph",
+    "titleSlug": "find-center-of-star-graph",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Path with good nodes!",
+    "titleSlug": "path-with-good-nodes",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Distance between nodes of a Tree",
+    "titleSlug": "largest-distance-between-nodes-of-a-tree",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Two teams?",
+    "titleSlug": "two-teams",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Region in BinaryMatrix",
+    "titleSlug": "region-in-binarymatrix",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Level Order",
+    "titleSlug": "level-order",
+    "difficulty": "Easy",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Black Shapes",
+    "titleSlug": "black-shapes",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Undirected Graph Cycle",
+    "titleSlug": "detect-cycle-in-an-undirected-graph",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Directed Graph Cycle",
+    "titleSlug": "detect-cycle-in-a-directed-graph",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Topological Sort",
+    "titleSlug": "topological-sort",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Bipartite Graph",
+    "titleSlug": "bipartite-graph",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Dijkstra Algorithm",
+    "titleSlug": "implementing-dijkstra-set-1-adjacency-matrix",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Spanning Tree",
+    "titleSlug": "minimum-spanning-tree",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Strongly Connected",
+    "titleSlug": "strongly-connected-components-kosarajus-algo",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Bellman-Ford",
+    "titleSlug": "distance-from-the-source-bellman-ford-algorithm",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Euler circuit and Path",
+    "titleSlug": "euler-circuit-and-path",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Rotten Oranges",
+    "titleSlug": "rotten-oranges2536",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Steps by Knight",
+    "titleSlug": "steps-by-knight5927",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Flood fill Algorithm",
+    "titleSlug": "flood-fill-algorithm1856",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find the number of islands",
+    "titleSlug": "find-the-number-of-islands",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest Source to Destination Path",
+    "titleSlug": "shortest-source-to-destination-path3544",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Largest Region of 1's in a Binary Matrix",
+    "titleSlug": "length-of-largest-region-of-1s-1587115620",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Negative weight cycle",
+    "titleSlug": "negative-weight-cycle3504",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Circle of strings",
+    "titleSlug": "circle-of-strings4530",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number of Connected Components",
+    "titleSlug": "number-of-provinces",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Knight Walk",
+    "titleSlug": "knight-walk4521",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Bridge edge in a graph",
+    "titleSlug": "bridge-edge-in-graph",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Hamiltonian Path",
+    "titleSlug": "hamiltonian-path2522",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Replace O's with X's",
+    "titleSlug": "replace-os-with-xs0052",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest path in Directed Acyclic Graph",
+    "titleSlug": "shortest-path-in-undirected-graph",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Search",
+    "titleSlug": "word-search",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Course Schedule II",
+    "titleSlug": "course-schedule",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Bipartite Matching",
+    "titleSlug": "maximum-bipartite-matching--170646",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number of Ways to Arrive at Destination",
+    "titleSlug": "number-of-ways-to-arrive-at-destination",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Water Connection Problem",
+    "titleSlug": "water-connection-problem5822",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Covid Spread",
+    "titleSlug": "covid-spread--141631",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Euler circuit and Path",
+    "titleSlug": "euler-circuit-in-a-directed-graph",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Bipartite Matching",
+    "titleSlug": "maximum-bipartite-matching",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Water Flow",
+    "titleSlug": "water-flow",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Possible paths between 2 vertices",
+    "titleSlug": "possible-paths-between-2-vertices-1587115620",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Connected Groups of 1s",
+    "titleSlug": "x-total-shapes3617",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Prerequisite Tasks",
+    "titleSlug": "prerequisite-tasks",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Check for Path in a 2D Grid with Obstacles",
+    "titleSlug": "find-whether-path-exist5238",
+    "difficulty": "Medium",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Strongly connected component (Tarjans's Algo)",
+    "titleSlug": "strongly-connected-component-tarjanss-algo-1587115621",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Alien Dictionary",
+    "titleSlug": "alien-dictionary",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Cost Path",
+    "titleSlug": "minimum-cost-path3833",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Articulation Point - I",
+    "titleSlug": "articulation-point-1",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Ladder I",
+    "titleSlug": "word-ladder-i",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Sum Cycle",
+    "titleSlug": "largest-sum-cycle--170645",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest Path Using Atmost One Curved Edge",
+    "titleSlug": "shortest-path-using-atmost-one-curved-edge--170647",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Ladder II",
+    "titleSlug": "word-ladder-ii",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Assignment Problem",
+    "titleSlug": "assignment-problem3016",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Articulation Point - II",
+    "titleSlug": "articulation-point2616",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find all Critical Connections in the Graph",
+    "titleSlug": "critical-connections",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Groups of 1's Surrounded by 0's",
+    "titleSlug": "find-number-of-closed-islands",
+    "difficulty": "Hard",
+    "category": "Graphs",
+    "platform": "gfg"
+  },
+  {
+    "title": "First n Fibonacci using Recursion",
+    "titleSlug": "print-first-n-fibonacci-numbers1002",
+    "difficulty": "Basic",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count numbers containing 4",
+    "titleSlug": "count-numbers-containing-43022",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Nth Fibonacci Number",
+    "titleSlug": "nth-fibonacci-number1335",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stock buy and sell",
+    "titleSlug": "stock-buy-and-sell-1587115621",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count ways with 3 moves",
+    "titleSlug": "count-number-of-hops-1587115620",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Coin Change (Count Ways)",
+    "titleSlug": "coin-change2448",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Coin Change (Minimum Coins)",
+    "titleSlug": "number-of-coins1824",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "0-1 Knapsack",
+    "titleSlug": "0-1-knapsack",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Tushar's Birthday Party",
+    "titleSlug": "tushars-birthday-party",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Matrix Chain Multiplication Dp 8",
+    "titleSlug": "matrix-chain-multiplication-dp-8",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Program Nth Catalan Number",
+    "titleSlug": "program-nth-catalan-number",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Kadane's Algorithm",
+    "titleSlug": "kadanes-algorithm-1587115620",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Common Subsequence",
+    "titleSlug": "longest-common-subsequence-1587115620",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Increasing Subsequence",
+    "titleSlug": "longest-increasing-subsequence-1587115620",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Common Substring",
+    "titleSlug": "longest-common-substring1452",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Repeating Subsequence",
+    "titleSlug": "longest-repeating-subsequence2004",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Palindromic Subsequence",
+    "titleSlug": "longest-palindromic-subsequence-1612327878",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Arithmetic Subsequence",
+    "titleSlug": "longest-arithmetic-progression1019",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Bitonic subsequence",
+    "titleSlug": "longest-bitonic-subsequence0824",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Common Increasing Subsequence",
+    "titleSlug": "longest-common-increasing-subsequence1437",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Subset Sum Problem",
+    "titleSlug": "subset-sum-problem-1611555638",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Palindromic Subsequences",
+    "titleSlug": "count-palindromic-subsequences",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Palindrome in a String",
+    "titleSlug": "longest-palindrome-in-a-string3411",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Egg Dropping Puzzle",
+    "titleSlug": "egg-dropping-puzzle-1587115620",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Floyd Warshall",
+    "titleSlug": "implementing-floyd-warshall2042",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Break",
+    "titleSlug": "word-break",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning II",
+    "titleSlug": "palindrome-partitioning-ii",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Shortest Common Supersequence",
+    "titleSlug": "shortest-common-supersequence0322",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "LCS of three strings",
+    "titleSlug": "lcs-of-three-strings0028",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Box Stacking",
+    "titleSlug": "box-stacking",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count of Subarrays",
+    "titleSlug": "count-of-subarrays5922",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest alternating subsequence",
+    "titleSlug": "longest-alternating-subsequence5951",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count Cyclic Paths",
+    "titleSlug": "count-cyclic-paths--170647",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Coin Change (Count Ways)",
+    "titleSlug": "ways-to-sum-to-n5759",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Sum Non-Decreasing Subsequence of Length k",
+    "titleSlug": "maximum-sum-subsequence-of-length-k3053",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Find length of longest subsequence",
+    "titleSlug": "find-length-of-longest-subsequence4905",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number of palindromic strings",
+    "titleSlug": "number-of-palindromic-strings2706",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Palindromic  Strings",
+    "titleSlug": "palindromic-strings2555",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Trapping Rain Water",
+    "titleSlug": "trapping-rain-water-1587115621",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum Product Subarray",
+    "titleSlug": "maximum-product-subarray3604",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "nCr",
+    "titleSlug": "ncr1019",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximize The Cut Segments",
+    "titleSlug": "cutted-segments1642",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Edit Distance",
+    "titleSlug": "edit-distance3702",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Partition Equal Subset Sum",
+    "titleSlug": "subset-sum-problem2014",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Ways to Reach the n'th Stair",
+    "titleSlug": "count-ways-to-reach-the-nth-stair-1587115620",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stickler Thief",
+    "titleSlug": "stickler-theif-1587115621",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Job Sequencing Problem",
+    "titleSlug": "job-sequencing-problem-1587115620",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Perfect Sum Problem",
+    "titleSlug": "perfect-sum-problem5633",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Sum Increasing Subsequence",
+    "titleSlug": "maximum-sum-increasing-subsequence4749",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Sum Except First and Last",
+    "titleSlug": "max-length-chain",
+    "difficulty": "Basic",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum path sum in matrix",
+    "titleSlug": "path-in-matrix3805",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Regular Expression Match",
+    "titleSlug": "regular-expression-match",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Smallest sequence with given Primes",
+    "titleSlug": "smallest-sequence-with-given-primes",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Wildcard Pattern Matching",
+    "titleSlug": "wildcard-pattern-matching",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Tiling With Dominoes",
+    "titleSlug": "tiling-with-dominoes",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Paint House!",
+    "titleSlug": "paint-house",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Intersecting Chords in a Circle",
+    "titleSlug": "intersecting-chords-in-a-circle",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "N digit numbers with digit sum S ",
+    "titleSlug": "n-digit-numbers-with-digit-sum-s-",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth Manhattan Distance Neighbourhood",
+    "titleSlug": "kth-manhattan-distance-neighbourhood",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock atmost B times ",
+    "titleSlug": "best-time-to-buy-and-sell-stock-atmost-b-times",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stocks III",
+    "titleSlug": "best-time-to-buy-and-sell-stocks-iii",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest valid Parentheses",
+    "titleSlug": "longest-valid-parentheses",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rod Cutting",
+    "titleSlug": "rod-cutting",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max Rectangle in Binary Matrix",
+    "titleSlug": "max-rectangle-in-binary-matrix",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Size Square Sub-matrix",
+    "titleSlug": "maximum-size-square-sub-matrix",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Path in Triangle",
+    "titleSlug": "maximum-path-in-triangle",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Min Sum Path in Matrix",
+    "titleSlug": "min-sum-path-in-matrix",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Coin Sum Infinite",
+    "titleSlug": "coin-sum-infinite",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Arrange II",
+    "titleSlug": "arrange-ii",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Interleaved Strings",
+    "titleSlug": "interleaved-strings",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Consecutive 1's not allowed",
+    "titleSlug": "consecutive-1s-not-allowed1912",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Unique BST's",
+    "titleSlug": "unique-bsts-1587115621",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum number of Coins",
+    "titleSlug": "-minimum-number-of-coins4426",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Profit from Two Machines",
+    "titleSlug": "maximum-tip-calculator2631",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Snake and Ladder Problem",
+    "titleSlug": "snake-and-ladder-problem4816",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Special Keyboard",
+    "titleSlug": "special-keyboard3018",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Cost to Fill Given Weight",
+    "titleSlug": "minimum-cost-to-fill-given-weight-in-a-bag1956",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count ways to N'th Stair(Order does not matter)",
+    "titleSlug": "count-ways-to-nth-stairorder-does-not-matter5639",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Distinct occurrences",
+    "titleSlug": "distinct-occurrences",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count subsequences of type a^i, b^j, c^k",
+    "titleSlug": "count-subsequences-of-type-ai-bj-ck4425",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Unique Paths in a Grid",
+    "titleSlug": "special-matrix4201",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number of ways",
+    "titleSlug": "number-of-ways2552",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Paint N Houses",
+    "titleSlug": "distinct-coloring--170645",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest XY distance in Grid",
+    "titleSlug": "shortest-xy-distance-in-grid--170647",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Water Overflow",
+    "titleSlug": "champagne-overflow2636",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count possible ways to construct buildings",
+    "titleSlug": "count-possible-ways-to-construct-buildings5007",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Number of paths in a matrix with k coins",
+    "titleSlug": "number-of-paths-in-a-matrix-with-k-coins2728",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stock Buy and Sell – Max 2 Transactions Allowed",
+    "titleSlug": "buy-and-sell-a-share-at-most-twice",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum steps to destination",
+    "titleSlug": "minimum-number-of-steps-to-reach-a-given-number5234",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Optimal Strategy For A Game",
+    "titleSlug": "player-with-max-score",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Cutting Binary String",
+    "titleSlug": "cutting-binary-string1342",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Two water Jug problem",
+    "titleSlug": "two-water-jug-problem3402",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Min cut Square",
+    "titleSlug": "min-cut-square3303",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum sum of elements not part of LIS",
+    "titleSlug": "maximum-sum-of-elements-not-part-of-lis",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Count of AP Subsequences",
+    "titleSlug": "count-of-ap-subsequences0016",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Pascal's Triangle",
+    "titleSlug": "pascals-triangle",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Pascal's Triangle II",
+    "titleSlug": "pascals-triangle-ii",
+    "difficulty": "Easy",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock IV",
+    "titleSlug": "best-time-to-buy-and-sell-stock-iv",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "House Robber",
+    "titleSlug": "house-robber",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "House Robber II",
+    "titleSlug": "house-robber-ii",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Last Stone Weight II",
+    "titleSlug": "last-stone-weight-ii",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Predict the Winner",
+    "titleSlug": "predict-the-winner",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindromic Partitioning",
+    "titleSlug": "palindromic-patitioning4845",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum sum partition",
+    "titleSlug": "minimum-sum-partition3317",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest window containing all characters",
+    "titleSlug": "smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "The Painter's Partition Problem-II",
+    "titleSlug": "the-painters-partition-problem1535",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Wrap",
+    "titleSlug": "word-wrap1646",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Partition array to k subsets",
+    "titleSlug": "partition-array-to-k-subsets",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Break - 2",
+    "titleSlug": "word-break-part-23249",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Stock Buy and Sell – Max K Transactions Allowed",
+    "titleSlug": "maximum-profit4657",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Max Skills",
+    "titleSlug": "maximum-number-of-coins--170647",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Points To Reach Destination",
+    "titleSlug": "minimum-points-to-reach-destination0540",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Search - Count Occurrences with 4 Directions",
+    "titleSlug": "count-occurences-of-a-given-word-in-a-2-d-array",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "All Longest Common Subsequences",
+    "titleSlug": "print-all-lcs-sequences3413",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "All Palindromic Partitions",
+    "titleSlug": "find-all-possible-palindromic-partitions-of-a-string",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Strictly Increasing Array",
+    "titleSlug": "convert-to-strictly-increasing-array3351",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Brackets in Matrix Chain Multiplication",
+    "titleSlug": "brackets-in-matrix-chain-multiplication1024",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Zig-Zag Subsequence",
+    "titleSlug": "longest-zig-zag-sub-sequence2656",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Increasing Path in a Matrix",
+    "titleSlug": "longest-increasing-path-in-a-matrix",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "gfg"
+  },
+  {
+    "title": "Burst Balloons",
+    "titleSlug": "burst-balloons",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Russian Doll Envelopes",
+    "titleSlug": "russian-doll-envelopes",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Ways to Stay in the Same Place After Some Steps",
+    "titleSlug": "number-of-ways-to-stay-in-the-same-place-after-some-steps",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Sum BST in Binary Tree",
+    "titleSlug": "maximum-sum-bst-in-binary-tree",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "XOR of a given range",
+    "titleSlug": "xor-of-a-given-range",
+    "difficulty": "Easy",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum prefix sum for a given range",
+    "titleSlug": "maximum-prefix-sum-for-a-given-range0227",
+    "difficulty": "Easy",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Range Minimum Query",
+    "titleSlug": "range-minimum-query",
+    "difficulty": "Medium",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Array Sum Excluding Subarrays",
+    "titleSlug": "nitika-and-her-queries4804",
+    "difficulty": "Medium",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Smallest Subarray GCD",
+    "titleSlug": "smallest-sub-array4107",
+    "difficulty": "Medium",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Element left after performing alternate OR & XOR operation",
+    "titleSlug": "element-left-after-performing-alternate-or-xor-operation5106",
+    "difficulty": "Medium",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Array Partition",
+    "titleSlug": "array-partition",
+    "difficulty": "Hard",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Akku and Arrays",
+    "titleSlug": "akku-and-arrays4452",
+    "difficulty": "Hard",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Greater or Less",
+    "titleSlug": "greater-or-less--170646",
+    "difficulty": "Hard",
+    "category": "Segment Tree",
+    "platform": "gfg"
+  },
+  {
+    "title": "Unique rows in boolean matrix",
+    "titleSlug": "unique-rows-in-boolean-matrix",
+    "difficulty": "Easy",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Implement Trie",
+    "titleSlug": "trie-insert-and-search0651",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Boggle",
+    "titleSlug": "word-boggle4143",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word with maximum frequency",
+    "titleSlug": "most-frequent-word-in-an-array-of-strings3528",
+    "difficulty": "Easy",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Maximum XOR subarray",
+    "titleSlug": "maximum-xor-subarray--141631",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "PascalCase Pattern Matching",
+    "titleSlug": "camelcase-pattern-matching2259",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Trie Delete",
+    "titleSlug": "trie-delete",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Search II",
+    "titleSlug": "word-boggle-ii--141631",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Prefix match with other strings",
+    "titleSlug": "prefix-match-with-other-strings",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Phone directory",
+    "titleSlug": "phone-directory4628",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Palindrome Pairs",
+    "titleSlug": "palindrome-pairs",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Shortest Unique Prefix for Every Word",
+    "titleSlug": "shortest-unique-prefix-for-every-word",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Word Break (Trie)",
+    "titleSlug": "word-break-trie--141631",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Duplicate rows in a binary matrix",
+    "titleSlug": "find-duplicate-rows-in-a-binary-matrix",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "gfg"
+  },
+  {
+    "title": "Range Sum Query - Mutable",
+    "titleSlug": "range-sum-query-mutable",
+    "difficulty": "Medium",
+    "category": "Fenwick Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Number of Teams",
+    "titleSlug": "count-number-of-teams",
+    "difficulty": "Medium",
+    "category": "Fenwick Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Possible Integer After at Most K Adjacent Swaps On Digits",
+    "titleSlug": "minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits",
+    "difficulty": "Hard",
+    "category": "Fenwick Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Increasing Quadruplets",
+    "titleSlug": "count-increasing-quadruplets",
+    "difficulty": "Hard",
+    "category": "Fenwick Tree",
+    "platform": "leetcode"
+  }
+]

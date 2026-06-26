@@ -1,0 +1,471 @@
+[
+  {
+    "title": "Climbing Stairs",
+    "titleSlug": "climbing-stairs",
+    "difficulty": "Easy",
+    "category": "Fibonacci Sequence",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Fibonacci Number",
+    "titleSlug": "fibonacci-number",
+    "difficulty": "Easy",
+    "category": "Fibonacci Sequence",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Min Cost Climbing Stairs",
+    "titleSlug": "min-cost-climbing-stairs",
+    "difficulty": "Easy",
+    "category": "Fibonacci Sequence",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Subarray",
+    "titleSlug": "maximum-subarray",
+    "difficulty": "Medium",
+    "category": "Kadane's Algorithm",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Sum Circular Subarray",
+    "titleSlug": "maximum-sum-circular-subarray",
+    "difficulty": "Medium",
+    "category": "Kadane's Algorithm",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Product Subarray",
+    "titleSlug": "maximum-product-subarray",
+    "difficulty": "Medium",
+    "category": "Kadane's Algorithm",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Subset Sum Problem",
+    "titleSlug": "subset-sum-problem-1611555638",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Perfect Sum Problem",
+    "titleSlug": "perfect-sum-problem5633",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Partition Array Into Two Arrays to Minimize Sum Difference",
+    "titleSlug": "partition-array-into-two-arrays-to-minimize-sum-difference",
+    "difficulty": "Hard",
+    "category": "0/1 Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Partitions with Given Difference",
+    "titleSlug": "partitions-with-given-difference",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Partition Equal Subset Sum",
+    "titleSlug": "partition-equal-subset-sum",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Target Sum",
+    "titleSlug": "target-sum",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Last Stone Weight II",
+    "titleSlug": "last-stone-weight-ii",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Partition to K Equal Sum Subsets",
+    "titleSlug": "partition-to-k-equal-sum-subsets",
+    "difficulty": "Medium",
+    "category": "0/1 Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rod Cutting",
+    "titleSlug": "rod-cutting0840",
+    "difficulty": "Medium",
+    "category": "Unbounded Knapsack",
+    "platform": "gfg"
+  },
+  {
+    "title": "Coin Change",
+    "titleSlug": "coin-change",
+    "difficulty": "Medium",
+    "category": "Unbounded Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Coin Change II",
+    "titleSlug": "coin-change-ii",
+    "difficulty": "Medium",
+    "category": "Unbounded Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Perfect Squares",
+    "titleSlug": "perfect-squares",
+    "difficulty": "Medium",
+    "category": "Unbounded Knapsack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Common Subsequence",
+    "titleSlug": "longest-common-subsequence",
+    "difficulty": "Medium",
+    "category": "Longest Common Subsequence (LCS)",
+    "platform": "leetcode"
+  },
+  {
+    "title": "All Longest Common Subsequences",
+    "titleSlug": "print-all-lcs-sequences3413",
+    "difficulty": "Hard",
+    "category": "Longest Common Subsequence (LCS)",
+    "platform": "gfg"
+  },
+  {
+    "title": "Delete Operation for Two Strings",
+    "titleSlug": "delete-operation-for-two-strings",
+    "difficulty": "Medium",
+    "category": "Longest Common Subsequence (LCS)",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Shortest Common Supersequence ",
+    "titleSlug": "shortest-common-supersequence",
+    "difficulty": "Hard",
+    "category": "Longest Common Subsequence (LCS)",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Wildcard Pattern Matching",
+    "titleSlug": "wildcard-pattern-matching",
+    "difficulty": "Medium",
+    "category": "Longest Common Subsequence (LCS)",
+    "platform": "gfg"
+  },
+  {
+    "title": "Longest Increasing Subsequence",
+    "titleSlug": "longest-increasing-subsequence",
+    "difficulty": "Medium",
+    "category": "Longest Increasing Subsequence (LIS)",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Longest Increasing Subsequence",
+    "titleSlug": "number-of-longest-increasing-subsequence",
+    "difficulty": "Medium",
+    "category": "Longest Increasing Subsequence (LIS)",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Russian Doll Envelopes",
+    "titleSlug": "russian-doll-envelopes",
+    "difficulty": "Hard",
+    "category": "Longest Increasing Subsequence (LIS)",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindromic Subsequence",
+    "titleSlug": "longest-palindromic-subsequence",
+    "difficulty": "Medium",
+    "category": "Palindromic Subsequence",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindromic Substrings",
+    "titleSlug": "palindromic-substrings",
+    "difficulty": "Medium",
+    "category": "Palindromic Subsequence",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Insertion Steps to Make a String Palindrome",
+    "titleSlug": "minimum-insertion-steps-to-make-a-string-palindrome",
+    "difficulty": "Hard",
+    "category": "Palindromic Subsequence",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum number of deletions",
+    "titleSlug": "minimum-number-of-deletions4610",
+    "difficulty": "Medium",
+    "category": "Palindromic Subsequence",
+    "platform": "gfg"
+  },
+  {
+    "title": "Edit Distance",
+    "titleSlug": "edit-distance",
+    "difficulty": "Medium",
+    "category": "Edit Distance",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum ASCII Delete Sum for Two Strings",
+    "titleSlug": "minimum-ascii-delete-sum-for-two-strings",
+    "difficulty": "Medium",
+    "category": "Edit Distance",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Word Break",
+    "titleSlug": "word-break",
+    "difficulty": "Medium",
+    "category": "String Partition",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning II",
+    "titleSlug": "palindrome-partitioning-ii",
+    "difficulty": "Hard",
+    "category": "String Partition",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Concatenated Words",
+    "titleSlug": "concatenated-words",
+    "difficulty": "Hard",
+    "category": "String Partition",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Unique Binary Search Trees",
+    "titleSlug": "unique-binary-search-trees",
+    "difficulty": "Medium",
+    "category": "Catalan Numbers",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Generate Parentheses",
+    "titleSlug": "generate-parentheses",
+    "difficulty": "Medium",
+    "category": "Catalan Numbers",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning",
+    "titleSlug": "palindrome-partitioning",
+    "difficulty": "Medium",
+    "category": "Matrix Chain Multiplication",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Matrix Chain Multiplication",
+    "titleSlug": "matrix-chain-multiplication0303",
+    "difficulty": "Hard",
+    "category": "Matrix Chain Multiplication",
+    "platform": "gfg"
+  },
+  {
+    "title": "Minimum Score Triangulation of Polygon",
+    "titleSlug": "minimum-score-triangulation-of-polygon",
+    "difficulty": "Medium",
+    "category": "Matrix Chain Multiplication",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Burst Balloons",
+    "titleSlug": "burst-balloons",
+    "difficulty": "Hard",
+    "category": "Matrix Chain Multiplication",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Cost to Merge Stones",
+    "titleSlug": "minimum-cost-to-merge-stones",
+    "difficulty": "Hard",
+    "category": "Matrix Chain Multiplication",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Egg Dropping Puzzle",
+    "titleSlug": "egg-dropping-puzzle-1587115620",
+    "difficulty": "Medium",
+    "category": "Matrix Chain Multiplication",
+    "platform": "gfg"
+  },
+  {
+    "title": "Boolean Parenthesization",
+    "titleSlug": "boolean-parenthesization5610",
+    "difficulty": "Hard",
+    "category": "Matrix Chain Multiplication",
+    "platform": "gfg"
+  },
+  {
+    "title": "Scramble String",
+    "titleSlug": "scramble-string",
+    "difficulty": "Hard",
+    "category": "Matrix Chain Multiplication",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Decode Ways",
+    "titleSlug": "decode-ways",
+    "difficulty": "Medium",
+    "category": "Count Distinct Ways",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Number of Texts",
+    "titleSlug": "count-number-of-texts",
+    "difficulty": "Medium",
+    "category": "Count Distinct Ways",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Unique Paths",
+    "titleSlug": "unique-paths",
+    "difficulty": "Medium",
+    "category": "DP on Grids",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Path Sum",
+    "titleSlug": "minimum-path-sum",
+    "difficulty": "Medium",
+    "category": "DP on Grids",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Increasing Path in a Matrix",
+    "titleSlug": "longest-increasing-path-in-a-matrix",
+    "difficulty": "Hard",
+    "category": "DP on Grids",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Diameter of Binary Tree",
+    "titleSlug": "diameter-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "DP on Trees",
+    "platform": "leetcode"
+  },
+  {
+    "title": "House Robber III",
+    "titleSlug": "house-robber-iii",
+    "difficulty": "Medium",
+    "category": "DP on Trees",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Tree Maximum Path Sum",
+    "titleSlug": "binary-tree-maximum-path-sum",
+    "difficulty": "Hard",
+    "category": "DP on Trees",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Tree Cameras",
+    "titleSlug": "binary-tree-cameras",
+    "difficulty": "Hard",
+    "category": "DP on Trees",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Cheapest Flights Within K Stops",
+    "titleSlug": "cheapest-flights-within-k-stops",
+    "difficulty": "Medium",
+    "category": "DP on Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
+    "titleSlug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
+    "difficulty": "Medium",
+    "category": "DP on Graphs",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Numbers with Unique Digits",
+    "titleSlug": "count-numbers-with-unique-digits",
+    "difficulty": "Medium",
+    "category": "Digit DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Digit One",
+    "titleSlug": "number-of-digit-one",
+    "difficulty": "Hard",
+    "category": "Digit DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Numbers At Most N Given Digit Set",
+    "titleSlug": "numbers-at-most-n-given-digit-set",
+    "difficulty": "Hard",
+    "category": "Digit DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Number of Work Sessions to Finish the Tasks",
+    "titleSlug": "minimum-number-of-work-sessions-to-finish-the-tasks",
+    "difficulty": "Medium",
+    "category": "Bitmasking DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Fair Distribution of Cookies",
+    "titleSlug": "fair-distribution-of-cookies",
+    "difficulty": "Medium",
+    "category": "Bitmasking DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Shortest Path Visiting All Nodes",
+    "titleSlug": "shortest-path-visiting-all-nodes",
+    "difficulty": "Hard",
+    "category": "Bitmasking DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Knight Probability in Chessboard",
+    "titleSlug": "knight-probability-in-chessboard",
+    "difficulty": "Medium",
+    "category": "Probability DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Soup Servings",
+    "titleSlug": "soup-servings",
+    "difficulty": "Medium",
+    "category": "Probability DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "New 21 Game",
+    "titleSlug": "new-21-game",
+    "difficulty": "Medium",
+    "category": "Probability DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock with Cooldown",
+    "titleSlug": "best-time-to-buy-and-sell-stock-with-cooldown",
+    "difficulty": "Medium",
+    "category": "State Machine DP",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock III",
+    "titleSlug": "best-time-to-buy-and-sell-stock-iii",
+    "difficulty": "Hard",
+    "category": "State Machine DP",
+    "platform": "leetcode"
+  }
+]

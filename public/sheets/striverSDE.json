@@ -1,0 +1,1493 @@
+[
+  {
+    "title": "Set Matrix Zeros",
+    "titleSlug": "set-matrix-zeroes",
+    "difficulty": "Medium",
+    "category": "Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/N0MgLvceX7M"
+  },
+  {
+    "title": "Pascal's Triangle",
+    "titleSlug": "pascals-triangle",
+    "difficulty": "Easy",
+    "category": "Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/bR7mQgwQ_o8"
+  },
+  {
+    "title": "Next Permutation",
+    "titleSlug": "next-permutation",
+    "difficulty": "Medium",
+    "category": "Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/JDOXKqF60RQ"
+  },
+  {
+    "title": "Kadane's Algorithm",
+    "titleSlug": "maximum-subarray",
+    "difficulty": "Medium",
+    "category": "Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/AHZpyENo7k4"
+  },
+  {
+    "title": "Sort an array of 0's, 1's and 2's",
+    "titleSlug": "sort-colors",
+    "difficulty": "Medium",
+    "category": "Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=tp8JIuCXBaU&list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz&index=20"
+  },
+  {
+    "title": "Stock Buy and Sell",
+    "titleSlug": "best-time-to-buy-and-sell-stock",
+    "difficulty": "Easy",
+    "category": "Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/excAOvwF_Wk"
+  },
+  {
+    "title": "Rotate Matrix",
+    "titleSlug": "rotate-image",
+    "difficulty": "Medium",
+    "category": "Arrays Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Z0R2u6gd3GU"
+  },
+  {
+    "title": "Merge Overlapping Subintervals",
+    "titleSlug": "merge-intervals",
+    "difficulty": "Medium",
+    "category": "Arrays Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/IexN60k62jo"
+  },
+  {
+    "title": "Merge two sorted arrays without extra space",
+    "titleSlug": "merge-sorted-array",
+    "difficulty": "Easy",
+    "category": "Arrays Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/n7uwj04E0I4"
+  },
+  {
+    "title": "Find the duplicate in an array of N+1 integers",
+    "titleSlug": "find-the-duplicate-number",
+    "difficulty": "Medium",
+    "category": "Arrays Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=32Ll35mhWg0&list=PLgUwDviBIf0rPG3Ictpu74YWBQ1CaBkm2&index=1"
+  },
+  {
+    "title": "Repeat and Missing Number",
+    "titleSlug": "repeat-and-missing-number-array",
+    "difficulty": "Medium",
+    "category": "Arrays Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/2D0D8HE6uak"
+  },
+  {
+    "title": "Search in a 2 D matrix",
+    "titleSlug": "search-a-2d-matrix",
+    "difficulty": "Medium",
+    "category": "Arrays Part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/JXU4Akft7yk"
+  },
+  {
+    "title": "Pow(x, n)",
+    "titleSlug": "powx-n",
+    "difficulty": "Medium",
+    "category": "Arrays Part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/l0YC3876qxg"
+  },
+  {
+    "title": "Majority Element (>n/2 times)",
+    "titleSlug": "majority-element",
+    "difficulty": "Easy",
+    "category": "Arrays Part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/nP_ns3uSh80"
+  },
+  {
+    "title": "Majority Element (n/3 times)",
+    "titleSlug": "majority-element-ii",
+    "difficulty": "Medium",
+    "category": "Arrays Part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/vwZj1K0e9U8"
+  },
+  {
+    "title": "Grid Unique Paths",
+    "titleSlug": "unique-paths",
+    "difficulty": "Medium",
+    "category": "Arrays Part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/t_f0nwwdg5o"
+  },
+  {
+    "title": "Reverse Pairs (Leetcode)",
+    "titleSlug": "reverse-pairs",
+    "difficulty": "Hard",
+    "category": "Arrays Part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/0e4bZaP3MDI"
+  },
+  {
+    "title": "2Sum Problem",
+    "titleSlug": "two-sum",
+    "difficulty": "Easy",
+    "category": "Arrays Part-IV",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/UXDSeD9mN-k"
+  },
+  {
+    "title": "4-Sum Problem",
+    "titleSlug": "4sum",
+    "difficulty": "Medium",
+    "category": "Arrays Part-IV",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/eD95WRfh81c"
+  },
+  {
+    "title": "Longest Consecutive Sequence",
+    "titleSlug": "longest-consecutive-sequence",
+    "difficulty": "Medium",
+    "category": "Arrays Part-IV",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=oO5uLE7EUlM&list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz&index=28"
+  },
+  {
+    "title": "Largest Subarray with K sum",
+    "titleSlug": "longest-subarray-with-sum-k",
+    "difficulty": "Medium",
+    "category": "Arrays Part-IV",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/frf7qxiN2qU"
+  },
+  {
+    "title": "Count number of subarrays with given xor K",
+    "titleSlug": "subarray-with-given-xor",
+    "difficulty": "Medium",
+    "category": "Arrays Part-IV",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/eZr-6p0B7ME"
+  },
+  {
+    "title": "Longest Substring without repeat",
+    "titleSlug": "longest-substring-without-repeating-characters",
+    "difficulty": "Medium",
+    "category": "Arrays Part-IV",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=qtVh-XEpsJo&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=26"
+  },
+  {
+    "title": "Reverse a LinkedList",
+    "titleSlug": "reverse-linked-list",
+    "difficulty": "Easy",
+    "category": "Linked List",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=iRtLEoL-r-g&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=27"
+  },
+  {
+    "title": "Find the middle of LinkedList",
+    "titleSlug": "middle-of-the-linked-list",
+    "difficulty": "Easy",
+    "category": "Linked List",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=sGdwSH8RK-o&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=28"
+  },
+  {
+    "title": "Merge two sorted Linked List (use method used in mergeSort)",
+    "titleSlug": "merge-two-sorted-lists",
+    "difficulty": "Easy",
+    "category": "Linked List",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=Xb4slcp1U38&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=29"
+  },
+  {
+    "title": "Remove N-th node from back of LinkedList",
+    "titleSlug": "remove-nth-node-from-end-of-list",
+    "difficulty": "Medium",
+    "category": "Linked List",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=Lhu3MsXZy-Q&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=30"
+  },
+  {
+    "title": "Add two numbers as LinkedList",
+    "titleSlug": "add-two-numbers",
+    "difficulty": "Medium",
+    "category": "Linked List",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=LBVsXSMOIk4&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=32"
+  },
+  {
+    "title": "Delete a given Node when a node is given.(0(1) solution)",
+    "titleSlug": "delete-node-in-a-linked-list",
+    "difficulty": "Medium",
+    "category": "Linked List",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=icnp4FJdZ_c&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=31"
+  },
+  {
+    "title": "Find intersection point of Y LinkedList",
+    "titleSlug": "intersection-of-two-linked-lists",
+    "difficulty": "Easy",
+    "category": "Linked List Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=u4FWXfgS8jw&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=33"
+  },
+  {
+    "title": "Detect a cycle in Linked List",
+    "titleSlug": "linked-list-cycle",
+    "difficulty": "Easy",
+    "category": "Linked List Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=354J83hX7RI&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=34"
+  },
+  {
+    "title": "Reverse a LinkedList in groups of size k.",
+    "titleSlug": "reverse-nodes-in-k-group",
+    "difficulty": "Hard",
+    "category": "Linked List Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=Of0HPkk3JgI&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=34"
+  },
+  {
+    "title": "Check if a LinkedList is palindrome or not.",
+    "titleSlug": "palindrome-linked-list",
+    "difficulty": "Easy",
+    "category": "Linked List Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=-DtNInqFUXs&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=36"
+  },
+  {
+    "title": "Find the starting point of the Loop of LinkedList",
+    "titleSlug": "linked-list-cycle-ii",
+    "difficulty": "Medium",
+    "category": "Linked List Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=QfbOhn0WZ88&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=37"
+  },
+  {
+    "title": "Flattening of a LinkedList",
+    "titleSlug": "flattening-of-ll",
+    "difficulty": "Medium",
+    "category": "Linked List Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=ysytSSXpAI0&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=38"
+  },
+  {
+    "title": "Rotate a LinkedList",
+    "titleSlug": "rotate-list",
+    "difficulty": "Medium",
+    "category": "Linked List and Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=9VPm6nEbVPA&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=39"
+  },
+  {
+    "title": "Clone a Linked List with random and next pointer",
+    "titleSlug": "copy-list-with-random-pointer",
+    "difficulty": "Medium",
+    "category": "Linked List and Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/q570bKdrnlw?si=epZtpWvtNwuTf23o"
+  },
+  {
+    "title": "3 sum",
+    "titleSlug": "3sum",
+    "difficulty": "Medium",
+    "category": "Linked List and Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/DhFh8Kw7ymk"
+  },
+  {
+    "title": "Trapping Rainwater",
+    "titleSlug": "trapping-rain-water",
+    "difficulty": "Hard",
+    "category": "Linked List and Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/1_5VuquLbXg?si=NFG6df318_6OtGvg"
+  },
+  {
+    "title": "Remove Duplicate from Sorted array",
+    "titleSlug": "remove-duplicates-from-sorted-array",
+    "difficulty": "Easy",
+    "category": "Linked List and Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/37E9ckMDdTk?t=1888"
+  },
+  {
+    "title": "Max consecutive ones",
+    "titleSlug": "max-consecutive-ones",
+    "difficulty": "Easy",
+    "category": "Linked List and Arrays",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/bYWLJb3vCWY?t=1124"
+  },
+  {
+    "title": "N meetings in one room",
+    "titleSlug": "n-meetings-in-one-room",
+    "difficulty": "Easy",
+    "category": "Greedy Algorithm",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/mKfhTotEguk?si=2RELeq18mpmIIN3Q"
+  },
+  {
+    "title": "Minimum number of platforms required for a railway",
+    "titleSlug": "minimum-number-of-platforms-required-for-a-railway",
+    "difficulty": "Medium",
+    "category": "Greedy Algorithm",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/AsGzwR_FWok?si=165acXU_dtqOHuo9"
+  },
+  {
+    "title": "Job sequencing Problem",
+    "titleSlug": "job-sequencing-problem",
+    "difficulty": "Medium",
+    "category": "Greedy Algorithm",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/QbwltemZbRg?si=wvcemJ5BLPlTRmkG"
+  },
+  {
+    "title": "Fractional Knapsack Problem",
+    "titleSlug": "fractional-knapsack",
+    "difficulty": "Medium",
+    "category": "Greedy Algorithm",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/1ibsQrnuEEg?si=8R2By3wpHo0zZVHE"
+  },
+  {
+    "title": "Greedy algorithm to find minimum number of coins",
+    "titleSlug": "minimum-coins",
+    "difficulty": "Easy",
+    "category": "Greedy Algorithm",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=mVg9CfJvayM&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=48"
+  },
+  {
+    "title": "Assign Cookies",
+    "titleSlug": "assign-cookies",
+    "difficulty": "Easy",
+    "category": "Greedy Algorithm",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/DIX2p7vb9co?si=6G7JzMZ2TSP_LWSG"
+  },
+  {
+    "title": "Subset Sums",
+    "titleSlug": "subset-sum-equals-to-target",
+    "difficulty": "Medium",
+    "category": "Recursion",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=rYkfBRtMJr8&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=52"
+  },
+  {
+    "title": "Subset-II",
+    "titleSlug": "subsets-ii",
+    "difficulty": "Medium",
+    "category": "Recursion",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=RIn3gOkbhQE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=53"
+  },
+  {
+    "title": "Combination sum-1",
+    "titleSlug": "combination-sum",
+    "difficulty": "Medium",
+    "category": "Recursion",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=OyZFFqQtu98&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=49"
+  },
+  {
+    "title": "Combination sum-2",
+    "titleSlug": "combination-sum-ii",
+    "difficulty": "Medium",
+    "category": "Recursion",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=G1fRTGRxXU8&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=50"
+  },
+  {
+    "title": "Palindrome Partitioning",
+    "titleSlug": "palindrome-partitioning",
+    "difficulty": "Medium",
+    "category": "Recursion",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=WBgsABoClE0&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=51"
+  },
+  {
+    "title": "K-th permutation Sequence",
+    "titleSlug": "permutation-sequence",
+    "difficulty": "Hard",
+    "category": "Recursion",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=wT7gcXLYoao&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=55"
+  },
+  {
+    "title": "Print all permutations of a string/array",
+    "titleSlug": "permutations",
+    "difficulty": "Medium",
+    "category": "Recursion and Backtracking",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=f2ic2Rsc9pU&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=52"
+  },
+  {
+    "title": "N queens Problem",
+    "titleSlug": "n-queens",
+    "difficulty": "Hard",
+    "category": "Recursion and Backtracking",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=i05Ju7AftcM&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=57"
+  },
+  {
+    "title": "Sudoko Solver",
+    "titleSlug": "sudoku-solver",
+    "difficulty": "Hard",
+    "category": "Recursion and Backtracking",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=FWAIf_EVUKE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=58"
+  },
+  {
+    "title": "M Coloring Problem",
+    "titleSlug": "m-coloring-problem",
+    "difficulty": "Medium",
+    "category": "Recursion and Backtracking",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=wuVwUK25Rfc&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=59"
+  },
+  {
+    "title": "Rat in a Maze",
+    "titleSlug": "rat-in-a-maze",
+    "difficulty": "Medium",
+    "category": "Recursion and Backtracking",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=bLGZhJlt4y0&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=60"
+  },
+  {
+    "title": "Matrix Median",
+    "titleSlug": "matrix-median",
+    "difficulty": "Hard",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Q9wXgdxJq48?si=ScI_0uzJh7yg8nrX"
+  },
+  {
+    "title": "Find the element that appears once in a sorted array, and the rest element appears twice (Binary search)",
+    "titleSlug": "single-element-in-a-sorted-array",
+    "difficulty": "Medium",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=PzszoiY5XMQ&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=64"
+  },
+  {
+    "title": "Search element in a sorted and rotated array/ find pivot where it is rotated",
+    "titleSlug": "search-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=r3pMQ8-Ad5s&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=64"
+  },
+  {
+    "title": "Median of 2 sorted arrays",
+    "titleSlug": "median-of-two-sorted-arrays",
+    "difficulty": "Hard",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/C2rRzz-JDk8"
+  },
+  {
+    "title": "K-th element of two sorted arrays",
+    "titleSlug": "kth-element-of-2-sorted-arrays",
+    "difficulty": "Medium",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=nv7F4PiLUzo&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=66"
+  },
+  {
+    "title": "Allocate Minimum Number of Pages",
+    "titleSlug": "allocate-books",
+    "difficulty": "Medium",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=gYmWHvRHu-s&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=69"
+  },
+  {
+    "title": "Aggressive Cows",
+    "titleSlug": "AGGRCOW",
+    "difficulty": "Hard",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/R_Mfw4ew-Vo"
+  },
+  {
+    "title": "Kth Largest Element",
+    "titleSlug": "kth-largest-element-in-an-array",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Sum Combination",
+    "titleSlug": "maximum-sum-combinations",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Median from Data Stream",
+    "titleSlug": "find-median-from-data-stream",
+    "difficulty": "Hard",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "K most frequent elements",
+    "titleSlug": "top-k-frequent-elements",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Implement Stack using Arrays",
+    "titleSlug": "implement-stack-using-arrays",
+    "difficulty": "Easy",
+    "category": "Stack and Queue",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/tqQ5fTamIN4?si=ofLt8Zt1ZvhikZ6w"
+  },
+  {
+    "title": "Implement Queue using Arrays",
+    "titleSlug": "implement-queue-using-arrays",
+    "difficulty": "Basic",
+    "category": "Stack and Queue",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/tqQ5fTamIN4?si=ofLt8Zt1ZvhikZ6w"
+  },
+  {
+    "title": "Implement Stack using Queue (using single queue)",
+    "titleSlug": "implement-stack-using-queues",
+    "difficulty": "Easy",
+    "category": "Stack and Queue",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/tqQ5fTamIN4?si=ofLt8Zt1ZvhikZ6w"
+  },
+  {
+    "title": "Implement Queue using Stack (0(1) amortized method)",
+    "titleSlug": "implement-queue-using-stacks",
+    "difficulty": "Easy",
+    "category": "Stack and Queue",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/tqQ5fTamIN4?si=ofLt8Zt1ZvhikZ6w"
+  },
+  {
+    "title": "Check for balanced parentheses",
+    "titleSlug": "valid-parentheses",
+    "difficulty": "Easy",
+    "category": "Stack and Queue",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/xwjS0iZhw4I?si=UoyKpFn4Q3nf5h2R"
+  },
+  {
+    "title": "Next Greater Element",
+    "titleSlug": "next-greater-element-i",
+    "difficulty": "Easy",
+    "category": "Stack and Queue",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/e7XQLtOQM3I?si=QdcHpTtx6gAHsext"
+  },
+  {
+    "title": "Sort a Stack",
+    "titleSlug": "sort-a-stack",
+    "difficulty": "Medium",
+    "category": "Stack and Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Next Smaller Element",
+    "titleSlug": "nearest-smaller-element",
+    "difficulty": "Easy",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "LRU cache (IMPORTANT)",
+    "titleSlug": "lru-cache",
+    "difficulty": "Medium",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/z9bJUPxzFOw?si=IUo_d35rXBD0CBAF"
+  },
+  {
+    "title": "LFU cache",
+    "titleSlug": "lfu-cache",
+    "difficulty": "Hard",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=0PSB9y8ehbk&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=79"
+  },
+  {
+    "title": "Largest rectangle in a histogram",
+    "titleSlug": "largest-rectangle-in-histogram",
+    "difficulty": "Hard",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Bzat9vgD0fs?si=DiBlLejXcr6EJoyB"
+  },
+  {
+    "title": "Sliding Window maximum",
+    "titleSlug": "sliding-window-maximum",
+    "difficulty": "Hard",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/NwBvene4Imo?si=eU1PY-bcQfk5wdog"
+  },
+  {
+    "title": "Implement Min Stack",
+    "titleSlug": "min-stack",
+    "difficulty": "Medium",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/NdDIaH91P0g?si=4_Jbsq5trFvfSdUY"
+  },
+  {
+    "title": "Rotten Orange (Using BFS)",
+    "titleSlug": "rotting-oranges",
+    "difficulty": "Medium",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=yf3oUhkvqA0"
+  },
+  {
+    "title": "Stock span problem",
+    "titleSlug": "online-stock-span",
+    "difficulty": "Medium",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/eay-zoSRkVc?si=deNNe5i38BOAntha"
+  },
+  {
+    "title": "Find the maximum of minimums of every window size",
+    "titleSlug": "maximum-of-minimums-for-every-window-size",
+    "difficulty": "Hard",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse Words in a String",
+    "titleSlug": "reverse-words-in-a-string",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindrome in a string",
+    "titleSlug": "longest-palindromic-substring",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Roman Number to Integer and vice versa",
+    "titleSlug": "roman-to-integer",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Implement ATOI/STRSTR",
+    "titleSlug": "string-to-integer-atoi",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Common Prefix",
+    "titleSlug": "longest-common-prefix",
+    "difficulty": "Easy",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rabin Karp",
+    "titleSlug": "repeated-string-match",
+    "difficulty": "Medium",
+    "category": "String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum characters needed to be inserted in the beginning to make it palindromic",
+    "titleSlug": "minimum-characters-required-to-make-a-string-palindromic",
+    "difficulty": "Medium",
+    "category": "String Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check for Anagrams",
+    "titleSlug": "valid-anagram",
+    "difficulty": "Easy",
+    "category": "String Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count and say",
+    "titleSlug": "count-and-say",
+    "difficulty": "Medium",
+    "category": "String Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Compare version numbers",
+    "titleSlug": "compare-version-numbers",
+    "difficulty": "Medium",
+    "category": "String Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Inorder Traversal",
+    "titleSlug": "binary-tree-inorder-traversal",
+    "difficulty": "Easy",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=Z_NEgBgbRVI&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=7"
+  },
+  {
+    "title": "Preorder Traversal",
+    "titleSlug": "binary-tree-preorder-traversal",
+    "difficulty": "Easy",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/RlUu72JrOCQ"
+  },
+  {
+    "title": "Postorder Traversal",
+    "titleSlug": "binary-tree-postorder-traversal",
+    "difficulty": "Easy",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/COQOU6klsBg"
+  },
+  {
+    "title": "Morris Inorder Traversal",
+    "titleSlug": "binary-tree-inorder-traversal",
+    "difficulty": "Easy",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=80Zug6D1_r4&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=38"
+  },
+  {
+    "title": "LeftView Of Binary Tree",
+    "titleSlug": "right-left-view-of-bt",
+    "difficulty": "Easy",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=KV4mRzTjlAk&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=25"
+  },
+  {
+    "title": "Bottom View of Binary Tree",
+    "titleSlug": "bottom-view-of-bt",
+    "difficulty": "Medium",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/0FtVY6I4pB8"
+  },
+  {
+    "title": "Top View of Binary Tree",
+    "titleSlug": "top-view-of-bt",
+    "difficulty": "Medium",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Et9OCDNvJ78"
+  },
+  {
+    "title": "Vertical order traversal",
+    "titleSlug": "vertical-order-traversal-of-a-binary-tree",
+    "difficulty": "Hard",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/q_a6lpbKJdw"
+  },
+  {
+    "title": "Root to Node Path in Binary Tree",
+    "titleSlug": "print-root-to-note-path-in-bt",
+    "difficulty": "Medium",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/fmflMqVOC7k"
+  },
+  {
+    "title": "Max width of a Binary Tree",
+    "titleSlug": "maximum-width-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/ZbybYvcVLks"
+  },
+  {
+    "title": "Level order Traversal / Level order traversal in spiral form",
+    "titleSlug": "binary-tree-level-order-traversal",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/EoAsWbO7sqg"
+  },
+  {
+    "title": "Height of a Binary Tree",
+    "titleSlug": "maximum-depth-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/eD3tmO66aBA"
+  },
+  {
+    "title": "Diameter of Binary Tree",
+    "titleSlug": "diameter-of-binary-tree",
+    "difficulty": "Easy",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Rezetez59Nk"
+  },
+  {
+    "title": "Check if the Binary tree is height-balanced or not",
+    "titleSlug": "balanced-binary-tree",
+    "difficulty": "Easy",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Yt50Jfbd8Po"
+  },
+  {
+    "title": "LCA in Binary Tree",
+    "titleSlug": "lowest-common-ancestor-of-a-binary-tree",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/_-QHfMDde90"
+  },
+  {
+    "title": "Check if two trees are identical or not",
+    "titleSlug": "same-tree",
+    "difficulty": "Easy",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/BhuvF_-PWS0"
+  },
+  {
+    "title": "Zig Zag Traversal of Binary Tree",
+    "titleSlug": "binary-tree-zigzag-level-order-traversal",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/3OXWEdlIGl4"
+  },
+  {
+    "title": "Boundary Traversal of Binary Tree",
+    "titleSlug": "boundary-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/0ca1nvR0be4"
+  },
+  {
+    "title": "Maximum path sum",
+    "titleSlug": "binary-tree-maximum-path-sum",
+    "difficulty": "Hard",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/WszrfSwMz58"
+  },
+  {
+    "title": "Construct Binary Tree from inorder and preorder",
+    "titleSlug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/aZNaLrVebKQ"
+  },
+  {
+    "title": "Construct Binary Tree from Inorder and Postorder",
+    "titleSlug": "construct-binary-tree-from-inorder-and-postorder-traversal",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/LgLRTaEMRVc"
+  },
+  {
+    "title": "Symmetric Binary Tree",
+    "titleSlug": "symmetric-tree",
+    "difficulty": "Easy",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/nKggiEpBE"
+  },
+  {
+    "title": "Flatten Binary Tree to LinkedList",
+    "titleSlug": "flatten-binary-tree-to-linked-list",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/sWf7k1x9XR4"
+  },
+  {
+    "title": "Check if Binary Tree is the mirror of itself or not",
+    "titleSlug": "check-for-symmetrical-bts",
+    "difficulty": "Easy",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check for Children Sum Property",
+    "titleSlug": "children-sum-property-in-binary-tree",
+    "difficulty": "Medium",
+    "category": "Binary Tree part-III",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/fnmisPM6cVo"
+  },
+  {
+    "title": "Populate Next Right pointers of Tree",
+    "titleSlug": "populating-next-right-pointers-in-each-node",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search given Key in BST",
+    "titleSlug": "search-in-a-binary-search-tree",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/KcNt6v_56cc"
+  },
+  {
+    "title": "Construct BST from given keys",
+    "titleSlug": "convert-sorted-array-to-binary-search-tree",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Construct a BST from a preorder traversal",
+    "titleSlug": "construct-binary-search-tree-from-preorder-traversal",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/UmJT3j26t1I"
+  },
+  {
+    "title": "Check is a BT is BST or not",
+    "titleSlug": "validate-binary-search-tree",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/f-sj7I5oXEI"
+  },
+  {
+    "title": "Find LCA of two nodes in BST",
+    "titleSlug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/cX_kPV_foZc"
+  },
+  {
+    "title": "Find the inorder predecessor/successor of a given Key in BST.",
+    "titleSlug": "inorder-successor-and-predecessor-in-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/SXKAD2svfmI"
+  },
+  {
+    "title": "Find K-th smallest element in BST",
+    "titleSlug": "kth-smallest-element-in-a-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/9TJYWh0adfk"
+  },
+  {
+    "title": "Find K-th largest element in BST",
+    "titleSlug": "kth-smallest-and-largest-element-in-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/9TJYWh0adfk"
+  },
+  {
+    "title": "Find a pair with a given sum in BST",
+    "titleSlug": "two-sum-iv-input-is-a-bst",
+    "difficulty": "Easy",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/ssL3sHwPeb4"
+  },
+  {
+    "title": "BST iterator",
+    "titleSlug": "binary-search-tree-iterator",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/D2jMcmxU4bs"
+  },
+  {
+    "title": "Size of the largest BST in a Binary Tree",
+    "titleSlug": "maximum-sum-bst-in-binary-tree",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/X0oXMdtUDwo"
+  },
+  {
+    "title": "Serialize and deserialize Binary Tree",
+    "titleSlug": "serialize-and-deserialize-binary-tree",
+    "difficulty": "Hard",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/-YbXySKJsX8"
+  },
+  {
+    "title": "Binary Tree to Double Linked List",
+    "titleSlug": "flatten-binary-tree-to-linked-list",
+    "difficulty": "Medium",
+    "category": "Binary Trees[Miscellaneous]",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=sWf7k1x9XR4&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=39"
+  },
+  {
+    "title": "Find median in a stream of running integers.",
+    "titleSlug": "find-median-from-data-stream",
+    "difficulty": "Hard",
+    "category": "Binary Trees[Miscellaneous]",
+    "platform": "leetcode"
+  },
+  {
+    "title": "K-th largest element in a stream.",
+    "titleSlug": "kth-largest-element-in-a-stream",
+    "difficulty": "Easy",
+    "category": "Binary Trees[Miscellaneous]",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Distinct numbers in Window.",
+    "titleSlug": "distinct-numbers-in-window",
+    "difficulty": "Medium",
+    "category": "Binary Trees[Miscellaneous]",
+    "platform": "leetcode"
+  },
+  {
+    "title": "K-th largest element in an unsorted array.",
+    "titleSlug": "kth-largest-element-in-an-array",
+    "difficulty": "Medium",
+    "category": "Binary Trees[Miscellaneous]",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Flood-fill Algorithm",
+    "titleSlug": "flood-fill",
+    "difficulty": "Easy",
+    "category": "Binary Trees[Miscellaneous]",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Clone a graph (Not that easy as it looks)",
+    "titleSlug": "clone-graph",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "DFS",
+    "titleSlug": "traversal-techniques",
+    "difficulty": "Easy",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/Qzf1a--rhp8"
+  },
+  {
+    "title": "BFS",
+    "titleSlug": "traversal-techniques",
+    "difficulty": "Easy",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/-tgVpUgsQ5k"
+  },
+  {
+    "title": "Detect A cycle in Undirected Graph using BFS",
+    "titleSlug": "course-schedule",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/BPlrALf1LDU"
+  },
+  {
+    "title": "Detect A cycle in Undirected Graph using DFS",
+    "titleSlug": "course-schedule",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/zQ3zgFypzX4"
+  },
+  {
+    "title": "Detect A cycle in a Directed Graph using DFS",
+    "titleSlug": "course-schedule",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=uzVUw90ZFIg&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=12"
+  },
+  {
+    "title": "Detect A cycle in a Directed Graph using BFS",
+    "titleSlug": "course-schedule",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=iTBaI90lpDQ&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=23"
+  },
+  {
+    "title": "Topological Sort BFS",
+    "titleSlug": "topological-sort-or-kahns-algorithm",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=73sneFXuTEg&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=22"
+  },
+  {
+    "title": "Topological Sort DFS",
+    "titleSlug": "topological-sort-or-kahns-algorithm",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=5lZ0iJMrUMk&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=22"
+  },
+  {
+    "title": "Number of islands(Do in Grid and Graph Both)",
+    "titleSlug": "number-of-islands",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=muncqlKJrH0&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=8"
+  },
+  {
+    "title": "Bipartite Check using BFS",
+    "titleSlug": "is-graph-bipartite",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=-vu34sct1g8&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=17"
+  },
+  {
+    "title": "Bipartite Check using DFS",
+    "titleSlug": "is-graph-bipartite",
+    "difficulty": "Medium",
+    "category": "Graph",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=KG5YFfR0j8A&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=18"
+  },
+  {
+    "title": "Strongly Connected Component(using KosaRajuΓÇÖs algo)",
+    "titleSlug": "maximum-number-of-non-overlapping-substrings",
+    "difficulty": "Hard",
+    "category": "Graph Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=V8qIqJxCioo&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=27"
+  },
+  {
+    "title": "DijkstraΓÇÖs Algorithm",
+    "titleSlug": "dijkstra's-algorithm",
+    "difficulty": "Medium",
+    "category": "Graph Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=rp1SMw7HSO8&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=35"
+  },
+  {
+    "title": "Bellman-Ford Algo",
+    "titleSlug": "bellman-ford-algorithm",
+    "difficulty": "Medium",
+    "category": "Graph Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=0vVofAhAYjc&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=41"
+  },
+  {
+    "title": "Floyd Warshall Algorithm",
+    "titleSlug": "floyd-warshall-algorithm",
+    "difficulty": "Medium",
+    "category": "Graph Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=YbY8cVwWAvw&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=42"
+  },
+  {
+    "title": "MST using Prim's Algo",
+    "titleSlug": "find-the-mst-weight",
+    "difficulty": "Medium",
+    "category": "Graph Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=mJcZjjKzeqk&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=44"
+  },
+  {
+    "title": "MST using KruskalΓÇÖs Algo",
+    "titleSlug": "find-the-mst-weight",
+    "difficulty": "Medium",
+    "category": "Graph Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=1KRmCzBl_mQ&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=24"
+  },
+  {
+    "title": "Max Product Subarray",
+    "titleSlug": "maximum-product-subarray",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Increasing Subsequence",
+    "titleSlug": "longest-increasing-subsequence",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/ekcwMsSIzVc"
+  },
+  {
+    "title": "Longest Common Subsequence",
+    "titleSlug": "longest-common-subsequence",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/NPZn9jBrX8U"
+  },
+  {
+    "title": "Edit Distance",
+    "titleSlug": "edit-distance",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/fJaKO8FbDdo"
+  },
+  {
+    "title": "Maximum sum increasing subsequence",
+    "titleSlug": "maximum-sum-increasing-subsequence",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Matrix Chain Multiplication",
+    "titleSlug": "matrix-chain-multiplication",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/vRVfmbCFW7Y"
+  },
+  {
+    "title": "Minimum sum path in the matrix, (count paths and similar type do, also backtrack to find the Minimum path)",
+    "titleSlug": "minimum-path-sum",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/_rgTlyky1uQ"
+  },
+  {
+    "title": "Coin change",
+    "titleSlug": "coin-change",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/HgyouUi11zk"
+  },
+  {
+    "title": "Subset Sum",
+    "titleSlug": "partition-equal-subset-sum",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=fWX9xDmIzRI"
+  },
+  {
+    "title": "Rod Cutting",
+    "titleSlug": "minimum-cost-to-cut-a-stick",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/mO8XpGoJwuo"
+  },
+  {
+    "title": "Egg Dropping",
+    "titleSlug": "super-egg-drop",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Word Break",
+    "titleSlug": "word-break",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning (MCM Variation)",
+    "titleSlug": "palindrome-partitioning",
+    "difficulty": "Hard",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/_H8V5hJUGd0"
+  },
+  {
+    "title": "Maximum profit in Job scheduling",
+    "titleSlug": "job-sequencing-problem",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Implement Trie (Prefix Tree)",
+    "titleSlug": "implement-trie-prefix-tree",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=dBGUmUQhjaM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp"
+  },
+  {
+    "title": "Implement Trie - 2 (Prefix Tree)",
+    "titleSlug": "trie-implementation-and-advanced-operations",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest String with All Prefixes",
+    "titleSlug": "longest-word-with-all-prefixes",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=AWnBa91lThI&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=3"
+  },
+  {
+    "title": "Number of Distinct Substrings in a String",
+    "titleSlug": "number-of-distinct-substrings-in-a-string",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=RV0QeTyHZxo&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=4"
+  },
+  {
+    "title": "Power Set (this is very important)",
+    "titleSlug": "power-set",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=b7AYbpM5YrE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=67"
+  },
+  {
+    "title": "Maximum XOR of two numbers in an array",
+    "titleSlug": "maximum-xor-of-two-numbers-in-an-array",
+    "difficulty": "Medium",
+    "category": "Trie",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=EIhAwfHubE8&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=6"
+  },
+  {
+    "title": "Maximum XOR With an Element From Array",
+    "titleSlug": "maximum-xor-with-an-element-from-array",
+    "difficulty": "Hard",
+    "category": "Trie",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=Q8LhG9Pi5KM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=7"
+  },
+  {
+    "title": "Inversion of Array (Pre-req: Merge Sort)",
+    "titleSlug": "count-inversions",
+    "difficulty": "Medium",
+    "category": "Arrays Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/AseUmwVNaoY"
+  },
+  {
+    "title": "Max heap, Min Heap Implementation (Only for interviews)",
+    "titleSlug": "implement-max-heap",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Merge K sorted arrays",
+    "titleSlug": "merge-k-sorted-arrays",
+    "difficulty": "Medium",
+    "category": "Heaps",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Morris Preorder Traversal",
+    "titleSlug": "morris-preorder-traversal-",
+    "difficulty": "Easy",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/80Zug6D1_r4"
+  },
+  {
+    "title": "Floor in a BST",
+    "titleSlug": "floor-and-ceil-in-a-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=xm_W1ub-K-w&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=43"
+  },
+  {
+    "title": "Ceil in a BST",
+    "titleSlug": "floor-and-ceil-in-a-bst",
+    "difficulty": "Medium",
+    "category": "Binary Search Tree Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=KSsk8AhdOZA&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=42"
+  },
+  {
+    "title": "The N-th root of an integer",
+    "titleSlug": "find-nth-root-of-a-number",
+    "difficulty": "Medium",
+    "category": "Binary Search",
+    "platform": "leetcode",
+    "youtubeLink": "https://www.youtube.com/watch?v=WjpswYrS2nY&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=62"
+  },
+  {
+    "title": "The Celebrity Problem",
+    "titleSlug": "word-break",
+    "difficulty": "Medium",
+    "category": "Stack and Queue Part-II",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/cEadsbTeze4?si=olXYfOs7l-SEn2zl"
+  },
+  {
+    "title": "Z-Function",
+    "titleSlug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "difficulty": "Easy",
+    "category": "String Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "KMP algo / LPS(pi) array",
+    "titleSlug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "difficulty": "Easy",
+    "category": "String Part-II",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Preorder inorder postorder in a single traversal",
+    "titleSlug": "pre,-post,-inorder-in-one-traversal",
+    "difficulty": "Medium",
+    "category": "Binary Tree",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/ySp2epYvgTE"
+  },
+  {
+    "title": "0-1 Knapsack",
+    "titleSlug": "0-and-1-knapsack",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "leetcode",
+    "youtubeLink": "https://youtu.be/GqOmJHQZivw"
+  },
+  {
+    "title": "Word Break",
+    "titleSlug": "word-break",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming Part-II",
+    "platform": "leetcode"
+  }
+]

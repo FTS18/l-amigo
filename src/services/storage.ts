@@ -8,6 +8,7 @@ import {
 } from "../types";
 import { sanitizeUsername, extractUsernameFromUrl } from "../utils/sanitize";
 import { friendAddRateLimiter } from "../utils/rate-limiter";
+import { validateProfile } from "../utils/schema";
 
 const IDENTITIES_KEY = "friend_identities_v2";
 const PROFILE_V2_KEY_PREFIX = "profile:v2:";
@@ -66,9 +67,9 @@ export class StorageService {
   private static normalizeHandle(platform: Platform, handle: string): string {
     if (platform === "leetcode") {
       if (handle.includes("leetcode.com")) {
-        return extractUsernameFromUrl(handle).toLowerCase();
+        return extractUsernameFromUrl(handle);
       }
-      return sanitizeUsername(handle).toLowerCase();
+      return sanitizeUsername(handle);
     }
 
     const trimmed = handle.trim();
@@ -391,6 +392,21 @@ export class StorageService {
     await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
   }
 
+  static async restoreIdentity(
+    identity: FriendIdentity,
+    profiles: FriendProfile[],
+  ): Promise<void> {
+    await this.ensureMigration();
+    const identities = await this.getIdentities();
+    if (!identities.some((i) => i.id === identity.id)) {
+      identities.push(identity);
+      await this.saveIdentities(identities);
+    }
+    for (const profile of profiles) {
+      await this.saveProfile(profile);
+    }
+  }
+
   static async getFriends(): Promise<Friend[]> {
     const identities = await this.getIdentities();
     return identities.map((i) => this.toLegacyFriend(i));
@@ -399,9 +415,9 @@ export class StorageService {
   static async addFriend(username: string): Promise<void> {
     await this.ensureMigration();
 
-    if (!friendAddRateLimiter.canProceed()) {
+    if (!(await friendAddRateLimiter.canProceed())) {
       const waitTime = Math.ceil(
-        friendAddRateLimiter.getTimeUntilReset() / 1000,
+        (await friendAddRateLimiter.getTimeUntilReset()) / 1000,
       );
       throw new Error(`Rate limit exceeded. Please wait ${waitTime} seconds.`);
     }
@@ -520,6 +536,13 @@ export class StorageService {
 
   static async saveProfile(profile: FriendProfile): Promise<void> {
     await this.ensureMigration();
+
+    // Validate schema before persisting — rejects malformed / spoofed API data
+    const validated = validateProfile(profile);
+    if (!validated) {
+      console.warn('[StorageService] Rejected invalid profile:', profile?.username);
+      return;
+    }
     const platform = profile.platform || "leetcode";
     const username = this.normalizeHandle(platform, profile.username);
 
@@ -545,8 +568,6 @@ export class StorageService {
       index.push(ref);
       await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: index });
     }
-
-    this.cleanupProfiles(index).catch(console.error);
   }
 
   private static async getAllPlatformProfiles(): Promise<
@@ -575,7 +596,6 @@ export class StorageService {
   }
 
   private static async cleanupProfiles(index: string[]): Promise<void> {
-    // console.log("[StorageService.cleanupProfiles] Starting cleanup process. Input index:", index);
     const identities = await this.getIdentities();
     const allowedRefs = new Set<string>();
     identities.forEach((identity) => {
@@ -601,13 +621,11 @@ export class StorageService {
         this.profileRef("codechef", String(ownCodechefHandle).trim().toLowerCase()),
       );
     }
-    // console.log("[StorageService.cleanupProfiles] Allowed profile references:", Array.from(allowedRefs));
 
     // To prevent orphaned profiles that aren't even in the index, scan all chrome.storage.local keys
     const allStorage = await chrome.storage.local.get(null);
     const allStorageKeys = Object.keys(allStorage);
     const profileKeysInStorage = allStorageKeys.filter(key => key.startsWith(PROFILE_V2_KEY_PREFIX));
-    // console.log("[StorageService.cleanupProfiles] Profile keys currently in storage:", profileKeysInStorage);
 
     const toRemove: string[] = [];
 
@@ -615,7 +633,6 @@ export class StorageService {
     for (const key of profileKeysInStorage) {
       const refPart = key.slice(PROFILE_V2_KEY_PREFIX.length);
       if (!allowedRefs.has(refPart)) {
-        // console.log(`[StorageService.cleanupProfiles] Found orphaned profile in storage: ${key}. Queueing for removal.`);
         toRemove.push(key);
       }
     }
@@ -626,7 +643,6 @@ export class StorageService {
       if (allowedRefs.has(ref)) {
         newIndex.push(ref);
       } else {
-        // console.log(`[StorageService.cleanupProfiles] Found disallowed index entry: ${ref}`);
         const [platform, handle] = ref.split(":");
         const key = this.getProfileV2Key(platform as Platform, handle);
         if (!toRemove.includes(key)) {
@@ -636,13 +652,10 @@ export class StorageService {
     }
 
     if (toRemove.length > 0) {
-      // console.log("[StorageService.cleanupProfiles] Removing keys from storage:", toRemove);
       await chrome.storage.local.remove(toRemove);
     }
 
-    // console.log("[StorageService.cleanupProfiles] Updating profile index to:", newIndex);
     await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
-    // console.log("[StorageService.cleanupProfiles] Cleanup complete.");
   }
 
   static async getProfile(username: string): Promise<FriendProfile | null> {

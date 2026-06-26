@@ -8,6 +8,26 @@ export class CodeChefService {
     resetTimeout: 60000,
   });
 
+  static async verifyHandle(handle: string): Promise<boolean> {
+    return this.circuitBreaker.execute(async () => {
+      const url = `https://www.codechef.com/users/${handle}`;
+      const ctl = new AbortController();
+      const timer = setTimeout(
+        () => ctl.abort(),
+        API_CONSTANTS.REQUEST_TIMEOUT || 10000,
+      );
+      try {
+        const res = await fetch(url, { method: 'HEAD', signal: ctl.signal });
+        if (!res.ok) {
+          throw new Error("CodeChef user not found");
+        }
+        return true;
+      } finally {
+        clearTimeout(timer);
+      }
+    });
+  }
+
   static async fetchUserProfile(handle: string): Promise<FriendProfile> {
     return this.circuitBreaker.execute(async () => {
       const url = `https://www.codechef.com/users/${handle}`;

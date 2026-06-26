@@ -125,7 +125,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
           ? <ChevronDown size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
           : <ChevronRight size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} />}
         {recommendations.length > 0 && (
-          <span style={{ marginLeft: '4px', fontSize: '10px', color: 'var(--text-muted)', fontWeight: 400 }}>
+          <span style={{ marginLeft: '4px', fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontWeight: 400 }}>
             ({filteredRecs.length}{filteredRecs.length !== recommendations.length ? `/${recommendations.length}` : ''})
           </span>
         )}
@@ -148,7 +148,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                     onClick={() => setDiffFilter(d)}
                     style={{
                       padding: '3px 10px',
-                      fontSize: '10px',
+                      fontSize: 'var(--font-size-xs)',
                       fontWeight: 700,
                       borderRadius: '0',
                       border: `1.5px solid ${active ? diffColor(d) : 'var(--border-strong)'}`,
@@ -179,7 +179,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                     onClick={() => togglePlatform(p.key)}
                     style={{
                       padding: '3px 9px',
-                      fontSize: '10px',
+                      fontSize: 'var(--font-size-xs)',
                       fontWeight: 800,
                       borderRadius: '0',
                       border: `1.5px solid ${active ? p.color : 'var(--border-strong)'}`,
@@ -205,7 +205,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                 onClick={() => setShowAdvanced(s => !s)}
                 style={{
                   padding: '3px 8px',
-                  fontSize: '10px',
+                  fontSize: 'var(--font-size-xs)',
                   fontWeight: 700,
                   borderRadius: '0',
                   border: `1.5px solid ${showAdvanced ? 'var(--accent-codeforces-blue)' : 'var(--border-strong)'}`,
@@ -231,7 +231,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                   onClick={clearFilters}
                   style={{
                     padding: '3px 7px',
-                    fontSize: '10px',
+                    fontSize: 'var(--font-size-xs)',
                     fontWeight: 700,
                     borderRadius: '0',
                     border: '1.5px solid var(--color-hard)',
@@ -256,7 +256,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                 disabled={loading}
                 style={{
                   padding: '3px 7px',
-                  fontSize: '12px',
+                  fontSize: 'var(--font-size-base)',
                   borderRadius: '0',
                   border: '1.5px solid var(--border-strong)',
                   background: 'transparent',
@@ -286,7 +286,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                   border: '1px solid rgba(59,130,246,0.2)',
                 }}
               >
-                <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent-codeforces-blue)', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--accent-codeforces-blue)', whiteSpace: 'nowrap' }}>
                   CF Rating
                 </span>
                 <input
@@ -297,7 +297,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                   style={{
                     width: '64px',
                     padding: '4px 8px',
-                    fontSize: '11px',
+                    fontSize: 'var(--font-size-sm)',
                     borderRadius: '0',
                     border: '1.5px solid var(--border-strong)',
                     background: 'var(--bg-tertiary)',
@@ -307,7 +307,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                   }}
                   onKeyDown={e => { if (e.key === 'Enter') loadRecommendations(); }}
                 />
-                <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>–</span>
+                <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>–</span>
                 <input
                   type="number"
                   placeholder="Max"
@@ -316,7 +316,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                   style={{
                     width: '64px',
                     padding: '4px 8px',
-                    fontSize: '11px',
+                    fontSize: 'var(--font-size-sm)',
                     borderRadius: '0',
                     border: '1.5px solid var(--border-strong)',
                     background: 'var(--bg-tertiary)',
@@ -331,7 +331,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                     onClick={() => { setRatingMin(''); setRatingMax(''); }}
                     style={{
                       padding: '2px 6px',
-                      fontSize: '10px',
+                      fontSize: 'var(--font-size-xs)',
                       borderRadius: '0',
                       border: '1px solid var(--border)',
                       background: 'transparent',
@@ -343,7 +343,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                     Clear
                   </button>
                 )}
-                <span style={{ fontSize: '9px', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                <span style={{ fontSize: 'calc(0.9 * var(--font-size-xs))', color: 'var(--text-muted)', fontStyle: 'italic' }}>
                   (only applies to CF)
                 </span>
               </div>
@@ -363,7 +363,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
               color: 'var(--text-muted)', gap: '8px', margin: '8px 0', borderRadius: '0'
             }}>
               <FolderSearch size={28} style={{ opacity: 0.5, marginBottom: '4px' }} />
-              <p style={{ margin: 0, fontSize: '12px', fontWeight: 600 }}>
+              <p style={{ margin: 0, fontSize: 'var(--font-size-base)', fontWeight: 600 }}>
                 {recommendations.length === 0
                   ? 'No recommendations available yet'
                   : 'No problems match your filters'}
@@ -409,7 +409,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                           {/* CF Rating badge */}
                           {rec.platform === 'codeforces' && rec.rating && (
                             <span style={{
-                              fontSize: '9px',
+                              fontSize: 'calc(0.9 * var(--font-size-xs))',
                               fontWeight: 700,
                               padding: '1px 5px',
                               borderRadius: '0',

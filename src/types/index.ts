@@ -80,6 +80,7 @@ export interface RatingHistoryEntry {
   ranking?: number;
   timestamp: number; // in milliseconds
   contestId?: string | number;
+  delta?: number;
 }
 
 

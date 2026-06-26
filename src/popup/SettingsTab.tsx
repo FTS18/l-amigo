@@ -6,6 +6,7 @@ import { REFRESH_CONSTANTS } from '../constants';
 import { validateGitHubToken, validateRepositoryName } from '../utils/sanitize';
 import { sendMessageWithRetry } from '../utils/messaging';
 import { SyncEntry } from '../utils/import-restore';
+import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../utils/PlatformIcons';
 
 interface SettingsTabProps {
   onSync: () => void;
@@ -48,6 +49,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [syncDone, setSyncDone] = useState(0);
   const [syncTotal, setSyncTotal] = useState(0);
   const [syncError, setSyncError] = useState('');
+  const [debugInfo, setDebugInfo] = useState('');
   const [lastSyncTime, setLastSyncTime] = useState<number | null>(null);
 
   const [deviceFlowState, setDeviceFlowState] = useState<{
@@ -64,13 +66,20 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [isBackingUp, setIsBackingUp] = useState(false);
   const [syncHistory, setSyncHistory] = useState<SyncEntry[]>([]);
   
+  const handleClearSyncHistory = () => {
+    chrome.storage.local.remove('sync_history', () => {
+      setSyncHistory([]);
+    });
+  };
+
   // Collapsible sections state
   const [expanded, setExpanded] = useState({
     profile: true,
-    preferences: false,
-    data: false,
-    about: false,
-    shortcuts: false
+    preferences: true,
+    accessibility: true,
+    data: true,
+    about: true,
+    shortcuts: true
   });
 
   const toggleSection = (sec: keyof typeof expanded) => {
@@ -87,6 +96,26 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const [healthStatus, setHealthStatus] = useState<{ status: 'idle' | 'checking' | 'ok' | 'error'; message: string }>({ status: 'idle', message: '' });
   const [dailyGoal, setDailyGoal] = useState(3);
   const [cfDarkMode, setCfDarkMode] = useState(false);
+  const [fontSizeScale, setFontSizeScale] = useState(100);
+  const [displayZoomScale, setDisplayZoomScale] = useState(100);
+  const [showSyncInfo, setShowSyncInfo] = useState(false);
+
+  const handleFontSizeChange = (val: number) => {
+    setFontSizeScale(val);
+    chrome.storage.local.set({ font_size_scale: val });
+  };
+
+  const handleDisplayZoomChange = (val: number) => {
+    setDisplayZoomScale(val);
+    chrome.storage.local.set({ display_zoom_scale: val });
+  };
+
+  const handleResetAccessibility = () => {
+    setFontSizeScale(100);
+    setDisplayZoomScale(100);
+    chrome.storage.local.set({ font_size_scale: 100, display_zoom_scale: 100 });
+    if (onToast) onToast('Accessibility reset to default (100%)', 'success');
+  };
 
   // Poll sync status from storage while sync is running
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -108,8 +137,35 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     checkOngoingSync();
 
     const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes.last_backup_time) {
+      if (areaName !== 'local') return;
+      
+      // Live backup time update
+      if (changes.last_backup_time) {
         setLastBackupTime(changes.last_backup_time.newValue || null);
+      }
+      
+      // Live sync_status reconnect: if bg sync transitions to fetching/syncing, immediately start polling
+      if (changes.sync_status) {
+        const newStatus = changes.sync_status.newValue;
+        if (newStatus === 'fetching' || newStatus === 'syncing') {
+          setSyncPhase(newStatus);
+          startProgressPoll();
+        } else if (newStatus === 'idle') {
+          setSyncPhase('idle');
+          setSyncProgress('');
+          setSyncPct(0);
+          if (pollRef.current) clearInterval(pollRef.current);
+          // Refresh sync history
+          chrome.storage.local.get('sync_history').then(r => {
+            if (r.sync_history) setSyncHistory(r.sync_history);
+          });
+        } else if (newStatus === 'error') {
+          setSyncPhase('error');
+          chrome.storage.local.get('sync_error').then(r => {
+            setSyncError(r.sync_error || 'Unknown error');
+          });
+          if (pollRef.current) clearInterval(pollRef.current);
+        }
       }
     };
     chrome.storage.onChanged.addListener(handleStorageChange);
@@ -127,6 +183,12 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       'sync_progress_done', 'sync_progress_total', 'sync_error',
     ]);
     if (s.sync_status === 'fetching' || s.sync_status === 'syncing') {
+      const session = await chrome.storage.session.get("sync_in_progress");
+      if (!session.sync_in_progress) {
+        await chrome.storage.local.set({ sync_status: 'idle' });
+        setSyncPhase('idle');
+        return;
+      }
       setSyncPhase(s.sync_status);
       setSyncFetched(s.sync_progress_fetch || 0);
       setSyncDone(s.sync_progress_done || 0);
@@ -160,7 +222,9 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       'sync_history',
       'cf_dark_mode',
       'last_backup_time',
-      'daily_goal'
+      'daily_goal',
+      'font_size_scale',
+      'display_zoom_scale'
     ]);
     
     setNotificationsEnabled(settings.notifications_enabled ?? true);
@@ -173,16 +237,28 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     setCfDarkMode(settings.cf_dark_mode || false);
     setDailyGoal(settings.daily_goal || 3);
     setLastBackupTime(settings.last_backup_time || null);
+    setFontSizeScale(settings.font_size_scale ?? 100);
+    setDisplayZoomScale(settings.display_zoom_scale ?? 100);
   };
 
   // Start polling sync progress from chrome.storage.local
   const startProgressPoll = () => {
     if (pollRef.current) clearInterval(pollRef.current);
     pollRef.current = setInterval(async () => {
+      const session = await chrome.storage.session.get("sync_in_progress");
+      if (!session.sync_in_progress) {
+        await chrome.storage.local.set({ sync_status: 'idle' });
+        setSyncPhase('idle');
+        setSyncProgress('');
+        setSyncPct(0);
+        if (pollRef.current) clearInterval(pollRef.current);
+        return;
+      }
       const s = await chrome.storage.local.get([
         'sync_status', 'sync_progress_fetch',
-        'sync_progress_done', 'sync_progress_total', 'sync_error',
+        'sync_progress_done', 'sync_progress_total', 'sync_error', 'debug_sync_info',
       ]);
+      if (s.debug_sync_info) setDebugInfo(s.debug_sync_info);
       if (s.sync_status === 'fetching') {
         setSyncPhase('fetching');
         const f = s.sync_progress_fetch || 0;
@@ -227,6 +303,27 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       return;
     }
 
+    const requestGitHubPermissions = (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        if (!chrome?.permissions?.request) {
+          resolve(true);
+          return;
+        }
+        chrome.permissions.request({
+          origins: ['https://api.github.com/*', 'https://github.com/*']
+        }, (granted) => {
+          resolve(granted);
+        });
+      });
+    };
+
+    const granted = await requestGitHubPermissions();
+    if (!granted) {
+      const msg = 'GitHub host permissions are required to sync solutions.';
+      onToast ? onToast(msg, 'error') : alert(msg);
+      return;
+    }
+
     try {
       await GitHubSyncService.saveConfig({ token: token.trim() });
       setIsTokenSet(true);
@@ -244,6 +341,31 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const handleOAuthLogin = async () => {
     setSyncError('');
     setIsLoggingIn(true);
+
+    const requestGitHubOAuthPermissions = (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        if (!chrome?.permissions?.request) {
+          resolve(true);
+          return;
+        }
+        chrome.permissions.request({
+          permissions: ['identity'],
+          origins: ['https://api.github.com/*', 'https://github.com/*']
+        }, (granted) => {
+          resolve(granted);
+        });
+      });
+    };
+
+    const granted = await requestGitHubOAuthPermissions();
+    if (!granted) {
+      const msg = 'GitHub permissions are required to enable automatic syncing.';
+      setSyncError(msg);
+      onToast?.(msg, 'error');
+      setIsLoggingIn(false);
+      return;
+    }
+
     try {
       const state = await GitHubSyncService.requestDeviceCode();
       setDeviceFlowState(state);
@@ -323,7 +445,8 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     }
   };
 
-  const handleFullSync = async () => {
+  const handleFullSync = async (forceCfOnly: boolean | React.MouseEvent = false) => {
+    const isForceCf = forceCfOnly === true;
     if (!repoName.trim()) {
       const msg = 'Please enter a repository name';
       onToast ? onToast(msg, 'error') : alert(msg);
@@ -360,7 +483,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     startProgressPoll();
 
     try {
-      const response: any = await sendMessageWithRetry({ type: 'fullSync' });
+      const response: any = await sendMessageWithRetry({ type: 'fullSync', forceCfOnly: isForceCf });
 
       setIsConfigured(true);
       const config = await GitHubSyncService.getConfig();
@@ -382,6 +505,17 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     } finally {
       setSyncProgress('');
       if (pollRef.current) clearInterval(pollRef.current);
+      const s = await chrome.storage.local.get(['sync_status', 'sync_history']);
+      if (s.sync_status === 'idle') {
+        setSyncPhase('idle');
+        if (s.sync_history) setSyncHistory(s.sync_history);
+      } else if (s.sync_status === 'error') {
+        setSyncPhase('error');
+      } else {
+        await chrome.storage.local.set({ sync_status: 'idle' });
+        setSyncPhase('idle');
+        if (s.sync_history) setSyncHistory(s.sync_history);
+      }
     }
   };
 
@@ -436,7 +570,8 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     }
 
     try {
-      const handle = newCFHandle.trim().toLowerCase();
+      // CF handles are case-sensitive — preserve the user's casing exactly
+      const handle = newCFHandle.trim();
       await chrome.storage.local.set({ own_codeforces_handle: handle });
       if (onCodeforcesHandleChange) {
         onCodeforcesHandleChange(handle);
@@ -468,8 +603,25 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   };
 
   const handleNotificationsToggle = async (enabled: boolean) => {
-    setNotificationsEnabled(enabled);
-    await chrome.storage.local.set({ notifications_enabled: enabled });
+    if (enabled) {
+      if (chrome?.permissions?.request) {
+        chrome.permissions.request({ permissions: ['notifications'] }, async (granted) => {
+          if (granted) {
+            setNotificationsEnabled(true);
+            await chrome.storage.local.set({ notifications_enabled: true });
+          } else {
+            setNotificationsEnabled(false);
+            onToast?.('Notifications permission was denied.', 'error');
+          }
+        });
+      } else {
+        setNotificationsEnabled(true);
+        await chrome.storage.local.set({ notifications_enabled: true });
+      }
+    } else {
+      setNotificationsEnabled(false);
+      await chrome.storage.local.set({ notifications_enabled: false });
+    }
   };
 
   const handleAutoRefreshToggle = async (enabled: boolean) => {
@@ -517,6 +669,15 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
     }, 'Clear All Data', 'Clear all extension data? This will remove all friends and profiles. This action cannot be undone.');
   };
 
+  const handleForceFullSync = () => {
+    if (!onConfirmAction) return;
+    onConfirmAction(async () => {
+      await chrome.storage.local.remove('all_accepted_submissions');
+      onToast?.('Cleared sync cache. Starting full sync...', 'info');
+      handleFullSync(true);
+    }, 'Force Full Sync', 'This will clear your local sync cache and re-fetch all submissions from LeetCode and Codeforces. Are you sure?');
+  };
+
   const formatLastSync = () => {
     if (!lastSyncTime) return 'Never';
     const date = new Date(lastSyncTime);
@@ -526,6 +687,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
   const renderSectionHeader = (id: keyof typeof expanded, title: React.ReactNode) => (
     <div
       onClick={() => toggleSection(id)}
+      title="Click to expand/collapse section"
       className={`settings-section-header${expanded[id] ? ' settings-section-header--expanded' : ''}`}
     >
       <h3 className="settings-title settings-title--no-margin">{title}</h3>
@@ -542,7 +704,11 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         {expanded.profile && (
           <div className="settings-section-content">
             <div className="settings-item">
-              <label className="settings-label">Your LeetCode Username</label>
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <LeetCodeIcon size={16} />
+                <span>Your LeetCode Username</span>
+                <span title="Your personal LeetCode username. Excludes you from friend comparisons and enables relative progress tracking." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="settings-hint">
                 Current: {ownUsername || 'Not set'}
               </p>
@@ -561,7 +727,11 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             </div>
 
             <div className="settings-item">
-              <label className="settings-label">Your Codeforces Handle</label>
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CodeforcesIcon size={16} />
+                <span>Your Codeforces Handle</span>
+                <span title="Your personal Codeforces handle (case-sensitive). Links your real-time practice sessions." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="settings-hint">
                 Current: {ownCodeforcesHandle || 'Not set'}
               </p>
@@ -580,7 +750,11 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             </div>
 
             <div className="settings-item">
-              <label className="settings-label">Your CodeChef Handle</label>
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CodeChefIcon size={16} />
+                <span>Your CodeChef Handle</span>
+                <span title="Your personal CodeChef handle. Tracks your official star rating and contest attendance." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="settings-hint">
                 Current: {ownCodechefHandle || 'Not set'}
               </p>
@@ -597,6 +771,34 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                 </button>
               </div>
             </div>
+
+            <div style={{ marginTop: '24px' }}>
+              <button
+                onClick={() => setShowSyncInfo(!showSyncInfo)}
+                style={{
+                  width: '100%',
+                  padding: '10px 16px',
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-strong)',
+                  borderRadius: '0px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  fontSize: 'var(--font-size-base)',
+                  color: showSyncInfo ? '#ffa116' : 'var(--text-secondary)'
+                }}
+              >
+                <span>ⓘ How Multi-Platform Sync Works</span>
+                <span>{showSyncInfo ? '▲' : '▼'}</span>
+              </button>
+              {showSyncInfo && (
+                <div style={{ padding: '12px 16px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', borderTop: 'none', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
+                  LeetCode sync requires an active logged-in session in your browser (utilizing <code>.leetcode.com</code> cookies). Codeforces and CodeChef fetch data directly via public APIs and web scraping using your configured handles.
+                </div>
+              )}
+            </div>
           </div>
         )}
       </section>
@@ -610,7 +812,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             <div className="settings-item">
               <div className="settings-toggle">
                 <div>
-                  <label className="settings-label">Dark Mode</label>
+                  <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Dark Mode</span>
+                    <span title="Toggles the interface color scheme between sleek dark mode and bright light mode." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  </label>
                   <p className="settings-hint">Switch between light and dark theme</p>
                 </div>
                 <label className="toggle-switch">
@@ -627,7 +832,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             <div className="settings-item">
               <div className="settings-toggle">
                 <div>
-                  <label className="settings-label">Notifications</label>
+                  <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Notifications</span>
+                    <span title="Triggers rich system notifications whenever a tracked friend successfully submits a new accepted problem." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  </label>
                   <p className="settings-hint">Get notified when friends solve problems</p>
                 </div>
                 <label className="toggle-switch">
@@ -644,7 +852,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             <div className="settings-item">
               <div className="settings-toggle">
                 <div>
-                  <label className="settings-label">Auto Refresh</label>
+                  <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Auto Refresh</span>
+                    <span title="Keeps your friends' statistics and submission feeds perfectly up to date in the background without needing to open the extension." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  </label>
                   <p className="settings-hint">Automatically refresh friend data in background</p>
                 </div>
                 <label className="toggle-switch">
@@ -660,7 +871,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
             {autoRefresh && (
               <div className="settings-item">
-                <label className="settings-label">Refresh Interval</label>
+                <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>Refresh Interval</span>
+                  <span title="Determines how frequently background synchronization checks for new problem solves." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                </label>
                 <select
                   value={refreshInterval}
                   onChange={(e) => handleRefreshIntervalChange(Number(e.target.value))}
@@ -677,7 +891,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
             <div className="settings-item toggle-row">
               <div className="toggle-info">
-                <label className="settings-label">Codeforces Dark Mode</label>
+                <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>Codeforces Dark Mode</span>
+                  <span title="Injects a premium dark theme directly into Codeforces.com pages so your entire browsing experience matches L'Amigo." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                </label>
                 <p className="settings-hint">Enable experimental dark mode for Codeforces.com</p>
               </div>
               <div className="toggle-wrapper">
@@ -696,7 +913,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             </div>
 
             <div className="settings-item">
-              <label className="settings-label">Daily Solve Goal</label>
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Daily Solve Goal</span>
+                <span title="Your target number of problems to solve each day. Fuels the visual progress bar on the overview tab." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="settings-hint">Set your daily target for the progress bar</p>
               <div className="settings-input-group settings-input-group-small">
                 <input
@@ -714,6 +934,81 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         )}
       </section>
 
+      {/* Accessibility & Display */}
+      <section className="settings-section">
+        {renderSectionHeader('accessibility', 'Accessibility & Display')}
+        
+        {expanded.accessibility && (
+          <div className="settings-section-content">
+            <div className="settings-item">
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Font Size Scale ({fontSizeScale}%)</span>
+                <span title="Dynamically scales all text elements across the extension and dashboard for improved readability and accessibility." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
+              <p className="settings-hint">Adjust text size across the entire application (80% - 150%)</p>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '8px' }}>
+                <input
+                  type="range"
+                  min="80"
+                  max="150"
+                  step="5"
+                  value={fontSizeScale}
+                  onChange={(e) => handleFontSizeChange(Number(e.target.value))}
+                  style={{ flex: 1, accentColor: 'var(--color-easy)', cursor: 'pointer' }}
+                />
+                <input
+                  type="number"
+                  min="80"
+                  max="150"
+                  value={fontSizeScale}
+                  onChange={(e) => handleFontSizeChange(Number(e.target.value))}
+                  style={{ width: '70px', padding: '6px', border: '1px solid var(--border-strong)', background: 'var(--bg-primary)', color: 'var(--text-primary)', borderRadius: '0px', textAlign: 'center', fontSize: 'var(--font-size-base)', fontWeight: 600 }}
+                />
+                <span style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-muted)', fontWeight: 600 }}>%</span>
+              </div>
+            </div>
+
+            <div className="settings-item">
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Display Size / UI Zoom ({displayZoomScale}%)</span>
+                <span title="Adjusts the overall density and layout zoom of the entire user interface, similar to browser zoom." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
+              <p className="settings-hint">Scale the entire interface density and layout zoom (80% - 130%)</p>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '8px' }}>
+                <input
+                  type="range"
+                  min="80"
+                  max="130"
+                  step="5"
+                  value={displayZoomScale}
+                  onChange={(e) => handleDisplayZoomChange(Number(e.target.value))}
+                  style={{ flex: 1, accentColor: 'var(--color-easy)', cursor: 'pointer' }}
+                />
+                <input
+                  type="number"
+                  min="80"
+                  max="130"
+                  value={displayZoomScale}
+                  onChange={(e) => handleDisplayZoomChange(Number(e.target.value))}
+                  style={{ width: '70px', padding: '6px', border: '1px solid var(--border-strong)', background: 'var(--bg-primary)', color: 'var(--text-primary)', borderRadius: '0px', textAlign: 'center', fontSize: 'var(--font-size-base)', fontWeight: 600 }}
+                />
+                <span style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-muted)', fontWeight: 600 }}>%</span>
+              </div>
+            </div>
+
+            <div className="settings-actions" style={{ marginTop: '16px' }}>
+              <button
+                onClick={handleResetAccessibility}
+                className="settings-btn settings-btn-secondary"
+                style={{ width: '100%', borderRadius: '0px' }}
+              >
+                Reset to Default (100%)
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+
       {/* Data Management */}
       <section className="settings-section">
         {renderSectionHeader('data', 'Data Management')}
@@ -723,7 +1018,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             <h4 className="settings-subsection-title">GitHub Backup</h4>
             {!isTokenSet ? (
               <div className="settings-item">
-                <label className="settings-label">Step 1: Connect GitHub Account</label>
+                <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>Step 1: Connect GitHub Account</span>
+                  <span title="Authorizes L'Amigo to sync your successful problem solutions directly to a private or public GitHub repository." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                </label>
                 <p className="settings-hint">
                   Link your GitHub account via Device Flow or use a Personal Access Token below.
                 </p>
@@ -733,24 +1031,24 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                       {isLoggingIn ? 'Connecting...' : 'Login with GitHub'}
                     </button>
                   ) : (
-                    <div style={{ padding: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '4px', textAlign: 'center' }}>
-                      <p style={{ margin: '0 0 8px', fontSize: '13px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', textAlign: 'center' }}>
+                      <p style={{ margin: '0 0 8px', fontSize: 'var(--font-size-md)' }}>
                         1. Open <a href={deviceFlowState.verification_uri} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 'bold', textDecoration: 'underline' }}>github.com/login/device</a>
                       </p>
-                      <p style={{ margin: '0 0 12px', fontSize: '13px' }}>
+                      <p style={{ margin: '0 0 12px', fontSize: 'var(--font-size-md)' }}>
                         2. Enter code:
                       </p>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '2px', margin: '8px 0', color: 'var(--text-primary)', background: 'var(--bg-primary)', padding: '8px', border: '1px solid var(--border)' }}>
+                      <div style={{ fontSize: 'calc(2 * var(--font-size-base))', fontWeight: 'bold', letterSpacing: '2px', margin: '8px 0', color: 'var(--text-primary)', background: 'var(--bg-primary)', padding: '8px', border: '1px solid var(--border)' }}>
                         {deviceFlowState.user_code}
                       </div>
-                      <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: '8px 0 0' }}>
+                      <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-muted)', margin: '8px 0 0' }}>
                         Waiting for authorization...
                       </p>
                       <button
                         type="button"
                         onClick={cancelDeviceFlow}
                         className="settings-btn"
-                        style={{ marginTop: '12px', padding: '6px 12px', fontSize: '12px', width: 'auto' }}
+                        style={{ marginTop: '12px', padding: '6px 12px', fontSize: 'var(--font-size-base)', width: 'auto' }}
                       >
                         Cancel
                       </button>
@@ -786,7 +1084,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                   <p className="settings-status connected">Token Connected</p>
                 </div>
                 <div className="settings-item">
-                  <label className="settings-label">Step 2: Repository Name</label>
+                  <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Step 2: Repository Name</span>
+                    <span title="The target repository on your GitHub account where your accepted solutions and automatic backup configurations will be stored." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  </label>
                   <p className="settings-hint">
                     Enter a name for your repository (will be created automatically). All your solved problems will be synced here.
                   </p>
@@ -842,7 +1143,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             ) : (
               <>
                 <div className="settings-item">
-                  <label className="settings-label">Repository</label>
+                  <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Repository</span>
+                    <span title="Your active GitHub sync repository. Background listeners will automatically commit new accepted submissions here." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  </label>
                   <p className="settings-hint">{repoName || 'Not set'}</p>
                   <p className="settings-status connected">✓ Active - Auto-syncing in background</p>
                   {lastSyncTime && <p className="settings-hint">Last sync: {formatLastSync()}</p>}
@@ -855,7 +1159,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                 </div>
 
                 <div className="settings-item">
-                  <label className="settings-label">Change Repository</label>
+                  <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>Change Repository</span>
+                    <span title="Switch synchronization to a different repository. Future submissions will begin syncing to the new target." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  </label>
                   <p className="settings-hint">
                     Update repository name (new problems will sync here)
                   </p>
@@ -893,6 +1200,13 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                     {syncButtonLabel}
                   </button>
                   <button 
+                    onClick={handleForceFullSync}
+                    disabled={isSyncingNow || !repoName.trim()}
+                    className="settings-btn settings-btn-secondary"
+                  >
+                    Force Full Sync
+                  </button>
+                  <button 
                     onClick={handleDisconnect}
                     className="settings-btn settings-btn-secondary"
                   >
@@ -924,15 +1238,36 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                 {syncPhase === 'error' && (
                   <p className="sync-progress-text sync-error-text">⚠ {syncError}</p>
                 )}
+                {debugInfo && (
+                  <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontFamily: 'monospace', marginTop: '4px', padding: '4px 6px', background: 'var(--bg-tertiary)', borderRadius: '0px', wordBreak: 'break-all' }}>
+                    🔍 {debugInfo}
+                  </p>
+                )}
+
+                <div style={{ margin: '16px 0', padding: '12px 16px', background: 'rgba(59,130,246,0.1)', borderLeft: '4px solid var(--accent-codeforces-blue)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', fontWeight: 600, color: 'var(--accent-codeforces-blue)' }}>
+                    <span>⚡</span> Codeforces & CodeChef Sync Notice
+                  </div>
+                  Due to strict API rate limits on Codeforces and aggressive bot protections on CodeChef, fetching historical submission code in bulk can trigger temporary rate limits or pauses. L'Amigo automatically throttles requests and pauses when secondary rate limits are encountered to protect your account. New submissions will be automatically detected and synced in real-time as you submit them!
+                </div>
 
                 {/* ── Sync History ── */}
                 {syncHistory.length > 0 && (
-                  <div className="sync-history-section">
-                    <h4 className="settings-subsection-title sync-history-title">Recent Syncs</h4>
-                    <div className="sync-history-list sync-history-list--grid">
-                      {/* Show pagination / improved spacing */}
-                      {syncHistory.slice(0, 10).map((entry, idx) => (
-                        <div key={idx} className="sync-history-item sync-history-item--card">
+                  <div className="sync-history-section" style={{ overflow: 'hidden', width: '100%', boxSizing: 'border-box' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <h4 className="settings-subsection-title sync-history-title" style={{ margin: 0 }}>Recent Syncs</h4>
+                      <button 
+                        onClick={handleClearSyncHistory}
+                        style={{ background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-muted)', fontSize: 'var(--font-size-sm)', padding: '2px 8px', borderRadius: '0px', cursor: 'pointer' }}
+                        title="Clear sync log history"
+                      >
+                        Clear History
+                      </button>
+                    </div>
+                    <div className="sync-history-list" style={{ overflow: 'hidden', width: '100%', boxSizing: 'border-box' }}>
+                      {/* Show compact 5 items */}
+                      {syncHistory.slice(0, 5).map((entry, idx) => (
+                        <div key={idx} className="sync-history-item sync-history-item--card" style={{ overflow: 'hidden', width: '100%', boxSizing: 'border-box' }}>
                           <div className="sync-history-meta">
                             <span className="sync-history-date">
                               {new Date(entry.timestamp).toLocaleDateString()} {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -942,7 +1277,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
                             </span>
                           </div>
                           {entry.problems && entry.problems.length > 0 && (
-                            <p className="sync-history-details">
+                            <p className="sync-history-details" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%', display: 'block', boxSizing: 'border-box' }}>
                               {entry.problems.slice(0, 4).join(', ')}{entry.problems.length > 4 ? ` + ${entry.problems.length - 4} more` : ''}
                             </p>
                           )}
@@ -962,7 +1297,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
             <h4 className="settings-subsection-title">Storage Cleanup</h4>
             <div className="settings-item">
-              <label className="settings-label">Local Data Backup</label>
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Local Data Backup</span>
+                <span title="Allows you to export your current friends list and configuration to a portable JSON file, or import from an existing backup." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="settings-hint">Export or import your full friends list and app settings via the Import/Export panel</p>
               <div className="settings-actions">
                 <button 
@@ -977,7 +1315,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
             <hr className="settings-subsection-divider" />
 
             <div className="settings-item">
-              <label className="settings-label">Clear All Data</label>
+              <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Clear All Data</span>
+                <span title="Wipes all locally cached submissions, tracked friends, and custom configurations. This action is irreversible." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="settings-hint">Remove all friends, profiles, and settings</p>
               <button 
                 onClick={handleClearData}

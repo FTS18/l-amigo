@@ -1,0 +1,702 @@
+[
+  {
+    "title": "3B - Lorry",
+    "titleSlug": "3B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "5C - Longest Regular Bracket Sequence",
+    "titleSlug": "5C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "6E - Exposition",
+    "titleSlug": "6E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "9D - How many trees?",
+    "titleSlug": "9D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "14E - Camels",
+    "titleSlug": "14E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "14D - Two Paths",
+    "titleSlug": "14D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "16E - Fish",
+    "titleSlug": "16E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "16D - Logging",
+    "titleSlug": "16D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "19B - Checkout Assistant",
+    "titleSlug": "19B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "20C - Dijkstra?",
+    "titleSlug": "20C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "21A - Jabber ID",
+    "titleSlug": "21A",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "22D - Segments",
+    "titleSlug": "22D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "25D - Roads not only in Berland",
+    "titleSlug": "25D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "25C - Roads in Berland",
+    "titleSlug": "25C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "27C - Unordered Subsequence",
+    "titleSlug": "27C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "37C - Old Berland Language",
+    "titleSlug": "37C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "38D - Vasya the Architect",
+    "titleSlug": "38D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "41E - 3-cycles",
+    "titleSlug": "41E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "41D - Pawn",
+    "titleSlug": "41D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45D - Event Dates",
+    "titleSlug": "45D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45C - Dancing Lessons",
+    "titleSlug": "45C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "46E - Comb",
+    "titleSlug": "46E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "55C - Pie or die",
+    "titleSlug": "55C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "57C - Array",
+    "titleSlug": "57C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "61E - Enemy is weak",
+    "titleSlug": "61E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "63D - Dividing Island",
+    "titleSlug": "63D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "67D - Optical Experiment",
+    "titleSlug": "67D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "69D - Dot",
+    "titleSlug": "69D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "72F - Oil",
+    "titleSlug": "72F",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "93B - End of Exams",
+    "titleSlug": "93B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "95C - Volleyball",
+    "titleSlug": "95C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "103C - Russian Roulette",
+    "titleSlug": "103C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "109C - Lucky Tree",
+    "titleSlug": "109C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "109B - Lucky Probability",
+    "titleSlug": "109B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "111B - Petya and Divisors",
+    "titleSlug": "111B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "118C - Fancy Number",
+    "titleSlug": "118C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "119B - Before Exam",
+    "titleSlug": "119B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "120J - Minimum Sum",
+    "titleSlug": "120J",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "121C - Lucky Permutation",
+    "titleSlug": "121C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "126A - Hot Bath",
+    "titleSlug": "126A",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "134B - Pairs of Numbers",
+    "titleSlug": "134B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "135C - Zero-One",
+    "titleSlug": "135C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "137D - Palindromes",
+    "titleSlug": "137D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "138B - Digits Permutations",
+    "titleSlug": "138B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "144D - Missile Silos",
+    "titleSlug": "144D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "148E - Porcelain",
+    "titleSlug": "148E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "149D - Coloring Brackets",
+    "titleSlug": "149D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "158E - Phone Talks",
+    "titleSlug": "158E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "162D - Remove digits",
+    "titleSlug": "162D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "173C - Spiral Maximum",
+    "titleSlug": "173C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "177E2 - Space Voyage",
+    "titleSlug": "177E2",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178E1 - The Beaver's Problem - 2",
+    "titleSlug": "178E1",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178D2 - Magic Squares",
+    "titleSlug": "178D2",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178C2 - Smart Beaver and Resolving Collisions",
+    "titleSlug": "178C2",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "180D - Name",
+    "titleSlug": "180D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "190D - Non-Secret Cypher",
+    "titleSlug": "190D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "191C - Fools and Roads",
+    "titleSlug": "191C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "195D - Analyzing Polyline",
+    "titleSlug": "195D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "199B - Special Olympics",
+    "titleSlug": "199B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207B2 - Military Trainings",
+    "titleSlug": "207B2",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "208C - Police Station",
+    "titleSlug": "208C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "208B - Solitaire",
+    "titleSlug": "208B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "213B - Numbers",
+    "titleSlug": "213B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "215D - Hot Days",
+    "titleSlug": "215D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "222E - Decoding Genome",
+    "titleSlug": "222E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "222D - Olympiad",
+    "titleSlug": "222D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "223C - Partial Sums",
+    "titleSlug": "223C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "223B - Two Strings",
+    "titleSlug": "223B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "226B - Naughty Stone Piles",
+    "titleSlug": "226B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "228E - The Road to Berland is Paved With Good Intentions",
+    "titleSlug": "228E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "229C - Triangles",
+    "titleSlug": "229C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "232B - Table",
+    "titleSlug": "232B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "241G - Challenging Balloons",
+    "titleSlug": "241G",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "250D - Building Bridge",
+    "titleSlug": "250D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "257D - Sum",
+    "titleSlug": "257D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "258B - Little Elephant and Elections",
+    "titleSlug": "258B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "261B - Maxim and Restaurant",
+    "titleSlug": "261B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "279E - Beautiful Decomposition",
+    "titleSlug": "279E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "285D - Permutation Sum",
+    "titleSlug": "285D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "292E - Copying Data",
+    "titleSlug": "292E",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "292D - Connected Components",
+    "titleSlug": "292D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "294C - Shaass and Lights",
+    "titleSlug": "294C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "309C - Memory for Arrays",
+    "titleSlug": "309C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "319B - Psychos in a Line",
+    "titleSlug": "319B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "321B - Ciel and Duel",
+    "titleSlug": "321B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "327D - Block Tower",
+    "titleSlug": "327D",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "331B2 - Shave Beaver!",
+    "titleSlug": "331B2",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "335B - Palindrome",
+    "titleSlug": "335B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "336B - Vasily the Bear and Fly",
+    "titleSlug": "336B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "342C - Cupboard and Balloons",
+    "titleSlug": "342C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "343C - Read Time",
+    "titleSlug": "343C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "351B - Jeff and Furik",
+    "titleSlug": "351B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "353B - Two Heaps",
+    "titleSlug": "353B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "356B - Xenia and Hamming",
+    "titleSlug": "356B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "359C - Prime Number",
+    "titleSlug": "359C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "362C - Insertion Sort",
+    "titleSlug": "362C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "366C - Dima and Salad",
+    "titleSlug": "366C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "367B - Sereja ans Anagrams",
+    "titleSlug": "367B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "372B - Counting Rectangles is Fun",
+    "titleSlug": "372B",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "374C - Inna and Dima",
+    "titleSlug": "374C",
+    "difficulty": "Hard",
+    "category": "1900 Rating",
+    "platform": "codeforces"
+  }
+]

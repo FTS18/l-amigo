@@ -3,6 +3,7 @@ import { RefreshCw, MoreVertical, ChevronUp, X } from 'lucide-react';
 import { Friend, FriendProfile, Platform, RecentSubmission } from '../types';
 import { StreakCalculator } from '../services/streak';
 import { SkeletonList } from './Skeleton';
+import { PlatformIcon } from '../utils/PlatformIcons';
 
 const getProfileQualityHue = (p: FriendProfile) => {
   const { easy, medium, hard, total } = p.problemsSolved;
@@ -111,6 +112,7 @@ interface FriendCardProps {
   refreshing?: boolean;
   isDarkMode?: boolean;
   isOwn?: boolean;
+  platformFilters?: Platform[];
 }
 
 export const FriendCard: React.FC<FriendCardProps> = ({ 
@@ -125,7 +127,8 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   onViewProfile,
   refreshing, 
   isDarkMode, 
-  isOwn 
+  isOwn,
+  platformFilters
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -152,13 +155,23 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   const cf = codeforcesProfile || (profile.platform === 'codeforces' ? profile : undefined);
   const cc = codechefProfile || (profile.platform === 'codechef' ? profile : undefined);
 
-  // useMemo ensures the default platform is computed once and doesn't flicker on re-renders
-  const defaultPlatform = useMemo<Platform>(
-    () => lc ? 'leetcode' : cf ? 'codeforces' : 'codechef',
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  // useMemo ensures the default platform respects active filters
+  const defaultPlatform = useMemo<Platform>(() => {
+    const allowed = platformFilters || ['leetcode', 'codeforces', 'codechef'];
+    // Prefer the explicitly selected filters in priority order
+    if (allowed.includes('leetcode') && lc) return 'leetcode';
+    if (allowed.includes('codeforces') && cf) return 'codeforces';
+    if (allowed.includes('codechef') && cc) return 'codechef';
+    // Fallback if none of the allowed platforms exist for this user
+    return lc ? 'leetcode' : cf ? 'codeforces' : 'codechef';
+  }, [platformFilters, lc, cf, cc]);
+
   const [localActivePlatform, setLocalActivePlatform] = useState<Platform>(defaultPlatform);
+
+  // Sync active platform if filters change
+  React.useEffect(() => {
+    setLocalActivePlatform(defaultPlatform);
+  }, [defaultPlatform]);
 
   const activeProfile = localActivePlatform === 'codeforces' ? (cf || profile) : localActivePlatform === 'codechef' ? (cc || profile) : (lc || profile);
   const streak = StreakCalculator.calculateStreak(activeProfile);
@@ -203,11 +216,18 @@ export const FriendCard: React.FC<FriendCardProps> = ({
       <div className="card-main-row">
         <div className="card-left-section">
           <div className="user-header-compact">
-            {activeProfile.avatar ? (
-              <img src={activeProfile.avatar} alt={friend.displayName} className="avatar-mini" />
-            ) : (
-              <div className="avatar-placeholder">{friend.displayName?.[0] || friend.username[0]}</div>
-            )}
+            <div className="avatar-container" style={{ position: 'relative', flexShrink: 0 }}>
+              <div className="avatar-placeholder">{friend.displayName?.[0]?.toUpperCase() || friend.username[0]?.toUpperCase()}</div>
+              {activeProfile.avatar && (
+                <img
+                  src={activeProfile.avatar}
+                  alt={friend.displayName}
+                  className="avatar-mini"
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+              )}
+            </div>
 
             <div className="user-identity-box">
               <div className="name-streak-row">
@@ -215,7 +235,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                   {friend.displayName || friend.username}
                 </span>
                 {streak.currentStreak > 0 && (
-                  <span className="mini-streak" title="Current Streak">{streak.currentStreak}</span>
+                  <span className="mini-streak" title="Active Streak: Consecutive days with at least 1 accepted submission across active platforms (calculated in local time).">{streak.currentStreak}</span>
                 )}
               </div>
               
@@ -228,21 +248,32 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                   const color = accProfile ? getPlatformRankColor(accProfile) : 'var(--bg-tertiary)';
                   const isActive = localActivePlatform === account.platform;
 
+                  let monochromeMode: 'white' | 'black' = 'white';
+                  if (!isDarkMode) {
+                    if (!isActive || !label || label.toLowerCase() === 'newbie' || label.toLowerCase() === 'unrated') {
+                      monochromeMode = 'black';
+                    }
+                  }
+
                   return (
                     <div 
                       key={account.platform} 
                       className={`platform-tag-pill ${isActive ? 'active-tag' : 'inactive-tag'}`} 
                       style={{ 
                         backgroundColor: isActive ? (color === 'inherit' ? 'var(--bg-tertiary)' : color) : 'var(--bg-pill-inactive)',
-                        borderColor: isActive ? 'var(--border-pill-active)' : 'transparent'
+                        borderColor: isActive ? 'var(--border-pill-active)' : 'transparent',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
                       }}
                       onClick={(e) => {
                         e.stopPropagation();
                         setLocalActivePlatform(account.platform || 'leetcode');
                       }}
+                      title={rating ? `Rating: ${rating} (${label || 'Unrated'}). Click to switch active platform view.` : `Platform: ${account.platform}. Click to switch active platform view.`}
                     >
-                      <span className="tag-platform-name">
-                        {account.platform === 'leetcode' ? 'LC' : account.platform === 'codechef' ? 'CC' : 'CF'}
+                      <span className="tag-platform-name" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        <PlatformIcon platform={account.platform || 'leetcode'} size={14} monochrome={monochromeMode} />
                       </span>
                       {rating && (
                         <span className="tag-rating-val">{rating}</span>
@@ -250,6 +281,16 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                       {label && (
                         <span className="tag-rank-label">{label}</span>
                       )}
+                      <a 
+                        href={account.platform === 'leetcode' ? `https://leetcode.com/${account.handle}` : account.platform === 'codeforces' ? `https://codeforces.com/profile/${account.handle}` : `https://www.codechef.com/users/${account.handle}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ color: 'inherit', textDecoration: 'none', marginLeft: '2px', opacity: 0.8, fontSize: 'var(--font-size-base)', fontWeight: 'bold' }}
+                        title={`Open ${account.platform} profile (${account.handle})`}
+                      >
+                        ↗
+                      </a>
                     </div>
                   );
                 })}
@@ -267,18 +308,20 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                 onRefresh(friend);
               }}
               disabled={refreshing}
-              title="Refresh"
+              title="Refresh profile data from official API"
             >
               {refreshing ? <RefreshCw size={14} className="spin" /> : <RefreshCw size={14} />}
             </button>
           )}
-          <div className="friend-menu-wrap">
+          {!isOwn && (
+            <div className="friend-menu-wrap">
             <button
               className="mini-action-btn"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowMenu((s) => !s);
               }}
+              title="More actions (Edit / Remove)"
             >
               <MoreVertical size={14} />
             </button>
@@ -295,6 +338,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               </div>
             )}
           </div>
+          )}
         </div>
       </div>
 
@@ -307,7 +351,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               borderColor: `color-mix(in srgb, ${getProfileQualityColor(activeProfile, !!isDarkMode)} 40%, transparent)`,
               color: getProfileQualityColor(activeProfile, !!isDarkMode)
             }}
-            title="Total Solved (Color based on Difficulty Balance)"
+            title="Total Solved (Color dynamically calculated based on Hard/Medium/Easy difficulty balance)"
             onClick={(e) => {
               e.stopPropagation();
               onViewProfile?.(localActivePlatform, 'all');
@@ -323,33 +367,36 @@ export const FriendCard: React.FC<FriendCardProps> = ({
 
           <div 
             className="stats-item easy-box-item easy-box"
+            title={localActivePlatform === 'codeforces' ? 'Codeforces rating < 1200' : localActivePlatform === 'codechef' ? 'CodeChef Beginner level' : 'LeetCode Easy difficulty'}
             onClick={(e) => {
               e.stopPropagation();
               onViewProfile?.(localActivePlatform, 'Easy');
             }}
           >
             <span className="stats-val">{activeProfile.problemsSolved.easy}</span>
-            <span className="stats-lbl">Easy</span>
+            <span className="stats-lbl">{localActivePlatform === 'codeforces' ? '<1200' : localActivePlatform === 'codechef' ? 'Beginner' : 'Easy'}</span>
           </div>
           <div 
             className="stats-item med-box-item med-box"
+            title={localActivePlatform === 'codeforces' ? 'Codeforces rating 1200 - 1900' : localActivePlatform === 'codechef' ? 'CodeChef Intermediate level' : 'LeetCode Medium difficulty'}
             onClick={(e) => {
               e.stopPropagation();
               onViewProfile?.(localActivePlatform, 'Medium');
             }}
           >
             <span className="stats-val">{activeProfile.problemsSolved.medium}</span>
-            <span className="stats-lbl">Med</span>
+            <span className="stats-lbl">{localActivePlatform === 'codeforces' ? '1200-1900' : localActivePlatform === 'codechef' ? 'Intermediate' : 'Med'}</span>
           </div>
           <div 
             className="stats-item hard-box-item hard-box"
+            title={localActivePlatform === 'codeforces' ? 'Codeforces rating > 1900' : localActivePlatform === 'codechef' ? 'CodeChef Advanced level' : 'LeetCode Hard difficulty'}
             onClick={(e) => {
               e.stopPropagation();
               onViewProfile?.(localActivePlatform, 'Hard');
             }}
           >
             <span className="stats-val">{activeProfile.problemsSolved.hard}</span>
-            <span className="stats-lbl">Hard</span>
+            <span className="stats-lbl">{localActivePlatform === 'codeforces' ? '>1900' : localActivePlatform === 'codechef' ? 'Advanced' : 'Hard'}</span>
           </div>
         </div>
       </div>
@@ -388,40 +435,36 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                 }
 
                 return (
-                  <li key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 0', fontSize: '11px' }}>
+                  <li key={`${sub.platform}-${sub.submissionId || sub.titleSlug}-${sub.timestamp}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 0', fontSize: 'var(--font-size-sm)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
-                      <span className={`sub-platform-badge ${sub.platform}`} style={{ 
-                        fontSize: '8px', 
-                        padding: '1px 3px', 
-                        fontWeight: 'bold',
-                        color: sub.platform === 'leetcode' ? 'var(--accent-leetcode-primary)' : sub.platform === 'codechef' ? 'var(--accent-codechef-primary, #5B4638)' : 'var(--text-secondary)',
-                        border: `1px solid ${sub.platform === 'leetcode' ? 'var(--accent-leetcode-primary)' : sub.platform === 'codechef' ? 'var(--accent-codechef-primary, #5B4638)' : 'var(--border-strong)'}`,
-                        backgroundColor: 'transparent',
-                        textTransform: 'uppercase' as const
-                      }}>
-                        {sub.platform === 'leetcode' ? 'LC' : sub.platform === 'codechef' ? 'CC' : 'CF'}
+                      <span className={`sub-platform-badge ${sub.platform}`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '16px', height: '16px' }}>
+                        <PlatformIcon platform={sub.platform || 'leetcode'} size={14} />
                       </span>
-                      <span 
+                      <a 
+                        href={questionUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         title={sub.title}
                         className="sub-link"
                         style={{ 
                           textOverflow: 'ellipsis', 
                           overflow: 'hidden', 
                           whiteSpace: 'nowrap',
-                          color: 'inherit'
+                          color: 'inherit',
+                          textDecoration: 'none'
                         }}
                       >
                         {sub.title} {sub.statusDisplay !== 'Accepted' ? <span title="Rejected" style={{ display: 'inline-flex', verticalAlign: 'middle', marginLeft: '4px' }}><X size={10} color="#ff4444" /></span> : null}
-                      </span>
+                      </a>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                       {sub.platform === 'leetcode' && sub.difficulty && (
-                        <span className={`sub-diff-badge ${sub.difficulty.toLowerCase()}`} style={{ fontSize: '9px' }}>
+                        <span className={`sub-diff-badge ${sub.difficulty.toLowerCase()}`} style={{ fontSize: 'calc(0.9 * var(--font-size-xs))' }}>
                           {sub.difficulty}
                         </span>
                       )}
                       {sub.platform === 'codeforces' && sub.rating && (
-                        <span className={`sub-diff-badge ${sub.difficulty ? sub.difficulty.toLowerCase() : 'unknown'}`} style={{ fontSize: '9px' }}>
+                        <span className={`sub-diff-badge ${sub.difficulty ? sub.difficulty.toLowerCase() : 'unknown'}`} style={{ fontSize: 'calc(0.9 * var(--font-size-xs))' }}>
                           {sub.rating}
                         </span>
                       )}

@@ -1,0 +1,702 @@
+[
+  {
+    "title": "2B - The least round way",
+    "titleSlug": "2B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "8C - Looking for Order",
+    "titleSlug": "8C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "10C - Digital Root",
+    "titleSlug": "10C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "13B - Letter A",
+    "titleSlug": "13B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "15C - Industrial Nim",
+    "titleSlug": "15C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "18E - Flag 2",
+    "titleSlug": "18E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "18D - Seller Bob",
+    "titleSlug": "18D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "20B - Equation",
+    "titleSlug": "20B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "21C - Stripe 2",
+    "titleSlug": "21C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "21B - Intersection",
+    "titleSlug": "21B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "26C - Parquet",
+    "titleSlug": "26C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "27E - Number With The Given Amount Of Divisors",
+    "titleSlug": "27E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "29D - Ant on the Tree",
+    "titleSlug": "29D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "31D - Chocolate",
+    "titleSlug": "31D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "33D - Knights",
+    "titleSlug": "33D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "34E - Collisions",
+    "titleSlug": "34E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39E - What Has Dirichlet Got to Do with That?",
+    "titleSlug": "39E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39A - C*++ Calculations",
+    "titleSlug": "39A",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "43D - Journey",
+    "titleSlug": "43D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44J - Triminoes",
+    "titleSlug": "44J",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45E - Director",
+    "titleSlug": "45E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "47C - Crossword",
+    "titleSlug": "47C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "50C - Happy Farm 5",
+    "titleSlug": "50C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "54C - First Digit Law",
+    "titleSlug": "54C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "58D - Calendar",
+    "titleSlug": "58D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "59E - Shortest Path",
+    "titleSlug": "59E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "59D - Team Arrangement",
+    "titleSlug": "59D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "61C - Capture Valerian",
+    "titleSlug": "61C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "63E - Sweets Game",
+    "titleSlug": "63E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64F - Domain",
+    "titleSlug": "64F",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "66E - Petya and Post",
+    "titleSlug": "66E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "69C - Game",
+    "titleSlug": "69C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "73B - Need For Brake",
+    "titleSlug": "73B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "75D - Big Maximum Sum",
+    "titleSlug": "75D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "78C - Beaver Game",
+    "titleSlug": "78C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "82D - Two out of Three",
+    "titleSlug": "82D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "82C - General Mobilization",
+    "titleSlug": "82C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "87C - Interesting Game",
+    "titleSlug": "87C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "101C - Vectors",
+    "titleSlug": "101C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "109D - Lucky Sorting",
+    "titleSlug": "109D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "113B - Petr#",
+    "titleSlug": "113B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "117C - Cycle",
+    "titleSlug": "117C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "118E - Bertown roads",
+    "titleSlug": "118E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "119C - Education Reform",
+    "titleSlug": "119C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "126C - E-reader Display",
+    "titleSlug": "126C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "128D - Numbers",
+    "titleSlug": "128D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "128C - Games with Rectangle",
+    "titleSlug": "128C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "131F - Present to Mom",
+    "titleSlug": "131F",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "137E - Last Chance",
+    "titleSlug": "137E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "153D - Date Change",
+    "titleSlug": "153D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "156C - Cipher",
+    "titleSlug": "156C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "162I - Truncatable primes",
+    "titleSlug": "162I",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "162G - Non-decimal sum",
+    "titleSlug": "162G",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "163B - Lemmings",
+    "titleSlug": "163B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "164B - Ancient Berland Hieroglyphs",
+    "titleSlug": "164B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "171E - MYSTERIOUS LANGUAGE",
+    "titleSlug": "171E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "171C - A Piece of Cake",
+    "titleSlug": "171C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "176C - Playing with Superglue",
+    "titleSlug": "176C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178E2 - The Beaver's Problem - 2",
+    "titleSlug": "178E2",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178C3 - Smart Beaver and Resolving Collisions",
+    "titleSlug": "178C3",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "182C - Optimal Sum",
+    "titleSlug": "182C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "187C - Weak Memory",
+    "titleSlug": "187C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "193B - Xor",
+    "titleSlug": "193B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "195E - Building Forest",
+    "titleSlug": "195E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "196B - Infinite Maze",
+    "titleSlug": "196B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "201C - Fragile Bridges",
+    "titleSlug": "201C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "204C - Little Elephant and Furik and Rubik",
+    "titleSlug": "204C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207D3 - The Beaver's Problem - 3",
+    "titleSlug": "207D3",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207D2 - The Beaver's Problem - 3",
+    "titleSlug": "207D2",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207A3 - Beaver's Calculator 1.0",
+    "titleSlug": "207A3",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "213C - Relay Race",
+    "titleSlug": "213C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "216E - Martian Luck",
+    "titleSlug": "216E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "228C - Fractal Detector",
+    "titleSlug": "228C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "234H - Merging Two Decks",
+    "titleSlug": "234H",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "235B - Let's Play Osu!",
+    "titleSlug": "235B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "237E - Build String",
+    "titleSlug": "237E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "237D - T-decomposition",
+    "titleSlug": "237D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "241C - Mirror Box",
+    "titleSlug": "241C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "242E - XOR on Segment",
+    "titleSlug": "242E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "243B - Hydra",
+    "titleSlug": "243B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "245F - Log Stream Analysis",
+    "titleSlug": "245F",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "248C - Robo-Footballer",
+    "titleSlug": "248C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "250E - Mad Joe",
+    "titleSlug": "250E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "251C - Number Transformation",
+    "titleSlug": "251C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "253D - Table with Letters - 2",
+    "titleSlug": "253D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "258C - Little Elephant and LCM",
+    "titleSlug": "258C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "261C - Maxim and Matrix",
+    "titleSlug": "261C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "263C - Circle of Numbers",
+    "titleSlug": "263C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "264C - Choosing Balls",
+    "titleSlug": "264C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "267B - Dominoes",
+    "titleSlug": "267B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "280A - Rectangle Puzzle",
+    "titleSlug": "280A",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "291E - Tree-String Problem",
+    "titleSlug": "291E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "292C - Beautiful IP Addresses",
+    "titleSlug": "292C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "296B - Yaroslav and Two Strings",
+    "titleSlug": "296B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "309A - Morning run",
+    "titleSlug": "309A",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "314C - Sereja and Subsequences",
+    "titleSlug": "314C",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "314B - Sereja and Periods",
+    "titleSlug": "314B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "317B - Ants",
+    "titleSlug": "317B",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "337D - Book of Evil",
+    "titleSlug": "337D",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "340E - Iahub and Permutations",
+    "titleSlug": "340E",
+    "difficulty": "Hard",
+    "category": "2000 Rating",
+    "platform": "codeforces"
+  }
+]

@@ -1,0 +1,702 @@
+[
+  {
+    "title": "4C - Registration System",
+    "titleSlug": "4C",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "25A - IQ test",
+    "titleSlug": "25A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "27B - Tournament",
+    "titleSlug": "27B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "34C - Page Numbers",
+    "titleSlug": "34C",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "36A - Extra-terrestrial Intelligence",
+    "titleSlug": "36A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39H - Multiplication Table",
+    "titleSlug": "39H",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39F - Pacifist frogs",
+    "titleSlug": "39F",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39B - Company Income Growth",
+    "titleSlug": "39B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "40A - Find Color",
+    "titleSlug": "40A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "41C - Email address",
+    "titleSlug": "41C",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "43C - Lucky Tickets",
+    "titleSlug": "43C",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44C - Holidays",
+    "titleSlug": "44C",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "51A - Cheaterius's Problem",
+    "titleSlug": "51A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "54A - Presents",
+    "titleSlug": "54A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "56B - Spoilt Permutation",
+    "titleSlug": "56B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "57A - Square Earth?",
+    "titleSlug": "57A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "58B - Coins",
+    "titleSlug": "58B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "60A - Where Are My Flakes?",
+    "titleSlug": "60A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "61B - Hard Work",
+    "titleSlug": "61B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "62A - A Student's Dream",
+    "titleSlug": "62A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64A - Factorial",
+    "titleSlug": "64A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "66A - Petya and Java",
+    "titleSlug": "66A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "70A - Cookies",
+    "titleSlug": "70A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "71B - Progress Bar",
+    "titleSlug": "71B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "83A - Magical Array",
+    "titleSlug": "83A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "85A - Domino",
+    "titleSlug": "85A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "92B - Binary Number",
+    "titleSlug": "92B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "94B - Friends",
+    "titleSlug": "94B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "96B - Lucky Numbers (easy)",
+    "titleSlug": "96B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "99B - Help Chef Gerasim",
+    "titleSlug": "99B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "117A - Elevator",
+    "titleSlug": "117A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "123A - Prime Permutation",
+    "titleSlug": "123A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "132A - Turing Tape",
+    "titleSlug": "132A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "135A - Replacement",
+    "titleSlug": "135A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "144B - Meeting",
+    "titleSlug": "144B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "146B - Lucky Mask",
+    "titleSlug": "146B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "147A - Punctuation",
+    "titleSlug": "147A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "152B - Steps",
+    "titleSlug": "152B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "158D - Ice Sculptures",
+    "titleSlug": "158D",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "161A - Dress'em in Vests!",
+    "titleSlug": "161A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "171D - Broken checker",
+    "titleSlug": "171D",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "171B - Star",
+    "titleSlug": "171B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "173A - Rock-Paper-Scissors",
+    "titleSlug": "173A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "181B - Number of Triplets",
+    "titleSlug": "181B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "185A - Plant",
+    "titleSlug": "185A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "188B - A + Reverse B",
+    "titleSlug": "188B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "189B - Counting Rhombi",
+    "titleSlug": "189B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "189A - Cut Ribbon",
+    "titleSlug": "189A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "192A - Funky Numbers",
+    "titleSlug": "192A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "195B - After Training",
+    "titleSlug": "195B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "203B - Game on Paper",
+    "titleSlug": "203B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "215B - Olympic Medal",
+    "titleSlug": "215B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "220A - Little Elephant and Problem",
+    "titleSlug": "220A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "221B - Little Elephant and Numbers",
+    "titleSlug": "221B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "222B - Cosmic Tables",
+    "titleSlug": "222B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "227A - Where do I Turn?",
+    "titleSlug": "227A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "230B - T-primes",
+    "titleSlug": "230B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "234C - Weather",
+    "titleSlug": "234C",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "236B - Easy Number Challenge",
+    "titleSlug": "236B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "238A - Not Wool Sequences",
+    "titleSlug": "238A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "241A - Old Peykan",
+    "titleSlug": "241A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "246B - Increase and Decrease",
+    "titleSlug": "246B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "251A - Points on Line",
+    "titleSlug": "251A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "257B - Playing Cubes",
+    "titleSlug": "257B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "271B - Prime Matrix",
+    "titleSlug": "271B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "276B - Little Girl and Game",
+    "titleSlug": "276B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "288A - Polo the Penguin and Strings",
+    "titleSlug": "288A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "291B - Command Line Arguments",
+    "titleSlug": "291B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "298A - Snow Footprints",
+    "titleSlug": "298A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "303A - Lucky Permutation Triple",
+    "titleSlug": "303A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "304B - Calendar",
+    "titleSlug": "304B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "311A - The Closest Pair",
+    "titleSlug": "311A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "312B - Archer",
+    "titleSlug": "312B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "318B - Strings of Power",
+    "titleSlug": "318B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "330B - Road Construction",
+    "titleSlug": "330B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "332A - Down the Hatch!",
+    "titleSlug": "332A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "347A - Difference Row",
+    "titleSlug": "347A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "352B - Jeff and Periods",
+    "titleSlug": "352B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "370B - Berland Bingo",
+    "titleSlug": "370B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "371B - Fox Dividing Cheese",
+    "titleSlug": "371B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "376B - I.O.U.",
+    "titleSlug": "376B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "378B - Semifinals",
+    "titleSlug": "378B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "413B - Spyke Chatting",
+    "titleSlug": "413B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "416B - Art Union",
+    "titleSlug": "416B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "426B - Sereja and Mirroring",
+    "titleSlug": "426B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "429A - Xor-tree",
+    "titleSlug": "429A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "437A - The Child and Homework",
+    "titleSlug": "437A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "450B - Jzzhu and Sequences",
+    "titleSlug": "450B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "451B - Sort the Array",
+    "titleSlug": "451B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "459B - Pashmak and Flowers",
+    "titleSlug": "459B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "462B - Appleman and Card Game",
+    "titleSlug": "462B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "469B - Chat Online",
+    "titleSlug": "469B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "471B - MUH and Important Things",
+    "titleSlug": "471B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "472B - Design Tutorial: Learn from Life",
+    "titleSlug": "472B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "476B - Dreamoon and WiFi",
+    "titleSlug": "476B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "478B - Random Teams",
+    "titleSlug": "478B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "485B - Valuable Resources",
+    "titleSlug": "485B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "486B - OR in Matrix",
+    "titleSlug": "486B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "493A - Vasya and Football",
+    "titleSlug": "493A",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "508B - Anton and currency you all know",
+    "titleSlug": "508B",
+    "difficulty": "Medium",
+    "category": "1300 Rating",
+    "platform": "codeforces"
+  }
+]

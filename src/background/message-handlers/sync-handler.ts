@@ -11,7 +11,7 @@ export class SyncHandler implements MessageHandler {
       case 'newSubmissionDetected':
         return this.handleNewSubmission(message.data);
       case 'fullSync':
-        return this.handleFullSync();
+        return this.handleFullSync(message.forceCfOnly);
       case 'getSyncState':
         return this.handleGetSyncState();
       case 'githubOAuthLogin':
@@ -39,30 +39,10 @@ export class SyncHandler implements MessageHandler {
     return { success: true };
   }
 
-  private async handleFullSync(): Promise<MessageResponse> {
-     // SyncManager.handleFullSync expects a callback for keeping the channel open if needed
-     // But here we are just triggering it.
-     // We can wrap it to return a promise or just fire and forget if the types allow.
-     // Based on existing code, handleFullSync takes a sendResponse.
-     // Let's modify it to be awaitable or just trigger it.
-     
-     // The original code was: SyncManager.handleFullSync(sendResponse).catch(console.error);
-     // This implies handleFullSync might send multiple responses or just one.
-     // Let's assume for this refactor we trigger it and return active.
-     
-     // IMPORTANT: The original implementation used sendResponse directly.
-     // To support that pattern with this interface, we might need to change how we call handle.
-     // For now, let's just trigger it and return success immediately, 
-     // assuming the UI listens to storage changes or we accept that strict request/response
-     // might effectively be "fire and forget" for this extensive operation.
-     
+  private async handleFullSync(forceCfOnly?: boolean): Promise<MessageResponse> {
      SyncManager.handleFullSync((res) => {
-         // This callback is used by SyncManager to send status updates.
-         // Since we are returning immediately, we can't easily stream updates 
-         // through this Promise interface without changing SyncManager.
-         // For now, we'll log.
          console.log('Sync update:', res);
-     }).catch(console.error);
+     }, forceCfOnly).catch(console.error);
 
      return { success: true };
   }

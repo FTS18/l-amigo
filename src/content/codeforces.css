@@ -147,11 +147,11 @@ a.lamigo-processed:hover {
 
 /* Rating-based Heatmap Toggle */
 .lamigo-heatmap-toggle-container {
-  display: inline-flex;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  margin-left: 15px;
-  float: right;
-  height: 24px;
+  margin-bottom: 8px;
+  width: 100%;
 }
 
 .lamigo-heatmap-toggle-label {

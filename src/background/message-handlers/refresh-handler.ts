@@ -54,27 +54,42 @@ export class RefreshHandler implements MessageHandler {
         }
       }
 
+      const queue: { platform: string; handle: string }[] = [];
       for (const identity of identities) {
         for (const account of identity.accounts) {
-          try {
-            const profile = await PlatformService.fetchProfile(
-              account.platform,
-              account.handle,
-            );
-            if (account.platform === "leetcode") {
-              await NotificationService.checkForNewSubmissions(account.handle, profile);
-            }
-
-            await StorageService.saveProfile(profile);
-            await delay(REFRESH_CONSTANTS.DELAY_BETWEEN_REQUESTS);
-          } catch (e) {
-            console.error(
-              `Error refreshing ${account.platform}:${account.handle}:`,
-              e,
-            );
-          }
+          queue.push({ platform: account.platform, handle: account.handle });
         }
       }
+
+      const workers = Array(REFRESH_CONSTANTS.MAX_CONCURRENT_REQUESTS)
+        .fill(null)
+        .map(async () => {
+          while (queue.length > 0) {
+            const account = queue.shift();
+            if (!account) continue;
+
+            try {
+              const profile = await PlatformService.fetchProfile(
+                account.platform as any,
+                account.handle,
+              );
+              if (account.platform === "leetcode") {
+                await NotificationService.checkForNewSubmissions(account.handle, profile);
+              }
+
+              await StorageService.saveProfile(profile);
+              await delay(REFRESH_CONSTANTS.DELAY_BETWEEN_REQUESTS);
+            } catch (e) {
+              console.error(
+                `Error refreshing ${account.platform}:${account.handle}:`,
+                e,
+              );
+              await delay(REFRESH_CONSTANTS.DELAY_BETWEEN_REQUESTS);
+            }
+          }
+        });
+
+      await Promise.all(workers);
 
       console.log("Friend refresh complete");
     } catch (e) {

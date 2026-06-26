@@ -4,18 +4,23 @@ import { AlarmsService } from '../services/alarms';
 import { CodeforcesService } from '../services/codeforces';
 import { CodeChefService } from '../services/codechef';
 import { LeetCodeService } from '../services/leetcode';
+import { STORAGE_KEYS } from '../constants';
+import { PlatformIcon } from '../utils/PlatformIcons';
 
 export const UpcomingContests: React.FC = () => {
   const [contests, setContests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [expanded, setExpanded] = useState(false); // Default to collapsed
   const [reminders, setReminders] = useState<Record<string, any>>({});
   const [currentTime, setCurrentTime] = useState(Date.now());
 
+  // Only tick the countdown when the section is open — saves 1 re-render/sec when collapsed
   useEffect(() => {
+    if (!expanded) return;
     const timer = setInterval(() => setCurrentTime(Date.now()), 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [expanded]);
 
   useEffect(() => {
     AlarmsService.getReminders().then(setReminders);
@@ -51,7 +56,7 @@ export const UpcomingContests: React.FC = () => {
 
   useEffect(() => {
     const fetchContests = async () => {
-      const cacheKey = 'lamigo:upcomingContests:v5'; // bumped cache key for codechef name fix
+      const cacheKey = STORAGE_KEYS.UPCOMING_CONTESTS_CACHE;
       const cached = await new Promise<any>(resolve => {
         chrome.storage.local.get([cacheKey], res => resolve(res[cacheKey]));
       });
@@ -70,10 +75,14 @@ export const UpcomingContests: React.FC = () => {
           CodeChefService.getUpcomingContests()
         ]);
         
+        const LC_MAX = 4;
+        const CF_MAX = 6;
+        const CC_MAX = 4;
+
         const mergedData = [
-          ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })),
-          ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })),
-          ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' }))
+          ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, LC_MAX),
+          ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, CF_MAX),
+          ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, CC_MAX),
         ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
 
         setContests(mergedData);
@@ -85,6 +94,7 @@ export const UpcomingContests: React.FC = () => {
         });
       } catch (err) {
         console.error(err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -92,26 +102,38 @@ export const UpcomingContests: React.FC = () => {
     fetchContests();
   }, []);
 
-  // If we have loaded but have no contests, hide the section
-  if (!loading && contests.length === 0) return null;
+  // Filter out contests that have already started or are more than 30 days away
+  const upcomingContests = contests.filter(c => {
+    const startTimeMs = c.startTimeSeconds * 1000;
+    return startTimeMs > Date.now() && startTimeMs < Date.now() + 30 * 24 * 60 * 60 * 1000;
+  });
+
+  // If we have loaded but have no upcoming contests, hide the section
+  if (!loading && upcomingContests.length === 0 && !error) return null;
 
   return (
     <div className="recommendations-section upcoming-contests-section">
       <button 
         className="recommendations-toggle"
         onClick={() => setExpanded(!expanded)}
+        aria-expanded={expanded}
+        aria-label="Toggle upcoming contests list"
       >
         Upcoming Contests {expanded ? <ChevronDown size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} /> : <ChevronRight size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} />}
       </button>
 
       {expanded && (
         <div className="recommendations-content" style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {loading && contests.length === 0 ? (
-            <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+          {loading && upcomingContests.length === 0 ? (
+            <div style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-secondary)' }}>
               Loading schedule...
             </div>
+          ) : error ? (
+            <div style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-secondary)' }}>
+              Could not load contests. Check connection.
+            </div>
           ) : (
-            contests.map(c => {
+            upcomingContests.map(c => {
               const date = new Date(c.startTimeSeconds * 1000);
               const isLC = c.platform === 'leetcode';
               const isCC = c.platform === 'codechef';
@@ -122,21 +144,22 @@ export const UpcomingContests: React.FC = () => {
                 : `https://codeforces.com/contests/${c.id}`;
                 
               return (
-                <div key={`${c.platform}-${c.id}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
+                <div key={`${c.platform}-${c.id}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 'var(--font-size-base)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
                     <div 
                       className="contest-platform-badge"
                       style={{ 
-                        padding: '2px 4px',
-                        borderRadius: '4px',
-                        fontSize: '10px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '18px',
+                        height: '18px',
                         backgroundColor: isLC ? 'var(--accent-leetcode-primary)' : isCC ? 'var(--accent-codechef-primary, #5B4638)' : 'var(--accent-codeforces-blue)',
-                        color: 'white',
                         flexShrink: 0
                       }}
                       title={isLC ? 'LeetCode' : isCC ? 'CodeChef' : 'Codeforces'}
                     >
-                      {isLC ? 'LC' : isCC ? 'CC' : 'CF'}
+                      <PlatformIcon platform={c.platform} size={12} monochrome="white" />
                     </div>
                     <a 
                       href={href} 
@@ -151,13 +174,13 @@ export const UpcomingContests: React.FC = () => {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {c.startTimeSeconds * 1000 - currentTime < 24 * 60 * 60 * 1000 && c.startTimeSeconds * 1000 > currentTime ? (
-                      <span style={{ color: 'var(--color-easy)', whiteSpace: 'nowrap', flexShrink: 0, fontWeight: 600, fontSize: '11px', fontFamily: 'monospace' }}>
+                      <span style={{ color: 'var(--color-easy)', whiteSpace: 'nowrap', flexShrink: 0, fontWeight: 600, fontSize: 'var(--font-size-sm)', fontFamily: 'monospace' }}>
                         {(() => {
-                          const diff = c.startTimeSeconds * 1000 - currentTime;
-                          const h = Math.floor(diff / (1000 * 60 * 60));
-                          const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                          const s = Math.floor((diff % (1000 * 60)) / 1000);
-                          return `Starts in ${h}h ${m}m ${s}s`;
+                           const diff = c.startTimeSeconds * 1000 - currentTime;
+                           const h = Math.floor(diff / (1000 * 60 * 60));
+                           const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                           const s = Math.floor((diff % (1000 * 60)) / 1000);
+                           return `Starts in ${h}h ${m}m ${s}s`;
                         })()}
                       </span>
                     ) : (
@@ -168,6 +191,7 @@ export const UpcomingContests: React.FC = () => {
                     <button 
                       onClick={(e) => handleToggleReminder(e, c)}
                       title={reminders[c.id] ? "Remove reminder" : "Set reminder"}
+                      aria-label={reminders[c.id] ? "Remove reminder" : "Set reminder"}
                       style={{ 
                         background: 'none', border: 'none', cursor: 'pointer', padding: 0, 
                         color: reminders[c.id] ? 'var(--platform-theme-color, #FFD700)' : 'var(--text-muted)' 

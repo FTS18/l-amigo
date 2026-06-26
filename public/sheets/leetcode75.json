@@ -1,0 +1,527 @@
+[
+  {
+    "title": "Merge Strings Alternately",
+    "titleSlug": "merge-strings-alternately",
+    "difficulty": "EASY",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Greatest Common Divisor of Strings",
+    "titleSlug": "greatest-common-divisor-of-strings",
+    "difficulty": "EASY",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kids With the Greatest Number of Candies",
+    "titleSlug": "kids-with-the-greatest-number-of-candies",
+    "difficulty": "EASY",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Can Place Flowers",
+    "titleSlug": "can-place-flowers",
+    "difficulty": "EASY",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse Vowels of a String",
+    "titleSlug": "reverse-vowels-of-a-string",
+    "difficulty": "EASY",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse Words in a String",
+    "titleSlug": "reverse-words-in-a-string",
+    "difficulty": "MEDIUM",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Product of Array Except Self",
+    "titleSlug": "product-of-array-except-self",
+    "difficulty": "MEDIUM",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Increasing Triplet Subsequence",
+    "titleSlug": "increasing-triplet-subsequence",
+    "difficulty": "MEDIUM",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "String Compression",
+    "titleSlug": "string-compression",
+    "difficulty": "MEDIUM",
+    "category": "Array / String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Move Zeroes",
+    "titleSlug": "move-zeroes",
+    "difficulty": "EASY",
+    "category": "Two Pointers",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Is Subsequence",
+    "titleSlug": "is-subsequence",
+    "difficulty": "EASY",
+    "category": "Two Pointers",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Container With Most Water",
+    "titleSlug": "container-with-most-water",
+    "difficulty": "MEDIUM",
+    "category": "Two Pointers",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max Number of K-Sum Pairs",
+    "titleSlug": "max-number-of-k-sum-pairs",
+    "difficulty": "MEDIUM",
+    "category": "Two Pointers",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Average Subarray I",
+    "titleSlug": "maximum-average-subarray-i",
+    "difficulty": "EASY",
+    "category": "Sliding Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Number of Vowels in a Substring of Given Length",
+    "titleSlug": "maximum-number-of-vowels-in-a-substring-of-given-length",
+    "difficulty": "MEDIUM",
+    "category": "Sliding Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max Consecutive Ones III",
+    "titleSlug": "max-consecutive-ones-iii",
+    "difficulty": "MEDIUM",
+    "category": "Sliding Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Subarray of 1's After Deleting One Element",
+    "titleSlug": "longest-subarray-of-1s-after-deleting-one-element",
+    "difficulty": "MEDIUM",
+    "category": "Sliding Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the Highest Altitude",
+    "titleSlug": "find-the-highest-altitude",
+    "difficulty": "EASY",
+    "category": "Prefix Sum",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Pivot Index",
+    "titleSlug": "find-pivot-index",
+    "difficulty": "EASY",
+    "category": "Prefix Sum",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the Difference of Two Arrays",
+    "titleSlug": "find-the-difference-of-two-arrays",
+    "difficulty": "EASY",
+    "category": "Hash Map / Set",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Unique Number of Occurrences",
+    "titleSlug": "unique-number-of-occurrences",
+    "difficulty": "EASY",
+    "category": "Hash Map / Set",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Determine if Two Strings Are Close",
+    "titleSlug": "determine-if-two-strings-are-close",
+    "difficulty": "MEDIUM",
+    "category": "Hash Map / Set",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Equal Row and Column Pairs",
+    "titleSlug": "equal-row-and-column-pairs",
+    "difficulty": "MEDIUM",
+    "category": "Hash Map / Set",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Removing Stars From a String",
+    "titleSlug": "removing-stars-from-a-string",
+    "difficulty": "MEDIUM",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Asteroid Collision",
+    "titleSlug": "asteroid-collision",
+    "difficulty": "MEDIUM",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Decode String",
+    "titleSlug": "decode-string",
+    "difficulty": "MEDIUM",
+    "category": "Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Recent Calls",
+    "titleSlug": "number-of-recent-calls",
+    "difficulty": "EASY",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Dota2 Senate",
+    "titleSlug": "dota2-senate",
+    "difficulty": "MEDIUM",
+    "category": "Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Delete the Middle Node of a Linked List",
+    "titleSlug": "delete-the-middle-node-of-a-linked-list",
+    "difficulty": "MEDIUM",
+    "category": "Linked List",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Odd Even Linked List",
+    "titleSlug": "odd-even-linked-list",
+    "difficulty": "MEDIUM",
+    "category": "Linked List",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse Linked List",
+    "titleSlug": "reverse-linked-list",
+    "difficulty": "EASY",
+    "category": "Linked List",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Twin Sum of a Linked List",
+    "titleSlug": "maximum-twin-sum-of-a-linked-list",
+    "difficulty": "MEDIUM",
+    "category": "Linked List",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Depth of Binary Tree",
+    "titleSlug": "maximum-depth-of-binary-tree",
+    "difficulty": "EASY",
+    "category": "Binary Tree - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Leaf-Similar Trees",
+    "titleSlug": "leaf-similar-trees",
+    "difficulty": "EASY",
+    "category": "Binary Tree - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count Good Nodes in Binary Tree",
+    "titleSlug": "count-good-nodes-in-binary-tree",
+    "difficulty": "MEDIUM",
+    "category": "Binary Tree - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Path Sum III",
+    "titleSlug": "path-sum-iii",
+    "difficulty": "MEDIUM",
+    "category": "Binary Tree - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest ZigZag Path in a Binary Tree",
+    "titleSlug": "longest-zigzag-path-in-a-binary-tree",
+    "difficulty": "MEDIUM",
+    "category": "Binary Tree - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "titleSlug": "lowest-common-ancestor-of-a-binary-tree",
+    "difficulty": "MEDIUM",
+    "category": "Binary Tree - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Tree Right Side View",
+    "titleSlug": "binary-tree-right-side-view",
+    "difficulty": "MEDIUM",
+    "category": "Binary Tree - BFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Level Sum of a Binary Tree",
+    "titleSlug": "maximum-level-sum-of-a-binary-tree",
+    "difficulty": "MEDIUM",
+    "category": "Binary Tree - BFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in a Binary Search Tree",
+    "titleSlug": "search-in-a-binary-search-tree",
+    "difficulty": "EASY",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Delete Node in a BST",
+    "titleSlug": "delete-node-in-a-bst",
+    "difficulty": "MEDIUM",
+    "category": "Binary Search Tree",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Keys and Rooms",
+    "titleSlug": "keys-and-rooms",
+    "difficulty": "MEDIUM",
+    "category": "Graphs - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Provinces",
+    "titleSlug": "number-of-provinces",
+    "difficulty": "MEDIUM",
+    "category": "Graphs - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reorder Routes to Make All Paths Lead to the City Zero",
+    "titleSlug": "reorder-routes-to-make-all-paths-lead-to-the-city-zero",
+    "difficulty": "MEDIUM",
+    "category": "Graphs - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Evaluate Division",
+    "titleSlug": "evaluate-division",
+    "difficulty": "MEDIUM",
+    "category": "Graphs - DFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Nearest Exit from Entrance in Maze",
+    "titleSlug": "nearest-exit-from-entrance-in-maze",
+    "difficulty": "MEDIUM",
+    "category": "Graphs - BFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rotting Oranges",
+    "titleSlug": "rotting-oranges",
+    "difficulty": "MEDIUM",
+    "category": "Graphs - BFS",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth Largest Element in an Array",
+    "titleSlug": "kth-largest-element-in-an-array",
+    "difficulty": "MEDIUM",
+    "category": "Heap / Priority Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Smallest Number in Infinite Set",
+    "titleSlug": "smallest-number-in-infinite-set",
+    "difficulty": "MEDIUM",
+    "category": "Heap / Priority Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Subsequence Score",
+    "titleSlug": "maximum-subsequence-score",
+    "difficulty": "MEDIUM",
+    "category": "Heap / Priority Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Total Cost to Hire K Workers",
+    "titleSlug": "total-cost-to-hire-k-workers",
+    "difficulty": "MEDIUM",
+    "category": "Heap / Priority Queue",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Guess Number Higher or Lower",
+    "titleSlug": "guess-number-higher-or-lower",
+    "difficulty": "EASY",
+    "category": "Binary Search",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Successful Pairs of Spells and Potions",
+    "titleSlug": "successful-pairs-of-spells-and-potions",
+    "difficulty": "MEDIUM",
+    "category": "Binary Search",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Peak Element",
+    "titleSlug": "find-peak-element",
+    "difficulty": "MEDIUM",
+    "category": "Binary Search",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Koko Eating Bananas",
+    "titleSlug": "koko-eating-bananas",
+    "difficulty": "MEDIUM",
+    "category": "Binary Search",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Letter Combinations of a Phone Number",
+    "titleSlug": "letter-combinations-of-a-phone-number",
+    "difficulty": "MEDIUM",
+    "category": "Backtracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Combination Sum III",
+    "titleSlug": "combination-sum-iii",
+    "difficulty": "MEDIUM",
+    "category": "Backtracking",
+    "platform": "leetcode"
+  },
+  {
+    "title": "N-th Tribonacci Number",
+    "titleSlug": "n-th-tribonacci-number",
+    "difficulty": "EASY",
+    "category": "DP - 1D",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Min Cost Climbing Stairs",
+    "titleSlug": "min-cost-climbing-stairs",
+    "difficulty": "EASY",
+    "category": "DP - 1D",
+    "platform": "leetcode"
+  },
+  {
+    "title": "House Robber",
+    "titleSlug": "house-robber",
+    "difficulty": "MEDIUM",
+    "category": "DP - 1D",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Domino and Tromino Tiling",
+    "titleSlug": "domino-and-tromino-tiling",
+    "difficulty": "MEDIUM",
+    "category": "DP - 1D",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Unique Paths",
+    "titleSlug": "unique-paths",
+    "difficulty": "MEDIUM",
+    "category": "DP - Multidimensional",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Common Subsequence",
+    "titleSlug": "longest-common-subsequence",
+    "difficulty": "MEDIUM",
+    "category": "DP - Multidimensional",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock with Transaction Fee",
+    "titleSlug": "best-time-to-buy-and-sell-stock-with-transaction-fee",
+    "difficulty": "MEDIUM",
+    "category": "DP - Multidimensional",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Edit Distance",
+    "titleSlug": "edit-distance",
+    "difficulty": "MEDIUM",
+    "category": "DP - Multidimensional",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Counting Bits",
+    "titleSlug": "counting-bits",
+    "difficulty": "EASY",
+    "category": "Bit Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Single Number",
+    "titleSlug": "single-number",
+    "difficulty": "EASY",
+    "category": "Bit Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Flips to Make a OR b Equal to c",
+    "titleSlug": "minimum-flips-to-make-a-or-b-equal-to-c",
+    "difficulty": "MEDIUM",
+    "category": "Bit Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Implement Trie (Prefix Tree)",
+    "titleSlug": "implement-trie-prefix-tree",
+    "difficulty": "MEDIUM",
+    "category": "Trie",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search Suggestions System",
+    "titleSlug": "search-suggestions-system",
+    "difficulty": "MEDIUM",
+    "category": "Trie",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Non-overlapping Intervals",
+    "titleSlug": "non-overlapping-intervals",
+    "difficulty": "MEDIUM",
+    "category": "Intervals",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Number of Arrows to Burst Balloons",
+    "titleSlug": "minimum-number-of-arrows-to-burst-balloons",
+    "difficulty": "MEDIUM",
+    "category": "Intervals",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Daily Temperatures",
+    "titleSlug": "daily-temperatures",
+    "difficulty": "MEDIUM",
+    "category": "Monotonic Stack",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Online Stock Span",
+    "titleSlug": "online-stock-span",
+    "difficulty": "MEDIUM",
+    "category": "Monotonic Stack",
+    "platform": "leetcode"
+  }
+]

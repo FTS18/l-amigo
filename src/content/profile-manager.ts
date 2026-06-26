@@ -15,7 +15,9 @@ export class ProfilePageManager {
   private isInjecting = false;
 
   constructor() {
-    console.log("[L'Amigo] ProfilePageManager initialized");
+    if (__DEV__) {
+      console.log("[L'Amigo] ProfilePageManager initialized");
+    }
     this.init();
   }
 
@@ -71,7 +73,9 @@ export class ProfilePageManager {
       const sidebar = avatar.closest(ProfilePageManager.SELECTORS.sidebarWrapper) || anchor;
 
       if (sidebar && this.currentUsername) {
-        console.log("[L'Amigo] Landmark found: Avatar. Injecting to sidebar.", this.currentUsername);
+        if (__DEV__) {
+          console.log("[L'Amigo] Landmark found: Avatar. Injecting to sidebar.", this.currentUsername);
+        }
         
         const identitiesResult = await chrome.storage.local.get('friend_identities_v2');
         const identities = identitiesResult.friend_identities_v2 || [];
@@ -84,7 +88,9 @@ export class ProfilePageManager {
         this.ensureButtonsPersistent(sidebar, isAlreadyTracked);
       }
     } catch (err) {
-      console.error("[L'Amigo] Landmark search failed:", err);
+      if (__DEV__) {
+        console.error("[L'Amigo] Landmark search failed:", err);
+      }
     } finally {
       this.isInjecting = false;
     }
@@ -135,7 +141,9 @@ export class ProfilePageManager {
 
     // Prepend to the found landmark area
     anchor.prepend(wrapper);
-    console.log("[L'Amigo] Buttons landmark-injected");
+    if (__DEV__) {
+      console.log("[L'Amigo] Buttons landmark-injected");
+    }
   }
 
   private removeInjectedButtons() {
@@ -172,7 +180,9 @@ export class ProfilePageManager {
         }
       }
     } catch (err) {
-      console.error('[L\'Amigo] Error adding friend:', err);
+      if (__DEV__) {
+        console.error('[L\'Amigo] Error adding friend:', err);
+      }
     }
   }
 
@@ -201,7 +211,9 @@ export class ProfilePageManager {
       
       this.showComparisonOverlay(ownUsername, ownProfile, this.currentUsername);
     } catch (err) {
-      console.error('[L\'Amigo] Error starting comparison:', err);
+      if (__DEV__) {
+        console.error('[L\'Amigo] Error starting comparison:', err);
+      }
     } finally {
       compareBtn.disabled = false;
       compareBtn.innerHTML = originalText;
@@ -267,7 +279,9 @@ export class ProfilePageManager {
         if (targetCol) targetCol.innerHTML = `<h4 class="col-title">${username}</h4><p class="loading-msg error">User not found or private.</p>`;
       }
     } catch (err) {
-      console.error('[L\'Amigo] Failed to fetch target stats:', err);
+      if (__DEV__) {
+        console.error('[L\'Amigo] Failed to fetch target stats:', err);
+      }
     }
   }
 

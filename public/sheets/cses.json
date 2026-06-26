@@ -1,0 +1,1052 @@
+[
+  {
+    "title": "Weird Algorithm",
+    "titleSlug": "1068",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Missing Number",
+    "titleSlug": "1083",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Repetitions",
+    "titleSlug": "1069",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Increasing Array",
+    "titleSlug": "1094",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Permutations",
+    "titleSlug": "1070",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Number Spiral",
+    "titleSlug": "1071",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Two Knights",
+    "titleSlug": "1072",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Two Sets",
+    "titleSlug": "1092",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Bit Strings",
+    "titleSlug": "1617",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Trailing Zeros",
+    "titleSlug": "1618",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Coin Piles",
+    "titleSlug": "1754",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Palindrome Reorder",
+    "titleSlug": "1755",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Gray Code",
+    "titleSlug": "2205",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Fence Construction",
+    "titleSlug": "1622",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Apple Division",
+    "titleSlug": "1623",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Chessboard and Queens",
+    "titleSlug": "1624",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Digit Queries",
+    "titleSlug": "1625",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Grid Paths",
+    "titleSlug": "1626",
+    "difficulty": "Easy",
+    "category": "Introductory Problems",
+    "platform": "cses"
+  },
+  {
+    "title": "Distinct Numbers",
+    "titleSlug": "1621",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Apartments",
+    "titleSlug": "1084",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Ferris Wheel",
+    "titleSlug": "1090",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Concert Tickets",
+    "titleSlug": "1091",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Restaurant Customers",
+    "titleSlug": "1619",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Movie Festival",
+    "titleSlug": "1631",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Sum of Two Values",
+    "titleSlug": "1163",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Maximum Subarray Sum",
+    "titleSlug": "1164",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Stick Lengths",
+    "titleSlug": "1620",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Missing Coin Sum",
+    "titleSlug": "1630",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Collecting Numbers",
+    "titleSlug": "1641",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Towers",
+    "titleSlug": "1073",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Array Division",
+    "titleSlug": "1085",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Sliding Median",
+    "titleSlug": "1076",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Sliding Cost",
+    "titleSlug": "1077",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Movie Festival II",
+    "titleSlug": "1632",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Nested Ranges Check",
+    "titleSlug": "2183",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Nested Ranges Count",
+    "titleSlug": "2184",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Subarray Sums I",
+    "titleSlug": "1085",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Subarray Sums II",
+    "titleSlug": "2422",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Subarray Divisibility",
+    "titleSlug": "1660",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Subarray Distinct Values",
+    "titleSlug": "2428",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Array Division",
+    "titleSlug": "1076",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Pizzeria Queries",
+    "titleSlug": "1203",
+    "difficulty": "Medium",
+    "category": "Sorting and Searching",
+    "platform": "cses"
+  },
+  {
+    "title": "Dice Combinations",
+    "titleSlug": "1633",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Minimizing Coins",
+    "titleSlug": "1634",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Coin Combinations I",
+    "titleSlug": "1635",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Coin Combinations II",
+    "titleSlug": "1636",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Removing Digits",
+    "titleSlug": "1637",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Grid Paths",
+    "titleSlug": "1638",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Edit Distance",
+    "titleSlug": "1639",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Towers",
+    "titleSlug": "1640",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Collecting Numbers",
+    "titleSlug": "1641",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Collecting Numbers II",
+    "titleSlug": "1642",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Elevator Rides",
+    "titleSlug": "1643",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Money Sums",
+    "titleSlug": "1644",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Removal Game",
+    "titleSlug": "1645",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Drop Balls",
+    "titleSlug": "1646",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Increasing Subsequence",
+    "titleSlug": "1647",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Projects",
+    "titleSlug": "1648",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Tilings",
+    "titleSlug": "1649",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Numbers",
+    "titleSlug": "1650",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "LCS",
+    "titleSlug": "1651",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Increasing Array II",
+    "titleSlug": "1745",
+    "difficulty": "Medium",
+    "category": "Dynamic Programming",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Rooms",
+    "titleSlug": "1192",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Labyrinth",
+    "titleSlug": "1193",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Building Roads",
+    "titleSlug": "1666",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Message Route",
+    "titleSlug": "1667",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Building Teams",
+    "titleSlug": "1668",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Round Trip",
+    "titleSlug": "1669",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Monsters",
+    "titleSlug": "1670",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Shortest Routes I",
+    "titleSlug": "1671",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Shortest Routes II",
+    "titleSlug": "1672",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "High Score",
+    "titleSlug": "1673",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Flight Discount",
+    "titleSlug": "1674",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Cycle Finding",
+    "titleSlug": "1675",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Flight Routes",
+    "titleSlug": "1676",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Round Trip II",
+    "titleSlug": "1677",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Course Schedule",
+    "titleSlug": "1678",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Longest Flight Route",
+    "titleSlug": "1679",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Game Routes",
+    "titleSlug": "1680",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Investigation",
+    "titleSlug": "1681",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Planets Queries I",
+    "titleSlug": "1682",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Planets Queries II",
+    "titleSlug": "1683",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Planets Cycles",
+    "titleSlug": "1684",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Road Reparation",
+    "titleSlug": "1685",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Road Construction",
+    "titleSlug": "1686",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Flight Routes Check",
+    "titleSlug": "1687",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Planets and Kingdoms",
+    "titleSlug": "1688",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Giant Pizza",
+    "titleSlug": "1689",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Coin Collector",
+    "titleSlug": "1690",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Mail Delivery",
+    "titleSlug": "1691",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "De Bruijn Sequence",
+    "titleSlug": "1692",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Teleporters Path",
+    "titleSlug": "1693",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Hamiltonian Flights",
+    "titleSlug": "1694",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Knight's Tour",
+    "titleSlug": "1695",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Download Speed",
+    "titleSlug": "1696",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Police Chase",
+    "titleSlug": "1697",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "School Dance",
+    "titleSlug": "1698",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Distinct Routes",
+    "titleSlug": "1699",
+    "difficulty": "Hard",
+    "category": "Graph Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Subordinates",
+    "titleSlug": "1674",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Tree Matching",
+    "titleSlug": "1130",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Tree Diameter",
+    "titleSlug": "1131",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Tree Distances I",
+    "titleSlug": "1132",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Tree Distances II",
+    "titleSlug": "1133",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Company Queries I",
+    "titleSlug": "1134",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Company Queries II",
+    "titleSlug": "1135",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Distance Queries",
+    "titleSlug": "1136",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Paths",
+    "titleSlug": "1137",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Subtree Queries",
+    "titleSlug": "1138",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Path Queries",
+    "titleSlug": "1139",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Distinct Colors",
+    "titleSlug": "1140",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Finding a Centroid",
+    "titleSlug": "2079",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Fixed-Length Paths I",
+    "titleSlug": "2080",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Fixed-Length Paths II",
+    "titleSlug": "2081",
+    "difficulty": "Hard",
+    "category": "Tree Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Word Combinations",
+    "titleSlug": "1731",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "String Matching",
+    "titleSlug": "1753",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "String Factors",
+    "titleSlug": "1732",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "String Transform",
+    "titleSlug": "1733",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Minimal Rotation",
+    "titleSlug": "1110",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Longest Palindrome",
+    "titleSlug": "1111",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Palindrome Queries",
+    "titleSlug": "2101",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Required Substring",
+    "titleSlug": "2102",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Palindrome Partition",
+    "titleSlug": "2103",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Patterns",
+    "titleSlug": "2104",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Pattern Positions",
+    "titleSlug": "2105",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Distinct Substrings",
+    "titleSlug": "2106",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Substring Order I",
+    "titleSlug": "2107",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Substring Order II",
+    "titleSlug": "2108",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Substring Distribution",
+    "titleSlug": "2109",
+    "difficulty": "Hard",
+    "category": "String Algorithms",
+    "platform": "cses"
+  },
+  {
+    "title": "Exponentiation",
+    "titleSlug": "1712",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Exponentiation II",
+    "titleSlug": "1713",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Counting Divisors",
+    "titleSlug": "1081",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Common Divisors",
+    "titleSlug": "1082",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Binomial Coefficients",
+    "titleSlug": "1079",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Creating Strings II",
+    "titleSlug": "1715",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Distributing Apples",
+    "titleSlug": "1716",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Christmas Party",
+    "titleSlug": "1717",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Fibonacci Numbers",
+    "titleSlug": "1718",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Throwing Dice",
+    "titleSlug": "1719",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Graph Paths I",
+    "titleSlug": "1720",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Graph Paths II",
+    "titleSlug": "1721",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Dice Probability",
+    "titleSlug": "1722",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Moving Robots",
+    "titleSlug": "1723",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Candy Lottery",
+    "titleSlug": "1724",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Inversion Probability",
+    "titleSlug": "1725",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Stick Game",
+    "titleSlug": "1726",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Nim Game I",
+    "titleSlug": "1727",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Nim Game II",
+    "titleSlug": "1728",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Staircase Game",
+    "titleSlug": "1729",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Grundy's Game",
+    "titleSlug": "1730",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  },
+  {
+    "title": "Another Game",
+    "titleSlug": "2413",
+    "difficulty": "Hard",
+    "category": "Mathematics",
+    "platform": "cses"
+  }
+]

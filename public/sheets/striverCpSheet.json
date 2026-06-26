@@ -1,0 +1,2046 @@
+[
+  {
+    "title": "Bit++",
+    "titleSlug": "282A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Chewbaсca and Number",
+    "titleSlug": "514A",
+    "difficulty": "1200",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Beautiful Matrix",
+    "titleSlug": "263A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Soft Drinking",
+    "titleSlug": "151A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "The New Year: Meeting Friends",
+    "titleSlug": "723A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Sum of Round Numbers",
+    "titleSlug": "1352A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fox And Snake",
+    "titleSlug": "510A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Anton and Polyhedrons",
+    "titleSlug": "785A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Arrival of the General",
+    "titleSlug": "144A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "In Search of an Easy Problem",
+    "titleSlug": "1030A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Presents",
+    "titleSlug": "136A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Nearly Lucky Number",
+    "titleSlug": "110A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Tram",
+    "titleSlug": "116A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Wrong Subtraction",
+    "titleSlug": "977A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Soldier and Bananas",
+    "titleSlug": "546A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bear and Big Brother",
+    "titleSlug": "791A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Boy or Girl",
+    "titleSlug": "236A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Word Capitalization",
+    "titleSlug": "281A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Helpful Maths",
+    "titleSlug": "339A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "C+=",
+    "titleSlug": "1368A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Maximum Increase",
+    "titleSlug": "702A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Gennady and a Card Game",
+    "titleSlug": "1097A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Vanya and Cubes",
+    "titleSlug": "492A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Boring Apartments",
+    "titleSlug": "1433A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Erasing Zeroes",
+    "titleSlug": "1303A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Repeating Cipher",
+    "titleSlug": "1095A",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fix You",
+    "titleSlug": "1391B",
+    "difficulty": "800",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "String Task",
+    "titleSlug": "118A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Assigning to Classes",
+    "titleSlug": "1300B",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Numbers on Whiteboard",
+    "titleSlug": "1430C",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Petr and Book",
+    "titleSlug": "139A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "k-String",
+    "titleSlug": "219A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Game 23",
+    "titleSlug": "1141A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Present from Lena",
+    "titleSlug": "118B",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Donut Shops",
+    "titleSlug": "1373A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Buttons",
+    "titleSlug": "268B",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dreamoon and Stairs",
+    "titleSlug": "476A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "New Year Transportation",
+    "titleSlug": "500A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "cAPS lOCK",
+    "titleSlug": "131A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Chocolates",
+    "titleSlug": "1139B",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "City Day",
+    "titleSlug": "1199A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Diverse Substring",
+    "titleSlug": "1073A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lucky Sum of Digits",
+    "titleSlug": "109A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Rooms and Staircases",
+    "titleSlug": "1244B",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Palindromic Twist",
+    "titleSlug": "1027A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Shuffle Hashing",
+    "titleSlug": "1278A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Middle of the Contest",
+    "titleSlug": "1133A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "OR in Matrix",
+    "titleSlug": "486B",
+    "difficulty": "1300",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Balanced Rating Changes",
+    "titleSlug": "1237A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Amr and Music",
+    "titleSlug": "507A",
+    "difficulty": "1000",
+    "category": "Implementation/Constructive",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ichihime and Triangle",
+    "titleSlug": "1337A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "LCM Problem",
+    "titleSlug": "1389A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mahmoud and Ehab and the even-odd game",
+    "titleSlug": "959A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Array with Odd Sum",
+    "titleSlug": "1296A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Floor Number",
+    "titleSlug": "1426A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Three Pairwise Maximums",
+    "titleSlug": "1385A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Park Lighting",
+    "titleSlug": "1358A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Collecting Coins",
+    "titleSlug": "1294A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Required Remainder",
+    "titleSlug": "1374A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Magical Sticks",
+    "titleSlug": "1371A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Minimal Square",
+    "titleSlug": "1360A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Even Array",
+    "titleSlug": "1367B",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Most Unstable Array",
+    "titleSlug": "1353A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Balanced Array",
+    "titleSlug": "1343B",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Buy a Shovel",
+    "titleSlug": "732A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Restoring Three Numbers",
+    "titleSlug": "1154A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Yet Another Two Integers Problem",
+    "titleSlug": "1409A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Candies and Two Sisters",
+    "titleSlug": "1335A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Divisibility Problem",
+    "titleSlug": "1328A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Elephant",
+    "titleSlug": "617A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Domino piling",
+    "titleSlug": "50A",
+    "difficulty": "800",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Emotes",
+    "titleSlug": "1117B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Drinks Choosing",
+    "titleSlug": "1195A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Chunga-Changa",
+    "titleSlug": "1181A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dice Tower",
+    "titleSlug": "1266B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Digital root",
+    "titleSlug": "1107B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Heating",
+    "titleSlug": "1260A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Competitive Programmer",
+    "titleSlug": "1266A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Triangles on a Rectangle",
+    "titleSlug": "1620B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Pasha and Stick",
+    "titleSlug": "610A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Young Physicist",
+    "titleSlug": "69A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Theatre Square",
+    "titleSlug": "1A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Water Lily",
+    "titleSlug": "1199B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Magic Stick",
+    "titleSlug": "1257B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "BowWow and the Timetable",
+    "titleSlug": "1204A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Drazil and Date",
+    "titleSlug": "515A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Boboniu Likes to Color Balls",
+    "titleSlug": "1395A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lovely Palindromes",
+    "titleSlug": "688B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "String LCM",
+    "titleSlug": "1473B",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "K-divisible Sum",
+    "titleSlug": "1476A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Berland Poker",
+    "titleSlug": "1359A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Road To Zero",
+    "titleSlug": "1342A",
+    "difficulty": "1000",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dungeon",
+    "titleSlug": "1463A",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Caisa and Pylons",
+    "titleSlug": "463B",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "GCD Length",
+    "titleSlug": "1511B",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lucky Numbers",
+    "titleSlug": "630C",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Number Circle",
+    "titleSlug": "1189B",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Non-Coprime Partition",
+    "titleSlug": "1038B",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Hexagons!",
+    "titleSlug": "630D",
+    "difficulty": "1100",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Sequence with Digits",
+    "titleSlug": "1355A",
+    "difficulty": "1200",
+    "category": "Maths",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Hamburgers",
+    "titleSlug": "371C",
+    "difficulty": "1600",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Magic Powder - 1",
+    "titleSlug": "670D1",
+    "difficulty": "1400",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Pipeline",
+    "titleSlug": "287B",
+    "difficulty": "1700",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Poisoned Dagger",
+    "titleSlug": "1613C",
+    "difficulty": "1200",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mike and Chocolate Thieves",
+    "titleSlug": "689C",
+    "difficulty": "1700",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Vasya and Robot",
+    "titleSlug": "1073C",
+    "difficulty": "1800",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Multiplication Table",
+    "titleSlug": "448D",
+    "difficulty": "1800",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Stressful Training",
+    "titleSlug": "1132D",
+    "difficulty": "2300",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Water Taps",
+    "titleSlug": "954E",
+    "difficulty": "2000",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Minimax Problem",
+    "titleSlug": "1288D",
+    "difficulty": "2000",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Odd-Even Subsequence",
+    "titleSlug": "1370D",
+    "difficulty": "2000",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Prime Generator",
+    "titleSlug": "PRIME1",
+    "difficulty": "Easy",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Printing some primes",
+    "titleSlug": "TDPRIMES",
+    "difficulty": "Easy",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Finding the Kth Prime",
+    "titleSlug": "TDKPRIME",
+    "difficulty": "Easy",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Good Sequences",
+    "titleSlug": "264B",
+    "difficulty": "1500",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Taxes",
+    "titleSlug": "735D",
+    "difficulty": "1600",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Soldier and Number Game",
+    "titleSlug": "546D",
+    "difficulty": "1700",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Reducing Fractions",
+    "titleSlug": "222C",
+    "difficulty": "1800",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Petya and Divisors",
+    "titleSlug": "111B",
+    "difficulty": "1900",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Primes and Multiplication",
+    "titleSlug": "1228C",
+    "difficulty": "1700",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "GCD Counting",
+    "titleSlug": "1101D",
+    "difficulty": "2000",
+    "category": "Prime, Sieve, Prime Factorisation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "New Year's Eve",
+    "titleSlug": "912B",
+    "difficulty": "1300",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Special Numbers",
+    "titleSlug": "1594B",
+    "difficulty": "1100",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Petr and a Combination Lock",
+    "titleSlug": "1097B",
+    "difficulty": "1200",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Powers Of Two",
+    "titleSlug": "1095C",
+    "difficulty": "1400",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Berland Crossword",
+    "titleSlug": "1494B",
+    "difficulty": "1400",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dima and a Bad XOR",
+    "titleSlug": "1151B",
+    "difficulty": "1600",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "p-binary",
+    "titleSlug": "1225C",
+    "difficulty": "1600",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ehab and the Expected XOR Problem",
+    "titleSlug": "1174D",
+    "difficulty": "1900",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "505",
+    "titleSlug": "1391D",
+    "difficulty": "2000",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Zookeeper and The Infinite Zoo",
+    "titleSlug": "1491D",
+    "difficulty": "1800",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Alternating Current",
+    "titleSlug": "343B",
+    "difficulty": "1600",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Cd and pwd commands",
+    "titleSlug": "158C",
+    "difficulty": "1400",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Longest Regular Bracket Sequence",
+    "titleSlug": "5C",
+    "difficulty": "1900",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Pair of Numbers",
+    "titleSlug": "359D",
+    "difficulty": "2000",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Great Vova Wall (Version 1)",
+    "titleSlug": "1092D1",
+    "difficulty": "2200",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Skyscrapers (hard version)",
+    "titleSlug": "1313C2",
+    "difficulty": "1900",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Phoenix and Towers",
+    "titleSlug": "1515C",
+    "difficulty": "1400",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Psychos in a Line",
+    "titleSlug": "319B",
+    "difficulty": "1900",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Strip",
+    "titleSlug": "487B",
+    "difficulty": "2000",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Great Vova Wall (Version 2)",
+    "titleSlug": "1092D2",
+    "difficulty": "2200",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Special Segments of Permutation",
+    "titleSlug": "1156E",
+    "difficulty": "2200",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Stack Sorting",
+    "titleSlug": "911E",
+    "difficulty": "2000",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Breaking Good",
+    "titleSlug": "507E",
+    "difficulty": "2100",
+    "category": "Stack/Queues/Priority Queues",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Good Substrings",
+    "titleSlug": "271D",
+    "difficulty": "1800",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Prefix-Suffix Palindrome (Hard version)",
+    "titleSlug": "1326D2",
+    "difficulty": "1800",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Watto and Mechanism",
+    "titleSlug": "514C",
+    "difficulty": "2000",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Palindrome Degree",
+    "titleSlug": "7D",
+    "difficulty": "2200",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Spy Syndrome 2",
+    "titleSlug": "633C",
+    "difficulty": "1900",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Segment Occurrences",
+    "titleSlug": "1016B",
+    "difficulty": "1300",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Password",
+    "titleSlug": "126B",
+    "difficulty": "1700",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "MUH and Cube Walls",
+    "titleSlug": "471D",
+    "difficulty": "1800",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Prefixes and Suffixes",
+    "titleSlug": "432D",
+    "difficulty": "2000",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Erase and Extend (Hard Version)",
+    "titleSlug": "1537E2",
+    "difficulty": "2200",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Number of Palindromes",
+    "titleSlug": "NUMOFPAL",
+    "difficulty": "Easy",
+    "category": "String Algorithms",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "titleSlug": "LPS",
+    "difficulty": "Easy",
+    "category": "String Algorithms",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Mirror Strings !!!",
+    "titleSlug": "MSUBSTR",
+    "difficulty": "Easy",
+    "category": "String Algorithms",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Extend to Palindrome",
+    "titleSlug": "EPALIN",
+    "difficulty": "Easy",
+    "category": "String Algorithms",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sonya and Matrix Beauty",
+    "titleSlug": "1080E",
+    "difficulty": "2400",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Xor-Paths",
+    "titleSlug": "1006F",
+    "difficulty": "2100",
+    "category": "BFS",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Subordinates",
+    "titleSlug": "1674",
+    "difficulty": "N/A",
+    "category": "Tree's",
+    "platform": "cses"
+  },
+  {
+    "title": "Tree Matching",
+    "titleSlug": "1130",
+    "difficulty": "N/A",
+    "category": "Tree's",
+    "platform": "cses"
+  },
+  {
+    "title": "Military Problem",
+    "titleSlug": "1006E",
+    "difficulty": "1600",
+    "category": "Tree's",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Tree Distances II",
+    "titleSlug": "1133",
+    "difficulty": "N/A",
+    "category": "Tree's",
+    "platform": "cses"
+  },
+  {
+    "title": "Three Paths on a Tree",
+    "titleSlug": "1294F",
+    "difficulty": "2000",
+    "category": "Tree's",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Tree Queries",
+    "titleSlug": "1328E",
+    "difficulty": "1900",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "1-Trees and Queries",
+    "titleSlug": "1304E",
+    "difficulty": "2000",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Blood Cousins",
+    "titleSlug": "208E",
+    "difficulty": "2100",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fools and Roads",
+    "titleSlug": "191C",
+    "difficulty": "1900",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "A and B and Lecture Rooms",
+    "titleSlug": "519E",
+    "difficulty": "2100",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Duff in the Army",
+    "titleSlug": "587C",
+    "difficulty": "2200",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Minimum spanning tree for each edge",
+    "titleSlug": "609E",
+    "difficulty": "2100",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Information Graph",
+    "titleSlug": "466E",
+    "difficulty": "2100",
+    "category": "LCA",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Two Buttons",
+    "titleSlug": "520B",
+    "difficulty": "1400",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Party",
+    "titleSlug": "115A",
+    "difficulty": "900",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Kefa and Park",
+    "titleSlug": "580C",
+    "difficulty": "1500",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Cyclic Components",
+    "titleSlug": "977E",
+    "difficulty": "1500",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Graph Without Long Directed Paths",
+    "titleSlug": "1144F",
+    "difficulty": "1700",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fox And Names",
+    "titleSlug": "510C",
+    "difficulty": "1600",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dijkstra?",
+    "titleSlug": "20C",
+    "difficulty": "1900",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Strongly Connected City",
+    "titleSlug": "475B",
+    "difficulty": "1400",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fair",
+    "titleSlug": "986A",
+    "difficulty": "1600",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "King's Path",
+    "titleSlug": "242C",
+    "difficulty": "1800",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Monopole Magnets",
+    "titleSlug": "1344B",
+    "difficulty": "2000",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Planets",
+    "titleSlug": "229B",
+    "difficulty": "1700",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Directing Edges",
+    "titleSlug": "1385E",
+    "difficulty": "2000",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Greg and Graph",
+    "titleSlug": "295B",
+    "difficulty": "1700",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Unstable String Sort",
+    "titleSlug": "1213F",
+    "difficulty": "2100",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Weights Distributing",
+    "titleSlug": "1343E",
+    "difficulty": "2100",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "String Coloring (easy version)",
+    "titleSlug": "1296E1",
+    "difficulty": "1800",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Book",
+    "titleSlug": "1572A",
+    "difficulty": "1800",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "How Many Paths?",
+    "titleSlug": "1547G",
+    "difficulty": "2100",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dima and Bacteria",
+    "titleSlug": "400D",
+    "difficulty": "2000",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Greedy Merchants",
+    "titleSlug": "178B3",
+    "difficulty": "1800",
+    "category": "Graph Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Camp Schedule",
+    "titleSlug": "1137B",
+    "difficulty": "1600",
+    "category": "String Algorithms",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Array Elimination",
+    "titleSlug": "1601A",
+    "difficulty": "1300",
+    "category": "Bit Manipulation/Power Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Plant",
+    "titleSlug": "185A",
+    "difficulty": "1300",
+    "category": "Matrix Exponentiation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Magic Gems",
+    "titleSlug": "1117D",
+    "difficulty": "2100",
+    "category": "Matrix Exponentiation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Once Again...",
+    "titleSlug": "582B",
+    "difficulty": "1900",
+    "category": "Matrix Exponentiation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Decoding Genome",
+    "titleSlug": "222E",
+    "difficulty": "1900",
+    "category": "Matrix Exponentiation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Wet Shark and Blocks",
+    "titleSlug": "621E",
+    "difficulty": "2000",
+    "category": "Matrix Exponentiation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Product Oriented Recurrence",
+    "titleSlug": "1182E",
+    "difficulty": "2300",
+    "category": "Matrix Exponentiation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Vasiliy's Multiset",
+    "titleSlug": "706D",
+    "difficulty": "1800",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Perfect Security",
+    "titleSlug": "923C",
+    "difficulty": "1800",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Beautiful Subarrays",
+    "titleSlug": "665E",
+    "difficulty": "2100",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dr. Evil Underscores",
+    "titleSlug": "1285D",
+    "difficulty": "1900",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Polycarp's phone book",
+    "titleSlug": "858D",
+    "difficulty": "1600",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "A Lot of Games",
+    "titleSlug": "455B",
+    "difficulty": "1900",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Petr#",
+    "titleSlug": "113B",
+    "difficulty": "2000",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Sausage Maximization",
+    "titleSlug": "282E",
+    "difficulty": "2200",
+    "category": "Trie",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Classy Numbers",
+    "titleSlug": "1036C",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "QAQ",
+    "titleSlug": "894A",
+    "difficulty": "800",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Napoleon Cake",
+    "titleSlug": "1501B",
+    "difficulty": "900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Red and Blue",
+    "titleSlug": "1469B",
+    "difficulty": "1000",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fence",
+    "titleSlug": "363B",
+    "difficulty": "1100",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ilya and Queries",
+    "titleSlug": "313B",
+    "difficulty": "1100",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Flipping Game",
+    "titleSlug": "327A",
+    "difficulty": "1200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lecture Sleep",
+    "titleSlug": "961B",
+    "difficulty": "1200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Reposts",
+    "titleSlug": "522A",
+    "difficulty": "1200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Vitamins",
+    "titleSlug": "1042B",
+    "difficulty": "1200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Cut Ribbon",
+    "titleSlug": "189A",
+    "difficulty": "1300",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Pokémon Army (easy version)",
+    "titleSlug": "1420C1",
+    "difficulty": "1300",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mashmokh and ACM",
+    "titleSlug": "414B",
+    "difficulty": "1400",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Basketball Exercise",
+    "titleSlug": "1195C",
+    "difficulty": "1400",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Orac and Models",
+    "titleSlug": "1350B",
+    "difficulty": "1400",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mr. Kitayuta, the Treasure Hunter",
+    "titleSlug": "505C",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Modulo Sum",
+    "titleSlug": "577B",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Little Elephant and Interval",
+    "titleSlug": "204A",
+    "difficulty": "1500",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Painting Fence",
+    "titleSlug": "448C",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Riding in a Lift",
+    "titleSlug": "479E",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Roman and Numbers",
+    "titleSlug": "401D",
+    "difficulty": "2000",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Hanoi Factory",
+    "titleSlug": "777E",
+    "difficulty": "2000",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Choosing Capital for Treeland",
+    "titleSlug": "219D",
+    "difficulty": "1700",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Book of Evil",
+    "titleSlug": "337D",
+    "difficulty": "2000",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Compatible Numbers",
+    "titleSlug": "165E",
+    "difficulty": "2200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "The Values You Can Make",
+    "titleSlug": "687C",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Clear the String",
+    "titleSlug": "1132F",
+    "difficulty": "2000",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Antenna Coverage",
+    "titleSlug": "1253E",
+    "difficulty": "2200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Wi-Fi",
+    "titleSlug": "1216F",
+    "difficulty": "2100",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Appleman and Tree",
+    "titleSlug": "461B",
+    "difficulty": "2000",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Kalila and Dimna in the Logging Industry",
+    "titleSlug": "319C",
+    "difficulty": "2100",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "The Fair Nut and Rectangles",
+    "titleSlug": "1083E",
+    "difficulty": "2400",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "The Maths Lecture",
+    "titleSlug": "507D",
+    "difficulty": "2200",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bad Luck Island",
+    "titleSlug": "540D",
+    "difficulty": "1900",
+    "category": "Dynamic Programming",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Little Alawn's Puzzle",
+    "titleSlug": "1534C",
+    "difficulty": "1300",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ice Skating",
+    "titleSlug": "217A",
+    "difficulty": "1200",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Learning Languages",
+    "titleSlug": "277A",
+    "difficulty": "1400",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bertown Subway",
+    "titleSlug": "884C",
+    "difficulty": "1500",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "K-Complete Word",
+    "titleSlug": "1332C",
+    "difficulty": "1500",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Civilization",
+    "titleSlug": "455C",
+    "difficulty": "2100",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "0-1-Tree",
+    "titleSlug": "1156D",
+    "difficulty": "2200",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Path Queries",
+    "titleSlug": "1213G",
+    "difficulty": "1800",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dogeforces",
+    "titleSlug": "1494D",
+    "difficulty": "2300",
+    "category": "Disjoint Set",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Powerful array",
+    "titleSlug": "86D",
+    "difficulty": "2200",
+    "category": "SQRT Decomposition/MO's Algorithm",
+    "platform": "codeforces"
+  },
+  {
+    "title": "XOR and Favorite Number",
+    "titleSlug": "617E",
+    "difficulty": "2200",
+    "category": "SQRT Decomposition/MO's Algorithm",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Little Elephant and Array",
+    "titleSlug": "220B",
+    "difficulty": "1800",
+    "category": "SQRT Decomposition/MO's Algorithm",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Cut and Stick",
+    "titleSlug": "1514D",
+    "difficulty": "2000",
+    "category": "SQRT Decomposition/MO's Algorithm",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Tree and Queries",
+    "titleSlug": "375D",
+    "difficulty": "2400",
+    "category": "SQRT Decomposition/MO's Algorithm",
+    "platform": "codeforces"
+  },
+  {
+    "title": "XOR on Segment",
+    "titleSlug": "242E",
+    "difficulty": "2000",
+    "category": "SQRT Decomposition/MO's Algorithm",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Enemy is weak",
+    "titleSlug": "61E",
+    "difficulty": "1900",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Moving Points",
+    "titleSlug": "1311F",
+    "difficulty": "1900",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Cows and Sequence",
+    "titleSlug": "283A",
+    "difficulty": "1600",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Pashmak and Parmida's problem",
+    "titleSlug": "459D",
+    "difficulty": "1800",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bubble Sort Graph",
+    "titleSlug": "340D",
+    "difficulty": "1500",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Vasya and a Tree",
+    "titleSlug": "1076E",
+    "difficulty": "1900",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Multiset",
+    "titleSlug": "1354D",
+    "difficulty": "1900",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fixed Point Removal",
+    "titleSlug": "1404C",
+    "difficulty": "2300",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Propagating tree",
+    "titleSlug": "383C",
+    "difficulty": "2000",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Kill Anton",
+    "titleSlug": "1526D",
+    "difficulty": "2200",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Little Girl and Problem on Trees",
+    "titleSlug": "276E",
+    "difficulty": "2100",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Tree and Queries",
+    "titleSlug": "375D",
+    "difficulty": "2400",
+    "category": "Fenwick Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Xenia and Bit Operations",
+    "titleSlug": "339D",
+    "difficulty": "1700",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bash and a Tough Math Puzzle",
+    "titleSlug": "914D",
+    "difficulty": "1900",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Pashmak and Parmida's problem",
+    "titleSlug": "459D",
+    "difficulty": "1800",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Sereja and Brackets",
+    "titleSlug": "380C",
+    "difficulty": "2000",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ant colony",
+    "titleSlug": "474F",
+    "difficulty": "2100",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Balanced Playlist",
+    "titleSlug": "1237D",
+    "difficulty": "2000",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Copying Data",
+    "titleSlug": "292E",
+    "difficulty": "1900",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Interesting Array",
+    "titleSlug": "482B",
+    "difficulty": "1800",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Subarray Sorting",
+    "titleSlug": "1187D",
+    "difficulty": "2400",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "SUM and REPLACE",
+    "titleSlug": "920F",
+    "difficulty": "2000",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Playoff Tournament",
+    "titleSlug": "1535D",
+    "difficulty": "1800",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "The Child and Sequence",
+    "titleSlug": "438D",
+    "difficulty": "2300",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Equilibrium",
+    "titleSlug": "1556E",
+    "difficulty": "2200",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Non-Decreasing Dilemma",
+    "titleSlug": "1567E",
+    "difficulty": "2200",
+    "category": "Segment Tree",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Circular RMQ",
+    "titleSlug": "52C",
+    "difficulty": "2200",
+    "category": "Lazy Propagation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Array Restoration",
+    "titleSlug": "1023D",
+    "difficulty": "1700",
+    "category": "Lazy Propagation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "XOR on Segment",
+    "titleSlug": "242E",
+    "difficulty": "2000",
+    "category": "Lazy Propagation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ezzat and Grid",
+    "titleSlug": "1557D",
+    "difficulty": "2200",
+    "category": "Lazy Propagation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lucky Queries",
+    "titleSlug": "145E",
+    "difficulty": "2400",
+    "category": "Lazy Propagation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Hanoi Factory",
+    "titleSlug": "777E",
+    "difficulty": "2000",
+    "category": "Lazy Propagation",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Increasing by Modulo",
+    "titleSlug": "1169C",
+    "difficulty": "Easy",
+    "category": "Binary Search",
+    "platform": "codeforces"
+  }
+]

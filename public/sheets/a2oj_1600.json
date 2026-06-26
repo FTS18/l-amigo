@@ -1,0 +1,702 @@
+[
+  {
+    "title": "1B - Spreadsheet",
+    "titleSlug": "1B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "7B - Memory Manager",
+    "titleSlug": "7B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "11B - Jumping Jack",
+    "titleSlug": "11B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "23B - Party",
+    "titleSlug": "23B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28B - pSort",
+    "titleSlug": "28B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28A - Bender Problem",
+    "titleSlug": "28A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "32D - Constellation",
+    "titleSlug": "32D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "34D - Road Map",
+    "titleSlug": "34D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "36B - Fractal",
+    "titleSlug": "36B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "40B - Repaintings",
+    "titleSlug": "40B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "46C - Hamsters and Tigers",
+    "titleSlug": "46C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "52B - Right Triangles",
+    "titleSlug": "52B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "55B - Smallest number",
+    "titleSlug": "55B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "57B - Martian Architecture",
+    "titleSlug": "57B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "59C - Title",
+    "titleSlug": "59C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64C - Table",
+    "titleSlug": "64C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "68B - Energy exchange",
+    "titleSlug": "68B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "70B - Text Messaging",
+    "titleSlug": "70B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "71C - Round Table Knights",
+    "titleSlug": "71C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "72H - Reverse It!",
+    "titleSlug": "72H",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "73A - The Elder Trolls IV: Oblivon",
+    "titleSlug": "73A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "75C - Modified GCD",
+    "titleSlug": "75C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "86A - Reflection",
+    "titleSlug": "86A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "95A - Hockey",
+    "titleSlug": "95A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "100E - Lamps in a Line",
+    "titleSlug": "100E",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "107B - Basketball Team",
+    "titleSlug": "107B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "113A - Grammar Lessons",
+    "titleSlug": "113A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "125C - Hobbits' Party",
+    "titleSlug": "125C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130H - Balanced brackets",
+    "titleSlug": "130H",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130F - Prime factorization",
+    "titleSlug": "130F",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130E - Tribonacci numbers",
+    "titleSlug": "130E",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "131D - Subway",
+    "titleSlug": "131D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "135B - Rectangle and Square",
+    "titleSlug": "135B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "138A - Literature Lesson",
+    "titleSlug": "138A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "139B - Wallpaper",
+    "titleSlug": "139B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "142A - Help Farmer",
+    "titleSlug": "142A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "149B - Martian Clock",
+    "titleSlug": "149B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "150B - Quantity of Strings",
+    "titleSlug": "150B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "153A - A + B",
+    "titleSlug": "153A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "154B - Colliders",
+    "titleSlug": "154B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "154A - Hometask",
+    "titleSlug": "154A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "156B - Suspects",
+    "titleSlug": "156B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "165C - Another Problem on Strings",
+    "titleSlug": "165C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "167A - Wizards and Trolleybuses",
+    "titleSlug": "167A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "171G - Mysterious numbers - 2",
+    "titleSlug": "171G",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "171F - ucyhf",
+    "titleSlug": "171F",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "175C - Geometry Horse",
+    "titleSlug": "175C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178C1 - Smart Beaver and Resolving Collisions",
+    "titleSlug": "178C1",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178B2 - Greedy Merchants",
+    "titleSlug": "178B2",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "178B1 - Greedy Merchants",
+    "titleSlug": "178B1",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "188G - Array Sorting",
+    "titleSlug": "188G",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "197A - Plate Game",
+    "titleSlug": "197A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207D7 - The Beaver's Problem - 3",
+    "titleSlug": "207D7",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207D5 - The Beaver's Problem - 3",
+    "titleSlug": "207D5",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207B1 - Military Trainings",
+    "titleSlug": "207B1",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "207A1 - Beaver's Calculator 1.0",
+    "titleSlug": "207A1",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "209A - Multicolored Marbles",
+    "titleSlug": "209A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "214B - Hometask",
+    "titleSlug": "214B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "219C - Color Stripe",
+    "titleSlug": "219C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "225B - Well-known Numbers",
+    "titleSlug": "225B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "231D - Magic Box",
+    "titleSlug": "231D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "231C - To Add or Not to Add",
+    "titleSlug": "231C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "232A - Cycles",
+    "titleSlug": "232A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "234G - Practice",
+    "titleSlug": "234G",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "234E - Champions' League",
+    "titleSlug": "234E",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "234D - Cinema",
+    "titleSlug": "234D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "235A - LCM Challenge",
+    "titleSlug": "235A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "237C - Primes on Interval",
+    "titleSlug": "237C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "243A - The Brand New Function",
+    "titleSlug": "243A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "244B - Undoubtedly Lucky Numbers",
+    "titleSlug": "244B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "246D - Colorful Graph",
+    "titleSlug": "246D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "246C - Beauty Pageant",
+    "titleSlug": "246C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "250C - Movie Critics",
+    "titleSlug": "250C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "253C - Text Editor",
+    "titleSlug": "253C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "260B - Ancient Prophesy",
+    "titleSlug": "260B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "269A - Magical Boxes",
+    "titleSlug": "269A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "272D - Dima and Two Sequences",
+    "titleSlug": "272D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "283A - Cows and Sequence",
+    "titleSlug": "283A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "291D - Parallel Programming",
+    "titleSlug": "291D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "291C - Network Mask",
+    "titleSlug": "291C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "297B - Fish Weight",
+    "titleSlug": "297B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "305C - Ivan and Powers of Two",
+    "titleSlug": "305C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "305A - Strange Addition",
+    "titleSlug": "305A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "314A - Sereja and Contest",
+    "titleSlug": "314A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "316B2 - EKG",
+    "titleSlug": "316B2",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "317A - Perfect Pair",
+    "titleSlug": "317A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "319A - Malek Dance Club",
+    "titleSlug": "319A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "322B - Ciel and Flowers",
+    "titleSlug": "322B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "323A - Black-and-White Cube",
+    "titleSlug": "323A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "333A - Secrets",
+    "titleSlug": "333A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "337C - Quiz",
+    "titleSlug": "337C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "340C - Tourist Problem",
+    "titleSlug": "340C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "343B - Alternating Current",
+    "titleSlug": "343B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "343A - Rational Resistance",
+    "titleSlug": "343A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "346A - Alice and Bob",
+    "titleSlug": "346A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "348A - Mafia",
+    "titleSlug": "348A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "350C - Bombs",
+    "titleSlug": "350C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "353C - Find Maximum",
+    "titleSlug": "353C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "364A - Matrix",
+    "titleSlug": "364A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "369C - Valera and Elections",
+    "titleSlug": "369C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  }
+]

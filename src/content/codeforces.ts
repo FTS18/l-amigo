@@ -1188,8 +1188,8 @@ async function updateHeatmap(useRating: boolean, handle: string) {
   if (rects.length === 0) return;
 
   if (!useRating) {
-    if (legend) legend.style.display = 'none';
-    if (toggleText) toggleText.innerText = 'Rating-based Heatmap';
+    if (legend && legend.style.display !== 'none') legend.style.display = 'none';
+    if (toggleText && toggleText.innerText !== 'Rating-based Heatmap') toggleText.innerText = 'Rating-based Heatmap';
 
     rects.forEach(rect => {
       if (rect.hasAttribute('data-lamigo-colored')) {
@@ -1206,33 +1206,35 @@ async function updateHeatmap(useRating: boolean, handle: string) {
     return;
   }
 
-  if (legend) legend.style.display = 'flex';
+  if (legend && legend.style.display !== 'flex') legend.style.display = 'flex';
 
   if (!cachedSubmissions && !isFetching) {
-    if (toggleText) toggleText.innerText = 'Loading submissions...';
+    if (toggleText && toggleText.innerText !== 'Loading submissions...') toggleText.innerText = 'Loading submissions...';
     try {
       const subs = await fetchSubmissions(handle);
       maxRatingByDate = calculateRatingsByDate(subs);
-      if (toggleText) toggleText.innerText = 'Rating-based Heatmap';
+      if (toggleText && toggleText.innerText !== 'Rating-based Heatmap') toggleText.innerText = 'Rating-based Heatmap';
     } catch (err) {
-      if (toggleText) toggleText.innerText = 'Error loading rating heatmap';
+      if (toggleText && toggleText.innerText !== 'Error loading rating heatmap') toggleText.innerText = 'Error loading rating heatmap';
       console.error(err);
       return;
     }
   } else if (isFetching) {
-    if (toggleText) toggleText.innerText = 'Loading submissions...';
+    if (toggleText && toggleText.innerText !== 'Loading submissions...') toggleText.innerText = 'Loading submissions...';
     try {
       const subs = await fetchPromise;
       if (subs) {
         maxRatingByDate = calculateRatingsByDate(subs);
       }
-      if (toggleText) toggleText.innerText = 'Rating-based Heatmap';
+      if (toggleText && toggleText.innerText !== 'Rating-based Heatmap') toggleText.innerText = 'Rating-based Heatmap';
     } catch (err) {
-      if (toggleText) toggleText.innerText = 'Error loading rating heatmap';
+      if (toggleText && toggleText.innerText !== 'Error loading rating heatmap') toggleText.innerText = 'Error loading rating heatmap';
       console.error(err);
       return;
     }
   }
+
+  if (useRating && !heatmapRatingEnabled) return;
 
   rects.forEach(rect => {
     const dateStr = rect.getAttribute('data-date');
@@ -1262,12 +1264,16 @@ async function updateHeatmap(useRating: boolean, handle: string) {
   });
 }
 
+let heatmapRatingEnabled = false;
+let heatmapToggleContainer: HTMLDivElement | null = null;
+let heatmapCheckbox: HTMLInputElement | null = null;
+let heatmapLegend: HTMLDivElement | null = null;
+
 function injectRatingHeatmap() {
   if (!window.location.pathname.startsWith('/profile/')) return;
 
-  const header = document.querySelector<HTMLDivElement>('._UserActivityFrame_header');
   const graph = document.querySelector<HTMLDivElement>('#userActivityGraph');
-  if (!header || !graph) return;
+  if (!graph) return;
 
   const match = window.location.pathname.match(/\/profile\/([^/]+)/);
   if (!match) return;
@@ -1279,18 +1285,35 @@ function injectRatingHeatmap() {
     maxRatingByDate.clear();
     originalColors.clear();
     currentHandle = handle;
+    heatmapRatingEnabled = false;
+    // Tear down the old toggle so it's re-injected fresh for the new handle
+    heatmapToggleContainer?.remove();
+    heatmapLegend?.remove();
+    heatmapToggleContainer = null;
+    heatmapCheckbox = null;
+    heatmapLegend = null;
   }
 
-  if (header.querySelector('.lamigo-heatmap-toggle-container')) {
-    chrome.storage.local.get(['cf_heatmap_rating_enabled'], (res) => {
-      const enabled = !!res.cf_heatmap_rating_enabled;
-      updateHeatmap(enabled, handle);
+  // If our container is already in the DOM, just re-anchor it if CF swapped the graph node
+  if (heatmapToggleContainer !== null) {
+    if (!graph.parentNode?.contains(heatmapToggleContainer)) {
+      graph.parentNode?.insertBefore(heatmapToggleContainer, graph);
+    }
+    // Nuke any rogue duplicates that somehow snuck in
+    document.querySelectorAll('.lamigo-heatmap-toggle-container').forEach(el => {
+      if (el !== heatmapToggleContainer) el.remove();
     });
+    if (heatmapRatingEnabled) {
+      const uncoloredRect = document.querySelector('#userActivityGraph svg rect.day:not([data-lamigo-colored])');
+      if (uncoloredRect) updateHeatmap(true, handle);
+    }
     return;
   }
 
+  // First time injection — build the UI
   const container = document.createElement('div');
   container.className = 'lamigo-heatmap-toggle-container';
+  heatmapToggleContainer = container;
 
   const label = document.createElement('label');
   label.className = 'lamigo-heatmap-toggle-label';
@@ -1298,6 +1321,8 @@ function injectRatingHeatmap() {
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.id = 'lamigo-heatmap-rating-toggle';
+  checkbox.checked = false;
+  heatmapCheckbox = checkbox;
 
   const labelText = document.createElement('span');
   labelText.innerText = 'Rating-based Heatmap';
@@ -1307,37 +1332,49 @@ function injectRatingHeatmap() {
   label.appendChild(labelText);
   container.appendChild(label);
 
-  header.appendChild(container);
+  graph.parentNode?.insertBefore(container, graph);
 
-  let legend = document.querySelector<HTMLDivElement>('.lamigo-heatmap-legend');
-  if (!legend) {
-    legend = document.createElement('div');
-    legend.className = 'lamigo-heatmap-legend';
-    legend.style.cssText = 'display: none;';
-    legend.innerHTML = `
-      <span style="font-weight: bold;">Rating Legend:</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #888888;"></span>&lt;1200</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #008000;"></span>&lt;1400</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #03a89e;"></span>&lt;1600</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #0000ff;"></span>&lt;1900</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #aa00aa;"></span>&lt;2100</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #ff8c00;"></span>&lt;2400</span>
-      <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: #ff0000;"></span>&ge;2400</span>
-    `;
-    graph.insertAdjacentElement('afterend', legend);
+  const legend = document.createElement('div');
+  legend.className = 'lamigo-heatmap-legend';
+  legend.style.cssText = 'display: none;';
+
+  // Build legend safely using DOM API (no innerHTML) to prevent any XSS vector
+  const legendItems: Array<{ color: string; label: string }> = [
+    { color: '#888888', label: '<1200' },
+    { color: '#008000', label: '<1400' },
+    { color: '#03a89e', label: '<1600' },
+    { color: '#0000ff', label: '<1900' },
+    { color: '#aa00aa', label: '<2100' },
+    { color: '#ff8c00', label: '<2400' },
+    { color: '#ff0000', label: '≥2400' },
+  ];
+
+  const legendTitle = document.createElement('span');
+  legendTitle.style.fontWeight = 'bold';
+  legendTitle.textContent = 'Rating Legend:';
+  legend.appendChild(legendTitle);
+
+  for (const item of legendItems) {
+    const wrapper = document.createElement('span');
+    wrapper.style.cssText = 'display: inline-flex; align-items: center; gap: 4px;';
+    const swatch = document.createElement('span');
+    swatch.style.cssText = `display: inline-block; width: 11px; height: 11px; border-radius: 2px; background-color: ${item.color};`;
+    const text = document.createTextNode(item.label);
+    wrapper.appendChild(swatch);
+    wrapper.appendChild(text);
+    legend.appendChild(wrapper);
   }
 
+  graph.insertAdjacentElement('afterend', legend);
+  heatmapLegend = legend;
+
   checkbox.addEventListener('change', () => {
-    const checked = checkbox.checked;
-    chrome.storage.local.set({ cf_heatmap_rating_enabled: checked });
-    updateHeatmap(checked, handle);
+    heatmapRatingEnabled = checkbox.checked;
+    updateHeatmap(heatmapRatingEnabled, handle);
   });
 
-  chrome.storage.local.get(['cf_heatmap_rating_enabled'], (res) => {
-    const enabled = !!res.cf_heatmap_rating_enabled;
-    checkbox.checked = enabled;
-    updateHeatmap(enabled, handle);
-  });
+  heatmapRatingEnabled = false;
+  checkbox.checked = false;
 }
 
 // ============================================================
@@ -1366,17 +1403,156 @@ async function prefetchCollegeStandings() {
 }
 
 // ============================================================
+// REAL-TIME SUBMISSION MONITOR & TOASTS
+// ============================================================
+
+class CodeforcesMonitor {
+  private lastDetectedSubId = '';
+
+  constructor() {
+    this.init();
+  }
+
+  private init() {
+    // Monitor status pages where user submissions appear
+    if (!window.location.pathname.includes('/my') && !window.location.pathname.includes('/status')) {
+      return;
+    }
+
+    console.log("[L'Amigo] Monitoring Codeforces submissions on", window.location.pathname);
+    this.checkForNewAccepted();
+
+    let monitorTimeout: number | null = null;
+    const observer = new MutationObserver(() => {
+      if (monitorTimeout !== null) return;
+      monitorTimeout = window.setTimeout(() => {
+        monitorTimeout = null;
+        this.checkForNewAccepted();
+      }, 150);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  private checkForNewAccepted() {
+    try {
+      // Find rows in status table
+      const rows = document.querySelectorAll('table.status-frame-datatable tr[data-submission-id], table.status-frame-datatable tr:not(:first-child)');
+      if (rows.length === 0) return;
+
+      // Look at the first row (most recent submission)
+      const firstRow = rows[0];
+      const verdictEl = firstRow.querySelector('.verdict-accepted');
+      if (!verdictEl) return;
+
+      // Get submission ID
+      const subId = firstRow.getAttribute('data-submission-id') || firstRow.querySelector('a.view-source')?.textContent?.trim() || '';
+      if (!subId || subId === this.lastDetectedSubId) return;
+
+      // Check if it's our own submission by verifying if 'my' is in URL or checking author
+      const isMyPage = window.location.pathname.includes('/my');
+      const authorEl = firstRow.querySelector('td.author a');
+      
+      chrome.storage.local.get(['own_codeforces_handle'], (res) => {
+        const ownHandle = (res.own_codeforces_handle || '').toLowerCase().trim();
+        const authorHandle = (authorEl?.textContent || '').toLowerCase().trim();
+
+        if (isMyPage || (ownHandle && authorHandle === ownHandle)) {
+          this.lastDetectedSubId = subId;
+          console.log("[L'Amigo] New Codeforces Accepted submission detected! ID:", subId);
+          
+          const problemTitle = firstRow.querySelector('td:nth-child(4) a')?.textContent?.trim() || 'Codeforces Problem';
+
+          chrome.runtime.sendMessage({
+            type: "newSubmissionDetected",
+            data: {
+              title: problemTitle,
+              timestamp: Date.now(),
+              url: window.location.href
+            }
+          }).catch(() => { /* silent */ });
+        }
+      });
+    } catch (err) {
+      console.warn("[L'Amigo] CodeforcesMonitor check failed:", err);
+    }
+  }
+}
+
+// Add global message listener for background notifications (e.g. sync toasts)
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "showSyncToast") {
+    const existing = document.querySelector(".lamigo-toast");
+    if (existing) {
+      existing.remove();
+    }
+
+    const toast = document.createElement("div");
+    toast.className = "lamigo-toast";
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: #1e293b;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3), 0 8px 10px -6px rgba(0,0,0,0.3);
+      z-index: 999999;
+    `;
+    
+    const icon = document.createElement("span");
+    icon.className = "lamigo-toast-success-icon";
+    icon.style.cssText = `
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: #3b82f6;
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+    `;
+    icon.textContent = "✓";
+    
+    const text = document.createElement("span");
+    text.textContent = message.message;
+    
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.remove();
+    }, 5000);
+  }
+});
+
+// ============================================================
 // BOOT
 // ============================================================
 
+let globalObserverTimeout: number | null = null;
 const observer = new MutationObserver(() => {
-  injectAddButtons();
-  injectBookmarkButton();
-  injectProfileBookmarkButton();
-  injectCollegeStandingsTab();
-  injectRatingHeatmap();
-  injectOwnRowDeltaBadge();
-  injectNativeStandingsDeltaColumn();
+  if (globalObserverTimeout !== null) return;
+  globalObserverTimeout = window.setTimeout(() => {
+    globalObserverTimeout = null;
+    injectAddButtons();
+    injectBookmarkButton();
+    injectProfileBookmarkButton();
+    injectCollegeStandingsTab();
+    injectRatingHeatmap();
+    injectOwnRowDeltaBadge();
+    injectNativeStandingsDeltaColumn();
+  }, 150);
 });
 
 if (document.body) {
@@ -1388,6 +1564,7 @@ if (document.body) {
   prefetchCollegeStandings();
   injectOwnRowDeltaBadge();
   injectNativeStandingsDeltaColumn();
+  new CodeforcesMonitor();
   observer.observe(document.body, { childList: true, subtree: true });
 } else {
   document.addEventListener('DOMContentLoaded', () => {
@@ -1399,6 +1576,7 @@ if (document.body) {
     prefetchCollegeStandings();
     injectOwnRowDeltaBadge();
     injectNativeStandingsDeltaColumn();
+    new CodeforcesMonitor();
     observer.observe(document.body, { childList: true, subtree: true });
   });
 }

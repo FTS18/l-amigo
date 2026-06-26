@@ -8,6 +8,7 @@ import { CodeChefService } from '../services/codechef';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { getPlatformRankColor, getPlatformRankLabel, getProfileQualityColor, getProfileQualityBorderColor, getProfileQualityTextColor } from './FriendCard';
 import { SkeletonList, SkeletonRecItem } from './Skeleton';
+import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon, PlatformIcon } from '../utils/PlatformIcons';
 
 interface FriendProfileViewProps {
   friend: Friend;
@@ -67,7 +68,7 @@ const RatingChart: React.FC<{
               dataKey="id" 
               tickFormatter={(val) => data[val]?.date || ''}
               stroke={labelColor} 
-              fontSize={9} 
+              fontSize="calc(0.9 * var(--font-size-xs))" 
               tickLine={false} 
               axisLine={false}
               dy={6}
@@ -75,7 +76,7 @@ const RatingChart: React.FC<{
             />
             <YAxis 
               stroke={labelColor} 
-              fontSize={9} 
+              fontSize="calc(0.9 * var(--font-size-xs))" 
               tickLine={false} 
               axisLine={false}
               domain={['dataMin - 100', 'dataMax + 100']}
@@ -89,12 +90,12 @@ const RatingChart: React.FC<{
                   return (
                     <div style={{
                       backgroundColor: 'var(--bg-tertiary)',
-                      borderRadius: '4px',
+                      borderRadius: '0px',
                       padding: '8px 12px',
                       border: '1px solid var(--border)',
                       boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
                       color: 'var(--text-primary)',
-                      fontSize: '11px',
+                      fontSize: 'var(--font-size-sm)',
                       minWidth: '150px'
                     }}>
                       <div style={{ fontWeight: 'bold', marginBottom: '6px', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)', paddingBottom: '4px' }}>
@@ -145,6 +146,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
   const [submissions, setSubmissions] = useState<RecentSubmission[]>([]);
   const [loadingSubmissions, setLoadingSubmissions] = useState(false);
   const [submissionLimit, setSubmissionLimit] = useState(30);
+  const [showInfo, setShowInfo] = useState(false);
 
   // Sync initialFilter prop to filterLevel state
   useEffect(() => {
@@ -300,9 +302,9 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
             <div className="profile-hero-identity">
               <img
                 className="profile-avatar-small"
-                src={activeChartProfile.avatar || 'default-avatar.png'}
+                src={activeChartProfile.avatar || 'default-avatar.svg'}
                 alt={friend.displayName || activeChartProfile.username}
-                onError={(e) => { (e.target as HTMLImageElement).src = 'default-avatar.png'; }}
+                onError={(e) => { (e.target as HTMLImageElement).src = 'default-avatar.svg'; }}
               />
               <div className="profile-hero-names">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -323,9 +325,9 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                     <span 
                       className="name-streak-badge" 
                       title={`${StreakCalculator.calculateStreak(activeChartProfile).currentStreak} Day Streak on ${activePlatform}`}
-                      style={{ fontSize: '13px', fontWeight: 600, color: '#ff9800', display: 'flex', alignItems: 'center', gap: '2px', cursor: 'default' }}
+                      style={{ fontSize: 'var(--font-size-md)', fontWeight: 600, color: '#ff9800', display: 'flex', alignItems: 'center', gap: '2px', cursor: 'default' }}
                     >
-                      {StreakCalculator.calculateStreak(activeChartProfile).currentStreak} <span style={{ fontSize: '13px' }}>🔥</span>
+                      {StreakCalculator.calculateStreak(activeChartProfile).currentStreak} <span style={{ fontSize: 'var(--font-size-md)' }}>🔥</span>
                     </span>
                   )}
                 </div>
@@ -367,7 +369,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                     {codechefProfile.contributionPoints && (
                       <span 
                         className="div-tag div3" 
-                        style={{ color: themeColor, border: 'none', backgroundColor: `${themeColor}1a`, fontSize: '10px', padding: '3px 8px' }}
+                        style={{ color: themeColor, border: 'none', backgroundColor: `${themeColor}1a`, fontSize: 'var(--font-size-xs)', padding: '3px 8px' }}
                         onClick={openExternalProfile} 
                         title="Maximum CodeChef Rating achieved"
                       >
@@ -392,19 +394,25 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                 <button
                   className={`platform-selector-btn lc ${activePlatform === 'leetcode' ? 'active' : ''}`}
                   onClick={() => setActivePlatform('leetcode')}
-                >LC</button>
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                  title="LeetCode"
+                ><LeetCodeIcon size={16} /></button>
               )}
               {codeforcesProfile && (
                 <button
                   className={`platform-selector-btn cf ${activePlatform === 'codeforces' ? 'active' : ''}`}
                   onClick={() => setActivePlatform('codeforces')}
-                >CF</button>
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                  title="Codeforces"
+                ><CodeforcesIcon size={16} /></button>
               )}
               {codechefProfile && (
                 <button
                   className={`platform-selector-btn cc ${activePlatform === 'codechef' ? 'active' : ''}`}
                   onClick={() => setActivePlatform('codechef')}
-                >CC</button>
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                  title="CodeChef"
+                ><CodeChefIcon size={16} /></button>
               )}
             </div>
           )}
@@ -567,7 +575,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                       {divs.div3 > 0 && <div style={{ width: `${(divs.div3 / totalDiv) * 100}%`, background: 'var(--accent-codeforces-blue)' }} />}
                       {divs.div4 > 0 && <div style={{ width: `${(divs.div4 / totalDiv) * 100}%`, background: 'var(--color-easy)' }} />}
                     </div>
-                    <div className="cf-divisions-legend" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                    <div className="cf-divisions-legend" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'calc(0.9 * var(--font-size-xs))', fontWeight: 700, color: 'var(--text-secondary)' }}>
                       {divs.div1 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-hard)' }} /> D1: {divs.div1}</span>}
                       {divs.div2 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-medium)' }} /> D2: {divs.div2}</span>}
                       {divs.div3 > 0 && <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-codeforces-blue)' }} /> D3: {divs.div3}</span>}
@@ -665,10 +673,10 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                         <ResponsiveContainer width="100%" height="100%">
                           <RadarChart cx="50%" cy="50%" outerRadius="65%" data={activeChartProfile.topicStats.slice(0, 6)}>
                             <PolarGrid stroke="var(--border)" />
-                            <PolarAngleAxis dataKey="topicName" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                            <PolarAngleAxis dataKey="topicName" tick={{ fill: 'var(--text-secondary)', fontSize: 'var(--font-size-xs)' }} />
                             <PolarRadiusAxis angle={30} domain={[0, 'dataMax']} tick={false} axisLine={false} />
                             <Radar name="Solved" dataKey="problemsSolved" stroke={themeColor} fill={themeColor} fillOpacity={0.3} />
-                            <Tooltip contentStyle={{ backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border)', borderRadius: '6px' }} />
+                            <Tooltip contentStyle={{ backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border)', borderRadius: '0px' }} />
                           </RadarChart>
                         </ResponsiveContainer>
                       </div>
@@ -717,9 +725,9 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                             const vLabel = verdict === 'OK' ? 'AC' : verdict === 'WRONG_ANSWER' ? 'WA' : verdict === 'TIME_LIMIT_EXCEEDED' ? 'TLE' : verdict === 'COMPILATION_ERROR' ? 'CE' : verdict === 'RUNTIME_ERROR' ? 'RE' : verdict;
                             const vColor = verdict === 'OK' ? 'var(--color-easy)' : verdict === 'WRONG_ANSWER' ? 'var(--color-hard)' : 'var(--color-medium)';
                             return (
-                              <div key={verdict} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-primary)', padding: '6px 12px', borderRadius: '4px', border: '1px solid var(--border)', minWidth: '60px' }}>
-                                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: vColor }}>{vLabel}</span>
-                                <span style={{ fontSize: '0.75rem', color: 'var(--text-primary)', marginTop: '2px' }}>{count}</span>
+                              <div key={verdict} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-primary)', padding: '6px 12px', borderRadius: '0px', border: '1px solid var(--border)', minWidth: '60px' }}>
+                                <span style={{ fontSize: 'calc(0.8 * var(--font-size-base))', fontWeight: 600, color: vColor }}>{vLabel}</span>
+                                <span style={{ fontSize: 'calc(0.75 * var(--font-size-base))', color: 'var(--text-primary)', marginTop: '2px' }}>{count}</span>
                               </div>
                             );
                         })}
@@ -771,7 +779,24 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
 
         {activeTab === 'submissions' && (
           <div className="submissions-tab-pane">
+            {showInfo && (
+              <div style={{ marginBottom: '16px', padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <strong>ⓘ Recent Submissions Pagination & API Limits</strong>
+                  <button onClick={() => setShowInfo(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
+                </div>
+                L'Amigo fetches recent problem submissions directly from each platform's public API. Because platforms strictly throttle historical pagination requests, clicking <strong>"Load More"</strong> will incrementally request older batches while safeguarding your connection from rate limits.
+              </div>
+            )}
             <div className="submission-filters">
+              <button 
+                className={`filter-btn ${showInfo ? 'active' : ''}`}
+                onClick={() => setShowInfo(!showInfo)}
+                style={{ padding: '4px 10px', fontSize: 'var(--font-size-sm)', fontWeight: 700, color: showInfo ? '#ffa116' : 'var(--text-secondary)' }}
+                title="Click for API Limits Info"
+              >
+                ⓘ INFO
+              </button>
               <button 
                 className={`filter-btn ${filterLevel === 'all' ? 'active' : ''}`}
                 onClick={() => setFilterLevel('all')}
@@ -861,8 +886,8 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                     return (
                       <div key={idx} className={`submission-feed-row compact ${diffClass}`}>
                         <div className="sub-left">
-                          <span className={`sub-platform-badge ${sub.platform}`}>
-                            {sub.platform === 'leetcode' ? 'LC' : sub.platform === 'codechef' ? 'CC' : 'CF'}
+                          <span className={`sub-platform-badge ${sub.platform}`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '16px', height: '16px', padding: 0 }}>
+                            <PlatformIcon platform={sub.platform || 'leetcode'} size={14} />
                           </span>
                           <span className="sub-title-text" title={sub.title}>
                             {sub.title} {sub.statusDisplay !== 'Accepted' ? <span title="Rejected" style={{ display: 'inline-flex', verticalAlign: 'text-bottom', marginLeft: '4px' }}><X size={12} color="#ff4444" /></span> : null}
@@ -898,7 +923,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                   className="load-more-btn"
                   onClick={() => setSubmissionLimit(prev => prev + 30)}
                   disabled={loadingSubmissions}
-                  style={{ width: '100%', padding: '8px', marginTop: '12px', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)', border: '1px dashed var(--border-primary)', borderRadius: '4px', cursor: loadingSubmissions ? 'not-allowed' : 'pointer' }}
+                  style={{ width: '100%', padding: '8px', marginTop: '12px', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)', border: '1px dashed var(--border-primary)', borderRadius: '0px', cursor: loadingSubmissions ? 'not-allowed' : 'pointer' }}
                 >
                   {loadingSubmissions ? 'Loading...' : 'Load More'}
                 </button>

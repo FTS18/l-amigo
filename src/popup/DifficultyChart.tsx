@@ -56,7 +56,7 @@ export const DifficultyChart: React.FC<DifficultyChartProps> = ({ profile, isDar
             height={36}
             wrapperStyle={{
               color: 'var(--text-primary)',
-              fontSize: '11px'
+              fontSize: 'var(--font-size-sm)'
             }}
           />
         </PieChart>

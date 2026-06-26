@@ -1,0 +1,702 @@
+[
+  {
+    "title": "8B - Obsession with Robots",
+    "titleSlug": "8B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "19A - World Football Cup",
+    "titleSlug": "19A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "24A - Ring road",
+    "titleSlug": "24A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "26B - Regular Bracket Sequence",
+    "titleSlug": "26B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "30A - Accounting",
+    "titleSlug": "30A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "38C - Blinds",
+    "titleSlug": "38C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "41B - Martian Dollar",
+    "titleSlug": "41B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "42A - Guilty --- to the kitchen!",
+    "titleSlug": "42A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44E - Anfisa the Monkey",
+    "titleSlug": "44E",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45I - TCMCF+++",
+    "titleSlug": "45I",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "60B - Serial Time!",
+    "titleSlug": "60B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "77A - Heroes",
+    "titleSlug": "77A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "79B - Colorful Field",
+    "titleSlug": "79B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "81A - Plug-in",
+    "titleSlug": "81A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "100C - A+B",
+    "titleSlug": "100C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "107A - Dorm Water Supply",
+    "titleSlug": "107A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "108B - Datatypes",
+    "titleSlug": "108B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "111A - Petya and Inequiations",
+    "titleSlug": "111A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "120F - Spiders",
+    "titleSlug": "120F",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "120E - Put Knight!",
+    "titleSlug": "120E",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "120D - Three Sons",
+    "titleSlug": "120D",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "124B - Permutations",
+    "titleSlug": "124B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "125A - Measuring Lengths in Baden",
+    "titleSlug": "125A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130B - Gnikool Ssalg",
+    "titleSlug": "130B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "131C - The World is a Theatre",
+    "titleSlug": "131C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "141B - Hopscotch",
+    "titleSlug": "141B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "150A - Win or Freeze",
+    "titleSlug": "150A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "152C - Pocket Book",
+    "titleSlug": "152C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "158C - Cd and pwd commands",
+    "titleSlug": "158C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "159C - String Manipulation 1.0",
+    "titleSlug": "159C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "159A - Friends or Not",
+    "titleSlug": "159A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "174B - File List",
+    "titleSlug": "174B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "175B - Plane of Tanks: Pro",
+    "titleSlug": "175B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "175A - Robot Bicorn Attack",
+    "titleSlug": "175A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "180C - Letter",
+    "titleSlug": "180C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "182D - Common Divisors",
+    "titleSlug": "182D",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "188F - Binary Notation",
+    "titleSlug": "188F",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "188E - HQ9+",
+    "titleSlug": "188E",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "188C - LCM",
+    "titleSlug": "188C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "197B - Limit",
+    "titleSlug": "197B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "198B - Jumping on Walls",
+    "titleSlug": "198B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "203C - Photographer",
+    "titleSlug": "203C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "205B - Little Elephant and Sorting",
+    "titleSlug": "205B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "219B - Special Offer! Super Price 999 Bourles!",
+    "titleSlug": "219B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "226A - Flying Saucer Segments",
+    "titleSlug": "226A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "228B - Two Tables",
+    "titleSlug": "228B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "233B - Non-square Equation",
+    "titleSlug": "233B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "245E - Mishap in Club",
+    "titleSlug": "245E",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "248B - Chilly Willy",
+    "titleSlug": "248B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "253B - Physics Practical",
+    "titleSlug": "253B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "260A - Adding Digits",
+    "titleSlug": "260A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "261A - Maxim and Discounts",
+    "titleSlug": "261A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "270B - Multithreading",
+    "titleSlug": "270B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "272B - Dima and Sequence",
+    "titleSlug": "272B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "277A - Learning Languages",
+    "titleSlug": "277A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "279B - Books",
+    "titleSlug": "279B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "279A - Point on Spiral",
+    "titleSlug": "279A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "284A - Cows and Primitive Roots",
+    "titleSlug": "284A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "286A - Lucky Permutation",
+    "titleSlug": "286A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "289B - Polo the Penguin and Matrix",
+    "titleSlug": "289B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "290D - Orange",
+    "titleSlug": "290D",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "290A - Mysterious strings",
+    "titleSlug": "290A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "295A - Greg and Array",
+    "titleSlug": "295A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "313C - Ilya and Matrix",
+    "titleSlug": "313C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "315A - Sereja and Bottles",
+    "titleSlug": "315A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "316A2 - Special Task",
+    "titleSlug": "316A2",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "331A1 - Oh Sweet Beaverette",
+    "titleSlug": "331A1",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "334B - Eight Point Sets",
+    "titleSlug": "334B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "335A - Banana",
+    "titleSlug": "335A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "337B - Routine Problem",
+    "titleSlug": "337B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "357B - Flag Day",
+    "titleSlug": "357B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "358A - Dima and Continuous Line",
+    "titleSlug": "358A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "359B - Permutation",
+    "titleSlug": "359B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "363C - Fixing Typos",
+    "titleSlug": "363C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "369B - Valera and Contest",
+    "titleSlug": "369B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "379C - New Year Ratings Change",
+    "titleSlug": "379C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "386B - Fly, freebies, fly!",
+    "titleSlug": "386B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "388A - Fox and Box Accumulation",
+    "titleSlug": "388A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "401C - Team",
+    "titleSlug": "401C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "402B - Trees in a Row",
+    "titleSlug": "402B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "413C - Jeopardy!",
+    "titleSlug": "413C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "414B - Mashmokh and ACM",
+    "titleSlug": "414B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "416A - Guess a number!",
+    "titleSlug": "416A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "417C - Football",
+    "titleSlug": "417C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "417B - Crash",
+    "titleSlug": "417B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "430B - Balls Game",
+    "titleSlug": "430B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "435B - Pasha Maximizes",
+    "titleSlug": "435B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "436B - Om Nom and Spiders",
+    "titleSlug": "436B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "437C - The Child and Toy",
+    "titleSlug": "437C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "441B - Valera and Fruits",
+    "titleSlug": "441B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "445B - DZY Loves Chemistry",
+    "titleSlug": "445B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "448B - Suffix Structures",
+    "titleSlug": "448B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "470A - Crystal Ball Sequence",
+    "titleSlug": "470A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "472C - Design Tutorial: Make It Nondeterministic",
+    "titleSlug": "472C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "475B - Strongly Connected City",
+    "titleSlug": "475B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "479C - Exams",
+    "titleSlug": "479C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "479B - Towers",
+    "titleSlug": "479B",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "485A - Factory",
+    "titleSlug": "485A",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "489C - Given Length and Sum of Digits...",
+    "titleSlug": "489C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "492C - Vanya and Exams",
+    "titleSlug": "492C",
+    "difficulty": "Medium",
+    "category": "1400 Rating",
+    "platform": "codeforces"
+  }
+]

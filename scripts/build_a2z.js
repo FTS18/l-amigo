@@ -1,0 +1,348 @@
+const fs = require('fs');
+const path = require('path');
+
+const outDir = path.join(__dirname, '..', 'public', 'sheets');
+
+// Raw Striver A2Z data from Codolio scrape (455 problems)
+const raw = [
+  // Arrays & Hashing / Basics
+  {title:"User Input / Output",url:"https://takeuforward.org/plus/dsa/problems/input-output"},
+  {title:"What are arrays, strings?",url:"https://takeuforward.org/plus/dsa/problems/cpp"},
+  {title:"Data Types",url:"https://takeuforward.org/data-structure/data-types"},
+  {title:"If Else statements",url:"https://takeuforward.org/plus/dsa/problems/if-elseif"},
+  {title:"Switch Statement",url:"https://takeuforward.org/plus/dsa/problems/switch-case"},
+  {title:"For loops",url:"https://takeuforward.org/for-loop/understanding-for-loop/"},
+  {title:"While loops",url:"https://takeuforward.org/while-loop/while-loops-in-programming/"},
+  {title:"Functions (Pass by Reference and Value)",url:"https://www.hackerrank.com/challenges/c-tutorial-functions/problem"},
+  {title:"Time Complexity",url:"https://takeuforward.org/time-complexity/time-and-space-complexity-strivers-a2z-dsa-course/"},
+  {title:"Patterns",url:"https://takeuforward.org/strivers-a2z-dsa-course/must-do-pattern-problems-before-starting-dsa/"},
+  {title:"C++ STL",url:"https://takeuforward.org/c/c-stl-tutorial-most-frequent-used-stl-containers/"},
+  // Sorting
+  {title:"Count Digits",url:"https://takeuforward.org/plus/dsa/problems/count-all-digits-of-a-number"},
+  {title:"Reverse a Number",url:"https://leetcode.com/problems/reverse-integer"},
+  {title:"Check Palindrome",url:"https://leetcode.com/problems/palindrome-number"},
+  {title:"GCD Or HCF",url:"https://takeuforward.org/plus/dsa/problems/gcd-of-two-numbers"},
+  {title:"Armstrong Numbers",url:"https://leetcode.com/problems/armstrong-number"},
+  {title:"Print all Divisors",url:"https://takeuforward.org/plus/dsa/problems/divisors-of-a-number"},
+  {title:"Check for Prime",url:"https://takeuforward.org/plus/dsa/problems/check-for-prime-number"},
+  {title:"Understand recursion by print something N times",url:"https://takeuforward.org/plus/dsa/problems/print-1-to-n-using-recursion"},
+  {title:"Print 1 to N using recursion",url:"https://takeuforward.org/recursion/introduction-to-recursion-understand-recursion-by-printing-something-n-times/"},
+  {title:"Sum of first N numbers",url:"https://takeuforward.org/plus/dsa/problems/sum-of-first-n-numbers"},
+  {title:"Factorial of N numbers",url:"https://takeuforward.org/plus/dsa/problems/factorial-of-a-given-number"},
+  {title:"Reverse an array",url:"https://leetcode.com/problems/reverse-string"},
+  {title:"Check if a string is palindrome or not",url:"https://leetcode.com/problems/valid-palindrome"},
+  {title:"Fibonacci Number",url:"https://leetcode.com/problems/fibonacci-number"},
+  {title:"Selection Sort",url:"https://takeuforward.org/plus/dsa/problems/selection-sort"},
+  {title:"Bubble Sort",url:"https://takeuforward.org/plus/dsa/problems/bubble-sort"},
+  {title:"Insertion Sort",url:"https://takeuforward.org/plus/dsa/problems/recursive-insertion-sort"},
+  {title:"Merge Sort",url:"https://takeuforward.org/plus/dsa/problems/merge-sorting"},
+  {title:"Quick Sort",url:"https://takeuforward.org/plus/dsa/problems/quick-sorting"},
+  // Arrays
+  {title:"Largest Element in an Array",url:"https://takeuforward.org/plus/dsa/problems/largest-element"},
+  {title:"Second Largest Element in an Array without sorting",url:"https://takeuforward.org/plus/dsa/problems/second-largest-element"},
+  {title:"Check if the array is sorted",url:"https://leetcode.com/problems/check-if-array-is-sorted-and-rotated"},
+  {title:"Remove duplicates from Sorted array",url:"https://leetcode.com/problems/remove-duplicates-from-sorted-array"},
+  {title:"Left Rotate an array by one place",url:"https://leetcode.com/problems/rotate-array"},
+  {title:"Left rotate an array by D places",url:"https://leetcode.com/problems/rotate-array"},
+  {title:"Move Zeros to end",url:"https://leetcode.com/problems/move-zeroes"},
+  {title:"Linear Search",url:"https://takeuforward.org/plus/dsa/problems/linear-search"},
+  {title:"Find the Union",url:"https://takeuforward.org/plus/dsa/problems/union-of-two-sorted-arrays"},
+  {title:"Find missing number in an array",url:"https://leetcode.com/problems/missing-number"},
+  {title:"Maximum Consecutive Ones",url:"https://leetcode.com/problems/max-consecutive-ones"},
+  {title:"Find the number that appears once, and other numbers twice.",url:"https://leetcode.com/problems/single-number"},
+  {title:"Longest subarray with given sum K(positives)",url:"https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k"},
+  {title:"2Sum Problem",url:"https://leetcode.com/problems/two-sum"},
+  {title:"Sort an array of 0's 1's and 2's",url:"https://leetcode.com/problems/sort-colors"},
+  {title:"Majority Element (>n/2 times)",url:"https://leetcode.com/problems/majority-element"},
+  {title:"Kadane's Algorithm, maximum subarray sum",url:"https://leetcode.com/problems/maximum-subarray"},
+  {title:"Stock Buy and Sell",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock"},
+  {title:"Rearrange the array in alternating positive and negative items",url:"https://leetcode.com/problems/rearrange-array-elements-by-sign"},
+  {title:"Next Permutation",url:"https://leetcode.com/problems/next-permutation"},
+  {title:"Leaders in an Array problem",url:"https://takeuforward.org/plus/dsa/problems/leaders-in-an-array"},
+  {title:"Longest Consecutive Sequence in an Array",url:"https://leetcode.com/problems/longest-consecutive-sequence"},
+  {title:"Set Matrix Zeros",url:"https://leetcode.com/problems/set-matrix-zeroes"},
+  {title:"Rotate Matrix by 90 degrees",url:"https://leetcode.com/problems/rotate-image"},
+  {title:"Print the matrix in spiral manner",url:"https://leetcode.com/problems/spiral-matrix"},
+  {title:"Count subarrays with given sum",url:"https://leetcode.com/problems/subarray-sum-equals-k"},
+  {title:"Pascal's Triangle",url:"https://leetcode.com/problems/pascals-triangle"},
+  {title:"Majority Element (n/3 times)",url:"https://leetcode.com/problems/majority-element-ii"},
+  {title:"3-Sum Problem",url:"https://leetcode.com/problems/3sum"},
+  {title:"4-Sum Problem",url:"https://leetcode.com/problems/4sum"},
+  {title:"Merge Overlapping Subintervals",url:"https://leetcode.com/problems/merge-intervals"},
+  {title:"Merge two sorted arrays without extra space",url:"https://leetcode.com/problems/merge-sorted-array"},
+  {title:"Count Inversions",url:"https://takeuforward.org/plus/dsa/problems/count-inversions"},
+  {title:"Reverse Pairs",url:"https://leetcode.com/problems/reverse-pairs"},
+  {title:"Maximum Product Subarray",url:"https://leetcode.com/problems/maximum-product-subarray"},
+  // Binary Search
+  {title:"Binary Search to find X in sorted array",url:"https://leetcode.com/problems/binary-search"},
+  {title:"Search Insert Position",url:"https://leetcode.com/problems/search-insert-position"},
+  {title:"Find the first or last occurrence of a given number in a sorted array",url:"https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array"},
+  {title:"Search in Rotated Sorted Array I",url:"https://leetcode.com/problems/search-in-rotated-sorted-array"},
+  {title:"Search in Rotated Sorted Array II",url:"https://leetcode.com/problems/search-in-rotated-sorted-array-ii"},
+  {title:"Find minimum in Rotated Sorted Array",url:"https://leetcode.com/problems/find-minimum-in-rotated-sorted-array"},
+  {title:"Single element in a Sorted Array",url:"https://leetcode.com/problems/single-element-in-a-sorted-array"},
+  {title:"Find peak element",url:"https://leetcode.com/problems/find-peak-element"},
+  {title:"Koko Eating Bananas",url:"https://leetcode.com/problems/koko-eating-bananas"},
+  {title:"Minimum days to make M bouquets",url:"https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets"},
+  {title:"Find the smallest Divisor",url:"https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold"},
+  {title:"Capacity to Ship Packages within D Days",url:"https://leetcode.com/problems/capacity-to-ship-packages-within-d-days"},
+  {title:"Kth Missing Positive Number",url:"https://leetcode.com/problems/kth-missing-positive-number"},
+  {title:"Split array - Largest Sum",url:"https://leetcode.com/problems/split-array-largest-sum"},
+  {title:"Median of 2 sorted arrays",url:"https://leetcode.com/problems/median-of-two-sorted-arrays"},
+  {title:"Search in a 2D matrix",url:"https://leetcode.com/problems/search-a-2D-matrix"},
+  {title:"Search in a row and column wise sorted matrix",url:"https://leetcode.com/problems/search-a-2D-matrix-ii"},
+  // Strings
+  {title:"Remove outermost Paranthesis",url:"https://leetcode.com/problems/remove-outermost-parentheses"},
+  {title:"Reverse words in a given string",url:"https://leetcode.com/problems/reverse-words-in-a-string"},
+  {title:"Largest odd number in a string",url:"https://leetcode.com/problems/largest-odd-number-in-string"},
+  {title:"Longest Common Prefix",url:"https://leetcode.com/problems/longest-common-prefix"},
+  {title:"Isomorphic String",url:"https://leetcode.com/problems/isomorphic-strings"},
+  {title:"Check if two strings are anagram of each other",url:"https://leetcode.com/problems/valid-anagram"},
+  {title:"Sort Characters by frequency",url:"https://leetcode.com/problems/sort-characters-by-frequency"},
+  {title:"Maximum Nesting Depth of Paranthesis",url:"https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses"},
+  {title:"Roman Number to Integer",url:"https://leetcode.com/problems/roman-to-integer"},
+  {title:"Implement Atoi",url:"https://leetcode.com/problems/string-to-integer-atoi"},
+  {title:"Longest Palindromic Substring",url:"https://leetcode.com/problems/longest-palindromic-substring"},
+  // Linked List
+  {title:"Middle of a LinkedList",url:"https://leetcode.com/problems/middle-of-the-linked-list"},
+  {title:"Reverse a LinkedList",url:"https://leetcode.com/problems/reverse-linked-list"},
+  {title:"Detect a loop in LL",url:"https://leetcode.com/problems/linked-list-cycle"},
+  {title:"Find the starting point in LL",url:"https://leetcode.com/problems/linked-list-cycle-ii"},
+  {title:"Check if LL is palindrome or not",url:"https://leetcode.com/problems/palindrome-linked-list"},
+  {title:"Segrregate odd and even nodes in LL",url:"https://leetcode.com/problems/odd-even-linked-list"},
+  {title:"Remove Nth node from the back of the LL",url:"https://leetcode.com/problems/remove-nth-node-from-end-of-list"},
+  {title:"Delete the middle node of LL",url:"https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list"},
+  {title:"Sort LL",url:"https://leetcode.com/problems/sort-list"},
+  {title:"Find the intersection point of Y LL",url:"https://leetcode.com/problems/intersection-of-two-linked-lists"},
+  {title:"Add 2 numbers in LL",url:"https://leetcode.com/problems/add-two-numbers"},
+  {title:"Reverse LL in group of given size K",url:"https://leetcode.com/problems/reverse-nodes-in-k-group"},
+  {title:"Rotate a LL",url:"https://leetcode.com/problems/rotate-list"},
+  {title:"Clone a Linked List with random and next pointer",url:"https://leetcode.com/problems/copy-list-with-random-pointer"},
+  {title:"Flatten LL",url:"https://takeuforward.org/plus/dsa/problems/flattening-of-ll"},
+  // Recursion
+  {title:"Pow(x, n)",url:"https://leetcode.com/problems/powx-n"},
+  {title:"Generate Paranthesis",url:"https://leetcode.com/problems/generate-parentheses"},
+  {title:"Print all subsequences/Power Set",url:"https://leetcode.com/problems/subsets"},
+  {title:"Combination Sum",url:"https://leetcode.com/problems/combination-sum"},
+  {title:"Combination Sum-II",url:"https://leetcode.com/problems/combination-sum-ii"},
+  {title:"Subset Sum-II",url:"https://leetcode.com/problems/subsets-ii"},
+  {title:"Combination Sum - III",url:"https://leetcode.com/problems/combination-sum-iii"},
+  {title:"Letter Combinations of a Phone number",url:"https://leetcode.com/problems/letter-combinations-of-a-phone-number"},
+  {title:"Palindrome Partitioning",url:"https://leetcode.com/problems/palindrome-partitioning"},
+  {title:"Word Search",url:"https://leetcode.com/problems/word-search"},
+  {title:"N Queen",url:"https://leetcode.com/problems/n-queens"},
+  {title:"Word Break",url:"https://leetcode.com/problems/word-break"},
+  {title:"Sudoko Solver",url:"https://leetcode.com/problems/sudoku-solver"},
+  {title:"Expression Add Operators",url:"https://leetcode.com/problems/expression-add-operators"},
+  // Stacks & Queues
+  {title:"Implement Stack using Queue",url:"https://leetcode.com/problems/implement-stack-using-queues"},
+  {title:"Implement Queue using Stack",url:"https://leetcode.com/problems/implement-queue-using-stacks"},
+  {title:"Check for balanced paranthesis",url:"https://leetcode.com/problems/valid-parentheses"},
+  {title:"Implement Min Stack",url:"https://leetcode.com/problems/min-stack"},
+  {title:"Next Greater Element",url:"https://leetcode.com/problems/next-greater-element-i"},
+  {title:"Next Greater Element 2",url:"https://leetcode.com/problems/next-greater-element-ii"},
+  {title:"Trapping Rainwater",url:"https://leetcode.com/problems/trapping-rain-water"},
+  {title:"Sum of subarray minimum",url:"https://leetcode.com/problems/sum-of-subarray-minimums"},
+  {title:"Asteroid Collision",url:"https://leetcode.com/problems/asteroid-collision"},
+  {title:"Sum of subarray ranges",url:"https://leetcode.com/problems/sum-of-subarray-ranges"},
+  {title:"Remove k Digits",url:"https://leetcode.com/problems/remove-k-digits"},
+  {title:"Largest rectangle in a histogram",url:"https://leetcode.com/problems/largest-rectangle-in-histogram"},
+  {title:"Maximal Rectangles",url:"https://leetcode.com/problems/maximal-rectangle"},
+  {title:"Sliding Window maximum",url:"https://leetcode.com/problems/sliding-window-maximum"},
+  {title:"LRU cache (IMPORTANT)",url:"https://leetcode.com/problems/lru-cache"},
+  {title:"LFU cache",url:"https://leetcode.com/problems/lfu-cache"},
+  // Sliding Window
+  {title:"Longest Substring Without Repeating Characters",url:"https://leetcode.com/problems/longest-substring-without-repeating-characters"},
+  {title:"Max Consecutive Ones III",url:"https://leetcode.com/problems/max-consecutive-ones-iii"},
+  {title:"Fruit Into Baskets",url:"https://takeuforward.org/plus/dsa/problems/fruit-into-baskets"},
+  {title:"longest repeating character replacement",url:"https://leetcode.com/problems/longest-repeating-character-replacement"},
+  {title:"Binary subarray with sum",url:"https://leetcode.com/problems/binary-subarrays-with-sum"},
+  {title:"Count number of nice subarrays",url:"https://leetcode.com/problems/count-number-of-nice-subarrays"},
+  {title:"Number of substring containing all three characters",url:"https://leetcode.com/problems/number-of-substrings-containing-all-three-characters"},
+  {title:"Maximum point you can obtain from cards",url:"https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards"},
+  {title:"Subarray with k different integers",url:"https://leetcode.com/problems/subarrays-with-k-different-integers"},
+  {title:"Minimum Window Substring",url:"https://leetcode.com/problems/minimum-window-substring"},
+  // Heap
+  {title:"Kth largest element in an array",url:"https://leetcode.com/problems/kth-largest-element-in-an-array"},
+  {title:"Sort K sorted array",url:"https://leetcode.com/problems/merge-k-sorted-lists"},
+  {title:"Task Scheduler",url:"https://leetcode.com/problems/task-scheduler"},
+  {title:"Hands of Straights",url:"https://leetcode.com/problems/hand-of-straights"},
+  {title:"Design twitter",url:"https://leetcode.com/problems/design-twitter"},
+  {title:"Kth largest element in a stream",url:"https://leetcode.com/problems/kth-largest-element-in-a-stream"},
+  {title:"Find Median from Data Stream",url:"https://leetcode.com/problems/find-median-from-data-stream"},
+  {title:"K most frequent elements",url:"https://leetcode.com/problems/top-k-frequent-elements"},
+  // Greedy
+  {title:"Assign Cookies",url:"https://leetcode.com/problems/assign-cookies"},
+  {title:"Fractional Knapsack Problem",url:"https://takeuforward.org/plus/dsa/problems/fractional-knapsack"},
+  {title:"Lemonade Change",url:"https://leetcode.com/problems/lemonade-change"},
+  {title:"Valid Paranthesis Checker",url:"https://leetcode.com/problems/valid-parenthesis-string"},
+  {title:"Jump Game",url:"https://leetcode.com/problems/jump-game"},
+  {title:"Jump Game 2",url:"https://leetcode.com/problems/jump-game-ii"},
+  {title:"Job sequencing Problem",url:"https://takeuforward.org/plus/dsa/problems/job-sequencing-problem"},
+  {title:"Candy",url:"https://leetcode.com/problems/candy"},
+  {title:"Insert Interval",url:"https://leetcode.com/problems/insert-interval"},
+  {title:"Merge Intervals",url:"https://leetcode.com/problems/merge-intervals"},
+  {title:"Non-overlapping Intervals",url:"https://leetcode.com/problems/non-overlapping-intervals"},
+  // Binary Tree
+  {title:"Preorder Traversal of Binary Tree",url:"https://leetcode.com/problems/binary-tree-preorder-traversal"},
+  {title:"Inorder Traversal of Binary Tree",url:"https://leetcode.com/problems/binary-tree-inorder-traversal"},
+  {title:"Post-order Traversal of Binary Tree",url:"https://leetcode.com/problems/binary-tree-postorder-traversal"},
+  {title:"Level order Traversal",url:"https://leetcode.com/problems/binary-tree-level-order-traversal"},
+  {title:"Height of a Binary Tree",url:"https://leetcode.com/problems/maximum-depth-of-binary-tree"},
+  {title:"Check if the Binary tree is height-balanced or not",url:"https://leetcode.com/problems/balanced-binary-tree"},
+  {title:"Diameter of Binary Tree",url:"https://leetcode.com/problems/diameter-of-binary-tree"},
+  {title:"Maximum path sum",url:"https://leetcode.com/problems/binary-tree-maximum-path-sum"},
+  {title:"Check if two trees are identical or not",url:"https://leetcode.com/problems/same-tree"},
+  {title:"Zig Zag Traversal of Binary Tree",url:"https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal"},
+  {title:"Vertical Order Traversal of Binary Tree",url:"https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree"},
+  {title:"Right/Left View of Binary Tree",url:"https://leetcode.com/problems/binary-tree-right-side-view"},
+  {title:"Symmetric Binary Tree",url:"https://leetcode.com/problems/symmetric-tree"},
+  {title:"LCA in Binary Tree",url:"https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree"},
+  {title:"Maximum width of a Binary Tree",url:"https://leetcode.com/problems/maximum-width-of-binary-tree"},
+  {title:"Print all the Nodes at a distance of K in a Binary Tree",url:"https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree"},
+  {title:"Count total Nodes in a COMPLETE Binary Tree",url:"https://leetcode.com/problems/count-complete-tree-nodes"},
+  {title:"Construct Binary Tree from inorder and preorder",url:"https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal"},
+  {title:"Construct the Binary Tree from Postorder and Inorder Traversal",url:"https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal"},
+  {title:"Serialize and deserialize Binary Tree",url:"https://leetcode.com/problems/serialize-and-deserialize-binary-tree"},
+  {title:"Flatten Binary Tree to LinkedList",url:"https://leetcode.com/problems/flatten-binary-tree-to-linked-list"},
+  // BST
+  {title:"Search in a Binary Search Tree",url:"https://leetcode.com/problems/search-in-a-binary-search-tree"},
+  {title:"Insert a given Node in Binary Search Tree",url:"https://leetcode.com/problems/insert-into-a-binary-search-tree"},
+  {title:"Delete a Node in Binary Search Tree",url:"https://leetcode.com/problems/delete-node-in-a-bst"},
+  {title:"Find K-th smallest/largest element in BST",url:"https://leetcode.com/problems/kth-smallest-element-in-a-bst"},
+  {title:"Check if a tree is a BST or BT",url:"https://leetcode.com/problems/validate-binary-search-tree"},
+  {title:"LCA in Binary Search Tree",url:"https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree"},
+  {title:"Construct a BST from a preorder traversal",url:"https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal"},
+  {title:"Inorder Successor/Predecessor in BST",url:"https://leetcode.com/problems/inorder-successor-in-bst"},
+  {title:"Two Sum In BST",url:"https://leetcode.com/problems/two-sum-iv-input-is-a-bst"},
+  {title:"Recover BST | Correct BST with two nodes swapped",url:"https://leetcode.com/problems/recover-binary-search-tree"},
+  // Graphs
+  {title:"Number of provinces",url:"https://leetcode.com/problems/number-of-provinces"},
+  {title:"Rotten Oranges",url:"https://leetcode.com/problems/rotting-oranges"},
+  {title:"Flood fill",url:"https://leetcode.com/problems/flood-fill"},
+  {title:"0/1 Matrix (Bfs Problem)",url:"https://leetcode.com/problems/01-matrix"},
+  {title:"Surrounded Regions (dfs)",url:"https://leetcode.com/problems/surrounded-regions"},
+  {title:"Number of Enclaves",url:"https://leetcode.com/problems/number-of-enclaves"},
+  {title:"Word ladder - 1",url:"https://leetcode.com/problems/word-ladder"},
+  {title:"Word ladder - 2",url:"https://leetcode.com/problems/word-ladder-ii"},
+  {title:"Bipartite Graph (DFS)",url:"https://leetcode.com/problems/is-graph-bipartite"},
+  {title:"Course Schedule - I",url:"https://leetcode.com/problems/course-schedule"},
+  {title:"Course Schedule - II",url:"https://leetcode.com/problems/course-schedule-ii"},
+  {title:"Find eventual safe states",url:"https://leetcode.com/problems/find-eventual-safe-states"},
+  {title:"Alien dictionary",url:"https://leetcode.com/problems/alien-dictionary"},
+  {title:"Shortest path in a binary maze",url:"https://leetcode.com/problems/shortest-path-in-binary-matrix"},
+  {title:"Path with minimum effort",url:"https://leetcode.com/problems/path-with-minimum-effort"},
+  {title:"Cheapest flights within k stops",url:"https://leetcode.com/problems/cheapest-flights-within-k-stops"},
+  {title:"Network Delay time",url:"https://leetcode.com/problems/network-delay-time"},
+  {title:"Number of ways to arrive at destination",url:"https://leetcode.com/problems/number-of-ways-to-arrive-at-destination"},
+  {title:"Bridges in Graph",url:"https://leetcode.com/problems/critical-connections-in-a-network"},
+  {title:"Number of operations to make network connected",url:"https://leetcode.com/problems/number-of-operations-to-make-network-connected"},
+  {title:"Most stones removed with same rows or columns",url:"https://leetcode.com/problems/most-stones-removed-with-same-row-or-column"},
+  {title:"Accounts merge",url:"https://leetcode.com/problems/accounts-merge"},
+  {title:"Making a Large Island",url:"https://leetcode.com/problems/making-a-large-island"},
+  {title:"Swim in rising water",url:"https://leetcode.com/problems/swim-in-rising-water"},
+  // DP
+  {title:"Climbing Stairs",url:"https://leetcode.com/problems/climbing-stairs"},
+  {title:"Maximum sum of non-adjacent elements",url:"https://leetcode.com/problems/house-robber"},
+  {title:"House Robber II",url:"https://leetcode.com/problems/house-robber-ii"},
+  {title:"Grid Unique Paths",url:"https://leetcode.com/problems/unique-paths"},
+  {title:"Grid Unique Paths 2",url:"https://leetcode.com/problems/unique-paths-ii"},
+  {title:"Minimum path sum in Grid",url:"https://leetcode.com/problems/minimum-path-sum"},
+  {title:"Minimum path sum in Triangular Grid",url:"https://leetcode.com/problems/triangle"},
+  {title:"Minimum/Maximum Falling Path Sum",url:"https://leetcode.com/problems/minimum-falling-path-sum"},
+  {title:"Partition Equal Subset Sum",url:"https://leetcode.com/problems/partition-equal-subset-sum"},
+  {title:"Count Subsets with Sum K",url:"https://takeuforward.org/plus/dsa/problems/count-all-subsequences-with-sum-k"},
+  {title:"Minimum Coins",url:"https://leetcode.com/problems/coin-change"},
+  {title:"Target Sum",url:"https://leetcode.com/problems/target-sum"},
+  {title:"Coin Change 2",url:"https://leetcode.com/problems/coin-change-ii"},
+  {title:"Longest Common Subsequence",url:"https://leetcode.com/problems/longest-common-subsequence"},
+  {title:"Longest Palindromic Subsequence",url:"https://leetcode.com/problems/longest-palindromic-subsequence"},
+  {title:"Minimum insertions to make string palindrome",url:"https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome"},
+  {title:"Minimum Insertions/Deletions to Convert String",url:"https://leetcode.com/problems/delete-operation-for-two-strings"},
+  {title:"Shortest Common Supersequence",url:"https://leetcode.com/problems/shortest-common-supersequence"},
+  {title:"Distinct Subsequences",url:"https://leetcode.com/problems/distinct-subsequences"},
+  {title:"Edit Distance",url:"https://leetcode.com/problems/edit-distance"},
+  {title:"Wildcard Matching",url:"https://leetcode.com/problems/wildcard-matching"},
+  {title:"Best Time to Buy and Sell Stock",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock"},
+  {title:"Buy and Sell Stock - II",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii"},
+  {title:"Buy and Sell Stocks III",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii"},
+  {title:"Buy and Stock Sell IV",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv"},
+  {title:"Buy and Sell Stocks With Cooldown",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown"},
+  {title:"Buy and Sell Stocks With Transaction Fee",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee"},
+  {title:"Longest Increasing Subsequence",url:"https://leetcode.com/problems/longest-increasing-subsequence"},
+  {title:"Largest Divisible Subset",url:"https://leetcode.com/problems/largest-divisible-subset"},
+  {title:"Longest String Chain",url:"https://leetcode.com/problems/longest-string-chain"},
+  {title:"Longest Bitonic Subsequence",url:"https://takeuforward.org/plus/dsa/problems/longest-bitonic-subsequence"},
+  {title:"Number of LIS",url:"https://leetcode.com/problems/number-of-longest-increasing-subsequence"},
+  {title:"Matrix Chain Multiplication",url:"https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication"},
+  {title:"Minimum Cost to Cut the Stick",url:"https://leetcode.com/problems/minimum-cost-to-cut-a-stick"},
+  {title:"Burst Balloons",url:"https://leetcode.com/problems/burst-balloons"},
+  {title:"Palindrome Partitioning - II",url:"https://leetcode.com/problems/palindrome-partitioning-ii"},
+  {title:"Maximum Rectangle Area with all 1's",url:"https://leetcode.com/problems/maximal-rectangle"},
+  {title:"Count Square Submatrices with All Ones",url:"https://leetcode.com/problems/count-square-submatrices-with-all-ones"},
+];
+
+// Helper: derive titleSlug from leetcode URLs, or generate slug from title
+function extractSlug(url) {
+  const lcMatch = url.match(/leetcode\.com\/problems\/([^/?#]+)/);
+  if (lcMatch) return lcMatch[1];
+  return null; // non-LC problem
+}
+
+// Assign categories based on position / topic
+const categoryMap = [
+  { start: 0, end: 10, cat: 'Basics & Math' },
+  { start: 11, end: 30, cat: 'Sorting & Recursion' },
+  { start: 31, end: 63, cat: 'Arrays' },
+  { start: 64, end: 79, cat: 'Binary Search' },
+  { start: 80, end: 90, cat: 'Strings' },
+  { start: 91, end: 105, cat: 'Linked List' },
+  { start: 106, end: 119, cat: 'Recursion & Backtracking' },
+  { start: 120, end: 134, cat: 'Stacks & Queues' },
+  { start: 135, end: 144, cat: 'Sliding Window' },
+  { start: 145, end: 152, cat: 'Heaps' },
+  { start: 153, end: 163, cat: 'Greedy' },
+  { start: 164, end: 183, cat: 'Binary Tree' },
+  { start: 184, end: 193, cat: 'BST' },
+  { start: 194, end: 213, cat: 'Graphs' },
+  { start: 214, end: 999, cat: 'Dynamic Programming' },
+];
+
+function getCategory(idx) {
+  for (const { start, end, cat } of categoryMap) {
+    if (idx >= start && idx <= end) return cat;
+  }
+  return 'Miscellaneous';
+}
+
+// Difficulty heuristic based on category
+function getDifficulty(cat, title) {
+  const hardKw = ['hard', 'median', 'matrix chain', 'burst', 'lfu', 'serialize', 'alien dictionary', 'word ladder', 'n queen', 'largest bst', 'wildcard', 'expression add'];
+  const easyKw = ['basics', 'introduction', 'linear search', 'check if', 'count digits', 'fibonacci', 'palindrome number', 'largest element', 'search insert', 'missing number', 'factorial'];
+  const lower = title.toLowerCase();
+  if (hardKw.some(k => lower.includes(k))) return 'Hard';
+  if (easyKw.some(k => lower.includes(k))) return 'Easy';
+  return 'Medium';
+}
+
+const formatted = raw.map((p, idx) => {
+  const cat = getCategory(idx);
+  const slug = extractSlug(p.url) || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const platform = p.url.includes('leetcode.com') ? 'leetcode' : 'other';
+  return {
+    title: p.title,
+    titleSlug: slug,
+    difficulty: getDifficulty(cat, p.title),
+    category: cat,
+    platform,
+    url: platform === 'other' ? p.url : undefined
+  };
+}).filter(p => p.titleSlug.length > 2);
+
+fs.writeFileSync(path.join(outDir, 'striversA2Z.json'), JSON.stringify(formatted, null, 2));
+console.log(`✅ Saved Striver A2Z DSA Sheet (${formatted.length} problems)`);
+
+// Show summary
+const cats = {};
+formatted.forEach(p => { cats[p.category] = (cats[p.category] || 0) + 1; });
+Object.entries(cats).forEach(([k, v]) => console.log(`  ${k}: ${v} problems`));

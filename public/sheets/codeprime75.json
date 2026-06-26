@@ -1,0 +1,527 @@
+[
+  {
+    "title": "Bit++",
+    "titleSlug": "282A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Team",
+    "titleSlug": "231A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Tram",
+    "titleSlug": "116A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Stones on the Table",
+    "titleSlug": "266A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Translation",
+    "titleSlug": "41A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Way Too Long Words",
+    "titleSlug": "71A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Word Capitalization",
+    "titleSlug": "281A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Boy or Girl",
+    "titleSlug": "236A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ultra-Fast Mathematician",
+    "titleSlug": "61A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Magnets",
+    "titleSlug": "344A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Twins",
+    "titleSlug": "160A",
+    "difficulty": "900",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Little Elephant and Bits",
+    "titleSlug": "258A",
+    "difficulty": "1100",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bear and Big Brother",
+    "titleSlug": "791A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Hit the Lottery",
+    "titleSlug": "996A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Taxi",
+    "titleSlug": "158B",
+    "difficulty": "1100",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Young Physicist",
+    "titleSlug": "69A",
+    "difficulty": "1000",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Transfusion",
+    "titleSlug": "2050B",
+    "difficulty": "1100",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Fox And Snake",
+    "titleSlug": "510A",
+    "difficulty": "800",
+    "category": "Newbie (Rating < 1200)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "A Balanced Problemset?",
+    "titleSlug": "1925B",
+    "difficulty": "1200",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Uninteresting Number",
+    "titleSlug": "2050C",
+    "difficulty": "1200",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Stone Age Problem",
+    "titleSlug": "1679B",
+    "difficulty": "1200",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Drazil and Date",
+    "titleSlug": "515A",
+    "difficulty": "1000",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lucky Ticket",
+    "titleSlug": "146A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Minutes Before the New Year",
+    "titleSlug": "1283A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Last Year's Substring",
+    "titleSlug": "1462B",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Minimal Square",
+    "titleSlug": "1360A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Floor Number",
+    "titleSlug": "1426A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Robot Cleaner",
+    "titleSlug": "1623A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Chips Moving",
+    "titleSlug": "1213A",
+    "difficulty": "900",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Prefixes",
+    "titleSlug": "1216A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Soldier and Bananas",
+    "titleSlug": "546A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Favorite Sequence",
+    "titleSlug": "1462A",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Same Parity Summands",
+    "titleSlug": "1352B",
+    "difficulty": "1200",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dreamoon and Stairs",
+    "titleSlug": "476A",
+    "difficulty": "1000",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Who's Opposite?",
+    "titleSlug": "1560B",
+    "difficulty": "800",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ehab Fails to Be Thanos",
+    "titleSlug": "1174A",
+    "difficulty": "1000",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Number of Apartments",
+    "titleSlug": "1430A",
+    "difficulty": "900",
+    "category": "Pupil (Rating 1200–1399)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Lights Out",
+    "titleSlug": "275A",
+    "difficulty": "900",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Helpful Maths",
+    "titleSlug": "339A",
+    "difficulty": "800",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Drinks",
+    "titleSlug": "200B",
+    "difficulty": "800",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Valera and X",
+    "titleSlug": "404A",
+    "difficulty": "1000",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Panoramix's Prediction",
+    "titleSlug": "80A",
+    "difficulty": "800",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Bus Game",
+    "titleSlug": "79A",
+    "difficulty": "1200",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "DZY Loves Strings",
+    "titleSlug": "447B",
+    "difficulty": "1000",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "T-primes",
+    "titleSlug": "230B",
+    "difficulty": "1300",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Dividing Orange",
+    "titleSlug": "244A",
+    "difficulty": "900",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Hamburgers",
+    "titleSlug": "371C",
+    "difficulty": "1600",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Little Elephant and Problem",
+    "titleSlug": "220A",
+    "difficulty": "1300",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mashmokh and Numbers",
+    "titleSlug": "414A",
+    "difficulty": "1500",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Football",
+    "titleSlug": "96A",
+    "difficulty": "900",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "cAPS lOCK",
+    "titleSlug": "131A",
+    "difficulty": "1000",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Puzzles",
+    "titleSlug": "337A",
+    "difficulty": "900",
+    "category": "Specialist (Rating 1400–1599)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Triangles",
+    "titleSlug": "1453C",
+    "difficulty": "1700",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mocha and Red and Blue",
+    "titleSlug": "1559B",
+    "difficulty": "900",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Save the Magazines",
+    "titleSlug": "1743C",
+    "difficulty": "1100",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Omkar and Waterslide",
+    "titleSlug": "1392C",
+    "difficulty": "1200",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "XOR = Average",
+    "titleSlug": "1758B",
+    "difficulty": "900",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "1397/C",
+    "titleSlug": "1397C",
+    "difficulty": "Easy",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Palindrome Basis",
+    "titleSlug": "1673C",
+    "difficulty": "1500",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Same Differences",
+    "titleSlug": "1520D",
+    "difficulty": "1200",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "New Year and the Treasure Geolocation",
+    "titleSlug": "1091B",
+    "difficulty": "1200",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Swap Game",
+    "titleSlug": "1747C",
+    "difficulty": "1200",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Divide by three, multiply by two",
+    "titleSlug": "977D",
+    "difficulty": "1400",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Anti-Sudoku",
+    "titleSlug": "1335D",
+    "difficulty": "1300",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Maximum Median",
+    "titleSlug": "1201C",
+    "difficulty": "1400",
+    "category": "Expert (Rating 1600–1899)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Perform the Combo",
+    "titleSlug": "1311C",
+    "difficulty": "1300",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Maximum Set",
+    "titleSlug": "1796C",
+    "difficulty": "1600",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Kuroni and Simple Strings",
+    "titleSlug": "1305B",
+    "difficulty": "1200",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Treasure Hunting",
+    "titleSlug": "1201D",
+    "difficulty": "2100",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Mainak and Interesting Sequence",
+    "titleSlug": "1726B",
+    "difficulty": "1100",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "The Bits",
+    "titleSlug": "1017B",
+    "difficulty": "1200",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Killjoy",
+    "titleSlug": "1419C",
+    "difficulty": "1500",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "GCD Partition",
+    "titleSlug": "1780B",
+    "difficulty": "1100",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Checkpoints",
+    "titleSlug": "1453D",
+    "difficulty": "1900",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  },
+  {
+    "title": "Ticks",
+    "titleSlug": "1579C",
+    "difficulty": "1500",
+    "category": "Candidate Master (Rating 1900–2099)",
+    "platform": "codeforces"
+  }
+]

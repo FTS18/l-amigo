@@ -1,11 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LeetCodeService } from '../services/leetcode';
-import { CodeforcesService } from '../services/codeforces';
 import { GitHubSyncService } from '../services/github';
 import { restoreFromBackupJSON } from '../utils/import-restore';
+import { API_CONSTANTS } from '../constants';
 
 interface OnboardingProps {
   onComplete: (username: string) => void;
+}
+
+/** Lightweight CF handle check — only calls user.info, no submissions/ratings */
+async function verifyCFHandle(handle: string): Promise<void> {
+  const url = `${API_CONSTANTS.CODEFORCES_API}/user.info?handles=${encodeURIComponent(handle)}`;
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 8000);
+  try {
+    const res = await fetch(url, { signal: ctl.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const body = await res.json();
+    if (body.status !== 'OK' || !body.result?.length) {
+      throw new Error(body.comment || 'Not found');
+    }
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
@@ -13,8 +30,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [cfHandle, setCfHandle] = useState('');
   const [ccHandle, setCcHandle] = useState('');
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const [mode, setMode] = useState<'setup' | 'restore'>('setup');
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const [ghToken, setGhToken] = useState('');
   const [ghRepo, setGhRepo] = useState('');
   const [restoring, setRestoring] = useState(false);
@@ -43,14 +62,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       try {
         await LeetCodeService.fetchUserProfile(username.trim());
         setLcStatus('valid');
-      } catch (err) {
+      } catch {
         setLcStatus('invalid');
       }
     }, 800);
     return () => clearTimeout(timer);
   }, [username]);
 
-  // Debounced CF verification
+  // Debounced CF verification — lightweight, only user.info
   useEffect(() => {
     if (!cfHandle.trim()) {
       setCfStatus('idle');
@@ -59,9 +78,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     setCfStatus('verifying');
     const timer = setTimeout(async () => {
       try {
-        await CodeforcesService.fetchUserProfile(cfHandle.trim());
+        await verifyCFHandle(cfHandle.trim());
         setCfStatus('valid');
-      } catch (err) {
+      } catch {
         setCfStatus('invalid');
       }
     }, 800);
@@ -70,12 +89,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const trimmed = username.trim();
+
+    const lcTrimmed = username.trim();
+    // CF handles are case-sensitive — preserve the user's casing
     const cfTrimmed = cfHandle.trim();
     const ccTrimmed = ccHandle.trim();
-    
-    if (!trimmed && !cfTrimmed && !ccTrimmed) {
+
+    if (!lcTrimmed && !cfTrimmed && !ccTrimmed) {
       setError('Please enter at least one handle (LeetCode, Codeforces, or CodeChef)');
       return;
     }
@@ -85,8 +105,8 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       return;
     }
 
-    if (trimmed && lcStatus === 'invalid') {
-      setError('LeetCode handle is invalid');
+    if (lcTrimmed && lcStatus === 'invalid') {
+      setError('LeetCode username is invalid');
       return;
     }
 
@@ -95,19 +115,25 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       return;
     }
 
+    setSubmitting(true);
+    setError('');
     try {
-      // Save to storage
-      await chrome.storage.local.set({ 
+      await chrome.storage.local.set({
         onboarding_complete: true,
-        own_username: trimmed.toLowerCase(),
-        own_codeforces_handle: cfTrimmed.toLowerCase(),
-        own_codechef_handle: ccTrimmed.toLowerCase()
+        // LC usernames are case-insensitive, lowercase is fine
+        own_username: lcTrimmed.toLowerCase(),
+        // CF handles ARE case-sensitive — store as-is
+        own_codeforces_handle: cfTrimmed,
+        // CC handles are case-insensitive
+        own_codechef_handle: ccTrimmed.toLowerCase(),
       });
 
-      onComplete(trimmed || cfTrimmed || ccTrimmed);
-    } catch (error) {
+      onComplete(lcTrimmed || cfTrimmed || ccTrimmed);
+    } catch (err) {
       setError('Failed to save settings. Please try again.');
-      console.error('Error:', error);
+      console.error('Error:', err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -115,9 +141,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     try {
       await chrome.storage.local.set({ onboarding_complete: true });
       onComplete('');
-    } catch (error) {
+    } catch (err) {
       setError('Failed to save settings. Please try again.');
-      console.error('Error:', error);
+      console.error('Error:', err);
     }
   };
 
@@ -127,6 +153,27 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       setError('Please enter both GitHub token and repository name');
       return;
     }
+
+    const requestGitHubPermissions = (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        if (!chrome?.permissions?.request) {
+          resolve(true);
+          return;
+        }
+        chrome.permissions.request({
+          origins: ['https://api.github.com/*', 'https://github.com/*']
+        }, (granted) => {
+          resolve(granted);
+        });
+      });
+    };
+
+    const granted = await requestGitHubPermissions();
+    if (!granted) {
+      setError('GitHub host permissions are required to restore backup.');
+      return;
+    }
+
     setRestoring(true);
     setError('');
     try {
@@ -167,10 +214,33 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const startDeviceFlow = async () => {
     setError('');
     setIsLoggingIn(true);
+
+    const requestGitHubOAuthPermissions = (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        if (!chrome?.permissions?.request) {
+          resolve(true);
+          return;
+        }
+        chrome.permissions.request({
+          permissions: ['identity'],
+          origins: ['https://api.github.com/*', 'https://github.com/*']
+        }, (granted) => {
+          resolve(granted);
+        });
+      });
+    };
+
+    const granted = await requestGitHubOAuthPermissions();
+    if (!granted) {
+      setError('GitHub permissions are required to enable automatic syncing.');
+      setIsLoggingIn(false);
+      return;
+    }
+
     try {
       const state = await GitHubSyncService.requestDeviceCode();
       setDeviceFlowState(state);
-      
+
       chrome.tabs.create({ url: state.verification_uri });
 
       const controller = new AbortController();
@@ -239,7 +309,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     <div className="onboarding-overlay">
       <div className="onboarding-modal">
         <div className="onboarding-header">
-          <img src="/android-chrome-192x192.png" alt="L'Amigo" className="onboarding-logo" />
+          <img src="android-chrome-192x192.png" alt="L'Amigo" className="onboarding-logo" />
           <h2>Welcome to L'Amigo</h2>
           <p>Track your friends' progress across competitive programming platforms!</p>
         </div>
@@ -259,12 +329,33 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           >
             Restore Backup
           </button>
+          <button
+            type="button"
+            className={`tab-button ${showPrivacy ? 'active' : ''}`}
+            onClick={() => setShowPrivacy(!showPrivacy)}
+            style={{ color: showPrivacy ? '#ffa116' : 'inherit' }}
+          >
+            🔒 Privacy
+          </button>
         </div>
+
+        {showPrivacy && (
+          <div style={{ marginBottom: '20px', padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+              <strong>🔒 100% Local & Private</strong>
+              <button onClick={() => setShowPrivacy(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
+            </div>
+            L'Amigo operates entirely within your browser. All friend lists, submission caches, and GitHub tokens are stored securely in <code>chrome.storage.local</code>. Zero personal data or tracking analytics are sent to any external proprietary servers.
+          </div>
+        )}
 
         {mode === 'setup' ? (
           <form onSubmit={handleSubmit} className="onboarding-form">
             <div className="onboarding-field">
-              <label>Your LeetCode Username (Optional)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Your LeetCode Username (Optional)</span>
+                <span title="Providing your own handle prevents you from showing up in your own friend comparison lists and helps calculate relative head-to-head stats." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="onboarding-hint">
                 We'll exclude you from the friends list to avoid confusion
               </p>
@@ -283,9 +374,12 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             </div>
 
             <div className="onboarding-field">
-              <label>Your Codeforces Handle (Optional)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Your Codeforces Handle (Optional)</span>
+                <span title="Your exact Codeforces handle (case-sensitive). Allows L'Amigo to track your live submissions and compare ratings accurately." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="onboarding-hint">
-                Used to compare statistics and track activity
+                Handle is case-sensitive (e.g. Tourist, not tourist)
               </p>
               <input
                 type="text"
@@ -301,7 +395,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             </div>
 
             <div className="onboarding-field">
-              <label>Your CodeChef Handle (Optional)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Your CodeChef Handle (Optional)</span>
+                <span title="Your exact CodeChef handle. Used to establish your baseline star rating and practice metrics." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <input
                 type="text"
                 placeholder="CodeChef handle"
@@ -313,15 +410,15 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                 className="onboarding-input"
               />
             </div>
-            
+
             {error && <span className="onboarding-error" style={{ display: 'block', marginBottom: '12px' }}>{error}</span>}
 
             <div className="onboarding-actions">
-              <button type="button" onClick={handleSkip} className="onboarding-btn secondary">
+              <button type="button" onClick={handleSkip} className="onboarding-btn secondary" disabled={submitting}>
                 Skip
               </button>
-              <button type="submit" className="onboarding-btn primary">
-                Get Started
+              <button type="submit" className="onboarding-btn primary" disabled={submitting || lcStatus === 'verifying' || cfStatus === 'verifying'}>
+                {submitting ? 'Saving...' : 'Get Started'}
               </button>
             </div>
           </form>
@@ -330,8 +427,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           <form onSubmit={handleRestore} className="onboarding-form">
             {!ghToken ? (
               <div style={{ marginBottom: '16px' }}>
-                <label className="onboarding-field-label" style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', fontSize: '13px' }}>
-                  Option A: Authenticate with GitHub (Recommended)
+                <label className="onboarding-field-label" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', marginBottom: '8px', fontSize: 'var(--font-size-md)' }}>
+                  <span>Option A: Authenticate with GitHub (Recommended)</span>
+                  <span title="Securely connects L'Amigo to GitHub via OAuth device flow so you can automatically backup and sync your solved problem history." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {!deviceFlowState ? (
@@ -345,24 +443,24 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                       {isLoggingIn ? 'Connecting...' : 'Login with GitHub'}
                     </button>
                   ) : (
-                    <div style={{ padding: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '4px', textAlign: 'center' }}>
-                      <p style={{ margin: '0 0 8px', fontSize: '13px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', textAlign: 'center' }}>
+                      <p style={{ margin: '0 0 8px', fontSize: 'var(--font-size-md)' }}>
                         1. Open <a href={deviceFlowState.verification_uri} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 'bold', textDecoration: 'underline' }}>github.com/login/device</a>
                       </p>
-                      <p style={{ margin: '0 0 12px', fontSize: '13px' }}>
+                      <p style={{ margin: '0 0 12px', fontSize: 'var(--font-size-md)' }}>
                         2. Enter code:
                       </p>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '2px', margin: '8px 0', color: 'var(--text-primary)', background: 'var(--bg-primary)', padding: '8px', border: '1px solid var(--border)' }}>
+                      <div style={{ fontSize: 'calc(2 * var(--font-size-base))', fontWeight: 'bold', letterSpacing: '2px', margin: '8px 0', color: 'var(--text-primary)', background: 'var(--bg-primary)', padding: '8px', border: '1px solid var(--border)' }}>
                         {deviceFlowState.user_code}
                       </div>
-                      <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: '8px 0 0' }}>
+                      <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-muted)', margin: '8px 0 0' }}>
                         Waiting for authorization... (Expires in {Math.floor(deviceFlowState.expires_in / 60)}m)
                       </p>
                       <button
                         type="button"
                         onClick={cancelDeviceFlow}
                         className="onboarding-btn secondary"
-                        style={{ marginTop: '12px', padding: '6px 12px', fontSize: '12px' }}
+                        style={{ marginTop: '12px', padding: '6px 12px', fontSize: 'var(--font-size-base)' }}
                       >
                         Cancel
                       </button>
@@ -370,7 +468,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                   )}
                 </div>
                 <div className="onboarding-divider" style={{ textAlign: 'center', margin: '16px 0', borderBottom: '1px solid var(--border)', lineHeight: '0.1em' }}>
-                  <span style={{ background: 'var(--bg-primary)', padding: '0 10px', fontSize: '12px', color: 'var(--text-muted)' }}>OR</span>
+                  <span style={{ background: 'var(--bg-primary)', padding: '0 10px', fontSize: 'var(--font-size-base)', color: 'var(--text-muted)' }}>OR</span>
                 </div>
               </div>
             ) : (
@@ -380,7 +478,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                   type="button"
                   onClick={() => { setGhToken(''); setDeviceFlowState(null); }}
                   className="onboarding-btn secondary"
-                  style={{ padding: '4px 8px', fontSize: '11px', width: 'auto', flex: 'none' }}
+                  style={{ padding: '4px 8px', fontSize: 'var(--font-size-sm)', width: 'auto', flex: 'none' }}
                 >
                   Disconnect
                 </button>
@@ -388,7 +486,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             )}
 
             <div className="onboarding-field">
-              <label>Option B: Manual Personal Access Token (PAT)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Option B: Manual Personal Access Token (PAT)</span>
+                <span title="If you prefer manual control, paste a classic GitHub Personal Access Token (PAT) with 'repo' scope enabled." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="onboarding-hint">
                 Provide token manually with "repo" scope if you prefer not to use Device Flow
               </p>
@@ -406,7 +507,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             </div>
 
             <div className="onboarding-field">
-              <label>GitHub Repository Name</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>GitHub Repository Name</span>
+                <span title="The exact name of the private or public repository on your GitHub account where L'Amigo stores backup files and solution code." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <p className="onboarding-hint">
                 The private repository where your L'Amigo solutions and backup are synced
               </p>
@@ -421,7 +525,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
                 className="onboarding-input"
               />
             </div>
-            
+
             {error && <span className="onboarding-error" style={{ display: 'block', marginBottom: '12px' }}>{error}</span>}
 
             <div className="onboarding-actions">
@@ -435,14 +539,15 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           </form>
 
           <div className="onboarding-divider" style={{ textAlign: 'center', margin: '16px 0', borderBottom: '1px solid var(--border)', lineHeight: '0.1em' }}>
-            <span style={{ background: 'var(--bg-primary)', padding: '0 10px', fontSize: '12px', color: 'var(--text-muted)' }}>OR</span>
+            <span style={{ background: 'var(--bg-primary)', padding: '0 10px', fontSize: 'var(--font-size-base)', color: 'var(--text-muted)' }}>OR</span>
           </div>
 
           <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label className="onboarding-field-label" style={{ display: 'block', fontWeight: 'bold', fontSize: '13px' }}>
-              Option C: Local Import JSON
+            <label className="onboarding-field-label" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', fontSize: 'var(--font-size-md)' }}>
+              <span>Option C: Local Import JSON</span>
+              <span title="Allows you to restore your complete friends list, aliases, and custom settings from a previously exported backup file on your local drive." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
             </label>
-            <p className="onboarding-hint" style={{ margin: '0 0 8px', fontSize: '11px', color: 'var(--text-muted)' }}>
+            <p className="onboarding-hint" style={{ margin: '0 0 8px', fontSize: 'var(--font-size-sm)', color: 'var(--text-muted)' }}>
               Restore your complete configuration and friends list from a local JSON backup file
             </p>
             <input

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FriendIdentity, Platform } from '../types';
 import { StorageService } from '../services/storage';
-import { LeetCodeService } from '../services/leetcode';
-import { CodeforcesService } from '../services/codeforces';
-import { CodeChefService } from '../services/codechef';
+import { PlatformService } from '../services/platform-service';
 import { RefreshCw } from 'lucide-react';
+import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../utils/PlatformIcons';
 
 interface Props {
   isOpen: boolean;
@@ -72,7 +71,7 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
     setLcStatus('verifying');
     const timer = setTimeout(async () => {
       try {
-        await LeetCodeService.fetchUserProfile(lcHandle.trim());
+        await PlatformService.verifyHandle('leetcode', lcHandle.trim());
         setLcStatus('valid');
       } catch (err) {
         setLcStatus('invalid');
@@ -93,7 +92,7 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
     setCfStatus('verifying');
     const timer = setTimeout(async () => {
       try {
-        await CodeforcesService.fetchUserProfile(cfHandle.trim());
+        await PlatformService.verifyHandle('codeforces', cfHandle.trim());
         setCfStatus('valid');
       } catch (err) {
         setCfStatus('invalid');
@@ -114,7 +113,7 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
     setCcStatus('verifying');
     const timer = setTimeout(async () => {
       try {
-        await CodeChefService.fetchUserProfile(ccHandle.trim());
+        await PlatformService.verifyHandle('codechef', ccHandle.trim());
         setCcStatus('valid');
       } catch (err) {
         setCcStatus('invalid');
@@ -214,13 +213,16 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
             {error && (
-              <div className="danger-text" style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '12px' }}>
+              <div className="danger-text" style={{ fontSize: 'var(--font-size-md)', fontWeight: 'bold', marginBottom: '12px' }}>
                 {error}
               </div>
             )}
             
             <div className="modal-form-field">
-              <label>Display Name</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>Display Name</span>
+                <span title="Friendly display name to easily identify your friend on the leaderboard and compare view." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <input 
                 type="text" 
                 value={displayName} 
@@ -231,7 +233,11 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
             </div>
             
             <div className="modal-form-field">
-              <label>LeetCode Handle (Optional)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <LeetCodeIcon size={16} />
+                <span>LeetCode Handle (Optional)</span>
+                <span title="Official LeetCode username. Used to fetch public profile stats, submissions, and contest rating." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <input 
                 type="text" 
                 value={lcHandle} 
@@ -243,7 +249,11 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
             </div>
 
             <div className="modal-form-field">
-              <label>Codeforces Handle (Optional)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CodeforcesIcon size={16} />
+                <span>Codeforces Handle (Optional)</span>
+                <span title="Official Codeforces handle (case-sensitive). Used to fetch rating graphs, divisions, and live submissions." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <input 
                 type="text" 
                 value={cfHandle} 
@@ -255,7 +265,11 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
             </div>
             
             <div className="modal-form-field">
-              <label>CodeChef Handle (Optional)</label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <CodeChefIcon size={16} />
+                <span>CodeChef Handle (Optional)</span>
+                <span title="Official CodeChef handle. Used to fetch star ratings, contest participation, and problem practice stats." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              </label>
               <input 
                 type="text" 
                 value={ccHandle} 

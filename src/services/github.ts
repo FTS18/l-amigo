@@ -26,26 +26,93 @@ export class GitHubSyncService {
   private static readonly DEVICE_CODE_URL = "https://github.com/login/device/code";
   private static readonly ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
 
-  // OAuth Constants
+  // OAuth Constants — Client IDs are public and safe to expose.
+  // Client secrets are injected at BUILD TIME via webpack DefinePlugin from .env (never committed).
   private static readonly PROD_EXT_ID = "pakknkopmiakipmbjmfejcejehmgieli";
   private static readonly DEV_CLIENT_ID = "Ov23lieYe8hkM5XO9r1y";
   private static readonly PROD_CLIENT_ID = "Ov23li9p53LfS0Ule1M0";
-  // The user must insert their client secrets below.
-  private static readonly DEV_CLIENT_SECRET = "6d7d9421286e48b3c2098b18d6bd6281b8c30904";
-  private static readonly PROD_CLIENT_SECRET = "f17a088af033ed7c615c6abcd920a28a2ce981aa";
+  private static readonly DEV_CLIENT_SECRET: string = process.env.GITHUB_DEV_SECRET as string;
+  private static readonly PROD_CLIENT_SECRET: string = process.env.GITHUB_PROD_SECRET as string;
+
+  // ── Token encryption (AES-GCM via SubtleCrypto) ─────────────────────
+  // Key material is derived from the extension ID so it's unique per installation.
+
+  private static async _getEncryptionKey(): Promise<CryptoKey> {
+    const raw = new TextEncoder().encode(
+      `lamigo-gh-token-key:${chrome.runtime.id}`
+    );
+    // Use SHA-256 of the ID as raw key material
+    const hash = await crypto.subtle.digest('SHA-256', raw);
+    return crypto.subtle.importKey('raw', hash, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+  }
+
+  private static async _encryptToken(token: string): Promise<string> {
+    const key = await this._getEncryptionKey();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const encoded = new TextEncoder().encode(token);
+    const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+    // Persist as base64(iv):base64(ciphertext)
+    const toB64 = (buf: ArrayBuffer) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+    return `${toB64(iv.buffer)}:${toB64(cipher)}`;
+  }
+
+  private static async _decryptToken(encrypted: string): Promise<string | null> {
+    try {
+      const [ivB64, cipherB64] = encrypted.split(':');
+      if (!ivB64 || !cipherB64) return null;
+      const fromB64 = (s: string) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+      const iv = fromB64(ivB64);
+      const cipher = fromB64(cipherB64);
+      const key = await this._getEncryptionKey();
+      const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher);
+      return new TextDecoder().decode(plain);
+    } catch {
+      return null; // corrupted / wrong key — treat as not connected
+    }
+  }
 
   // ── Config helpers ──────────────────────────────────────────────────
 
   static async saveConfig(config: GitHubSyncConfig): Promise<void> {
-    await chrome.storage.local.set({ [this.CFG_KEY]: config });
+    // Encrypt token before persisting to storage
+    const encrypted = await this._encryptToken(config.token);
+    await chrome.storage.local.set({ [this.CFG_KEY]: { ...config, token: encrypted, _enc: true } });
   }
 
   static async getConfig(): Promise<GitHubSyncConfig | null> {
     const r = await chrome.storage.local.get(this.CFG_KEY);
-    return r[this.CFG_KEY] || null;
+    const raw = r[this.CFG_KEY];
+    if (!raw) return null;
+    // Decrypt token if it was stored encrypted
+    if (raw._enc && raw.token) {
+      const plainToken = await this._decryptToken(raw.token);
+      if (!plainToken) return null; // decryption failed — force re-auth
+      return { ...raw, token: plainToken };
+    }
+    return raw;
   }
 
   static async disconnect(): Promise<void> {
+    // Revoke the token on GitHub's side before wiping local config
+    try {
+      const config = await this.getConfig();
+      if (config?.token) {
+        const isProd = chrome.runtime.id === this.PROD_EXT_ID;
+        const clientId = isProd ? this.PROD_CLIENT_ID : this.DEV_CLIENT_ID;
+        const clientSecret = isProd ? this.PROD_CLIENT_SECRET : this.DEV_CLIENT_SECRET;
+        await fetch(`${this.API}/applications/${clientId}/token`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/vnd.github+json',
+          },
+          body: JSON.stringify({ access_token: config.token }),
+        });
+      }
+    } catch {
+      // Best-effort — always delete local config regardless
+    }
     await chrome.storage.local.remove(this.CFG_KEY);
   }
 
@@ -238,6 +305,13 @@ export class GitHubSyncService {
     await chrome.storage.local.set({ [this.SYNCED_KEY]: Array.from(s) });
   }
 
+  static async removeSyncedIds(ids: string[]): Promise<void> {
+    if (ids.length === 0) return;
+    const s = await this.getSyncedIds();
+    ids.forEach((id) => s.delete(id));
+    await chrome.storage.local.set({ [this.SYNCED_KEY]: Array.from(s) });
+  }
+
   // ── Main sync entry-point ──────────────────────────────────────────
 
   /**
@@ -251,6 +325,7 @@ export class GitHubSyncService {
   static async syncSubmissions(
     submissions: AcceptedSubmission[],
     onProgress?: (synced: number, total: number) => void,
+    forceCfOnly?: boolean
   ): Promise<SyncResult> {
     const config = await this.getConfig();
     if (!config?.token) throw new Error("GitHub token not configured");
@@ -291,8 +366,9 @@ export class GitHubSyncService {
     >();
 
     let syncedCount = 0;
+    let processedCount = 0;
     const syncedDetails: Array<{ title: string; lang: string }> = [];
-    const toSync = submissions.filter((s) => !synced.has(s.id));
+    const toSync = submissions.filter((s) => !synced.has(s.id) || (forceCfOnly && s.platform === 'codeforces'));
     const total = toSync.length;
     console.log(
       `[GH] ${total} new submissions to sync (${synced.size} already synced)`,
@@ -341,17 +417,24 @@ export class GitHubSyncService {
       try {
         await this.upsertFile(config.token, ghUser, repo, filePath, content);
         
-        // ★ ATOMIC UPDATE: Mark as synced immediately
-        await this.batchMarkSynced([sub.id]);
+        // ★ ATOMIC UPDATE: Mark as synced immediately only if code was successfully fetched or it's leetcode
+        if (code || (!sub.platform || sub.platform === 'leetcode')) {
+          await this.batchMarkSynced([sub.id]);
+        }
         
         syncedCount++;
         syncedDetails.push({ title: sub.title, lang: sub.lang });
         console.log(`[GH] ✓ ${filePath}`);
-      } catch (err) {
+      } catch (err: any) {
         console.error(`[GH] ✗ ${filePath}:`, err);
+        if (err.message && (err.message.includes('rate limit') || err.message.includes('abuse') || err.message.includes('secondary'))) {
+          console.warn("[GH] Secondary rate limit encountered. Pausing for 10 seconds before continuing...");
+          await sleep(10000);
+        }
       }
 
-      onProgress?.(syncedCount, total);
+      processedCount++;
+      onProgress?.(processedCount, total);
 
       // Throttle to avoid LeetCode WAF (reduced slightly as we are more efficient)
       await sleep(

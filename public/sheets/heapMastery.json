@@ -1,0 +1,156 @@
+[
+  {
+    "title": "Kth Largest Element in an Array",
+    "titleSlug": "kth-largest-element-in-an-array",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "K Closest Points to Origin",
+    "titleSlug": "k-closest-points-to-origin",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Top K Frequent Elements",
+    "titleSlug": "top-k-frequent-elements",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Top K Frequent Words",
+    "titleSlug": "top-k-frequent-words",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Ugly Number II",
+    "titleSlug": "ugly-number-ii",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort Characters By Frequency",
+    "titleSlug": "sort-characters-by-frequency",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth Largest Element in a Stream",
+    "titleSlug": "kth-largest-element-in-a-stream",
+    "difficulty": "Easy",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reorganize String",
+    "titleSlug": "reorganize-string",
+    "difficulty": "Medium",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rearrange String k Distance Apart",
+    "titleSlug": "rearrange-string-k-distance-apart",
+    "difficulty": "Hard",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the Kth Smallest Sum of a Matrix With Sorted Rows",
+    "titleSlug": "find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows",
+    "difficulty": "Hard",
+    "category": "Top K Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Merge k Sorted Lists",
+    "titleSlug": "merge-k-sorted-lists",
+    "difficulty": "Hard",
+    "category": "Merge K sorted pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find K Pairs with Smallest Sums",
+    "titleSlug": "find-k-pairs-with-smallest-sums",
+    "difficulty": "Medium",
+    "category": "Merge K sorted pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth Smallest Element in a Sorted Matrix",
+    "titleSlug": "kth-smallest-element-in-a-sorted-matrix",
+    "difficulty": "Medium",
+    "category": "Merge K sorted pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Median from Data Stream",
+    "titleSlug": "find-median-from-data-stream",
+    "difficulty": "Hard",
+    "category": "Two Heaps Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sliding Window Median",
+    "titleSlug": "sliding-window-median",
+    "difficulty": "Hard",
+    "category": "Two Heaps Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "IPO",
+    "titleSlug": "ipo",
+    "difficulty": "Hard",
+    "category": "Two Heaps Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Cost to Connect Sticks",
+    "titleSlug": "minimum-cost-to-connect-sticks",
+    "difficulty": "Medium",
+    "category": "Minimum number Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Meeting Rooms II",
+    "titleSlug": "meeting-rooms-ii",
+    "difficulty": "Medium",
+    "category": "Minimum number Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Employee Free Time",
+    "titleSlug": "employee-free-time",
+    "difficulty": "Hard",
+    "category": "Minimum number Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Cost to Hire K Workers",
+    "titleSlug": "minimum-cost-to-hire-k-workers",
+    "difficulty": "Hard",
+    "category": "Minimum number Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Task Scheduler",
+    "titleSlug": "task-scheduler",
+    "difficulty": "Medium",
+    "category": "Minimum number Pattern",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Number of Refueling Stops",
+    "titleSlug": "minimum-number-of-refueling-stops",
+    "difficulty": "Hard",
+    "category": "Minimum number Pattern",
+    "platform": "leetcode"
+  }
+]

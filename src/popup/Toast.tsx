@@ -9,11 +9,13 @@ interface ToastProps {
   action?: { label: string; onClick: () => void };
 }
 
-export const Toast: React.FC<ToastProps> = ({ message, type, onClose, action, duration = 4000 }) => {
+export const Toast: React.FC<ToastProps> = ({ message, type, onClose, action, duration }) => {
+  const finalDuration = duration ?? (type === 'error' ? 6000 : 4000);
+
   useEffect(() => {
-    const timer = setTimeout(onClose, duration);
+    const timer = setTimeout(onClose, finalDuration);
     return () => clearTimeout(timer);
-  }, [duration, onClose]);
+  }, [finalDuration, onClose]);
 
   const getIcon = () => {
     switch (type) {
@@ -32,7 +34,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose, action, du
         <button 
           className="toast-action-btn" 
           onClick={(e) => { e.stopPropagation(); action.onClick(); }}
-          style={{ marginLeft: '8px', padding: '4px 10px', fontSize: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)', borderRadius: '4px', cursor: 'pointer', color: 'var(--text-primary)', fontWeight: 600 }}
+          style={{ marginLeft: '8px', padding: '4px 10px', fontSize: 'var(--font-size-base)', background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)', borderRadius: '0px', cursor: 'pointer', color: 'var(--text-primary)', fontWeight: 600 }}
         >
           {action.label}
         </button>

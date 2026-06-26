@@ -5,6 +5,7 @@ import { StreakCalculator, StreakInfo } from '../services/streak';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { Toast } from './Toast'; // for error handling UI
 import { Modal } from './Modal'; // documentation overlay
+import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../utils/PlatformIcons';
 
 
 
@@ -33,6 +34,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
   const [isLoadingPlatform, setIsLoadingPlatform] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [showDocs, setShowDocs] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   // Debounced platform toggle to avoid rapid clicks
   const debounceTimeout = useRef<number | null>(null);
@@ -41,6 +43,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
     debounceTimeout.current = window.setTimeout(() => {
       setIsLoadingPlatform(true);
       setActivePlatform(platform);
+      chrome.storage.local.set({ activePlatform: platform });
       // Placeholder timeout – actual data fetch should clear loading when done
       setTimeout(() => setIsLoadingPlatform(false), 300);
     }, 300);
@@ -301,80 +304,80 @@ export const CompareTab: React.FC<CompareTabProps> = ({
   const metrics = useMemo(() => {
     if (activePlatform === 'codeforces') {
       return [
-        { key: 'Total Problems', label: 'Total Problems', getValue: (p: FriendProfile) => p.problemsSolved?.total ?? '-' },
-        { key: 'Easy', label: 'Easy (<1200)', getValue: (p: FriendProfile) => p.problemsSolved?.easy ?? '-' },
-        { key: 'Medium', label: 'Medium (<1900)', getValue: (p: FriendProfile) => p.problemsSolved?.medium ?? '-' },
-        { key: 'Hard', label: 'Hard (≥1900)', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
-        { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
+        { key: 'Total Problems', label: 'Total Problems', tooltip: 'Total accepted problems solved on Codeforces', getValue: (p: FriendProfile) => p.problemsSolved?.total ?? '-' },
+        { key: 'Easy', label: 'Easy (<1200)', tooltip: 'Problems solved with difficulty rating < 1200', getValue: (p: FriendProfile) => p.problemsSolved?.easy ?? '-' },
+        { key: 'Medium', label: 'Medium (<1900)', tooltip: 'Problems solved with difficulty rating 1200 - 1900', getValue: (p: FriendProfile) => p.problemsSolved?.medium ?? '-' },
+        { key: 'Hard', label: 'Hard (≥1900)', tooltip: 'Problems solved with difficulty rating ≥ 1900', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
+        { key: 'Current Streak', label: 'Current Streak', tooltip: 'Current consecutive days with at least 1 accepted submission', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
             return streak && streak.currentStreak > 0 ? `${streak.currentStreak}` : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
         },
-        { key: 'Best Streak', label: 'Best Streak', getValue: (p: FriendProfile) => {
+        { key: 'Best Streak', label: 'Best Streak', tooltip: 'Longest consecutive days streak recorded', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
             return streak && streak.longestStreak > 0 ? streak.longestStreak : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.longestStreak ?? 0
         },
-        { key: 'Submissions', label: 'Total Submissions', getValue: (p: FriendProfile) => p.submissionStats?.totalSubmissions ?? '-' },
-        { key: 'Acceptance Rate', label: 'Acceptance Rate', getValue: (p: FriendProfile) => p.submissionStats?.acceptanceRate ? `${p.submissionStats.acceptanceRate.toFixed(1)}%` : '-' },
-        { key: 'Contest Rating', label: 'Contest Rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
-        { key: 'Max Rating', label: 'Max Rating', getValue: (p: FriendProfile) => p.codeforcesStats?.maxRating ?? '-' },
-        { key: 'Rank Label', label: 'Rank', getValue: (p: FriendProfile) => p.codeforcesStats?.rankLabel ?? 'unrated' },
-        { key: 'Contest Count', label: 'Contests Participated', getValue: (p: FriendProfile) => p.contestCount ?? '-' },
+        { key: 'Submissions', label: 'Total Submissions', tooltip: 'Total number of problem submissions', getValue: (p: FriendProfile) => p.submissionStats?.totalSubmissions ?? '-' },
+        { key: 'Acceptance Rate', label: 'Acceptance Rate', tooltip: 'Percentage of submissions that resulted in Accepted verdict', getValue: (p: FriendProfile) => p.submissionStats?.acceptanceRate ? `${p.submissionStats.acceptanceRate.toFixed(1)}%` : '-' },
+        { key: 'Contest Rating', label: 'Contest Rating', tooltip: 'Current official Codeforces Elo rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
+        { key: 'Max Rating', label: 'Max Rating', tooltip: 'Peak official Codeforces rating achieved', getValue: (p: FriendProfile) => p.codeforcesStats?.maxRating ?? '-' },
+        { key: 'Rank Label', label: 'Rank', tooltip: 'Current Codeforces division rank title (e.g. Expert, Candidate Master)', getValue: (p: FriendProfile) => p.codeforcesStats?.rankLabel ?? 'unrated' },
+        { key: 'Contest Count', label: 'Contests Participated', tooltip: 'Total official contests participated in', getValue: (p: FriendProfile) => p.contestCount ?? '-' },
       ];
     } else if (activePlatform === 'codechef') {
       return [
-        { key: 'Stars', label: 'Stars', getValue: (p: FriendProfile) => {
+        { key: 'Stars', label: 'Stars', tooltip: 'CodeChef Star division tier (1★ to 7★)', getValue: (p: FriendProfile) => {
             const stars = Math.floor((p.contestRating || 0) / 200) - 2; // Approximate stars calculation if needed, or simply extract from profile if we saved it
             return p.contestRating ? `${Math.max(1, Math.min(7, Math.floor((p.contestRating - 1200) / 200) + 1))}★` : '-';
           }
         },
-        { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
+        { key: 'Current Streak', label: 'Current Streak', tooltip: 'Current consecutive days with at least 1 accepted submission', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
             return streak && streak.currentStreak > 0 ? `${streak.currentStreak}` : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
         },
-        { key: 'Best Streak', label: 'Best Streak', getValue: (p: FriendProfile) => {
+        { key: 'Best Streak', label: 'Best Streak', tooltip: 'Longest consecutive days streak recorded', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
             return streak && streak.longestStreak > 0 ? streak.longestStreak : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.longestStreak ?? 0
         },
-        { key: 'Contest Rating', label: 'Contest Rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
-        { key: 'Max Rating', label: 'Max Rating', getValue: (p: FriendProfile) => p.contributionPoints ?? '-' }, // using contributionPoints for Max Rating
-        { key: 'Global Rank', label: 'Global Rank', getValue: (p: FriendProfile) => p.contestRanking ? `#${p.contestRanking.toLocaleString()}` : '-',
+        { key: 'Contest Rating', label: 'Contest Rating', tooltip: 'Current official CodeChef contest rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
+        { key: 'Max Rating', label: 'Max Rating', tooltip: 'Peak rating / contribution points achieved', getValue: (p: FriendProfile) => p.contributionPoints ?? '-' }, // using contributionPoints for Max Rating
+        { key: 'Global Rank', label: 'Global Rank', tooltip: 'Worldwide ranking on CodeChef', getValue: (p: FriendProfile) => p.contestRanking ? `#${p.contestRanking.toLocaleString()}` : '-',
           getRawValue: (p: FriendProfile) => p.contestRanking ? 100000000 - p.contestRanking : 0
         },
-        { key: 'Contest Count', label: 'Contests Participated', getValue: (p: FriendProfile) => p.contestCount ?? '-' },
+        { key: 'Contest Count', label: 'Contests Participated', tooltip: 'Total official contests participated in', getValue: (p: FriendProfile) => p.contestCount ?? '-' },
       ];
     } else {
       return [
-        { key: 'Total Problems', label: 'Total Problems', getValue: (p: FriendProfile) => p.problemsSolved?.total ?? '-' },
-        { key: 'Easy', label: 'Easy', getValue: (p: FriendProfile) => p.problemsSolved?.easy ?? '-' },
-        { key: 'Medium', label: 'Medium', getValue: (p: FriendProfile) => p.problemsSolved?.medium ?? '-' },
-        { key: 'Hard', label: 'Hard', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
-        { key: 'Current Streak', label: 'Current Streak', getValue: (p: FriendProfile) => {
+        { key: 'Total Problems', label: 'Total Problems', tooltip: 'Total accepted problems solved on LeetCode', getValue: (p: FriendProfile) => p.problemsSolved?.total ?? '-' },
+        { key: 'Easy', label: 'Easy', tooltip: 'LeetCode Easy difficulty problems solved', getValue: (p: FriendProfile) => p.problemsSolved?.easy ?? '-' },
+        { key: 'Medium', label: 'Medium', tooltip: 'LeetCode Medium difficulty problems solved', getValue: (p: FriendProfile) => p.problemsSolved?.medium ?? '-' },
+        { key: 'Hard', label: 'Hard', tooltip: 'LeetCode Hard difficulty problems solved', getValue: (p: FriendProfile) => p.problemsSolved?.hard ?? '-' },
+        { key: 'Current Streak', label: 'Current Streak', tooltip: 'Current consecutive days with at least 1 accepted submission', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
             return streak && streak.currentStreak > 0 ? `${streak.currentStreak}` : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.currentStreak ?? 0
         },
-        { key: 'Best Streak', label: 'Best Streak', getValue: (p: FriendProfile) => {
+        { key: 'Best Streak', label: 'Best Streak', tooltip: 'Longest consecutive days streak recorded', getValue: (p: FriendProfile) => {
             const streak = streakMap.get(p.username);
             return streak && streak.longestStreak > 0 ? streak.longestStreak : '-';
           },
           getRawValue: (p: FriendProfile) => streakMap.get(p.username)?.longestStreak ?? 0
         },
-        { key: 'Submissions', label: 'Total Submissions', getValue: (p: FriendProfile) => p.submissionStats?.totalSubmissions ?? '-' },
-        { key: 'Acceptance Rate', label: 'Acceptance Rate', getValue: (p: FriendProfile) => p.submissionStats?.acceptanceRate ? `${p.submissionStats.acceptanceRate.toFixed(1)}%` : '-' },
-        { key: 'Contest Rating', label: 'Contest Rating', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
-        { key: 'Rank', label: 'Global Rank', getValue: (p: FriendProfile) => p.ranking ? `#${p.ranking.toLocaleString()}` : '-',
+        { key: 'Submissions', label: 'Total Submissions', tooltip: 'Total number of problem submissions', getValue: (p: FriendProfile) => p.submissionStats?.totalSubmissions ?? '-' },
+        { key: 'Acceptance Rate', label: 'Acceptance Rate', tooltip: 'Percentage of submissions that resulted in Accepted verdict', getValue: (p: FriendProfile) => p.submissionStats?.acceptanceRate ? `${p.submissionStats.acceptanceRate.toFixed(1)}%` : '-' },
+        { key: 'Contest Rating', label: 'Contest Rating', tooltip: 'Current official LeetCode Elo rating (e.g. Knight ≥ 1850, Guardian ≥ 2150)', getValue: (p: FriendProfile) => p.contestRating ? Math.round(p.contestRating) : '-' },
+        { key: 'Rank', label: 'Global Rank', tooltip: 'Worldwide ranking on LeetCode', getValue: (p: FriendProfile) => p.ranking ? `#${p.ranking.toLocaleString()}` : '-',
           getRawValue: (p: FriendProfile) => p.ranking ? 100000000 - p.ranking : 0
         },
-        { key: 'Reputation', label: 'Reputation', getValue: (p: FriendProfile) => p.reputation ?? '-' },
+        { key: 'Reputation', label: 'Reputation', tooltip: 'Community reputation points earned on LeetCode', getValue: (p: FriendProfile) => p.reputation ?? '-' },
       ];
     }
   }, [activePlatform, streakMap]);
@@ -515,25 +518,48 @@ export const CompareTab: React.FC<CompareTabProps> = ({
 
   return (
     <div className="compare-tab">
+      {showInfo && (
+        <div style={{ marginBottom: '16px', padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+            <strong>ⓘ Data Freshness</strong>
+            <button onClick={() => setShowInfo(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
+          </div>
+          Side-by-side comparison utilizes your locally cached friend statistics. For the most up-to-date submission counts and recent contest ratings, ensure you have recently clicked the refresh icon on your friends' profiles in the main feed.
+        </div>
+      )}
       <div className="compare-header-controls">
         <div className="platform-toggle-group">
           <button
+            className={`platform-toggle-btn ${showInfo ? 'active' : ''}`}
+            onClick={() => setShowInfo(!showInfo)}
+            style={{ padding: '0 10px', fontSize: 'var(--font-size-base)', fontWeight: 700, color: showInfo ? '#ffa116' : 'var(--text-secondary)' }}
+            title="Click for Data Freshness Info"
+          >
+            ⓘ INFO
+          </button>
+          <button
             className={`platform-toggle-btn leetcode ${activePlatform === 'leetcode' ? 'active' : ''}`}
             onClick={() => setActivePlatform('leetcode')}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+            title="LeetCode"
           >
-            LeetCode
+            <LeetCodeIcon size={18} />
           </button>
           <button
             className={`platform-toggle-btn codeforces ${activePlatform === 'codeforces' ? 'active' : ''}`}
             onClick={() => setActivePlatform('codeforces')}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+            title="Codeforces"
           >
-            Codeforces
+            <CodeforcesIcon size={18} />
           </button>
           <button
             className={`platform-toggle-btn codechef ${activePlatform === 'codechef' ? 'active' : ''}`}
             onClick={() => setActivePlatform('codechef')}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+            title="CodeChef"
           >
-            CodeChef
+            <CodeChefIcon size={18} />
           </button>
         </div>
         <div className="unrated-filter-control">
@@ -541,7 +567,10 @@ export const CompareTab: React.FC<CompareTabProps> = ({
             <input
               type="checkbox"
               checked={hideUnrated}
-              onChange={(e) => setHideUnrated(e.target.checked)}
+              onChange={(e) => {
+                setHideUnrated(e.target.checked);
+                chrome.storage.local.set({ hideUnrated: e.target.checked });
+              }}
             />
             <span>Hide Unrated</span>
           </label>
@@ -562,7 +591,12 @@ export const CompareTab: React.FC<CompareTabProps> = ({
                 onClick={() => handleToggleFriend(user.username)}
               >
                 {profile?.avatar && (
-                  <img src={profile.avatar} alt={user.username} className="selector-avatar" />
+                  <img
+                    src={profile.avatar}
+                    alt={user.username}
+                    className="selector-avatar"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
                 )}
                 <span>{user.username} {user.isOwn && '(You)'}</span>
                 {isSelected && <span className="check-icon">✓</span>}
@@ -586,14 +620,26 @@ export const CompareTab: React.FC<CompareTabProps> = ({
                   <tr>
                     <th>Metric</th>
                     {selectedProfiles.map(profile => (
-                      <th key={profile.username}>{profile.username}</th>
+                      <th key={profile.username}>
+                        <a 
+                          href={activePlatform === 'leetcode' ? `https://leetcode.com/${profile.username}` : activePlatform === 'codeforces' ? `https://codeforces.com/profile/${profile.username}` : `https://www.codechef.com/users/${profile.username}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          style={{ color: 'inherit', textDecoration: 'underline' }}
+                        >
+                          {profile.username} ↗
+                        </a>
+                      </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {metrics.map(metric => (
                     <tr key={metric.key}>
-                      <td className="metric-label">{metric.label}</td>
+                      <td className="metric-label" title={(metric as any).tooltip}>
+                        {metric.label}
+                        {(metric as any).tooltip && <span style={{ cursor: 'help', opacity: 0.7, marginLeft: '4px' }}>ⓘ</span>}
+                      </td>
                       {selectedProfiles.map(profile => {
                         const val = metric.getValue(profile);
                         const mx = isMax(metric.key, profile);
@@ -683,8 +729,8 @@ export const CompareTab: React.FC<CompareTabProps> = ({
           <ResponsiveContainer width="100%" height={350} minWidth={1}>
             <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
               <PolarGrid stroke={isDarkMode ? '#444' : '#e0e0e0'} />
-              <PolarAngleAxis dataKey="topic" tick={{ fill: isDarkMode ? '#aaa' : '#555', fontSize: 11 }} />
-              <PolarRadiusAxis angle={30} domain={[0, 'auto']} tick={{ fill: isDarkMode ? '#888' : '#666', fontSize: 10 }} />
+              <PolarAngleAxis dataKey="topic" tick={{ fill: isDarkMode ? '#aaa' : '#555', fontSize: 'var(--font-size-sm)' }} />
+              <PolarRadiusAxis angle={30} domain={[0, 'auto']} tick={{ fill: isDarkMode ? '#888' : '#666', fontSize: 'var(--font-size-xs)' }} />
               <Tooltip 
                 contentStyle={{
                   backgroundColor: isDarkMode ? '#2a2a2a' : '#f9f9f9',
@@ -714,7 +760,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
 
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.topicStats && p.topicStats.length > 0) && (
         <div className="topics-table-section">
-          <h3>Topics Sol <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedTopics.length} total)</span></h3>
+          <h3>Topics Sol <span style={{ fontSize: 'var(--font-size-base)', fontWeight: 'normal', opacity: 0.7 }}>({sortedTopics.length} total)</span></h3>
           <div className="compare-table-wrapper">
             <table className="topics-data-table">
               <thead>
@@ -756,7 +802,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
 
       {selectedProfiles.length > 0 && selectedProfiles.some(p => p.languageStats && p.languageStats.length > 0) && (
         <div className="language-table-section">
-          <h3>Languages Used <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.7 }}>({sortedLangs.length} total)</span></h3>
+          <h3>Languages Used <span style={{ fontSize: 'var(--font-size-base)', fontWeight: 'normal', opacity: 0.7 }}>({sortedLangs.length} total)</span></h3>
           <div className="compare-table-wrapper">
             <table className="language-data-table">
               <thead>
@@ -802,7 +848,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
           <ResponsiveContainer width="100%" height={300} minWidth={1}>
             <LineChart data={velocityData}>
               <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#444' : '#e0e0e0'} />
-              <XAxis dataKey="date" stroke={isDarkMode ? '#aaa' : '#999'} tick={{ fontSize: 11 }} />
+              <XAxis dataKey="date" stroke={isDarkMode ? '#aaa' : '#999'} tick={{ fontSize: 'var(--font-size-sm)' }} />
               <YAxis stroke={isDarkMode ? '#aaa' : '#999'} allowDecimals={false} />
               <Tooltip
                 contentStyle={{
@@ -918,7 +964,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
                 domain={['dataMin', 'dataMax']} 
                 tickFormatter={(tick) => new Date(tick).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                 stroke={isDarkMode ? '#aaa' : '#999'} 
-                tick={{ fontSize: 11 }} 
+                tick={{ fontSize: 'var(--font-size-sm)' }} 
               />
               <YAxis stroke={isDarkMode ? '#aaa' : '#999'} domain={['auto', 'auto']} />
               <Tooltip

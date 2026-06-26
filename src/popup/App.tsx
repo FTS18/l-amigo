@@ -4,7 +4,8 @@ import { StorageService } from '../services/storage';
 import { LeetCodeService } from '../services/leetcode';
 import { CodeforcesService } from '../services/codeforces';
 import { PlatformService } from '../services/platform-service';
-import { DATA_LIMITS } from '../constants';
+import { DATA_LIMITS, STORAGE_KEYS } from '../constants';
+import { SyncEntry } from '../utils/import-restore';
 import { FriendCard } from './FriendCard';
 import { TabNav } from './TabNav';
 import { Onboarding } from './Onboarding';
@@ -12,7 +13,6 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { Modal } from './Modal';
 import { Toast } from './Toast';
 import { Skeleton } from './Skeleton';
-
 import { Recommendations } from './Recommendations';
 import { SettingsTab } from './SettingsTab';
 import { CompareTab } from './CompareTab';
@@ -21,20 +21,17 @@ import { FriendProfileView } from './FriendProfileView';
 import { AddEditFriendModal } from './AddEditFriendModal';
 import { UpcomingContests } from './UpcomingContests';
 import { ImportExportModal } from './ImportExportModal';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Database, UserPlus, LayoutDashboard, RefreshCw, WifiOff } from 'lucide-react';
+import { StreakCalculator } from '../services/streak';
 import './App.css';
-const formatTimestamp = (timestamp: number) => {
-  const date = new Date(timestamp);
-  const now = Date.now();
-  const diff = now - timestamp;
-  
-  if (diff < 60000) return 'just now';
-  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-  if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
-  return `${Math.floor(diff / 86400000)}d ago`;
-};
 
-import { SyncEntry } from '../utils/import-restore';
+const formatTimestamp = (timestamp: number): string => {
+  const diff = Date.now() - timestamp;
+  if (diff < 60_000) return 'just now';
+  if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
+  if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+  return `${Math.floor(diff / 86_400_000)}d ago`;
+};
 
 export const App: React.FC = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -42,10 +39,17 @@ export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshingFriend, setRefreshingFriend] = useState<string | null>(null);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [addingFriend, setAddingFriend] = useState(false);
   const [showImportExport, setShowImportExport] = useState(false);
-  const [sortBy, setSortBy] = useState<'name' | 'problems' | 'recent'>('recent');
+  const [sortBy, setSortBy] = useState<'name' | 'problems' | 'recent' | 'streak'>('recent');
+  const [platformFilters, setPlatformFilters] = useState<Platform[]>(['leetcode', 'codeforces', 'codechef']);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [fontSizeScale, setFontSizeScale] = useState(100);
+  const [displayZoomScale, setDisplayZoomScale] = useState(100);
+  // Incrementing this key forces <UpcomingContests /> to remount and re-fetch fresh data
+  const [refreshContestsKey, setRefreshContestsKey] = useState(0);
+
 
   const [activeTab, setActiveTab] = useState<'friends' | 'compare' | 'settings'>('friends');
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -72,67 +76,120 @@ export const App: React.FC = () => {
   useEffect(() => {
     checkOnboarding();
     loadTheme();
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName !== 'local') return;
+      if (changes[STORAGE_KEYS.FONT_SIZE_SCALE]) setFontSizeScale(changes[STORAGE_KEYS.FONT_SIZE_SCALE].newValue ?? 100);
+      if (changes[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]) setDisplayZoomScale(changes[STORAGE_KEYS.DISPLAY_ZOOM_SCALE].newValue ?? 100);
+      if (changes[STORAGE_KEYS.DARK_MODE]) setIsDarkMode(changes[STORAGE_KEYS.DARK_MODE].newValue);
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    // Track network connectivity for offline banner
+    const goOffline = () => setIsOffline(true);
+    const goOnline = () => setIsOffline(false);
+    window.addEventListener('offline', goOffline);
+    window.addEventListener('online', goOnline);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+      window.removeEventListener('offline', goOffline);
+      window.removeEventListener('online', goOnline);
+    };
   }, []);
 
+
+
   const checkOnboarding = async () => {
-    const result = await chrome.storage.local.get(['onboarding_complete', 'own_username', 'own_codeforces_handle', 'own_codechef_handle']);
-    if (!result.onboarding_complete) {
+    // Single storage read — all keys merged into one call
+    const result = await chrome.storage.local.get([
+      STORAGE_KEYS.ONBOARDING_COMPLETE,
+      STORAGE_KEYS.OWN_USERNAME,
+      STORAGE_KEYS.OWN_CF_HANDLE,
+      STORAGE_KEYS.OWN_CC_HANDLE,
+      STORAGE_KEYS.SORT_BY,
+      STORAGE_KEYS.PLATFORM_FILTERS,
+      STORAGE_KEYS.ACTIVE_TAB,
+      STORAGE_KEYS.LAST_UPDATED,
+      STORAGE_KEYS.REFRESH_IN_PROGRESS,
+      STORAGE_KEYS.FONT_SIZE_SCALE,
+      STORAGE_KEYS.DISPLAY_ZOOM_SCALE,
+      STORAGE_KEYS.DARK_MODE,
+    ]);
+    if (!result[STORAGE_KEYS.ONBOARDING_COMPLETE]) {
       setShowOnboarding(true);
       setLoading(false);
     } else {
-      const username = result.own_username || '';
+      const username = result[STORAGE_KEYS.OWN_USERNAME] || '';
       setOwnUsername(username);
-      setOwnCodeforcesHandle(result.own_codeforces_handle || '');
-      setOwnCodechefHandle(result.own_codechef_handle || '');
-      loadData(username);
+      setOwnCodeforcesHandle(result[STORAGE_KEYS.OWN_CF_HANDLE] || '');
+      setOwnCodechefHandle(result[STORAGE_KEYS.OWN_CC_HANDLE] || '');
+      // Restore persisted UI state
+      if (result[STORAGE_KEYS.SORT_BY]) setSortBy(result[STORAGE_KEYS.SORT_BY]);
+      if (result[STORAGE_KEYS.PLATFORM_FILTERS]) setPlatformFilters(result[STORAGE_KEYS.PLATFORM_FILTERS]);
+      if (result[STORAGE_KEYS.ACTIVE_TAB]) setActiveTab(result[STORAGE_KEYS.ACTIVE_TAB]);
+      if (result[STORAGE_KEYS.LAST_UPDATED]) setLastUpdated(result[STORAGE_KEYS.LAST_UPDATED]);
+      // Also restore theme from the same single read (avoids a separate loadTheme() call)
+      if (result[STORAGE_KEYS.DARK_MODE] !== undefined) setIsDarkMode(result[STORAGE_KEYS.DARK_MODE]);
+      if (result[STORAGE_KEYS.FONT_SIZE_SCALE]) setFontSizeScale(result[STORAGE_KEYS.FONT_SIZE_SCALE]);
+      if (result[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]) setDisplayZoomScale(result[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]);
+      // If a refresh was running when popup was last closed, re-start it after load
+      loadData(username).then(() => {
+        if (result[STORAGE_KEYS.REFRESH_IN_PROGRESS]) {
+          handleRefresh();
+        }
+      });
     }
   };
 
-  const handleOnboardingComplete = async (username: string) => {
-    const lowerUsername = username.toLowerCase();
-    setOwnUsername(lowerUsername);
+  const handleOnboardingComplete = async (_passedUsername: string) => {
     setShowOnboarding(false);
-    
+
+    // Read handles exactly as saved by Onboarding (CF is case-sensitive — do NOT lowercase)
+    const result = await chrome.storage.local.get(['own_username', 'own_codeforces_handle', 'own_codechef_handle']);
+    const ownLC = result.own_username || '';
+    const ownCF = result.own_codeforces_handle || '';
+    const ownCC = result.own_codechef_handle || '';
+
+    setOwnUsername(ownLC);
+    setOwnCodeforcesHandle(ownCF);
+    setOwnCodechefHandle(ownCC);
+
     // Fetch and save own LeetCode profile if provided
-    if (lowerUsername) {
+    if (ownLC) {
       try {
-        const profile = await LeetCodeService.fetchUserProfile(lowerUsername);
+        const profile = await LeetCodeService.fetchUserProfile(ownLC);
         await StorageService.saveProfile(profile);
       } catch (error) {
-        console.error('Error fetching own profile:', error);
+        console.error('Error fetching own LC profile:', error);
       }
     }
 
-    // Fetch and save own Codeforces profile if provided
-    const result = await chrome.storage.local.get(['own_codeforces_handle', 'own_codechef_handle']);
-    const ownCF = result.own_codeforces_handle || '';
-    setOwnCodeforcesHandle(ownCF);
+    // Fetch and save own Codeforces profile if provided (case-sensitive handle)
     if (ownCF) {
       try {
         const profile = await CodeforcesService.fetchUserProfile(ownCF);
         await StorageService.saveProfile(profile);
       } catch (error) {
-        console.error('Error fetching own Codeforces profile:', error);
+        console.error('Error fetching own CF profile:', error);
       }
     }
-    
-    // Fetch and save own Codechef profile if provided
-    const ownCC = result.own_codechef_handle || '';
-    setOwnCodechefHandle(ownCC);
+
+    // Fetch and save own CodeChef profile if provided
     if (ownCC) {
       try {
         const profile = await PlatformService.fetchProfile('codechef', ownCC);
         await StorageService.saveProfile(profile);
       } catch (error) {
-        console.error('Error fetching own Codechef profile:', error);
+        console.error('Error fetching own CC profile:', error);
       }
     }
-    
-    loadData(lowerUsername);
+
+    loadData(ownLC);
   };
 
   const loadTheme = async () => {
-    const result = await chrome.storage.local.get('darkMode');
+    const result = await chrome.storage.local.get(['darkMode', 'font_size_scale', 'display_zoom_scale']);
     if (result.darkMode !== undefined) {
       setIsDarkMode(result.darkMode);
     } else {
@@ -141,6 +198,8 @@ export const App: React.FC = () => {
       setIsDarkMode(systemPrefersDark);
       await chrome.storage.local.set({ darkMode: systemPrefersDark });
     }
+    if (result.font_size_scale) setFontSizeScale(result.font_size_scale);
+    if (result.display_zoom_scale) setDisplayZoomScale(result.display_zoom_scale);
   };
 
   const toggleDarkMode = async () => {
@@ -192,6 +251,7 @@ export const App: React.FC = () => {
          setFriends(storageFriends);
          setProfiles(storageProfiles);
          setLastUpdated(Date.now());
+         chrome.storage.local.set({ ui_last_updated: Date.now() });
          return false;
       }
       
@@ -210,31 +270,30 @@ export const App: React.FC = () => {
       const profilesData = await StorageService.getProfiles();
       setFriends(friendsList);
       setProfiles(profilesData);
-      setLastUpdated(Date.now());
+      // Don't update lastUpdated here — we're just reading from cache.
+      // lastUpdated is only updated after actual network refreshes (handleRefresh / background stale fetch).
 
-      const { own_codeforces_handle: ownCF, own_codechef_handle: ownCC } = await chrome.storage.local.get(["own_codeforces_handle", "own_codechef_handle"]);
+      // Single storage read for all own handles — merged from two previous separate calls
+      const ownHandles = await chrome.storage.local.get([
+        STORAGE_KEYS.OWN_USERNAME,
+        STORAGE_KEYS.OWN_CF_HANDLE,
+        STORAGE_KEYS.OWN_CC_HANDLE,
+      ]);
+      const ownUser = ownHandles[STORAGE_KEYS.OWN_USERNAME];
+      const ownCF   = ownHandles[STORAGE_KEYS.OWN_CF_HANDLE];
+      const ownCC   = ownHandles[STORAGE_KEYS.OWN_CC_HANDLE];
       setOwnCodeforcesHandle(ownCF || '');
       setOwnCodechefHandle(ownCC || '');
 
-      const username = currentUsername || ownUsername;
+      const username = currentUsername || ownUser || ownUsername;
 
       // 2. Determine which profiles need a refresh (stale or missing)
-      const now = Date.now();
       const accountsToCheck: Array<{ platform: Platform; handle: string }> = [];
 
-      // Own profiles
-      const { own_username: ownUser, own_codeforces_handle: ownCodeforcesHandleObj, own_codechef_handle: ownCodechefHandleObj } =
-        await chrome.storage.local.get(["own_username", "own_codeforces_handle", "own_codechef_handle"]);
+      if (ownUser)  accountsToCheck.push({ platform: 'leetcode',   handle: ownUser });
+      if (ownCF)    accountsToCheck.push({ platform: 'codeforces', handle: ownCF });
+      if (ownCC)    accountsToCheck.push({ platform: 'codechef',   handle: ownCC });
 
-      if (ownUser) {
-        accountsToCheck.push({ platform: 'leetcode', handle: ownUser });
-      }
-      if (ownCodeforcesHandleObj) {
-        accountsToCheck.push({ platform: 'codeforces', handle: ownCodeforcesHandleObj });
-      }
-      if (ownCodechefHandleObj) {
-        accountsToCheck.push({ platform: 'codechef', handle: ownCodechefHandleObj });
-      }
 
       // Friend profiles
       for (const f of friendsList) {
@@ -252,7 +311,7 @@ export const App: React.FC = () => {
       for (const acc of accountsToCheck) {
         const key = `${acc.platform}:${acc.handle.toLowerCase()}`;
         const p = profilesData[key];
-        if (!p || (now - (p.lastFetched || 0)) > DATA_LIMITS.PROFILE_STALE_THRESHOLD) {
+        if (!p || (Date.now() - (p.lastFetched || 0)) > DATA_LIMITS.PROFILE_STALE_THRESHOLD) {
           staleAccounts.push(acc);
         }
       }
@@ -274,11 +333,15 @@ export const App: React.FC = () => {
                 }
               }),
             );
+            // Update UI incrementally after each batch
+            const intermediateProfiles = await StorageService.getProfiles();
+            setProfiles(intermediateProfiles);
           }
-          // Silently update state with fresh data
           const freshProfiles = await StorageService.getProfiles();
           setProfiles(freshProfiles);
-          setLastUpdated(Date.now());
+          const refreshedAt = Date.now();
+          setLastUpdated(refreshedAt);
+          chrome.storage.local.set({ ui_last_updated: refreshedAt });
           // Run verification on the updated state
           await verifyAndReconcileState(friendsList, freshProfiles);
         })();
@@ -296,75 +359,40 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleAddFriend = async (username: string) => {
-    if (!username.trim()) return;
-    // Check if it's the user's own username
-    if (ownUsername && username.toLowerCase() === ownUsername.toLowerCase()) {
-      setToast({ message: "You can't add yourself as a friend!", type: 'info' });
-      return;
-    }
 
-    setAddingFriend(true);
+
+  const handleRemoveFriend = async (friendId: string, displayName: string) => {
     try {
-      await StorageService.addFriend(username);
-      
-      // Fetch profile immediately
-      try {
-        const profile = await LeetCodeService.fetchUserProfile(username);
-        await StorageService.saveProfile(profile);
-      } catch (profileErr) {
-        console.warn(`Added ${username} but profile fetch failed:`, profileErr);
-      }
-      
-      // Reload data
+      const identities = await StorageService.getIdentities();
+      const identityToRestore = identities.find(i => i.id === friendId);
+      if (!identityToRestore) return;
+
+      // Get profiles belonging to this identity from state
+      const profilesToDelete = Object.values(profiles).filter(p => p.id === friendId);
+
+      // Delete immediately from storage and refresh UI
+      await StorageService.removeIdentity(friendId);
       await loadData();
-      setToast({ message: `${username} added successfully!`, type: 'success' });
-    } catch (error) {
-      if (error instanceof Error) {
-        setToast({ message: error.message, type: 'error' });
-      }
-    } finally {
-      setAddingFriend(false);
-    }
-  };
 
-  const handleRemoveFriend = async (username: string) => {
-    // Optimistic removal via pendingDeletions
-    setPendingDeletions(prev => {
-      const newSet = new Set(prev);
-      newSet.add(username);
-      return newSet;
-    });
-    
-    // Create an Undo function that removes it from pendingDeletions
-    let wasUndone = false;
-    const undoRemove = () => {
-      wasUndone = true;
-      setPendingDeletions(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(username);
-        return newSet;
-      });
-      setToast(null);
-    };
-
-    setToast({ 
-      message: `${username} removed`, 
-      type: 'info',
-      action: { label: 'Undo', onClick: undoRemove }
-    });
-
-    // Actually delete from storage after 4 seconds if not undone
-    setTimeout(async () => {
-      if (!wasUndone) {
-        try {
-          await StorageService.removeFriend(username);
-          await loadData();
-        } catch (error) {
-          console.error('Failed to remove friend permanently', error);
+      setToast({ 
+        message: `${displayName} removed`, 
+        type: 'info',
+        action: { 
+          label: 'Undo', 
+          onClick: async () => {
+            try {
+              await StorageService.restoreIdentity(identityToRestore, profilesToDelete);
+              await loadData();
+            } catch (error) {
+              console.error('Failed to restore friend', error);
+            }
+          } 
         }
-      }
-    }, 4000);
+      });
+    } catch (error) {
+      console.error('Failed to remove friend:', error);
+      setToast({ message: 'Failed to remove friend', type: 'error' });
+    }
   };
 
   const requestConfirm = (action: () => void, title: string, message: string) => {
@@ -378,6 +406,8 @@ export const App: React.FC = () => {
   };
   const handleRefresh = async () => {
     setRefreshing(true);
+    // Persist in-progress flag so reopening the popup shows the spinner and restarts
+    await chrome.storage.local.set({ ui_refresh_in_progress: true });
     try {
       // 1. Refresh own profiles (all platforms if configured)
       const { own_username: ownUser, own_codeforces_handle: ownCodeforcesHandleObj, own_codechef_handle: ownCodechefHandleObj } =
@@ -428,7 +458,6 @@ export const App: React.FC = () => {
             });
           }
         } else {
-          // Fallback legacy friend
           accountsToRefresh.push({
             friendUsername: friend.username,
             platform: 'leetcode',
@@ -451,6 +480,10 @@ export const App: React.FC = () => {
         failed += results.filter(r => r.status === 'rejected').length;
       }
 
+      // 4. Clear upcoming contests cache so it re-fetches on refresh
+      await chrome.storage.local.remove('lamigo:upcomingContests:v6');
+      setRefreshContestsKey(k => k + 1);
+
       await loadData();
       if (failed > 0) {
         setToast({ message: `Refreshed! (${failed} failed)`, type: 'info' });
@@ -461,6 +494,8 @@ export const App: React.FC = () => {
       setToast({ message: 'Failed to refresh friends', type: 'error' });
     } finally {
       setRefreshing(false);
+      // Clear the in-progress flag regardless of success or failure
+      chrome.storage.local.remove('ui_refresh_in_progress');
     }
   };
 
@@ -486,6 +521,9 @@ export const App: React.FC = () => {
         setToast({ message: `Refreshed ${username}!`, type: 'success' });
       }
       await loadData();
+      const t = Date.now();
+      setLastUpdated(t);
+      chrome.storage.local.set({ ui_last_updated: t });
     } catch (error) {
       setToast({ message: `Failed to refresh ${username}`, type: 'error' });
     } finally {
@@ -493,19 +531,71 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleTabChange = (tab: 'friends' | 'compare' | 'settings') => {
+    setActiveTab(tab);
+    chrome.storage.local.set({ ui_active_tab: tab });
+  };
+
+  const handleSortChange = (sort: 'name' | 'problems' | 'recent') => {
+    setSortBy(sort);
+    chrome.storage.local.set({ ui_sort_by: sort });
+  };
+
   const sortedFriends = useMemo(() => {
-    return [...friends].filter(f => !pendingDeletions.has(f.username)).sort((a, b) => {
+    const filteredFriends = [...friends].filter(f => {
+      if (pendingDeletions.has(f.id || f.username)) return false;
+      
+      // Prevent duplicacy: don't show the user in the regular friends list if they have configured their own handles
+      const isOwnLC = ownUsername && (f.username.toLowerCase() === ownUsername.toLowerCase() || f.accounts?.some(a => a.platform === 'leetcode' && a.handle.toLowerCase() === ownUsername.toLowerCase()));
+      const isOwnCF = ownCodeforcesHandle && f.accounts?.some(a => a.platform === 'codeforces' && a.handle.toLowerCase() === ownCodeforcesHandle.toLowerCase());
+      const isOwnCC = ownCodechefHandle && f.accounts?.some(a => a.platform === 'codechef' && a.handle.toLowerCase() === ownCodechefHandle.toLowerCase());
+      
+      if (isOwnLC || isOwnCF || isOwnCC) return false;
+      
+      // Filter by platform buttons
+      if (platformFilters.length === 0) return false;
+      const hasActivePlatform = f.accounts?.some(a => platformFilters.includes(a.platform)) || 
+                                (profiles[f.username.toLowerCase()]?.platform && platformFilters.includes(profiles[f.username.toLowerCase()].platform as Platform));
+      if (!hasActivePlatform) return false;
+
+      return true;
+    });
+
+    const ownFriend: Friend | null = (ownUsername || ownCodeforcesHandle || ownCodechefHandle) ? {
+      id: 'own-user',
+      displayName: 'You',
+      username: ownUsername || ownCodeforcesHandle || ownCodechefHandle || 'You',
+      addedAt: 0,
+      accounts: [
+        ...(ownUsername ? [{ platform: 'leetcode' as const, handle: ownUsername, status: 'active' as const }] : []),
+        ...(ownCodeforcesHandle ? [{ platform: 'codeforces' as const, handle: ownCodeforcesHandle, status: 'active' as const }] : []),
+        ...(ownCodechefHandle ? [{ platform: 'codechef' as const, handle: ownCodechefHandle, status: 'active' as const }] : [])
+      ]
+    } : null;
+
+    const listToSort = ownFriend ? [ownFriend, ...filteredFriends] : filteredFriends;
+
+    return listToSort.sort((a, b) => {
       const getProfile = (f: Friend, platform: Platform) => {
         const handle = f.accounts?.find(acc => acc.platform === platform)?.handle || (profiles[f.username.toLowerCase()]?.platform === platform ? f.username : undefined);
         if (!handle) return undefined;
         return profiles[`${platform}:${handle.toLowerCase()}`] || profiles[handle.toLowerCase()];
       };
 
+      const compareNames = (f1: Friend, f2: Friend) => {
+        const getSortName = (f: Friend) => {
+          if (f.id === 'own-user') return f.username.toLowerCase();
+          return (f.displayName || f.username).toLowerCase();
+        };
+        return getSortName(f1).localeCompare(getSortName(f2));
+      };
+
       switch (sortBy) {
         case 'problems': {
           const solvedA = (getProfile(a, 'leetcode')?.problemsSolved.total || 0) + (getProfile(a, 'codeforces')?.problemsSolved.total || 0) + (getProfile(a, 'codechef')?.problemsSolved.total || 0);
           const solvedB = (getProfile(b, 'leetcode')?.problemsSolved.total || 0) + (getProfile(b, 'codeforces')?.problemsSolved.total || 0) + (getProfile(b, 'codechef')?.problemsSolved.total || 0);
-          return solvedB - solvedA;
+          if (solvedA !== solvedB) return solvedB - solvedA;
+          return compareNames(a, b);
         }
         case 'recent': {
           const submissionsA = [
@@ -518,14 +608,31 @@ export const App: React.FC = () => {
           ].sort((x, y) => y.timestamp - x.timestamp);
           const recentA = submissionsA[0]?.timestamp || 0;
           const recentB = submissionsB[0]?.timestamp || 0;
-          return recentB - recentA;
+          if (recentA !== recentB) return recentB - recentA;
+          return compareNames(a, b);
+        }
+        case 'streak': {
+          const getMaxStreak = (f: Friend) => {
+            const lc = getProfile(f, 'leetcode');
+            const cf = getProfile(f, 'codeforces');
+            const cc = getProfile(f, 'codechef');
+            return Math.max(
+              lc ? StreakCalculator.calculateStreak(lc as any).currentStreak : 0,
+              cf ? StreakCalculator.calculateStreak(cf as any).currentStreak : 0,
+              cc ? StreakCalculator.calculateStreak(cc as any).currentStreak : 0
+            );
+          };
+          const streakA = getMaxStreak(a);
+          const streakB = getMaxStreak(b);
+          if (streakA !== streakB) return streakB - streakA;
+          return compareNames(a, b);
         }
         case 'name':
         default:
-          return a.username.localeCompare(b.username);
+          return compareNames(a, b);
       }
     });
-  }, [friends, profiles, sortBy, pendingDeletions]);
+  }, [friends, profiles, sortBy, platformFilters, pendingDeletions, ownUsername, ownCodeforcesHandle, ownCodechefHandle]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts([
@@ -554,20 +661,24 @@ export const App: React.FC = () => {
     },
     {
       key: '1',
-      handler: () => setActiveTab('friends'),
+      handler: () => handleTabChange('friends'),
       description: 'Go to Friends tab',
     },
     {
       key: '2',
-      handler: () => setActiveTab('compare'),
+      handler: () => handleTabChange('compare'),
       description: 'Go to Compare tab',
     },
     {
       key: '3',
-      handler: () => setActiveTab('settings'),
+      handler: () => handleTabChange('settings'),
       description: 'Go to Settings tab',
     },
   ]);
+
+  useEffect(() => {
+    document.body.style.background = isDarkMode ? '#0e0e0e' : '#ffffff';
+  }, [isDarkMode]);
 
   if (showOnboarding) {
     return <Onboarding onComplete={handleOnboardingComplete} />;
@@ -586,7 +697,7 @@ export const App: React.FC = () => {
             setSelectedFriend(null);
             setSelectedPlatform('');
             setSelectedFilter('all');
-            setActiveTab(tab);
+            handleTabChange(tab);
           }}
           friendCount={friends.length}
         />
@@ -598,7 +709,7 @@ export const App: React.FC = () => {
               leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
               codeforcesProfile={cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined}
               codechefProfile={ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined}
-              initialPlatform={selectedPlatform as 'leetcode' | 'codeforces' | 'codechef'}
+              initialPlatform={(selectedPlatform as 'leetcode' | 'codeforces' | 'codechef') || undefined}
               initialFilter={selectedFilter as 'all' | 'Easy' | 'Medium' | 'Hard'}
               onBack={() => {
                 setSelectedFriend(null);
@@ -610,31 +721,37 @@ export const App: React.FC = () => {
           </React.Suspense>
         </div>
 
-        <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px' }}>
+        <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px', borderTop: '1px solid var(--border-color, #222)' }}>
           <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
             <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
           </a>
-          <div className="header-search-add" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flex: 1, paddingRight: '12px', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
-              className="add-friend-btn-header"
+              className="icon-btn-bottom"
               id="import-export-btn-profile"
               title="Import / Export friends and data"
+              aria-label="Import or export friends and data"
               onClick={() => setShowImportExport(true)}
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
             >
-              Import / Export
+              <Database size={18} />
             </button>
             <button
-              className="add-friend-btn-header"
+              className="icon-btn-bottom"
               title="Add friend"
+              aria-label="Add friend"
               onClick={() => { setEditingFriend(null); setShowAddModal(true); }}
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
             >
-              + Add Friend
+              <UserPlus size={18} />
             </button>
-          </div>
-          <div className="header-actions">
-            <button className="theme-toggle" onClick={toggleDarkMode} title="Toggle dark mode">
+            <button 
+              className="icon-btn-bottom" 
+              onClick={toggleDarkMode} 
+              title="Toggle dark mode"
+              aria-label="Toggle dark mode"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+            >
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           </div>
@@ -663,9 +780,25 @@ export const App: React.FC = () => {
     );
   }
 
+  const fs = fontSizeScale / 100;
+  const zoom = displayZoomScale / 100;
+  const customStyles = {
+    '--font-size-xs': `${10 * fs}px`,
+    '--font-size-sm': `${11 * fs}px`,
+    '--font-size-base': `${12 * fs}px`,
+    '--font-size-md': `${13 * fs}px`,
+    '--font-size-value': `${18 * fs}px`,
+    '--font-size-label': `${10 * fs}px`,
+    '--font-size-title': `${14 * fs}px`,
+    width: `${400 / zoom}px`,
+    minHeight: `${500 / zoom}px`,
+    maxHeight: `${600 / zoom}px`,
+    zoom: zoom,
+  } as React.CSSProperties;
+
   if (loading) {
     return (
-      <div className={`app ${isDarkMode ? 'dark' : ''}`}>
+      <div className={`app ${isDarkMode ? 'dark' : ''}`} style={customStyles}>
         <TabNav 
           activeTab={activeTab} 
           onTabChange={setActiveTab}
@@ -677,32 +810,76 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className={`app ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`app ${isDarkMode ? 'dark' : ''}`} style={customStyles}>
       <TabNav 
         activeTab={activeTab} 
-        onTabChange={setActiveTab}
+        onTabChange={(tab) => {
+          setActiveTab(tab);
+          chrome.storage.local.set({ ui_active_tab: tab });
+        }}
         friendCount={friends.length}
       />
 
       {activeTab === 'friends' && friends.length > 0 && (
-        <div className="controls">
-          <label title="Sort your friends list by different criteria">
-            Sort by:
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as any)} title="Choose how to sort friends">
-              <option value="name">Name</option>
-              <option value="problems">Problems Solved</option>
-              <option value="recent">Last Submitted</option>
-            </select>
-          </label>
-          <span className="last-updated-info">Updated {formatTimestamp(lastUpdated)}</span>
-          <button 
-            className="refresh-btn-controls"
-            onClick={handleRefresh}
-            disabled={refreshing}
-            title="Refresh all"
-          >
-            {refreshing ? '⟳' : '↻'}
-          </button>
+        <div className="controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+            <label title="Sort your friends list by different criteria" style={{ margin: 0 }}>
+              Sort by:
+              <select value={sortBy} onChange={(e) => {
+                const val = e.target.value as 'name' | 'problems' | 'recent' | 'streak';
+                setSortBy(val);
+                chrome.storage.local.set({ ui_sort_by: val });
+              }}>
+                <option value="name">Name</option>
+                <option value="problems">Problems Solved</option>
+                <option value="recent">Last Submitted</option>
+                <option value="streak">Current Streak</option>
+              </select>
+            </label>
+            <div className="platform-filters" style={{ display: 'flex', gap: '4px' }}>
+              {(['leetcode', 'codeforces', 'codechef'] as Platform[]).map(plat => {
+                const isActive = platformFilters.includes(plat);
+                const initials = plat === 'leetcode' ? 'LC' : plat === 'codeforces' ? 'CF' : 'CC';
+                return (
+                  <button
+                    key={plat}
+                    onClick={() => {
+                      if (isActive && platformFilters.length === 1) return;
+                      const newFilters = isActive ? platformFilters.filter(p => p !== plat) : [...platformFilters, plat];
+                      setPlatformFilters(newFilters);
+                      chrome.storage.local.set({ ui_platform_filters: newFilters });
+                    }}
+                    style={{
+                      padding: '2px 8px',
+                      fontSize: 'var(--font-size-sm)',
+                      borderRadius: '0px',
+                      cursor: isActive && platformFilters.length === 1 ? 'not-allowed' : 'pointer',
+                      background: isActive ? 
+                        (plat === 'leetcode' ? 'rgba(234, 179, 8, 0.15)' : 
+                         plat === 'codeforces' ? 'rgba(59, 130, 246, 0.15)' : 
+                         'rgba(180, 83, 9, 0.15)') : 'transparent',
+                      color: isActive ? 
+                        (plat === 'leetcode' ? '#eab308' : 
+                         plat === 'codeforces' ? '#3b82f6' : 
+                         '#d97706') : '#888',
+                      border: `1px solid ${isActive ? 
+                        (plat === 'leetcode' ? '#eab308' : 
+                         plat === 'codeforces' ? '#3b82f6' : 
+                         '#b45309') : 'transparent'}`,
+                      transition: 'all 0.2s ease',
+                      fontWeight: isActive ? 600 : 400,
+                    }}
+                    title={isActive && platformFilters.length === 1 ? `Cannot disable the last active platform` : `Toggle ${plat} (${isActive ? 'Active' : 'Inactive'}) - Toggling platforms dynamically filters the active view, recalculating stats and visible friend accounts.`}
+                  >
+                    {initials}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <span className="last-updated-info" style={{ whiteSpace: 'nowrap', marginLeft: '8px', flexShrink: 1, textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            Updated {formatTimestamp(lastUpdated)}
+          </span>
         </div>
       )}
 
@@ -713,9 +890,9 @@ export const App: React.FC = () => {
               <>
                 <GlobalActivityFeed profiles={profiles} ownUsername={ownUsername} />
                 <Recommendations profiles={profiles} ownUsername={ownUsername} />
-                <UpcomingContests />
+                <UpcomingContests key={refreshContestsKey} />
 
-                {friends.length === 0 ? (
+                {(friends.length === 0 && !ownUsername && !ownCodeforcesHandle && !ownCodechefHandle) ? (
                   <div className="empty-state">
                     <img src="empty-state.svg" alt="No friends yet" style={{ width: '150px', height: '150px', marginBottom: '16px', opacity: 0.7 }} />
                     <p className="empty-title">Welcome to L'Amigo!</p>
@@ -728,21 +905,37 @@ export const App: React.FC = () => {
                 ) : (
                   <div className="friends-list">
                     {sortedFriends.map((friend) => {
+                      const isOwn = friend.id === 'own-user';
                       const lcAccount = friend.accounts?.find(a => a.platform === 'leetcode')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'leetcode' ? friend.username : undefined);
                       const cfAccount = friend.accounts?.find(a => a.platform === 'codeforces')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'codeforces' ? friend.username : undefined);
                       const ccAccount = friend.accounts?.find(a => a.platform === 'codechef')?.handle || (profiles[friend.username.toLowerCase()]?.platform === 'codechef' ? friend.username : undefined);
 
+                      const lcProfile = lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined;
+                      const cfProfile = cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined;
+                      const ccProfile = ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined;
+                      const mainProfile = isOwn ? (lcProfile || cfProfile || ccProfile) : profiles[friend.username.toLowerCase()];
+
                       return (
                         <FriendCard
-                          key={friend.username}
+                          key={isOwn ? 'own-user' : (friend.id || friend.username)}
                           friend={friend}
-                          profile={profiles[friend.username.toLowerCase()]}
-                          leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
-                          codeforcesProfile={cfAccount ? (profiles[`codeforces:${cfAccount.toLowerCase()}`] || profiles[cfAccount.toLowerCase()]) : undefined}
-                          codechefProfile={ccAccount ? (profiles[`codechef:${ccAccount.toLowerCase()}`] || profiles[ccAccount.toLowerCase()]) : undefined}
-                          onRemove={() => handleRemoveFriend(friend.username)}
-                          onRefresh={() => handleRefreshFriend(friend.username)}
-                          onEdit={(f) => { setEditingFriend(f); setShowAddModal(true); }}
+                          profile={mainProfile}
+                          leetcodeProfile={lcProfile}
+                          codeforcesProfile={cfProfile}
+                          codechefProfile={ccProfile}
+                          onRemove={() => { if (!isOwn) handleRemoveFriend(friend.id || friend.username, friend.displayName || friend.username); }}
+                          onRefresh={() => {
+                            if (isOwn) {
+                              const tasks = [];
+                              if (ownUsername) tasks.push(handleRefreshFriend(ownUsername));
+                              if (ownCodeforcesHandle) tasks.push(handleRefreshFriend(ownCodeforcesHandle));
+                              if (ownCodechefHandle) tasks.push(handleRefreshFriend(ownCodechefHandle));
+                              return Promise.all(tasks).then(() => {});
+                            } else {
+                              return handleRefreshFriend(friend.username);
+                            }
+                          }}
+                          onEdit={(f) => { if (!isOwn) { setEditingFriend(f); setShowAddModal(true); } }}
                           onViewProfile={(platform, filter) => {
                             setSelectedFriend(friend);
                             setSelectedPlatform(platform);
@@ -750,6 +943,8 @@ export const App: React.FC = () => {
                           }}
                           refreshing={refreshingFriend === friend.username}
                           isDarkMode={isDarkMode}
+                          isOwn={isOwn}
+                          platformFilters={platformFilters}
                         />
                       );
                     })}
@@ -785,23 +980,25 @@ export const App: React.FC = () => {
         </div>
       </div>
 
-      <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px' }}>
+      <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px', borderTop: '1px solid var(--border-color, #222)' }}>
         <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
           <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
         </a>
-        <div className="header-search-add" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flex: 1, paddingRight: '12px', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button
-            className="add-friend-btn-header"
+            className="icon-btn-bottom"
             id="import-export-btn-main"
             title="Import / Export friends and data"
+            aria-label="Import or export friends and data"
             onClick={() => setShowImportExport(true)}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px' }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
           >
-            Import / Export
+            <Database size={18} />
           </button>
           <button 
-            className={`add-friend-btn-header ${addingFriend ? 'disabled' : ''}`}
+            className={`icon-btn-bottom ${addingFriend ? 'disabled' : ''}`}
             title="Add friend"
+            aria-label="Add friend"
             disabled={addingFriend}
             onClick={() => {
               if (!addingFriend) {
@@ -809,16 +1006,32 @@ export const App: React.FC = () => {
                 setShowAddModal(true);
               }
             }}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', border: '2px solid var(--border-primary)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: addingFriend ? 'not-allowed' : 'pointer', borderRadius: '0px', opacity: addingFriend ? 0.7 : 1 }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: addingFriend ? 'not-allowed' : 'pointer', borderRadius: '0px', padding: 0, opacity: addingFriend ? 0.7 : 1 }}
           >
-            {addingFriend ? 'Adding...' : '+ Add Friend'}
+            <UserPlus size={18} />
           </button>
-        </div>
-        <div className="header-actions">
+          <button
+            className="icon-btn-bottom"
+            onClick={handleRefresh}
+            disabled={refreshing}
+            title={refreshing ? 'Refreshing...' : 'Refresh all data'}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: refreshing ? 'not-allowed' : 'pointer', borderRadius: '0px', padding: 0, opacity: refreshing ? 0.6 : 1 }}
+          >
+            <RefreshCw size={18} style={{ transform: refreshing ? 'rotate(180deg)' : 'none', transition: 'transform 1s ease' }} />
+          </button>
           <button 
-            className="theme-toggle" 
+            className="icon-btn-bottom" 
+            onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') })}
+            title="Open Full Dashboard"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', background: 'linear-gradient(45deg, #ff375f, #ffa116)', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+          >
+            <LayoutDashboard size={18} />
+          </button>
+          <button 
+            className="icon-btn-bottom" 
             onClick={toggleDarkMode}
             title="Toggle dark mode"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
           >
             {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
@@ -867,6 +1080,20 @@ export const App: React.FC = () => {
         />
       </React.Suspense>
       
+      {isOffline && (
+        <div style={{
+          position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999,
+          background: 'linear-gradient(90deg, #1a1a2e, #16213e)',
+          color: '#f0a500', padding: '6px 12px',
+          display: 'flex', alignItems: 'center', gap: 6,
+          fontSize: 'var(--font-size-base)', fontWeight: 600, letterSpacing: '0.3px',
+          borderTop: '1px solid rgba(240,165,0,0.3)',
+        }}>
+          <WifiOff size={13} />
+          You're offline — showing cached data
+        </div>
+      )}
+
       {toast && (
         <Toast
           message={toast.message}

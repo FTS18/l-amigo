@@ -42,6 +42,16 @@ interface CodeforcesRatingChange {
   ratingUpdateTimeSeconds: number;
 }
 
+interface CodeforcesContest {
+  id: number;
+  name: string;
+  phase: string;
+  startTimeSeconds: number;
+  durationSeconds: number;
+  type: string;
+  platform?: string; // populated by callers when merging multi-platform contest lists
+}
+
 export class CodeforcesService {
   private static readonly API = API_CONSTANTS.CODEFORCES_API;
   private static circuitBreaker = new CircuitBreaker({
@@ -53,48 +63,113 @@ export class CodeforcesService {
   private static lastCacheFetch = 0;
   private static readonly CACHE_TTL = 3600000; // 1 hour
 
-  private static requestQueue = Promise.resolve();
+  // ── Concurrency-limited request dispatcher ─────────────────────────
+  // Max 2 requests in-flight simultaneously, ≥500ms between dispatches.
+  // This gives ~2 req/s throughput while staying within Codeforces limits.
+  private static readonly MAX_CONCURRENT = 2;
+  private static readonly DISPATCH_GAP_MS = 500;
+  private static activeCount = 0;
+  private static lastDispatch = 0;
+  private static pendingQueue: Array<() => void> = [];
+
+  private static _scheduleNext(): void {
+    if (this.pendingQueue.length === 0 || this.activeCount >= this.MAX_CONCURRENT) return;
+    const wait = Math.max(0, this.DISPATCH_GAP_MS - (Date.now() - this.lastDispatch));
+    setTimeout(() => {
+      if (this.pendingQueue.length === 0 || this.activeCount >= this.MAX_CONCURRENT) return;
+      const next = this.pendingQueue.shift()!;
+      this.activeCount++;
+      this.lastDispatch = Date.now();
+      next();
+      // Schedule the next one after this dispatch (handles queue draining)
+      this._scheduleNext();
+    }, wait);
+  }
 
   private static async request<T>(endpoint: string): Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.requestQueue = this.requestQueue.then(async () => {
+    return new Promise<T>((resolve, reject) => {
+      this.pendingQueue.push(async () => {
         try {
           const result = await this.executeRequest<T>(endpoint);
-          // Wait 1000ms between requests to respect Codeforces rate limits
-          await new Promise(r => setTimeout(r, 1000));
           resolve(result);
         } catch (err) {
-          // Still wait on error to avoid spamming
-          await new Promise(r => setTimeout(r, 1000));
           reject(err);
+        } finally {
+          this.activeCount--;
+          // Drain the queue as each slot becomes free
+          this._scheduleNext();
         }
       });
+      this._scheduleNext();
     });
   }
 
-  private static async executeRequest<T>(endpoint: string): Promise<T> {
+  /**
+   * Maps raw CodeforcesSubmission objects to the shared RecentSubmission shape.
+   * Extracted so fetchUserProfile can reuse already-fetched data without a 2nd API call.
+   */
+  private static _mapToRecentSubmissions(subs: CodeforcesSubmission[]): RecentSubmission[] {
+    return subs.map((s) => ({
+      title: s.problem.name,
+      titleSlug: `${s.problem.contestId || ''}/${s.problem.index || ''}`,
+      timestamp: s.creationTimeSeconds * 1000,
+      statusDisplay: s.verdict === 'OK' ? 'Accepted' : (s.verdict || 'Rejected'),
+      lang: s.programmingLanguage,
+      submissionId: String(s.id),
+      platform: 'codeforces' as const,
+      rating: s.problem.rating,
+      difficulty: (() => {
+        if (s.problem.rating) {
+          if (s.problem.rating < 1300) return 'Easy';
+          if (s.problem.rating < 1800) return 'Medium';
+          return 'Hard';
+        }
+        const idx = s.problem.index?.toUpperCase() || '';
+        if (['A', 'B', 'A1', 'A2', 'B1', 'B2'].includes(idx)) return 'Easy';
+        if (['C', 'D', 'C1', 'C2'].includes(idx)) return 'Medium';
+        if (idx >= 'E') return 'Hard';
+        const name = s.problem.name.toLowerCase();
+        if (name.includes('easy')) return 'Easy';
+        if (name.includes('hard')) return 'Hard';
+        return 'Unknown';
+      })()
+    }));
+  }
+
+  private static async executeRequest<T>(endpoint: string, retries = 2): Promise<T> {
     return this.circuitBreaker.execute(async () => {
       const url = `${this.API}/${endpoint}`;
-      const ctl = new AbortController();
-      const timer = setTimeout(
-        () => ctl.abort(),
-        API_CONSTANTS.REQUEST_TIMEOUT,
-      );
+      
+      for (let attempt = 1; attempt <= retries + 1; attempt++) {
+        const ctl = new AbortController();
+        const timer = setTimeout(
+          () => ctl.abort(),
+          45000, // 45s timeout for heavy CF queries (e.g. 2000 subs for active users)
+        );
 
-      try {
-        const res = await fetch(url, { signal: ctl.signal });
-        if (!res.ok) {
-          throw new Error(`Codeforces HTTP ${res.status}`);
-        }
+        try {
+          const res = await fetch(url, { signal: ctl.signal });
+          if (!res.ok) {
+            throw new Error(`Codeforces HTTP ${res.status}`);
+          }
 
-        const body = (await res.json()) as CodeforcesApiResponse<T>;
-        if (body.status !== "OK" || body.result === undefined) {
-          throw new Error(body.comment || "Codeforces API error");
+          const body = (await res.json()) as CodeforcesApiResponse<T>;
+          if (body.status !== "OK" || body.result === undefined) {
+            throw new Error(body.comment || "Codeforces API error");
+          }
+          return body.result;
+        } catch (err: any) {
+          if (attempt <= retries) {
+            console.warn(`CF API attempt ${attempt} failed for ${endpoint}, retrying...`, err);
+            await new Promise(r => setTimeout(r, 2000 * attempt));
+            continue;
+          }
+          throw err;
+        } finally {
+          clearTimeout(timer);
         }
-        return body.result;
-      } finally {
-        clearTimeout(timer);
       }
+      throw new Error("Codeforces API failed after retries");
     });
   }
 
@@ -121,6 +196,16 @@ export class CodeforcesService {
       console.error("Failed to fetch contest list", err);
       return this.contestDivCache || new Map();
     }
+  }
+
+  static async verifyHandle(handle: string): Promise<boolean> {
+    const users = await this.request<CodeforcesUser[]>(
+      `user.info?handles=${encodeURIComponent(handle)}`,
+    );
+    if (!users || users.length === 0) {
+      throw new Error("Codeforces user not found");
+    }
+    return true;
   }
 
   static async fetchUserProfile(handle: string): Promise<FriendProfile> {
@@ -219,8 +304,9 @@ export class CodeforcesService {
     }
 
 
-    // Map recent submissions for the profile (limit to 30)
-    const recentSubmissions = await this.getRecentSubmissions(handle);
+    // Map recent submissions from the already-fetched submissions array.
+    // No 2nd API call needed — slice the first 30 from what we have.
+    const recentSubmissions = this._mapToRecentSubmissions(submissions.slice(0, 50));
 
     const topicStats: TopicStat[] = Array.from(topicMap.entries())
       .sort((a: [string, number], b: [string, number]) => b[1] - a[1])
@@ -271,6 +357,7 @@ export class CodeforcesService {
         ranking: c.rank,
         timestamp: c.ratingUpdateTimeSeconds * 1000,
         contestId: c.contestId,
+        delta: c.newRating - c.oldRating,
       })),
       submissionStats: {
         totalSubmissions: submissions.length,
@@ -297,69 +384,65 @@ export class CodeforcesService {
     const submissions = await this.request<CodeforcesSubmission[]>(
       `user.status?handle=${encodeURIComponent(handle)}&from=1&count=${limit}`,
     );
-
-    return submissions
-      .map((s) => ({
-        title: s.problem.name,
-        titleSlug: `${s.problem.contestId || ""}/${s.problem.index || ""}`,
-        timestamp: s.creationTimeSeconds * 1000,
-        statusDisplay: s.verdict === "OK" ? "Accepted" : (s.verdict || "Rejected"),
-        lang: s.programmingLanguage,
-        submissionId: String(s.id),
-        platform: 'codeforces' as const,
-        rating: s.problem.rating,
-        difficulty: (() => {
-          if (s.problem.rating) {
-            if (s.problem.rating < 1300) return 'Easy';
-            if (s.problem.rating < 1800) return 'Medium';
-            return 'Hard';
-          }
-          const idx = s.problem.index?.toUpperCase() || '';
-          if (['A', 'B', 'A1', 'A2', 'B1', 'B2'].includes(idx)) return 'Easy';
-          if (['C', 'D', 'C1', 'C2'].includes(idx)) return 'Medium';
-          if (idx >= 'E') return 'Hard';
-          
-          const name = s.problem.name.toLowerCase();
-          if (name.includes('easy')) return 'Easy';
-          if (name.includes('hard')) return 'Hard';
-          
-          return 'Unknown';
-        })()
-      }));
+    return this._mapToRecentSubmissions(submissions);
   }
 
   static async fetchSubmissionCode(contestId: number | string, submissionId: string | number): Promise<string | null> {
-    try {
-      const url = `https://codeforces.com/contest/${contestId}/submission/${submissionId}`;
-      const res = await fetch(url);
-      if (!res.ok) return null;
-      
-      const html = await res.text();
-      const match = html.match(/<pre id="program-source-text"[^>]*>([\s\S]*?)<\/pre>/i);
-      
-      if (match && match[1]) {
-        let code = match[1];
-        code = code.replace(/&lt;/g, '<')
-                   .replace(/&gt;/g, '>')
-                   .replace(/&amp;/g, '&')
-                   .replace(/&quot;/g, '"')
-                   .replace(/&#39;/g, "'");
-        return code;
+    const urls = [
+      `https://codeforces.com/contest/${contestId}/submission/${submissionId}`,
+      `https://codeforces.com/problemset/submission/${contestId}/${submissionId}`,
+    ];
+
+    /**
+     * Use DOMParser to reliably extract code — no regex needed.
+     * Handles encoded HTML entities and nested tags correctly.
+     */
+    const extractCode = (html: string): string | null => {
+      try {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const candidates = [
+          doc.querySelector('#program-source-text'),
+          doc.querySelector('[class*="source-code"]'),
+          doc.querySelector('textarea[name="source"]'),
+        ];
+        for (const el of candidates) {
+          const code = el?.textContent?.trim();
+          if (code && code.length > 10) return code;
+        }
+      } catch {
+        // DOMParser unavailable in this context
       }
       return null;
-    } catch (e) {
-      console.warn(`Failed to fetch Codeforces submission code for ${submissionId}`, e);
-      return null;
+    };
+
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          credentials: 'include',
+          headers: {
+            'Accept': 'text/html,application/xhtml+xml',
+            'Accept-Language': 'en-US,en;q=0.9',
+          },
+        });
+        if (!res.ok) continue;
+        const html = await res.text();
+        // Skip Cloudflare challenge pages
+        if (html.includes('Just a moment...') || html.includes('cf-mitigated')) continue;
+        const code = extractCode(html);
+        if (code) return code;
+      } catch (e) {
+        console.warn(`[CF] fetchSubmissionCode failed for ${url}:`, e);
+      }
     }
+    return null;
   }
 
-  static async getUpcomingContests(): Promise<any[]> {
+  static async getUpcomingContests(): Promise<CodeforcesContest[]> {
     try {
-      const data = await this.request<any[]>('contest.list?gym=false');
+      const data = await this.request<CodeforcesContest[]>('contest.list?gym=false');
       return data
         .filter(c => c.phase === 'BEFORE')
-        .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds)
-        .slice(0, 3); // next 3 contests
+        .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
     } catch (error) {
       console.error('Failed to fetch upcoming contests:', error);
       return [];

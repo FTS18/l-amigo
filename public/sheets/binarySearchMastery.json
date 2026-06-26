@@ -1,0 +1,80 @@
+[
+  {
+    "title": "Linear Search",
+    "titleSlug": "linear-search",
+    "difficulty": "Easy",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/linear-search"
+  },
+  {
+    "title": "Maximum Product Subarray",
+    "titleSlug": "maximum-product-subarray",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Search to find X in sorted array",
+    "titleSlug": "binary-search",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search Insert Position",
+    "titleSlug": "search-insert-position",
+    "difficulty": "Easy",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the first or last occurrence of a given number in a sorted array",
+    "titleSlug": "find-first-and-last-position-of-element-in-sorted-array",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in Rotated Sorted Array I",
+    "titleSlug": "search-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in Rotated Sorted Array II",
+    "titleSlug": "search-in-rotated-sorted-array-ii",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find minimum in Rotated Sorted Array",
+    "titleSlug": "find-minimum-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Single element in a Sorted Array",
+    "titleSlug": "single-element-in-a-sorted-array",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find peak element",
+    "titleSlug": "find-peak-element",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Koko Eating Bananas",
+    "titleSlug": "koko-eating-bananas",
+    "difficulty": "Medium",
+    "category": "Binary Search Mastery",
+    "platform": "leetcode"
+  }
+]

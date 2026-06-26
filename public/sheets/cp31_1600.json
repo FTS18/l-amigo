@@ -1,0 +1,219 @@
+[
+  {
+    "title": "1B - Spreadsheet",
+    "titleSlug": "1B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "7B - Memory Manager",
+    "titleSlug": "7B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "11B - Jumping Jack",
+    "titleSlug": "11B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "23B - Party",
+    "titleSlug": "23B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28B - pSort",
+    "titleSlug": "28B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28A - Bender Problem",
+    "titleSlug": "28A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "32D - Constellation",
+    "titleSlug": "32D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "34D - Road Map",
+    "titleSlug": "34D",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "36B - Fractal",
+    "titleSlug": "36B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "40B - Repaintings",
+    "titleSlug": "40B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "46C - Hamsters and Tigers",
+    "titleSlug": "46C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "52B - Right Triangles",
+    "titleSlug": "52B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "55B - Smallest number",
+    "titleSlug": "55B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "57B - Martian Architecture",
+    "titleSlug": "57B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "59C - Title",
+    "titleSlug": "59C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64C - Table",
+    "titleSlug": "64C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "68B - Energy exchange",
+    "titleSlug": "68B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "70B - Text Messaging",
+    "titleSlug": "70B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "71C - Round Table Knights",
+    "titleSlug": "71C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "72H - Reverse It!",
+    "titleSlug": "72H",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "73A - The Elder Trolls IV: Oblivon",
+    "titleSlug": "73A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "75C - Modified GCD",
+    "titleSlug": "75C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "86A - Reflection",
+    "titleSlug": "86A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "95A - Hockey",
+    "titleSlug": "95A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "100E - Lamps in a Line",
+    "titleSlug": "100E",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "107B - Basketball Team",
+    "titleSlug": "107B",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "113A - Grammar Lessons",
+    "titleSlug": "113A",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "125C - Hobbits' Party",
+    "titleSlug": "125C",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130H - Balanced brackets",
+    "titleSlug": "130H",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130F - Prime factorization",
+    "titleSlug": "130F",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "130E - Tribonacci numbers",
+    "titleSlug": "130E",
+    "difficulty": "Medium",
+    "category": "1600 Rating",
+    "platform": "codeforces"
+  }
+]

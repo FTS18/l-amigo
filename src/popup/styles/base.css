@@ -199,16 +199,16 @@ a[style*="display:flex"]:hover {
 .toast-error   { border-left-color: var(--color-hard); }
 .toast-info    { border-left-color: var(--accent-codeforces-blue); }
 
-.toast-icon { font-size: 18px; font-weight: bold; flex-shrink: 0; }
+.toast-icon { font-size: var(--font-size-value); font-weight: bold; flex-shrink: 0; }
 .toast-success .toast-icon { color: var(--color-easy); }
 .toast-error   .toast-icon { color: var(--color-hard); }
 .toast-info    .toast-icon { color: var(--accent-codeforces-blue); }
 
-.toast-message { flex: 1; font-size: 14px; line-height: 1.4; }
+.toast-message { flex: 1; font-size: var(--font-size-title); line-height: 1.4; }
 
 .toast-close {
   background: none; border: none;
-  font-size: 20px; color: var(--text-muted);
+  font-size: var(--font-size-value); color: var(--text-muted);
   cursor: pointer; padding: 0;
   width: 20px; height: 20px;
   display: flex; align-items: center; justify-content: center;
@@ -239,13 +239,13 @@ a[style*="display:flex"]:hover {
 .modal-header.modal-success { background: var(--color-easy); }
 
 .modal-header h3 {
-  margin: 0; font-size: 20px; font-weight: 700;
+  margin: 0; font-size: var(--font-size-value); font-weight: 700;
   color: var(--text-primary); letter-spacing: 1px;
 }
 
 .modal-body { padding: 24px; }
 .modal-body p {
-  margin: 0; font-size: 16px; font-weight: 600;
+  margin: 0; font-size: var(--font-size-title); font-weight: 600;
   color: var(--text-primary); line-height: 1.6;
 }
 
@@ -260,7 +260,7 @@ a[style*="display:flex"]:hover {
   background: var(--btn-bg); color: var(--btn-text);
   border: 1px solid var(--border-strong);
   box-shadow: 2px 2px 0 var(--border-strong);
-  font-size: 16px; font-weight: 700;
+  font-size: var(--font-size-title); font-weight: 700;
   cursor: pointer; letter-spacing: 1px;
   transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
 }
@@ -282,18 +282,18 @@ a[style*="display:flex"]:hover {
   padding: 60px 20px;
   color: var(--text-muted);
 }
-.empty-state p  { margin: 8px 0; font-size: 16px; }
-.empty-state .hint { font-size: 14px; color: var(--text-muted); }
+.empty-state p  { margin: 8px 0; font-size: var(--font-size-title); }
+.empty-state .hint { font-size: var(--font-size-title); color: var(--text-muted); }
 
-.empty-title   { font-size: 20px; font-weight: 600; margin: 0 0 8px; color: var(--text-primary); }
-.empty-message { font-size: 14px; color: var(--text-secondary); margin: 0 0 16px; }
+.empty-title   { font-size: var(--font-size-value); font-weight: 600; margin: 0 0 8px; color: var(--text-primary); }
+.empty-message { font-size: var(--font-size-title); color: var(--text-secondary); margin: 0 0 16px; }
 
 .example-hint {
   margin-top: 12px; padding: 12px;
   background: var(--bg-secondary);
   border: 1px dashed var(--border);
 }
-.example-hint small { color: var(--text-muted); font-size: 12px; }
+.example-hint small { color: var(--text-muted); font-size: var(--font-size-base); }
 
 /* ─── Error Boundary ──────────────────────────────────────────────── */
 .error-boundary {
@@ -302,8 +302,8 @@ a[style*="display:flex"]:hover {
   background: var(--bg-primary);
 }
 .error-content { text-align: center; max-width: 350px; }
-.error-content h2 { font-size: 24px; margin: 0 0 12px; color: var(--color-hard); }
-.error-content p  { font-size: 14px; color: var(--text-secondary); margin: 0 0 16px; }
+.error-content h2 { font-size: calc(2 * var(--font-size-base)); margin: 0 0 12px; color: var(--color-hard); }
+.error-content p  { font-size: var(--font-size-title); color: var(--text-secondary); margin: 0 0 16px; }
 
 /* ─── Micro-UX Additions ─────────────────────────────────────────── */
 [data-tooltip] {
@@ -319,7 +319,7 @@ a[style*="display:flex"]:hover {
   color: var(--text-primary);
   border: 1px solid var(--border-strong);
   padding: 4px 8px;
-  font-size: 10px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
   white-space: nowrap;
   pointer-events: none;
@@ -344,11 +344,11 @@ a[style*="display:flex"]:hover {
   background: var(--bg-secondary); text-align: left;
 }
 .error-content summary { cursor: pointer; font-weight: 600; color: var(--text-primary); }
-.error-content pre { margin-top: 8px; font-size: 12px; color: var(--text-secondary); overflow-x: auto; }
+.error-content pre { margin-top: 8px; font-size: var(--font-size-base); color: var(--text-secondary); overflow-x: auto; }
 .error-content button {
   padding: 12px 24px;
   background: var(--btn-bg); color: var(--btn-text);
-  border: 1px solid var(--border-strong); font-size: 14px; font-weight: 600;
+  border: 1px solid var(--border-strong); font-size: var(--font-size-title); font-weight: 600;
   cursor: pointer; transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
   box-shadow: 2px 2px 0 var(--border-strong);
 }
@@ -365,4 +365,4 @@ a[style*="display:flex"]:hover {
 .danger-text { color: var(--color-hard); }
 
 /* ─── No activity ─────────────────────────────────────────────────── */
-.no-activity { color: var(--text-muted); font-size: 12px; text-align: center; padding: 8px; }
+.no-activity { color: var(--text-muted); font-size: var(--font-size-base); text-align: center; padding: 8px; }

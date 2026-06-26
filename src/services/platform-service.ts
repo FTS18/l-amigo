@@ -10,6 +10,9 @@ class LeetCodeAdapter implements PlatformAdapter {
   fetchProfile(handle: string): Promise<FriendProfile> {
     return LeetCodeService.fetchUserProfile(handle);
   }
+  verifyHandle(handle: string): Promise<boolean> {
+    return LeetCodeService.verifyHandle(handle);
+  }
 }
 
 class CodeforcesAdapter implements PlatformAdapter {
@@ -18,6 +21,9 @@ class CodeforcesAdapter implements PlatformAdapter {
   fetchProfile(handle: string): Promise<FriendProfile> {
     return CodeforcesService.fetchUserProfile(handle);
   }
+  verifyHandle(handle: string): Promise<boolean> {
+    return CodeforcesService.verifyHandle(handle);
+  }
 }
 
 class CodechefAdapter implements PlatformAdapter {
@@ -25,6 +31,9 @@ class CodechefAdapter implements PlatformAdapter {
 
   fetchProfile(handle: string): Promise<FriendProfile> {
     return CodeChefService.fetchUserProfile(handle);
+  }
+  verifyHandle(handle: string): Promise<boolean> {
+    return CodeChefService.verifyHandle(handle);
   }
 }
 
@@ -45,5 +54,18 @@ export class PlatformService {
   ): Promise<FriendProfile> {
     const adapter = this.getAdapter(platform);
     return adapter.fetchProfile(handle);
+  }
+
+  static async verifyHandle(
+    platform: Platform,
+    handle: string,
+  ): Promise<boolean> {
+    const adapter = this.getAdapter(platform);
+    if (adapter.verifyHandle) {
+      return adapter.verifyHandle(handle);
+    }
+    // Fallback: fetch full profile if verify method is missing
+    await adapter.fetchProfile(handle);
+    return true;
   }
 }

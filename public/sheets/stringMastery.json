@@ -1,0 +1,359 @@
+[
+  {
+    "title": "Generate Parentheses",
+    "titleSlug": "generate-parentheses",
+    "difficulty": "Medium",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Score of Parentheses",
+    "titleSlug": "score-of-parentheses",
+    "difficulty": "Medium",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Parentheses",
+    "titleSlug": "valid-parentheses",
+    "difficulty": "Easy",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Remove Outermost Parentheses",
+    "titleSlug": "remove-outermost-parentheses",
+    "difficulty": "Easy",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Different Ways to Add Parentheses",
+    "titleSlug": "different-ways-to-add-parentheses",
+    "difficulty": "Medium",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Remove Invalid Parentheses",
+    "titleSlug": "remove-invalid-parentheses",
+    "difficulty": "Hard",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Remove to Make Valid Parentheses",
+    "titleSlug": "minimum-remove-to-make-valid-parentheses",
+    "difficulty": "Medium",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Nesting Depth of the Parentheses",
+    "titleSlug": "maximum-nesting-depth-of-the-parentheses",
+    "difficulty": "Easy",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Valid Parentheses",
+    "titleSlug": "longest-valid-parentheses",
+    "difficulty": "Hard",
+    "category": "Parenthesis problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of Wonderful Substrings",
+    "titleSlug": "number-of-wonderful-substrings",
+    "difficulty": "Medium",
+    "category": "Counting of substring based on some condition",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sum of Beauty of All Substrings",
+    "titleSlug": "sum-of-beauty-of-all-substrings",
+    "difficulty": "Medium",
+    "category": "Counting of substring based on some condition",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Number of Occurrences of a Substring",
+    "titleSlug": "maximum-number-of-occurrences-of-a-substring",
+    "difficulty": "Medium",
+    "category": "Counting of substring based on some condition",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Isomorphic Strings",
+    "titleSlug": "isomorphic-strings",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Anagram",
+    "titleSlug": "valid-anagram",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Additive Number",
+    "titleSlug": "additive-number",
+    "difficulty": "Medium",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Buddy Strings",
+    "titleSlug": "buddy-strings",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Happy Prefix",
+    "titleSlug": "longest-happy-prefix",
+    "difficulty": "Hard",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Increasing Decreasing String",
+    "titleSlug": "increasing-decreasing-string",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check If a String Can Break Another String",
+    "titleSlug": "check-if-a-string-can-break-another-string",
+    "difficulty": "Medium",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Determine if Two Strings Are Close",
+    "titleSlug": "determine-if-two-strings-are-close",
+    "difficulty": "Medium",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check If Two String Arrays are Equivalent",
+    "titleSlug": "check-if-two-string-arrays-are-equivalent",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if Word Equals Summation of Two Words",
+    "titleSlug": "check-if-word-equals-summation-of-two-words",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if One String Swap Can Make Strings Equal",
+    "titleSlug": "check-if-one-string-swap-can-make-strings-equal",
+    "difficulty": "Easy",
+    "category": "Check types of string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning",
+    "titleSlug": "palindrome-partitioning",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning II",
+    "titleSlug": "palindrome-partitioning-ii",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Palindrome",
+    "titleSlug": "valid-palindrome",
+    "difficulty": "Easy",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Shortest Palindrome",
+    "titleSlug": "shortest-palindrome",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Pairs",
+    "titleSlug": "palindrome-pairs",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindrome",
+    "titleSlug": "longest-palindrome",
+    "difficulty": "Easy",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindromic Subsequence",
+    "titleSlug": "longest-palindromic-subsequence",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the Closest Palindrome",
+    "titleSlug": "find-the-closest-palindrome",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindromic Substrings",
+    "titleSlug": "palindromic-substrings",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Palindrome II",
+    "titleSlug": "valid-palindrome-ii",
+    "difficulty": "Easy",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Chunked Palindrome Decomposition",
+    "titleSlug": "longest-chunked-palindrome-decomposition",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Break a Palindrome",
+    "titleSlug": "break-a-palindrome",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Can Make Palindrome from Substring",
+    "titleSlug": "can-make-palindrome-from-substring",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Palindrome Partitioning III",
+    "titleSlug": "palindrome-partitioning-iii",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Insertion Steps to Make a String Palindrome",
+    "titleSlug": "minimum-insertion-steps-to-make-a-string-palindrome",
+    "difficulty": "Hard",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Remove Palindromic Subsequences",
+    "titleSlug": "remove-palindromic-subsequences",
+    "difficulty": "Easy",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Construct K Palindrome Strings",
+    "titleSlug": "construct-k-palindrome-strings",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Split Two Strings to Make Palindrome",
+    "titleSlug": "split-two-strings-to-make-palindrome",
+    "difficulty": "Medium",
+    "category": "Palindromic string",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort Characters By Frequency",
+    "titleSlug": "sort-characters-by-frequency",
+    "difficulty": "Medium",
+    "category": "Sorting on String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Custom Sort String",
+    "titleSlug": "custom-sort-string",
+    "difficulty": "Medium",
+    "category": "Sorting on String",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Duplicate Substring",
+    "titleSlug": "longest-duplicate-substring",
+    "difficulty": "Hard",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest String Chain",
+    "titleSlug": "longest-string-chain",
+    "difficulty": "Medium",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Common Subsequence",
+    "titleSlug": "longest-common-subsequence",
+    "difficulty": "Medium",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Happy String",
+    "titleSlug": "longest-happy-string",
+    "difficulty": "Medium",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Length of a Concatenated String with Unique Characters",
+    "titleSlug": "maximum-length-of-a-concatenated-string-with-unique-characters",
+    "difficulty": "Medium",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Longest Awesome Substring",
+    "titleSlug": "find-longest-awesome-substring",
+    "difficulty": "Hard",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Substring Between Two Equal Characters",
+    "titleSlug": "largest-substring-between-two-equal-characters",
+    "difficulty": "Easy",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Odd Number in String",
+    "titleSlug": "largest-odd-number-in-string",
+    "difficulty": "Easy",
+    "category": "Longest and shortest kind of String Problem",
+    "platform": "leetcode"
+  }
+]

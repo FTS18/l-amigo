@@ -268,18 +268,22 @@ export class LeetCodeService {
       }
 
       onProgress?.(all.length);
-      console.log(
-        `[LC] Fetched ${all.length} new accepted (offset ${offset}, ${newInPage} new in page)`,
-      );
+      if (__DEV__) {
+        console.log(
+          `[LC] Fetched ${all.length} new accepted (offset ${offset}, ${newInPage} new in page)`,
+        );
+      }
 
       // Incremental: stop after 2 consecutive pages with zero new accepted
       if (knownIds) {
         if (newInPage === 0) {
           consecutiveKnownPages++;
           if (consecutiveKnownPages >= 2) {
-            console.log(
-              "[LC] Incremental: 2 all-known pages in a row → stopping early",
-            );
+            if (__DEV__) {
+              console.log(
+                "[LC] Incremental: 2 all-known pages in a row → stopping early",
+              );
+            }
             break;
           }
         } else {
@@ -288,7 +292,9 @@ export class LeetCodeService {
       }
       
       if (hitTimestampLimit) {
-        console.log("[LC] Reached submissions older than last_synced_timestamp. Stopping.");
+        if (__DEV__) {
+          console.log("[LC] Reached submissions older than last_synced_timestamp. Stopping.");
+        }
         break;
       }
 
@@ -302,7 +308,9 @@ export class LeetCodeService {
       await this.sleep(API_CONSTANTS.SUBMISSION_FETCH_DELAY_MS + jitter);
     }
 
-    console.log(`[LC] Total new accepted submissions: ${all.length}`);
+    if (__DEV__) {
+      console.log(`[LC] Total new accepted submissions: ${all.length}`);
+    }
     return all;
   }
 
@@ -331,6 +339,23 @@ export class LeetCodeService {
   }
 
   // ── User profile (used for friend tracking) ────────────────────────
+
+  static async verifyHandle(username: string): Promise<boolean> {
+    return this.circuitBreaker.execute(async () => {
+      const data = await this.gql<{ matchedUser: { username: string } | null }>(
+        `query userPublicProfile($username: String!) {
+          matchedUser(username: $username) {
+            username
+          }
+        }`,
+        { username },
+      );
+      if (!data?.matchedUser) {
+        throw new Error("User not found");
+      }
+      return true;
+    });
+  }
 
   static async fetchUserProfile(username: string): Promise<FriendProfile> {
     const data = await this.gql<{
@@ -536,7 +561,7 @@ export class LeetCodeService {
         lang: "Unknown",
         submissionId: s.id,
         platform: 'leetcode' as const,
-        difficulty: diffMap[s.titleSlug] as any
+        difficulty: diffMap[s.titleSlug]
       }));
     } catch (err) {
       console.error(`[LC] Failed to fetch activity for ${username}:`, err);

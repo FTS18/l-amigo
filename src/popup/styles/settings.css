@@ -214,15 +214,15 @@
 }
 
 /* ─── Sync History & About ────────────────────────────────────────── */
-.sync-history-section { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
-.sync-history-list    { display: flex; flex-direction: column; gap: 12px; }
-.sync-history-item { background: var(--bg-secondary); padding: 10px 12px; border: 1px solid var(--border); }
+.sync-history-section { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); overflow: hidden; width: 100%; box-sizing: border-box; }
+.sync-history-list    { display: flex; flex-direction: column; gap: 6px; overflow: hidden; width: 100%; box-sizing: border-box; }
+.sync-history-item { background: var(--bg-secondary); padding: 6px 10px; border: 1px solid var(--border); overflow: hidden; width: 100%; box-sizing: border-box; }
 .sync-history-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-.sync-history-date   { font-size: 11px; color: var(--text-muted); }
-.sync-history-status { font-size: 11px; font-weight: 700; }
+.sync-history-date   { font-size: var(--font-size-sm); color: var(--text-muted); }
+.sync-history-status { font-size: var(--font-size-sm); font-weight: 700; }
 .sync-history-status.success { color: var(--color-easy); }
 .sync-history-status.error   { color: var(--color-hard); }
-.sync-history-details { font-size: 12px; color: var(--text-secondary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sync-history-details { font-size: var(--font-size-base); color: var(--text-secondary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; display: block; box-sizing: border-box; }
 
 .settings-about p      { margin: 4px 0; font-size: var(--font-size-base); color: var(--text-secondary); }
 .settings-about strong { color: var(--text-primary); font-size: var(--font-size-md); }
@@ -244,7 +244,7 @@
 
 /* ─── Subsection Headings ─────────────────────────────────────────── */
 .settings-subsection-title {
-  font-size: 14px;
+  font-size: var(--font-size-title);
   margin: 0 0 12px 0;
   color: var(--text-primary);
   font-weight: 600;
@@ -257,7 +257,7 @@
 
 /* ─── Goal Input Helper ───────────────────────────────────────────── */
 .settings-goal-unit {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   color: var(--text-muted);
   margin-left: 8px;
   white-space: nowrap;
@@ -282,7 +282,7 @@
   margin-right: 4px;
   color: #ffcc00;
 }
-.settings-hint--sm { font-size: 11px; margin-top: 10px; }
+.settings-hint--sm { font-size: var(--font-size-sm); margin-top: 10px; }
 .settings-hint--accent { color: #FFA116; margin-top: 10px; }
 
 /* ─── About Links ─────────────────────────────────────────────────── */
@@ -295,7 +295,7 @@
 .about-link {
   color: #FFA116;
   text-decoration: none;
-  font-size: 13px;
+  font-size: var(--font-size-md);
   display: flex;
   align-items: center;
   gap: 6px;

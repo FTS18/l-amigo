@@ -67,7 +67,7 @@ const FriendCheckRow = ({
         onChange={onToggle}
         style={{ accentColor: 'var(--color-easy)', width: '14px', height: '14px', flexShrink: 0 }}
       />
-      <span style={{ flex: 1, fontSize: '12px', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+      <span style={{ flex: 1, fontSize: 'var(--font-size-base)', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
         {label}
       </span>
       <span style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>
@@ -75,7 +75,7 @@ const FriendCheckRow = ({
           <span
             key={a.platform + a.handle}
             style={{
-              fontSize: '9px',
+              fontSize: 'calc(0.9 * var(--font-size-xs))',
               fontWeight: 700,
               padding: '2px 5px',
               borderRadius: '2px',
@@ -122,7 +122,7 @@ const ImportPreviewRow = ({
       onChange={onToggle}
       style={{ accentColor: 'var(--color-easy)', width: '14px', height: '14px', flexShrink: 0 }}
     />
-    <span style={{ flex: 1, fontSize: '12px', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+    <span style={{ flex: 1, fontSize: 'var(--font-size-base)', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
       {friend.displayName}
     </span>
     <span style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>
@@ -130,7 +130,7 @@ const ImportPreviewRow = ({
         <span
           key={a.platform + a.handle}
           style={{
-            fontSize: '9px',
+            fontSize: 'calc(0.9 * var(--font-size-xs))',
             fontWeight: 700,
             padding: '2px 5px',
             borderRadius: '2px',
@@ -357,13 +357,13 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-          <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-primary)', letterSpacing: '0.02em' }}>
+          <span style={{ fontWeight: 700, fontSize: 'var(--font-size-md)', color: 'var(--text-primary)', letterSpacing: '0.02em' }}>
             Import / Export
           </span>
           <button
             onClick={onClose}
             aria-label="Close"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: '18px', lineHeight: 1, padding: '2px 6px' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 'var(--font-size-value)', lineHeight: 1, padding: '2px 6px' }}
           >
             <X size={16} />
           </button>
@@ -378,7 +378,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               style={{
                 flex: 1,
                 padding: '9px',
-                fontSize: '11px',
+                fontSize: 'var(--font-size-sm)',
                 fontWeight: 700,
                 letterSpacing: '0.06em',
                 textTransform: 'uppercase',
@@ -401,8 +401,9 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
             <>
               {/* Format Selector */}
               <div style={{ padding: '12px 14px 10px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-                <div style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
-                  Format
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <span>Format</span>
+                  <span title="Choose between exporting a lightweight shareable list of friend handles, a complete app backup, or formatted CSV reports for external analysis." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   {([
@@ -435,8 +436,8 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
                         style={{ accentColor: 'var(--color-easy)', marginTop: '2px', flexShrink: 0 }}
                       />
                       <div>
-                        <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-primary)' }}>{opt.label}</div>
-                        <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '1px' }}>{opt.hint}</div>
+                        <div style={{ fontSize: 'var(--font-size-base)', fontWeight: 600, color: 'var(--text-primary)' }}>{opt.label}</div>
+                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', marginTop: '1px' }}>{opt.hint}</div>
                       </div>
                     </label>
                   ))}
@@ -447,19 +448,19 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               {exportFormat !== 'json-backup' && (
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden', minHeight: 0 }}>
                   <div style={{ padding: '9px 14px 7px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-                    <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                       Friends ({selectedFriends.length}/{friends.length} selected)
                     </span>
                     <button
                       onClick={toggleAll}
-                      style={{ fontSize: '10px', color: 'var(--color-easy)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700, padding: '2px 4px' }}
+                      style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-easy)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700, padding: '2px 4px' }}
                     >
                       {selectedFriendIds.size === friends.length ? 'Deselect All' : 'Select All'}
                     </button>
                   </div>
                   <div style={{ flex: 1, overflowY: 'auto' }}>
                     {friends.length === 0 ? (
-                      <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '12px' }}>
+                      <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--font-size-base)' }}>
                         No friends added yet.
                       </div>
                     ) : (
@@ -477,7 +478,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               )}
 
               {exportFormat === 'json-backup' && (
-                <div style={{ padding: '16px 14px', color: 'var(--text-muted)', fontSize: '11px' }}>
+                <div style={{ padding: '16px 14px', color: 'var(--text-muted)', fontSize: 'var(--font-size-sm)' }}>
                   Exports all friends, settings, preferences, and GitHub sync configuration. Useful for migrating to a new device or browser.
                 </div>
               )}
@@ -487,8 +488,9 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
             <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden', minHeight: 0 }}>
               {/* File picker */}
               <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-                <div style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
-                  Select File
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  <span>Select File</span>
+                  <span title="Load a previously exported L'Amigo backup JSON or shareable friends file. New friends will be safely merged without overwriting existing data." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
                 </div>
                 <input
                   ref={importFileRef}
@@ -503,7 +505,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
                     onClick={() => importFileRef.current?.click()}
                     style={{
                       padding: '7px 12px',
-                      fontSize: '11px',
+                      fontSize: 'var(--font-size-sm)',
                       fontWeight: 700,
                       border: '1px solid var(--border-strong)',
                       background: 'var(--bg-secondary)',
@@ -515,13 +517,13 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
                     Choose JSON File
                   </button>
                   {importFileName && (
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <span style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {importFileName}
                     </span>
                   )}
                 </div>
                 {importType && (
-                  <div style={{ marginTop: '8px', fontSize: '10px', color: 'var(--color-easy)', fontWeight: 600 }}>
+                  <div style={{ marginTop: '8px', fontSize: 'var(--font-size-xs)', color: 'var(--color-easy)', fontWeight: 600 }}>
                     Detected: {importType === 'share' ? 'Shareable Friends JSON' : 'Full Settings Backup JSON'}
                   </div>
                 )}
@@ -531,12 +533,12 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               {importPreview.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden', minHeight: 0 }}>
                   <div style={{ padding: '9px 14px 7px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
-                    <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                       Preview ({importPreview.filter(f => f.selected).length}/{importPreview.length} selected)
                     </span>
                     <button
                       onClick={toggleImportAll}
-                      style={{ fontSize: '10px', color: 'var(--color-easy)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700, padding: '2px 4px' }}
+                      style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-easy)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700, padding: '2px 4px' }}
                     >
                       {importPreview.every(f => f.selected) ? 'Deselect All' : 'Select All'}
                     </button>
@@ -548,12 +550,12 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
                   </div>
                 </div>
               ) : (
-                <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '12px', flex: 1 }}>
-                  <div style={{ fontSize: '28px', marginBottom: '10px', opacity: 0.3 }}>
+                <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: 'var(--font-size-base)', flex: 1 }}>
+                  <div style={{ fontSize: 'calc(2.333 * var(--font-size-base))', marginBottom: '10px', opacity: 0.3 }}>
                     &#x2193;
                   </div>
                   <div style={{ fontWeight: 600, marginBottom: '4px', color: 'var(--text-secondary)' }}>No file loaded</div>
-                  <div style={{ fontSize: '11px' }}>
+                  <div style={{ fontSize: 'var(--font-size-sm)' }}>
                     Choose a shareable friends JSON or a full settings backup. Friends will be merged into your list.
                   </div>
                 </div>
@@ -568,7 +570,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
             onClick={onClose}
             style={{
               padding: '7px 14px',
-              fontSize: '11px',
+              fontSize: 'var(--font-size-sm)',
               fontWeight: 700,
               border: '1px solid var(--border-strong)',
               background: 'transparent',
@@ -585,7 +587,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               disabled={isExportDisabled}
               style={{
                 padding: '7px 14px',
-                fontSize: '11px',
+                fontSize: 'var(--font-size-sm)',
                 fontWeight: 700,
                 border: '1px solid var(--color-easy)',
                 background: 'var(--color-easy)',
@@ -603,7 +605,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               disabled={isImporting || importPreview.filter(f => f.selected).length === 0}
               style={{
                 padding: '7px 14px',
-                fontSize: '11px',
+                fontSize: 'var(--font-size-sm)',
                 fontWeight: 700,
                 border: '1px solid var(--color-easy)',
                 background: 'var(--color-easy)',

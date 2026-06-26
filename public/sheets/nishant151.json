@@ -1,0 +1,1070 @@
+[
+  {
+    "title": "What are arrays, strings?",
+    "titleSlug": "what-are-arrays-strings",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/cpp"
+  },
+  {
+    "title": "Reverse an array",
+    "titleSlug": "reverse-string",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest Element in an Array",
+    "titleSlug": "largest-element-in-an-array",
+    "difficulty": "Easy",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/largest-element"
+  },
+  {
+    "title": "Second Largest Element in an Array without sorting",
+    "titleSlug": "second-largest-element-in-an-array-without-sorting",
+    "difficulty": "Easy",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/second-largest-element"
+  },
+  {
+    "title": "Check if the array is sorted",
+    "titleSlug": "check-if-array-is-sorted-and-rotated",
+    "difficulty": "Easy",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Remove duplicates from Sorted array",
+    "titleSlug": "remove-duplicates-from-sorted-array",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Left Rotate an array by one place",
+    "titleSlug": "rotate-array",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Move Zeros to end",
+    "titleSlug": "move-zeroes",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Linear Search",
+    "titleSlug": "linear-search",
+    "difficulty": "Easy",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/linear-search"
+  },
+  {
+    "title": "Find the Union",
+    "titleSlug": "find-the-union",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/union-of-two-sorted-arrays"
+  },
+  {
+    "title": "Find missing number in an array",
+    "titleSlug": "missing-number",
+    "difficulty": "Easy",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Consecutive Ones",
+    "titleSlug": "max-consecutive-ones",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the number that appears once, and other numbers twice.",
+    "titleSlug": "single-number",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest subarray with given sum K(positives)",
+    "titleSlug": "longest-subarray-with-given-sum-k-positives",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k"
+  },
+  {
+    "title": "2Sum Problem",
+    "titleSlug": "two-sum",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort an array of 0's 1's and 2's",
+    "titleSlug": "sort-colors",
+    "difficulty": "Medium",
+    "category": "Topic 1: Essential Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sum of first N numbers",
+    "titleSlug": "sum-of-first-n-numbers",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/sum-of-first-n-numbers"
+  },
+  {
+    "title": "Kadane's Algorithm, maximum subarray sum",
+    "titleSlug": "maximum-subarray",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count subarrays with given sum",
+    "titleSlug": "subarray-sum-equals-k",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "3-Sum Problem",
+    "titleSlug": "3sum",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "4-Sum Problem",
+    "titleSlug": "4sum",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Product Subarray",
+    "titleSlug": "maximum-product-subarray",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Split array - Largest Sum",
+    "titleSlug": "split-array-largest-sum",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum Nesting Depth of Paranthesis",
+    "titleSlug": "maximum-nesting-depth-of-the-parentheses",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Combination Sum",
+    "titleSlug": "combination-sum",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Combination Sum-II",
+    "titleSlug": "combination-sum-ii",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Subset Sum-II",
+    "titleSlug": "subsets-ii",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Combination Sum - III",
+    "titleSlug": "combination-sum-iii",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sum of subarray minimum",
+    "titleSlug": "sum-of-subarray-minimums",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sum of subarray ranges",
+    "titleSlug": "sum-of-subarray-ranges",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximal Rectangles",
+    "titleSlug": "maximal-rectangle",
+    "difficulty": "Medium",
+    "category": "Topic 2: Advanced Arrays",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary Search to find X in sorted array",
+    "titleSlug": "binary-search",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search Insert Position",
+    "titleSlug": "search-insert-position",
+    "difficulty": "Easy",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the first or last occurrence of a given number in a sorted array",
+    "titleSlug": "find-first-and-last-position-of-element-in-sorted-array",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in Rotated Sorted Array I",
+    "titleSlug": "search-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in Rotated Sorted Array II",
+    "titleSlug": "search-in-rotated-sorted-array-ii",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find minimum in Rotated Sorted Array",
+    "titleSlug": "find-minimum-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Single element in a Sorted Array",
+    "titleSlug": "single-element-in-a-sorted-array",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find peak element",
+    "titleSlug": "find-peak-element",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Koko Eating Bananas",
+    "titleSlug": "koko-eating-bananas",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum days to make M bouquets",
+    "titleSlug": "minimum-number-of-days-to-make-m-bouquets",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the smallest Divisor",
+    "titleSlug": "find-the-smallest-divisor-given-a-threshold",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Capacity to Ship Packages within D Days",
+    "titleSlug": "capacity-to-ship-packages-within-d-days",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth Missing Positive Number",
+    "titleSlug": "kth-missing-positive-number",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Median of 2 sorted arrays",
+    "titleSlug": "median-of-two-sorted-arrays",
+    "difficulty": "Hard",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in a 2D matrix",
+    "titleSlug": "search-a-2D-matrix",
+    "difficulty": "Medium",
+    "category": "Topic 3: Binary Search Deep Dive",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if a string is palindrome or not",
+    "titleSlug": "valid-palindrome",
+    "difficulty": "Easy",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Search in a row and column wise sorted matrix",
+    "titleSlug": "search-a-2D-matrix-ii",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Remove outermost Paranthesis",
+    "titleSlug": "remove-outermost-parentheses",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse words in a given string",
+    "titleSlug": "reverse-words-in-a-string",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Largest odd number in a string",
+    "titleSlug": "largest-odd-number-in-string",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Common Prefix",
+    "titleSlug": "longest-common-prefix",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Isomorphic String",
+    "titleSlug": "isomorphic-strings",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if two strings are anagram of each other",
+    "titleSlug": "valid-anagram",
+    "difficulty": "Easy",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort Characters by frequency",
+    "titleSlug": "sort-characters-by-frequency",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Roman Number to Integer",
+    "titleSlug": "roman-to-integer",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Implement Atoi",
+    "titleSlug": "string-to-integer-atoi",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "titleSlug": "longest-palindromic-substring",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Substring Without Repeating Characters",
+    "titleSlug": "longest-substring-without-repeating-characters",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Number of substring containing all three characters",
+    "titleSlug": "number-of-substrings-containing-all-three-characters",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Minimum Window Substring",
+    "titleSlug": "minimum-window-substring",
+    "difficulty": "Medium",
+    "category": "Topic 4: String Manipulation",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Clone a Linked List with random and next pointer",
+    "titleSlug": "copy-list-with-random-pointer",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Trapping Rainwater",
+    "titleSlug": "trapping-rain-water",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sliding Window maximum",
+    "titleSlug": "sliding-window-maximum",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "LRU cache (IMPORTANT)",
+    "titleSlug": "lru-cache",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "LFU cache",
+    "titleSlug": "lfu-cache",
+    "difficulty": "Hard",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max Consecutive Ones III",
+    "titleSlug": "max-consecutive-ones-iii",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Fruit Into Baskets",
+    "titleSlug": "fruit-into-baskets",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/fruit-into-baskets"
+  },
+  {
+    "title": "longest repeating character replacement",
+    "titleSlug": "longest-repeating-character-replacement",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Binary subarray with sum",
+    "titleSlug": "binary-subarrays-with-sum",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count number of nice subarrays",
+    "titleSlug": "count-number-of-nice-subarrays",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Swim in rising water",
+    "titleSlug": "swim-in-rising-water",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Trapping Rain Water",
+    "titleSlug": "trapping-rain-water-1587115621",
+    "difficulty": "Hard",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Smallest distinct window",
+    "titleSlug": "smallest-distant-window3132",
+    "difficulty": "Medium",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Smallest window containing all characters",
+    "titleSlug": "smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621",
+    "difficulty": "Hard",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Clone List with Next and Random",
+    "titleSlug": "clone-a-linked-list-with-next-and-random-pointer",
+    "difficulty": "Hard",
+    "category": "Topic 5: Two Pointers & Window",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Middle of a LinkedList",
+    "titleSlug": "middle-of-the-linked-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse a LinkedList",
+    "titleSlug": "reverse-linked-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Detect a loop in LL",
+    "titleSlug": "linked-list-cycle",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the starting point in LL",
+    "titleSlug": "linked-list-cycle-ii",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if LL is palindrome or not",
+    "titleSlug": "palindrome-linked-list",
+    "difficulty": "Easy",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Segrregate odd and even nodes in LL",
+    "titleSlug": "odd-even-linked-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Remove Nth node from the back of the LL",
+    "titleSlug": "remove-nth-node-from-end-of-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Delete the middle node of LL",
+    "titleSlug": "delete-the-middle-node-of-a-linked-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort LL",
+    "titleSlug": "sort-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find the intersection point of Y LL",
+    "titleSlug": "intersection-of-two-linked-lists",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Add 2 numbers in LL",
+    "titleSlug": "add-two-numbers",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reverse LL in group of given size K",
+    "titleSlug": "reverse-nodes-in-k-group",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rotate a LL",
+    "titleSlug": "rotate-list",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort K sorted array",
+    "titleSlug": "merge-k-sorted-lists",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Print all the Nodes at a distance of K in a Binary Tree",
+    "titleSlug": "all-nodes-distance-k-in-binary-tree",
+    "difficulty": "Medium",
+    "category": "Topic 6: Linked List Patterns",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Insert Interval",
+    "titleSlug": "insert-interval",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Non-overlapping Intervals",
+    "titleSlug": "non-overlapping-intervals",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Preorder Traversal of Binary Tree",
+    "titleSlug": "binary-tree-preorder-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Inorder Traversal of Binary Tree",
+    "titleSlug": "binary-tree-inorder-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Post-order Traversal of Binary Tree",
+    "titleSlug": "binary-tree-postorder-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Level order Traversal",
+    "titleSlug": "binary-tree-level-order-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Height of a Binary Tree",
+    "titleSlug": "maximum-depth-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if the Binary tree is height-balanced or not",
+    "titleSlug": "balanced-binary-tree",
+    "difficulty": "Easy",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Diameter of Binary Tree",
+    "titleSlug": "diameter-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum path sum",
+    "titleSlug": "binary-tree-maximum-path-sum",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Check if two trees are identical or not",
+    "titleSlug": "same-tree",
+    "difficulty": "Easy",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Zig Zag Traversal of Binary Tree",
+    "titleSlug": "binary-tree-zigzag-level-order-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Vertical Order Traversal of Binary Tree",
+    "titleSlug": "vertical-order-traversal-of-a-binary-tree",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Right/Left View of Binary Tree",
+    "titleSlug": "binary-tree-right-side-view",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Symmetric Binary Tree",
+    "titleSlug": "symmetric-tree",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "LCA in Binary Tree",
+    "titleSlug": "lowest-common-ancestor-of-a-binary-tree",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum width of a Binary Tree",
+    "titleSlug": "maximum-width-of-binary-tree",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Count total Nodes in a COMPLETE Binary Tree",
+    "titleSlug": "count-complete-tree-nodes",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Construct Binary Tree from inorder and preorder",
+    "titleSlug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Construct the Binary Tree from Postorder and Inorder Traversal",
+    "titleSlug": "construct-binary-tree-from-inorder-and-postorder-traversal",
+    "difficulty": "Medium",
+    "category": "Topic 7: Binary Tree Mastery",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum point you can obtain from cards",
+    "titleSlug": "maximum-points-you-can-obtain-from-cards",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Subarray with k different integers",
+    "titleSlug": "subarrays-with-k-different-integers",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth largest element in an array",
+    "titleSlug": "kth-largest-element-in-an-array",
+    "difficulty": "Easy",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Task Scheduler",
+    "titleSlug": "task-scheduler",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Hands of Straights",
+    "titleSlug": "hand-of-straights",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Design twitter",
+    "titleSlug": "design-twitter",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth largest element in a stream",
+    "titleSlug": "kth-largest-element-in-a-stream",
+    "difficulty": "Easy",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find Median from Data Stream",
+    "titleSlug": "find-median-from-data-stream",
+    "difficulty": "Hard",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "K most frequent elements",
+    "titleSlug": "top-k-frequent-elements",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Assign Cookies",
+    "titleSlug": "assign-cookies",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Fractional Knapsack Problem",
+    "titleSlug": "fractional-knapsack-problem",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/fractional-knapsack"
+  },
+  {
+    "title": "Lemonade Change",
+    "titleSlug": "lemonade-change",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Valid Paranthesis Checker",
+    "titleSlug": "valid-parenthesis-string",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Jump Game",
+    "titleSlug": "jump-game",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Jump Game 2",
+    "titleSlug": "jump-game-ii",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Job sequencing Problem",
+    "titleSlug": "job-sequencing-problem",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/job-sequencing-problem"
+  },
+  {
+    "title": "Candy",
+    "titleSlug": "candy",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Cheapest flights within k stops",
+    "titleSlug": "cheapest-flights-within-k-stops",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Making a Large Island",
+    "titleSlug": "making-a-large-island",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Reorganize String",
+    "titleSlug": "reorganize-string",
+    "difficulty": "Medium",
+    "category": "Topic 8: Heaps, Greed & Graph",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Set Matrix Zeros",
+    "titleSlug": "set-matrix-zeroes",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rotate Matrix by 90 degrees",
+    "titleSlug": "rotate-image",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Print the matrix in spiral manner",
+    "titleSlug": "spiral-matrix",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "0/1 Matrix (Bfs Problem)",
+    "titleSlug": "01-matrix",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Shortest path in a binary maze",
+    "titleSlug": "shortest-path-in-binary-matrix",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Climbing Stairs",
+    "titleSlug": "climbing-stairs",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Maximum sum of non-adjacent elements",
+    "titleSlug": "house-robber",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "House Robber II",
+    "titleSlug": "house-robber-ii",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Longest Palindromic Subsequence",
+    "titleSlug": "longest-palindromic-subsequence",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Matrix Chain Multiplication",
+    "titleSlug": "matrix-chain-multiplication",
+    "difficulty": "Hard",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode",
+    "url": "https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication"
+  },
+  {
+    "title": "Search a 2D Matrix",
+    "titleSlug": "search-a-2d-matrix",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Array with All Palindromes",
+    "titleSlug": "palindromic-array-1587115620",
+    "difficulty": "Basic",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Spirally traversing a matrix",
+    "titleSlug": "spirally-traversing-a-matrix-1587115621",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Median in a row-wise sorted Matrix",
+    "titleSlug": "median-in-a-row-wise-sorted-matrix1527",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Row with Max 1s in Rowwise Sorted",
+    "titleSlug": "row-with-max-1s0023",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Sort a Matrix",
+    "titleSlug": "sorted-matrix2333",
+    "difficulty": "Basic",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Max  rectangle",
+    "titleSlug": "max-rectangle",
+    "difficulty": "Hard",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Find A Specific Pair In Matrix",
+    "titleSlug": "find-a-specific-pair-in-matrix",
+    "difficulty": "Easy",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Rotate A Matrix By 90 Degree In Clockwise Direction Without Using Any Extra Space",
+    "titleSlug": "rotate-a-matrix-by-90-degree-in-clockwise-direction-without-using-any-extra-space",
+    "difficulty": "Easy",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  },
+  {
+    "title": "Kth smallest element in a Matrix",
+    "titleSlug": "kth-element-in-matrix",
+    "difficulty": "Medium",
+    "category": "Topic 9: Dynamic Programming",
+    "platform": "leetcode"
+  }
+]

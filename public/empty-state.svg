@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Central person -->
+  <circle cx="100" cy="72" r="30" stroke="#888" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M46 168c0-29.8 24.3-54 54-54s54 24.2 54 54" stroke="#888" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Left ghost friend -->
+  <circle cx="44" cy="80" r="18" stroke="#888" stroke-width="4" stroke-linecap="round" opacity="0.28" stroke-dasharray="5 5"/>
+  <path d="M14 138c0-16.6 13.4-30 30-30s30 13.4 30 30" stroke="#888" stroke-width="4" stroke-linecap="round" opacity="0.28" stroke-dasharray="5 5"/>
+
+  <!-- Right ghost friend -->
+  <circle cx="156" cy="80" r="18" stroke="#888" stroke-width="4" stroke-linecap="round" opacity="0.28" stroke-dasharray="5 5"/>
+  <path d="M126 138c0-16.6 13.4-30 30-30s30 13.4 30 30" stroke="#888" stroke-width="4" stroke-linecap="round" opacity="0.28" stroke-dasharray="5 5"/>
+</svg>

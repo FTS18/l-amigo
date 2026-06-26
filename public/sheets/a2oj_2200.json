@@ -1,0 +1,702 @@
+[
+  {
+    "title": "2C - Commentator problem",
+    "titleSlug": "2C",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "3D - Least Cost Bracket Sequence",
+    "titleSlug": "3D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "5E - Bindian Signalizing",
+    "titleSlug": "5E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "6D - Lizards and Basements 2",
+    "titleSlug": "6D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "7E - Defining Macros",
+    "titleSlug": "7E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "7D - Palindrome Degree",
+    "titleSlug": "7D",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "8E - Beads",
+    "titleSlug": "8E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "8D - Two Friends",
+    "titleSlug": "8D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "9E - Interestring graph and Apples",
+    "titleSlug": "9E",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "10E - Greedy Change",
+    "titleSlug": "10E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "10D - LCIS",
+    "titleSlug": "10D",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "11E - Forward, march!",
+    "titleSlug": "11E",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "11D - A Simple Task",
+    "titleSlug": "11D",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "11C - How Many Squares?",
+    "titleSlug": "11C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "12D - Ball",
+    "titleSlug": "12D",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "13E - Holes",
+    "titleSlug": "13E",
+    "difficulty": "Hard",
+    "category": "2700 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "13D - Triangles",
+    "titleSlug": "13D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "13C - Sequence",
+    "titleSlug": "13C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "15E - Triangles",
+    "titleSlug": "15E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "15D - Map",
+    "titleSlug": "15D",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "17E - Palisection",
+    "titleSlug": "17E",
+    "difficulty": "Hard",
+    "category": "2900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "17D - Notepad",
+    "titleSlug": "17D",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "17C - Balance",
+    "titleSlug": "17C",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "19E - Fairy",
+    "titleSlug": "19E",
+    "difficulty": "Hard",
+    "category": "2900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "19D - Points",
+    "titleSlug": "19D",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "19C - Deletion of Repeats",
+    "titleSlug": "19C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "21D - Traveling Graph",
+    "titleSlug": "21D",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "22E - Scheme",
+    "titleSlug": "22E",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "23E - Tree",
+    "titleSlug": "23E",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "23D - Tetragon",
+    "titleSlug": "23D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "23C - Oranges and Apples",
+    "titleSlug": "23C",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "24E - Berland collider",
+    "titleSlug": "24E",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "24D - Broken robot",
+    "titleSlug": "24D",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "25E - Test",
+    "titleSlug": "25E",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "26E - Multithreading",
+    "titleSlug": "26E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "26D - Tickets",
+    "titleSlug": "26D",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "27D - Ring Road 2",
+    "titleSlug": "27D",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28E - DravDe saves the world",
+    "titleSlug": "28E",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28D - Don't fear, DravDe is kind",
+    "titleSlug": "28D",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "28C - Bath Queue",
+    "titleSlug": "28C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "29E - Quarrel",
+    "titleSlug": "29E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "30E - Tricky and Clever Password",
+    "titleSlug": "30E",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "30D - King's Problem?",
+    "titleSlug": "30D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "31E - TV Game",
+    "titleSlug": "31E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "32E - Hide-and-Seek",
+    "titleSlug": "32E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "33E - Helper",
+    "titleSlug": "33E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "36E - Two Paths",
+    "titleSlug": "36E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "36D - New Game with a Chess Piece",
+    "titleSlug": "36D",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "36C - Bowls",
+    "titleSlug": "36C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "37E - Trial for Chief",
+    "titleSlug": "37E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "37D - Lesson Timetable",
+    "titleSlug": "37D",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "38H - The Great Marathon",
+    "titleSlug": "38H",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "38G - Queue",
+    "titleSlug": "38G",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39K - Testing",
+    "titleSlug": "39K",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39I - Tram",
+    "titleSlug": "39I",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "39G - Inverse Function",
+    "titleSlug": "39G",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "40E - Number Table",
+    "titleSlug": "40E",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "40D - Interesting Sequence",
+    "titleSlug": "40D",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "40C - Berland Square",
+    "titleSlug": "40C",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "42E - Baldman and the military",
+    "titleSlug": "42E",
+    "difficulty": "Hard",
+    "category": "2700 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "42D - Strange town",
+    "titleSlug": "42D",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "42C - Safe cracking",
+    "titleSlug": "42C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "43E - Race",
+    "titleSlug": "43E",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44I - Toys",
+    "titleSlug": "44I",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44G - Shooting Gallery",
+    "titleSlug": "44G",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "44F - BerPaint",
+    "titleSlug": "44F",
+    "difficulty": "Hard",
+    "category": "2700 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45G - Prime Problem",
+    "titleSlug": "45G",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45F - Goats and Wolves",
+    "titleSlug": "45F",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "45B - School",
+    "titleSlug": "45B",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "46G - Emperor's Problem",
+    "titleSlug": "46G",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "46F - Hercule Poirot Problem",
+    "titleSlug": "46F",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "47E - Cannon",
+    "titleSlug": "47E",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "47D - Safe",
+    "titleSlug": "47D",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "48H - Black and White",
+    "titleSlug": "48H",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "48G - Galaxy Union",
+    "titleSlug": "48G",
+    "difficulty": "Hard",
+    "category": "2700 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "48F - Snow sellers",
+    "titleSlug": "48F",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "49E - Common ancestor",
+    "titleSlug": "49E",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "50E - Square Equation Roots",
+    "titleSlug": "50E",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "51F - Caterpillar",
+    "titleSlug": "51F",
+    "difficulty": "Hard",
+    "category": "2800 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "51E - Pentagon",
+    "titleSlug": "51E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "51D - Geometrical problem",
+    "titleSlug": "51D",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "52C - Circular RMQ",
+    "titleSlug": "52C",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "53E - Dead Ends",
+    "titleSlug": "53E",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "54E - Vacuum Сleaner",
+    "titleSlug": "54E",
+    "difficulty": "Hard",
+    "category": "2700 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "55E - Very simple problem",
+    "titleSlug": "55E",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "55D - Beautiful numbers",
+    "titleSlug": "55D",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "56E - Domino Principle",
+    "titleSlug": "56E",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "57E - Chess",
+    "titleSlug": "57E",
+    "difficulty": "Hard",
+    "category": "3000 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "57D - Journey",
+    "titleSlug": "57D",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "58E - Expression",
+    "titleSlug": "58E",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "60E - Mushroom Gnomes",
+    "titleSlug": "60E",
+    "difficulty": "Hard",
+    "category": "2600 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "60D - Savior",
+    "titleSlug": "60D",
+    "difficulty": "Hard",
+    "category": "2500 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "62E - World Evil",
+    "titleSlug": "62E",
+    "difficulty": "Hard",
+    "category": "2700 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "62D - Wormhouse",
+    "titleSlug": "62D",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "62C - Inquisition",
+    "titleSlug": "62C",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64I - Sort the Table",
+    "titleSlug": "64I",
+    "difficulty": "Hard",
+    "category": "2400 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64H - Table Bowling",
+    "titleSlug": "64H",
+    "difficulty": "Hard",
+    "category": "2300 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "64G - Path Canonization",
+    "titleSlug": "64G",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "65E - Harry Potter and Moving Staircases",
+    "titleSlug": "65E",
+    "difficulty": "Hard",
+    "category": "2900 Rating",
+    "platform": "codeforces"
+  },
+  {
+    "title": "65D - Harry Potter and the Sorting Hat",
+    "titleSlug": "65D",
+    "difficulty": "Hard",
+    "category": "2200 Rating",
+    "platform": "codeforces"
+  }
+]
