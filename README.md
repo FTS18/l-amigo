@@ -17,6 +17,14 @@ The extension utilizes a `MutationObserver` to modify both LeetCode and Codeforc
 - **CF Profile Shortcuts**: Injects quick-add `+` tracker buttons next to user handles across rankings, standings, and comments pages for direct identity pairing.
 - **Rating-based Heatmap toggle**: Injects a toggle checkbox inside Codeforces profile activity graph headers (`._UserActivityFrame_header`) to recolor graph squares based on difficulty.
 
+### Peer Progress Dashboard
+The extension popup serves as a centralized interface for monitoring your tracked friends.
+- **Individual Performance Cards**: Provides a granular view of total solved problems, difficulty breakdowns (Easy, Medium, Hard), and current activity streaks.
+- **Visual Pattern Analysis**: Uses Recharts to render SVG-based distribution charts, helping users identify their peers' solving habits.
+- **Submission History**: Extracts and displays the five most recent accepted problems for each tracked friend, including direct links to problem statements.
+- **Problem Recommendations Engine**: Curates and suggests the most popular problems your friends are solving. Includes deep filtering by platform (LeetCode/Codeforces), difficulty, and Codeforces rating ranges.
+- **Global Activity Feed**: A unified, chronological timeline of all recent problem solves across platforms, eliminating the need to check individual profiles.
+
 ### Full-Page Analytics Dashboard
 The extension popup features a massive full-page dashboard interface (accessible via the Layout icon) for deep insights into your group's performance.
 - **Leaderboard Tab**: Ranks your friends using three distinct modes: **Power Score** (combining peak normalized rating & difficulty-weighted solves), **Peak Mastery** (cross-platform rating normalization), and **Total Solved**.
