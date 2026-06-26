@@ -297,14 +297,13 @@ export const ContestHub: React.FC<ContestHubProps> = ({
   return (
     <div className="contest-hub-container" style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
       <div className="tab-header" style={{ marginBottom: '32px' }}>
-        <h2>Contest Hub & Historical Rating Vault</h2>
-        <p>Your ultimate arena for upcoming global battles, rating trajectory analytics, and granular contest deltas.</p>
+        <h2>Contest Hub</h2>
+        <p>Track upcoming contests, view rating trajectories, and analyze performance.</p>
       </div>
 
-      {/* Brutalist Countdown Tiles */}
       <div style={{ marginBottom: '48px' }}>
         <h3 style={{ fontSize: 'var(--font-size-value)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-          Upcoming Live Battles
+          Upcoming Contests
         </h3>
         {loadingContests ? (
           <div style={{ padding: '32px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', color: 'var(--text-secondary)' }}>
@@ -315,139 +314,142 @@ export const ContestHub: React.FC<ContestHubProps> = ({
             No upcoming contests found for your active platform filter.
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
-            {upcomingContests.map(c => {
-              const isLC = c.platform === 'leetcode';
-              const isCC = c.platform === 'codechef';
-              const isCF = c.platform === 'codeforces';
-              const accentColor = isLC ? '#ffa116' : isCC ? '#8B572A' : '#3b82f6';
-              const href = isLC 
-                ? `https://leetcode.com/contest/${c.id}` 
-                : isCC
-                ? `https://www.codechef.com/${c.id}`
-                : `https://codeforces.com/contests/${c.id}`;
+          <div className="sheets-container">
+            <table className="sheets-table">
+              <thead>
+                <tr>
+                  <th style={{ width: '5%', textAlign: 'center' }}>Platform</th>
+                  <th style={{ width: '50%' }}>Contest Name</th>
+                  <th style={{ width: '15%' }}>Starts At</th>
+                  <th style={{ width: '15%' }}>Countdown</th>
+                  <th style={{ width: '15%', textAlign: 'center' }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {upcomingContests.map(c => {
+                  const isLC = c.platform === 'leetcode';
+                  const isCC = c.platform === 'codechef';
+                  const isCF = c.platform === 'codeforces';
+                  const accentColor = isLC ? '#ffa116' : isCC ? '#8B572A' : '#3b82f6';
+                  const href = isLC 
+                    ? `https://leetcode.com/contest/${c.id}` 
+                    : isCC
+                    ? `https://www.codechef.com/${c.id}`
+                    : `https://codeforces.com/contests/${c.id}`;
 
-              const startDate = new Date(c.startTimeSeconds * 1000);
-              const diff = c.startTimeSeconds * 1000 - currentTime;
-              const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-              const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-              const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-              const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                  const startDate = new Date(c.startTimeSeconds * 1000);
+                  const diff = c.startTimeSeconds * 1000 - currentTime;
+                  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                  const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-              return (
-                <div 
-                  key={`${c.platform}-${c.id}`} 
-                  style={{ 
-                    background: 'var(--bg-secondary)', 
-                    border: `1px solid var(--border-strong)`, 
-                    borderTop: `4px solid ${accentColor}`,
-                    borderRadius: '0px', 
-                    padding: '24px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: 'none'
-                  }}
-                >
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: 'var(--font-size-sm)', fontWeight: 700, color: 'var(--text-secondary)', background: 'var(--bg-primary)', padding: '4px 8px', border: '1px solid var(--border-color)', borderRadius: '0px', textTransform: 'uppercase' }}>
-                        <PlatformIcon platform={c.platform} size={14} />
-                        {c.platform}
-                      </span>
-                      <button 
-                        onClick={(e) => handleToggleReminder(e, c)}
-                        title={reminders[c.id] ? "Remove notification alarm" : "Set notification alarm"}
-                        style={{ 
-                          background: reminders[c.id] ? 'rgba(255, 161, 22, 0.15)' : 'var(--bg-primary)', 
-                          border: reminders[c.id] ? '1px solid #ffa116' : '1px solid var(--border-strong)', 
-                          padding: '6px 12px', 
-                          borderRadius: '0px', 
-                          color: reminders[c.id] ? '#ffa116' : 'var(--text-secondary)',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          fontSize: 'var(--font-size-sm)',
-                          fontWeight: 700
-                        }}
-                      >
-                        {reminders[c.id] ? <BellRing size={13} /> : <Bell size={13} />}
-                        {reminders[c.id] ? 'ALARM SET' : 'REMIND ME'}
-                      </button>
-                    </div>
-
-                    <h4 style={{ fontSize: 'calc(1.333 * var(--font-size-base))', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '16px', lineHeight: '1.4' }}>
-                      {c.name}
-                    </h4>
-
-                    {/* Brutalist Digital Countdown Box */}
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: '16px', marginBottom: '20px', borderRadius: '0px', textAlign: 'center' }}>
-                      <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
-                        Live Battle Countdown
-                      </div>
-                      <div style={{ fontSize: 'calc(2.2 * var(--font-size-xs))', fontWeight: 800, fontFamily: 'monospace', color: 'var(--color-easy)', letterSpacing: '2px' }}>
-                        {diff > 0 ? `${days}d ${hours}h ${mins}m ${secs}s` : 'STARTED!'}
-                      </div>
-                      <div style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-secondary)', marginTop: '8px' }}>
-                        {startDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })} @ {startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '12px' }}>
-                    <a 
-                      href={href} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ 
-                        flex: 1,
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
-                        gap: '8px',
-                        padding: '10px', 
-                        background: accentColor, 
-                        color: '#000', 
-                        textDecoration: 'none', 
-                        fontWeight: 800, 
-                        fontSize: 'var(--font-size-base)',
-                        borderRadius: '0px',
-                        border: '1px solid #000',
-                        textTransform: 'uppercase'
-                      }}
-                    >
-                      <ExternalLink size={14} />
-                      Enter Arena
-                    </a>
-                    <a 
-                      href={getGoogleCalendarUrl(c)} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      title="Add to Google Calendar"
-                      style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
-                        gap: '6px',
-                        padding: '10px 16px', 
-                        background: 'var(--bg-primary)', 
-                        color: 'var(--text-primary)', 
-                        textDecoration: 'none', 
-                        fontWeight: 700, 
-                        fontSize: 'var(--font-size-base)',
-                        borderRadius: '0px',
-                        border: '1px solid var(--border-strong)',
-                        textTransform: 'uppercase'
-                      }}
-                    >
-                      <Calendar size={14} />
-                      +Cal
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
+                  return (
+                    <tr key={`${c.platform}-${c.id}`}>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} title={c.platform}>
+                          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', borderRadius: '0px' }}>
+                            <PlatformIcon platform={c.platform} size={14} />
+                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <a 
+                          href={href} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          style={{ fontWeight: 800, color: 'var(--text-primary)', textDecoration: 'none', fontSize: 'var(--font-size-base)' }}
+                          onMouseOver={(e) => { e.currentTarget.style.textDecoration = 'underline'; }}
+                          onMouseOut={(e) => { e.currentTarget.style.textDecoration = 'none'; }}
+                        >
+                          {c.name}
+                        </a>
+                      </td>
+                      <td style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', fontWeight: 600 }}>
+                        {startDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} @ {startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+                      </td>
+                      <td style={{ fontFamily: 'monospace', fontWeight: 800, color: diff > 0 ? 'var(--color-easy)' : 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums', fontSize: 'var(--font-size-base)', letterSpacing: '0.5px' }}>
+                        {diff > 0 ? `${days}d ${hours}h ${mins}m ${secs}s` : 'STARTED'}
+                      </td>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                          <button 
+                            onClick={(e) => handleToggleReminder(e, c)}
+                            title={reminders[c.id] ? "Remove alarm" : "Set alarm"}
+                            style={{ 
+                              background: reminders[c.id] ? 'rgba(255, 161, 22, 0.15)' : 'var(--bg-primary)', 
+                              border: reminders[c.id] ? '1px solid #ffa116' : '1px solid var(--border-strong)', 
+                              width: '26px',
+                              height: '26px',
+                              borderRadius: '0px', 
+                              color: reminders[c.id] ? '#ffa116' : 'var(--text-secondary)',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              transition: 'border-color 0.2s ease'
+                            }}
+                            onMouseOver={(e) => { e.currentTarget.style.borderColor = reminders[c.id] ? '#ffa116' : 'var(--text-primary)'; }}
+                            onMouseOut={(e) => { e.currentTarget.style.borderColor = reminders[c.id] ? '#ffa116' : 'var(--border-strong)'; }}
+                          >
+                            {reminders[c.id] ? <BellRing size={13} /> : <Bell size={13} />}
+                          </button>
+                          <a 
+                            href={href} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            title="Join Contest"
+                            style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              justifyContent: 'center', 
+                              padding: '0 12px', 
+                              height: '26px',
+                              background: 'transparent',
+                              color: accentColor, 
+                              textDecoration: 'none', 
+                              fontWeight: 700, 
+                              fontSize: 'var(--font-size-xs)',
+                              borderRadius: '0px',
+                              border: `1px solid ${accentColor}`,
+                              textTransform: 'uppercase',
+                              transition: 'all 0.2s ease'
+                            }}
+                            onMouseOver={(e) => { e.currentTarget.style.background = accentColor; e.currentTarget.style.color = '#000'; }}
+                            onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = accentColor; }}
+                          >
+                            JOIN
+                          </a>
+                          <a 
+                            href={getGoogleCalendarUrl(c)} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            title="Add to Google Calendar"
+                            style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              justifyContent: 'center', 
+                              width: '26px',
+                              height: '26px', 
+                              background: 'var(--bg-primary)', 
+                              color: 'var(--text-primary)', 
+                              textDecoration: 'none', 
+                              borderRadius: '0px',
+                              border: '1px solid var(--border-strong)',
+                              transition: 'border-color 0.2s ease'
+                            }}
+                            onMouseOver={(e) => { e.currentTarget.style.borderColor = 'var(--text-primary)'; }}
+                            onMouseOut={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; }}
+                          >
+                            <Calendar size={13} />
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
@@ -456,7 +458,7 @@ export const ContestHub: React.FC<ContestHubProps> = ({
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
           <h3 style={{ fontSize: 'var(--font-size-value)', fontWeight: 800, color: 'var(--text-primary)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Historical Rating Vault & Delta Analytics
+            Rating History & Analytics
           </h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span style={{ fontSize: 'var(--font-size-md)', fontWeight: 700, color: 'var(--text-secondary)' }}>Inspect User:</span>
@@ -548,9 +550,9 @@ export const ContestHub: React.FC<ContestHubProps> = ({
         </div>
 
         {/* Rating Trajectory Graphs */}
-        <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '28px', borderRadius: '0px', marginBottom: '40px' }}>
-          <h4 style={{ fontSize: 'calc(1.25 * var(--font-size-base))', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '24px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Multi-Platform Rating Trajectory Chart
+        <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', marginBottom: '32px' }}>
+          <h4 style={{ fontSize: 'calc(1.25 * var(--font-size-base))', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px' }}>
+            Rating Trajectory
           </h4>
           {ratingData.chartData.length === 0 ? (
             <div style={{ padding: '40px 0', textAlign: 'center', color: 'var(--text-secondary)', fontSize: 'var(--font-size-title)' }}>
@@ -592,8 +594,8 @@ export const ContestHub: React.FC<ContestHubProps> = ({
         {/* Contest Performance Log Table */}
         <div className="sheets-container">
           <div style={{ padding: '20px 24px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-strong)', borderTop: '1px solid var(--border-strong)', borderLeft: '1px solid var(--border-strong)', borderRight: '1px solid var(--border-strong)' }}>
-            <h4 style={{ fontSize: 'calc(1.25 * var(--font-size-base))', fontWeight: 800, color: 'var(--text-primary)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              Contest Performance Log (Historical Battles)
+            <h4 style={{ fontSize: 'calc(1.25 * var(--font-size-base))', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+              Contest History
             </h4>
           </div>
           <table className="sheets-table">
