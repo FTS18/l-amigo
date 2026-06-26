@@ -1,6 +1,6 @@
 {
   "name": "lamigo",
-  "version": "1.6.0",
+  "version": "1.6.3",
   "private": true,
   "description": "Track friends across LeetCode & Codeforces. Compare stats, get recommendations, view activity, and sync with GitHub.",
   "scripts": {
