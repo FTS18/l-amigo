@@ -1,7 +1,7 @@
 # L'Amigo - Multi-Platform Peer Progress and Automation
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-orange?logo=googlechrome)](https://chromewebstore.google.com/detail/lamigo/pakknkopmiakipmbjmfejcejehmgieli)
-[![Version](https://img.shields.io/badge/version-1.6.0-blue)](https://github.com/FTS18/l-amigo/releases)
+[![Version](https://img.shields.io/badge/version-1.6.3-blue)](https://github.com/FTS18/l-amigo/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/FTS18/l-amigo?style=social)](https://github.com/FTS18/l-amigo)
 
@@ -17,14 +17,12 @@ The extension utilizes a `MutationObserver` to modify both LeetCode and Codeforc
 - **CF Profile Shortcuts**: Injects quick-add `+` tracker buttons next to user handles across rankings, standings, and comments pages for direct identity pairing.
 - **Rating-based Heatmap toggle**: Injects a toggle checkbox inside Codeforces profile activity graph headers (`._UserActivityFrame_header`) to recolor graph squares based on difficulty.
 
-### Peer Progress Dashboard
-The extension popup serves as a centralized interface for monitoring your tracked friends.
-- **Individual Performance Cards**: Provides a granular view of total solved problems, difficulty breakdowns (Easy, Medium, Hard), and current activity streaks.
-- **Visual Pattern Analysis**: Uses Recharts to render SVG-based distribution charts, helping users identify their peers' solving habits.
-- **Submission History**: Extracts and displays the five most recent accepted problems for each tracked friend, including direct links to problem statements.
-- **Problem Recommendations Engine**: Curates and suggests the most popular problems your friends are solving. Includes deep filtering by platform (LeetCode/Codeforces), difficulty, and Codeforces rating ranges.
-- **Global Activity Feed**: A unified, chronological timeline of all recent problem solves across platforms, eliminating the need to check individual profiles.
-- **Upcoming Contest Reminders**: Toggles notifications via a Bell icon next to upcoming contests, scheduling alerts 24h, 1h, and 10m before start time using Chrome Alarms.
+### Full-Page Analytics Dashboard
+The extension popup features a massive full-page dashboard interface (accessible via the Layout icon) for deep insights into your group's performance.
+- **Leaderboard Tab**: Ranks your friends using three distinct modes: **Power Score** (combining peak normalized rating & difficulty-weighted solves), **Peak Mastery** (cross-platform rating normalization), and **Total Solved**.
+- **Sheets Tracker**: Curated selection of 50+ problem sheets (Striver A2Z, CP-31, NeetCode, CSES) tightly integrated with LeetCode/Codeforces API to automatically check off completed problems. Includes friend avatar clusters showing who solved each problem.
+- **Contest Hub**: A dense, brutalist chronological list view of upcoming live contests across LeetCode, Codeforces, and CodeChef. Includes 1-click Google Calendar integration and Chrome alarm reminders.
+- **Rating History & Analytics**: Multi-platform rating trajectory charts for any tracked friend, along with a granular Contest Performance Log detailing rating deltas, win rates, and recent battle history.
 
 ### Multi-Platform Engine
 L'Amigo natively supports concurrent tracking across three major competitive programming platforms:
@@ -77,7 +75,7 @@ The easiest way to install L'Amigo is directly from the Chrome Web Store:
 ### Method 2: Pre-built Release (Manual Installation)
 This method is recommended for users who wish to utilize L'Amigo without maintaining a local development environment.
 1. Navigate to the official L'Amigo GitHub repository and access the **Releases** section.
-2. Download the distribution package: `lamigo-v1.6.0.zip`.
+2. Download the distribution package: `lamigo-v1.6.3.zip`.
 3. Extract the ZIP archive contents to a persistent local directory.
 4. Open the Google Chrome browser and navigate to `chrome://extensions/`.
 5. Activate **Developer mode** using the toggle in the upper-right corner.

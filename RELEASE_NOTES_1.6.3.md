@@ -12,7 +12,7 @@ We've introduced a dedicated full-page dashboard (accessible via the new Layout 
     *   *Automated Checkmarks:* Sync your LeetCode and Codeforces history to automatically see what you've solved!
     *   *Rich Data:* Links to problems, video editorials, friend avatar clusters showing who in your group solved a problem, and "Revision Star" toggles.
 *   **Contest Hub Tab:** Your ultimate arena for global battles.
-    *   *Upcoming Live Battles:* Brutalist countdown tiles for LeetCode, Codeforces, and CodeChef contests. Set browser alarms, or add to Google Calendar.
+    *   *Upcoming Live Battles:* A sleek, brutalist dense list view of LeetCode, Codeforces, and CodeChef contests. Includes chronological sorting, 1-click Google Calendar integration, and Chrome alarm reminders.
     *   *Historical Rating Vault:* View rating trajectories on a unified multi-platform chart for any tracked friend.
     *   *Delta Analytics:* See Latest Rating Delta, All-Time Net Delta, Average Delta/Contest, and Win Rate.
 

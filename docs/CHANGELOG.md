@@ -3,7 +3,23 @@
  All notable changes to the L'Amigo (formerly LeetCode Friend Tracker) extension.
  
 
- ## [1.6.0] - 2026-06-15
+ ## [1.6.3] - 2026-06-27
+### Added
+- **Full-Page Analytics Dashboard**: Introduced a massive new dashboard interface integrating Leaderboards, Sheets Tracker, and Contest Hub.
+- **Contest Hub & Rating Vault**: Tracks upcoming contests across LeetCode, Codeforces, and CodeChef in a dense, chronological list view. Includes multi-platform rating trajectory charts and performance analytics.
+- **Sheets Tracker**: Integrated 50+ curated problem sheets (Striver A2Z, CP-31, NeetCode, CSES) with automated completion sync from LeetCode and Codeforces.
+- **Design & UX Overhaul**: Added dynamic CSS variable-based responsive typography (Font Size 80-150% and Display Zoom 75-125%). Implemented custom `PlatformIcons` library for crisp SVG logos.
+- **Core Reliability & Architecture**: 
+  - OAuth tokens are now encrypted using AES-GCM before storage, keeping secrets out of the source code via Webpack injection.
+  - Smarter GitHub Sync: Implemented a 10s backoff for GitHub abuse rate limits and improved progress bar accuracy.
+  - Codeforces Concurrency Queue: 2-slot concurrency-limited dispatcher with exponential backoff to respect API limits.
+  - Strict type safety with `STORAGE_KEYS` registry and schema validation.
+- **Bug Fixes**:
+  - Fixed Codeforces handles case-sensitivity bug causing API errors.
+  - Debounced heatmap injection for stability during SPA navigation.
+  - Cleaned up background connection lifecycles for Service Worker restarts.
+
+## [1.6.0] - 2026-06-15
 ### Added
 - **CF College Standings Tab**: Injects a custom tab into Codeforces standings (`/contest/*/standings`) using `_standingsCache` memory lookup for instant rendering. Replicates Codeforces' exact native table structure (`class="standings"`, `tr class="dark"`, `verdict-accepted` with timestamp) showing team links, problem details, Legendary Grandmaster rendering (`.legendary-first-letter` coloring the first letter black), and falls back to a page scraping crawling mechanism if the members cache is empty.
 - **Organization Bookmarking & Profile Shortcuts**: Added bookmarking controls on ratings page (`/ratings/organization/*`) supporting parallel page 2 fetching (up to 400 members) and profile bookmarks next to organization links. Injected Quick-Add buttons next to handles (`a[href^="/profile/"]`) in standings, rankings, and comment pages sending background message `createIdentity` on click. Hooks a `cf_dark_mode` theme listener to add `lamigo-cf-dark` class on the root element.
