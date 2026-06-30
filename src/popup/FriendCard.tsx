@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { RefreshCw, MoreVertical, ChevronUp, X } from 'lucide-react';
+import { RefreshCw, MoreVertical, ChevronUp, X, Star } from 'lucide-react';
 import { Friend, FriendProfile, Platform, RecentSubmission } from '../types';
 import { StreakCalculator } from '../services/streak';
 import { SkeletonList } from './Skeleton';
@@ -85,7 +85,7 @@ export const getPlatformRankLabel = (p: FriendProfile) => {
   }
   if (p.platform === 'codechef') {
     const stars = Math.max(1, Math.min(7, Math.floor(((p.contestRating || 0) - 1200) / 200) + 1));
-    return p.contestRating ? `${stars}★` : null;
+    return p.contestRating ? `${stars}` : null;
   }
   return null;
 };
@@ -113,6 +113,8 @@ interface FriendCardProps {
   isDarkMode?: boolean;
   isOwn?: boolean;
   platformFilters?: Platform[];
+  isPinned?: boolean;
+  onTogglePin?: (friend: Friend) => void;
 }
 
 export const FriendCard: React.FC<FriendCardProps> = ({ 
@@ -128,7 +130,9 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   refreshing, 
   isDarkMode, 
   isOwn,
-  platformFilters
+  platformFilters,
+  isPinned,
+  onTogglePin
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -150,7 +154,8 @@ export const FriendCard: React.FC<FriendCardProps> = ({
     );
   }
 
-  const linkedAccounts = friend.accounts?.length ? friend.accounts : [{ platform: profile.platform, handle: friend.username }];
+  const linkedAccounts = (friend.accounts?.length ? friend.accounts : [{ platform: profile.platform, handle: friend.username }])
+    .filter(acc => acc.platform !== 'cses');
   const lc = leetcodeProfile || (profile.platform === 'leetcode' ? profile : undefined);
   const cf = codeforcesProfile || (profile.platform === 'codeforces' ? profile : undefined);
   const cc = codechefProfile || (profile.platform === 'codechef' ? profile : undefined);
@@ -195,6 +200,16 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   }
   const sortedSubmissions = Array.from(deduplicated.values()).slice(0, 50);
 
+  const lastSolvedText = useMemo(() => {
+    if (!sortedSubmissions.length) return 'No recent activity';
+    const sub = sortedSubmissions[0];
+    const diff = (Date.now() - sub.timestamp) / 1000;
+    if (diff < 60) return 'solved just now';
+    if (diff < 3600) return `solved ${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `solved ${Math.floor(diff / 3600)}h ago`;
+    return `solved ${Math.floor(diff / 86400)}d ago`;
+  }, [sortedSubmissions]);
+
   const handleCardClick = (e: React.MouseEvent) => {
     if (
       (e.target as HTMLElement).closest('.friend-menu-wrap') || 
@@ -230,7 +245,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
             </div>
 
             <div className="user-identity-box">
-              <div className="name-streak-row">
+              <div className="name-streak-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                 <span className="display-name-text">
                   {friend.displayName || friend.username}
                 </span>
@@ -278,7 +293,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                       {rating && (
                         <span className="tag-rating-val">{rating}</span>
                       )}
-                      {label && (
+                      {label && isActive && (
                         <span className="tag-rank-label">{label}</span>
                       )}
                       <a 
@@ -300,6 +315,19 @@ export const FriendCard: React.FC<FriendCardProps> = ({
         </div>
 
         <div className="card-right-section hover-actions">
+          {!isOwn && onTogglePin && (
+            <button
+              className="mini-action-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onTogglePin(friend);
+              }}
+              title={isPinned ? "Unpin friend" : "Pin friend to top"}
+              style={{ color: isPinned ? 'var(--rank-leetcode-guardian, #F5A623)' : 'inherit' }}
+            >
+              <Star size={14} fill={isPinned ? 'currentColor' : 'none'} />
+            </button>
+          )}
           {onRefresh && (
             <button 
               className="mini-action-btn" 
@@ -411,7 +439,12 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               setExpanded(!expanded);
             }}
           >
-            <span>Recent Solves</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>Recent Solves</span>
+              <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontWeight: 'normal' }}>
+                ({lastSolvedText.replace('solved ', '')})
+              </span>
+            </div>
             <span className="toggle-arrow">{expanded ? <ChevronUp size={12} /> : ''}</span>
           </button>
           {expanded && (

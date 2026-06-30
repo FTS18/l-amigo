@@ -4,6 +4,7 @@ import { LeetCodeService } from '../../services/leetcode';
 import { CodeforcesService } from '../../services/codeforces';
 import { CodeChefService } from '../../services/codechef';
 import { AlarmsService } from '../../services/alarms';
+import { OtherPlatformsService } from '../../services/other-platforms';
 import { PlatformIcon, LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../../utils/PlatformIcons';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Calendar, Bell, BellRing, ExternalLink, TrendingUp, TrendingDown, Award } from 'lucide-react';
@@ -32,7 +33,29 @@ export const ContestHub: React.FC<ContestHubProps> = ({
   const [loadingContests, setLoadingContests] = useState(true);
   const [reminders, setReminders] = useState<Record<string, any>>({});
   const [currentTime, setCurrentTime] = useState(Date.now());
-  const [activeUser, setActiveUser] = useState<string>('own-user');
+  const ss = <T,>(key: string, fallback: T): T => {
+    try {
+      const v = localStorage.getItem(`st_st_${key}`) || localStorage.getItem(`ch_${key}`);
+      if (v !== null) return JSON.parse(v) as T;
+    } catch { /* ignore */ }
+    return fallback;
+  };
+  const setSS = <T,>(key: string, value: T) => {
+    try { localStorage.setItem(`ch_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
+  };
+
+  const [activeUser, _setActiveUser] = useState<string>(() => ss('activeUser', 'own-user'));
+  const setActiveUser = (v: string) => { setSS('activeUser', v); _setActiveUser(v); };
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'ch_activeUser' && e.newValue) {
+        try { _setActiveUser(JSON.parse(e.newValue)); } catch {}
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
   const [dismissedNotice, setDismissedNotice] = useState(false);
 
   useEffect(() => {
@@ -92,11 +115,26 @@ export const ContestHub: React.FC<ContestHubProps> = ({
       }
 
       try {
-        const [lcData, cfData, ccData] = await Promise.all([
-          LeetCodeService.getUpcomingContests(),
-          CodeforcesService.getUpcomingContests(),
-          CodeChefService.getUpcomingContests()
-        ]);
+        const promises = [];
+        if (selectedGlobalPlatforms.includes('leetcode')) {
+          promises.push(LeetCodeService.getUpcomingContests());
+        } else {
+          promises.push(Promise.resolve([]));
+        }
+
+        if (selectedGlobalPlatforms.includes('codeforces')) {
+          promises.push(CodeforcesService.getUpcomingContests());
+        } else {
+          promises.push(Promise.resolve([]));
+        }
+
+        if (selectedGlobalPlatforms.includes('codechef')) {
+          promises.push(CodeChefService.getUpcomingContests());
+        } else {
+          promises.push(Promise.resolve([]));
+        }
+
+        const [lcData, cfData, ccData] = await Promise.all(promises);
         
         const LC_MAX = 4;
         const CF_MAX = 6;
@@ -128,7 +166,8 @@ export const ContestHub: React.FC<ContestHubProps> = ({
     return contests
       .filter(c => {
         const startTimeMs = c.startTimeSeconds * 1000;
-        return startTimeMs > Date.now() && startTimeMs < Date.now() + 30 * 24 * 60 * 60 * 1000;
+        const durationMs = (c.durationSeconds || 7200) * 1000;
+        return startTimeMs + durationMs > Date.now() && startTimeMs < Date.now() + 30 * 24 * 60 * 60 * 1000;
       })
       .filter(c => selectedGlobalPlatforms.includes(c.platform));
   }, [contests, selectedGlobalPlatforms]);
@@ -368,8 +407,12 @@ export const ContestHub: React.FC<ContestHubProps> = ({
                       <td style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', fontWeight: 600 }}>
                         {startDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} @ {startDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
                       </td>
-                      <td style={{ fontFamily: 'monospace', fontWeight: 800, color: diff > 0 ? 'var(--color-easy)' : 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums', fontSize: 'var(--font-size-base)', letterSpacing: '0.5px' }}>
-                        {diff > 0 ? `${days}d ${hours}h ${mins}m ${secs}s` : 'STARTED'}
+                      <td style={{ fontFamily: 'monospace', fontWeight: 800, color: diff > 0 ? 'var(--color-easy)' : diff > -(c.durationSeconds || 7200) * 1000 ? 'var(--color-easy, #00C853)' : 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums', fontSize: 'var(--font-size-base)', letterSpacing: '0.5px' }}>
+                        {diff > 0 ? `${days}d ${hours}h ${mins}m ${secs}s` : diff > -(c.durationSeconds || 7200) * 1000 ? (
+                          <span className="live-now-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(0, 200, 83, 0.15)', border: '1px solid #00C853', color: '#00C853', padding: '2px 8px', borderRadius: '4px', animation: 'pulse 2s infinite', fontWeight: 'bold', fontSize: 'var(--font-size-xs)' }}>
+                            ● LIVE NOW
+                          </span>
+                        ) : 'FINISHED'}
                       </td>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>

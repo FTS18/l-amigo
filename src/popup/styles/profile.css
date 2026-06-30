@@ -226,15 +226,10 @@
 .solved-pill .count { font-size: var(--font-size-title); font-weight: 900; line-height: 1; }
 .solved-pill .lbl   { font-size: calc(0.7 * var(--font-size-xs)); font-weight: 700; opacity: 0.65; letter-spacing: 0.3px; text-transform: uppercase; }
 
-/* Dark mode pill colors - Hierarchy */
-.app.dark .solved-pill.easy   { background: rgba(255, 255, 255, 0.03) !important; color: var(--color-easy) !important; border: none !important; }
-.app.dark .solved-pill.medium { background: rgba(255, 255, 255, 0.03) !important; color: var(--color-medium) !important; border: none !important; }
-.app.dark .solved-pill.hard   { background: rgba(255, 255, 255, 0.03) !important; color: var(--color-hard) !important; border: none !important; }
-
-/* Light mode pill colors - Hierarchy */
-.app:not(.dark) .solved-pill.easy   { background: rgba(0, 0, 0, 0.03) !important; color: var(--color-easy) !important; border: none !important; }
-.app:not(.dark) .solved-pill.medium { background: rgba(0, 0, 0, 0.03) !important; color: var(--color-medium) !important; border: none !important; }
-.app:not(.dark) .solved-pill.hard   { background: rgba(0, 0, 0, 0.03) !important; color: var(--color-hard) !important; border: none !important; }
+/* Theme-consistent high-contrast solved-pill colors */
+.solved-pill.easy   { background: rgba(0, 184, 163, 0.12) !important; color: var(--color-easy) !important; border: 1px solid rgba(0, 184, 163, 0.25) !important; }
+.solved-pill.medium { background: rgba(255, 161, 22, 0.12) !important; color: var(--color-medium) !important; border: 1px solid rgba(255, 161, 22, 0.25) !important; }
+.solved-pill.hard   { background: rgba(255, 55, 95, 0.12) !important; color: var(--color-hard) !important; border: 1px solid rgba(255, 55, 95, 0.25) !important; }
 
 /* ─── Bottom Meta Row ──────────────────────────────────────────────── */
 .bottom-meta-row, .bottom-meta-row-cf {

@@ -789,3 +789,34 @@
 .profile-tab-content {
   padding-top: 12px;
 }
+
+/* ─── Global Compact View Override ────────────────────────────────── */
+body.compact-view-enabled .compact-premium {
+  padding: 4px 8px !important;
+  gap: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+body.compact-view-enabled .avatar-mini,
+body.compact-view-enabled .avatar-placeholder {
+  width: 24px !important;
+  height: 24px !important;
+  font-size: var(--font-size-base) !important;
+}
+
+body.compact-view-enabled .display-name-text {
+  font-size: var(--font-size-base) !important;
+}
+
+body.compact-view-enabled .recent-submissions-compact {
+  display: none !important;
+}
+
+body.compact-view-enabled .stats-grid-compact {
+  display: none !important;
+}
+
+body.compact-view-enabled .platform-tag-pill {
+  padding: 1px 4px !important;
+  font-size: 9px !important;
+}

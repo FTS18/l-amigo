@@ -44,10 +44,34 @@ export const CodeChefIcon: React.FC<{ size?: number; className?: string; monochr
   </svg>
 );
 
+const GenericPlatformIcon: React.FC<{ letter: string; color: string; size?: number; className?: string; monochrome?: boolean | 'white' | 'black' }> = ({ letter, color, size = 16, className = '', monochrome = false }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    width={size} 
+    height={size} 
+    className={className} 
+    style={{ width: size, height: size, flexShrink: 0, display: 'inline-block', verticalAlign: 'middle' }}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="24" height="24" rx="6" fill={monochrome === true || monochrome === 'white' ? '#ffffff' : monochrome === 'black' ? '#000000' : color} />
+    <text x="12" y="16" fontSize="14" fontWeight="bold" fill={monochrome ? 'rgba(0,0,0,0.5)' : '#ffffff'} textAnchor="middle" fontFamily="sans-serif">{letter}</text>
+  </svg>
+);
+
+export const GfgIcon: React.FC<{ size?: number; className?: string; monochrome?: boolean | 'white' | 'black' }> = ({ size = 16, className = '', monochrome = false }) => (
+  <GenericPlatformIcon letter="G" color="#2f8d46" size={size} className={className} monochrome={monochrome} />
+);
+
+export const CsesIcon: React.FC<{ size?: number; className?: string; monochrome?: boolean | 'white' | 'black' }> = ({ size = 16, className = '', monochrome = false }) => (
+  <GenericPlatformIcon letter="C" color="#000000" size={size} className={className} monochrome={monochrome} />
+);
+
 export const PlatformIcon: React.FC<{ platform: string; size?: number; className?: string; monochrome?: boolean | 'white' | 'black' }> = ({ platform, size = 16, className = '', monochrome = false }) => {
   const p = platform.toLowerCase();
   if (p === 'leetcode') return <LeetCodeIcon size={size} className={className} monochrome={monochrome} />;
   if (p === 'codeforces') return <CodeforcesIcon size={size} className={className} monochrome={monochrome} />;
   if (p === 'codechef') return <CodeChefIcon size={size} className={className} monochrome={monochrome} />;
+  if (p === 'gfg' || p === 'geeksforgeeks') return <GfgIcon size={size} className={className} monochrome={monochrome} />;
+  if (p === 'cses') return <CsesIcon size={size} className={className} monochrome={monochrome} />;
   return null;
 };

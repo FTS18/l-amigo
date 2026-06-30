@@ -403,7 +403,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               <div style={{ padding: '12px 14px 10px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
                   <span>Format</span>
-                  <span title="Choose between exporting a lightweight shareable list of friend handles, a complete app backup, or formatted CSV reports for external analysis." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  <span title="Choose between exporting a lightweight shareable list of friend handles, a complete app backup, or formatted CSV reports for external analysis." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   {([
@@ -490,7 +490,7 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
               <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
                   <span>Select File</span>
-                  <span title="Load a previously exported L'Amigo backup JSON or shareable friends file. New friends will be safely merged without overwriting existing data." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  <span title="Load a previously exported L'Amigo backup JSON or shareable friends file. New friends will be safely merged without overwriting existing data." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
                 </div>
                 <input
                   ref={importFileRef}

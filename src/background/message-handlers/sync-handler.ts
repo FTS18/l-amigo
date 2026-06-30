@@ -11,7 +11,7 @@ export class SyncHandler implements MessageHandler {
       case 'newSubmissionDetected':
         return this.handleNewSubmission(message.data);
       case 'fullSync':
-        return this.handleFullSync(message.forceCfOnly);
+        return this.handleFullSync(message.forceCfOnly, message.historyOnly);
       case 'getSyncState':
         return this.handleGetSyncState();
       case 'githubOAuthLogin':
@@ -23,12 +23,18 @@ export class SyncHandler implements MessageHandler {
 
   private async handleNewSubmission(data: { runtimeBeats?: string; memoryBeats?: string }): Promise<MessageResponse> {
     const { runtimeBeats, memoryBeats } = data;
-    console.log('[RT] New submission detected – triggering incremental sync', { runtimeBeats, memoryBeats });
+    console.log('[RT] New submission detected', { runtimeBeats, memoryBeats });
     
     if (runtimeBeats || memoryBeats) {
       await chrome.storage.local.set({ 
         latest_stats: { runtimeBeats, memoryBeats, timestamp: Date.now() } 
       });
+    }
+
+    const { commit_frequency } = await chrome.storage.local.get('commit_frequency');
+    if (commit_frequency === 'batch') {
+      console.log('[RT] Skipping immediate incremental sync due to batch commit frequency setting.');
+      return { success: true };
     }
     
     // Delay to allow LeetCode to update its servers
@@ -39,10 +45,10 @@ export class SyncHandler implements MessageHandler {
     return { success: true };
   }
 
-  private async handleFullSync(forceCfOnly?: boolean): Promise<MessageResponse> {
+  private async handleFullSync(forceCfOnly?: boolean, historyOnly?: boolean): Promise<MessageResponse> {
      SyncManager.handleFullSync((res) => {
          console.log('Sync update:', res);
-     }, forceCfOnly).catch(console.error);
+     }, forceCfOnly, historyOnly).catch(console.error);
 
      return { success: true };
   }

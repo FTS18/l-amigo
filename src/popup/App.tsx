@@ -42,27 +42,88 @@ export const App: React.FC = () => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [addingFriend, setAddingFriend] = useState(false);
   const [showImportExport, setShowImportExport] = useState(false);
-  const [sortBy, setSortBy] = useState<'name' | 'problems' | 'recent' | 'streak'>('recent');
-  const [platformFilters, setPlatformFilters] = useState<Platform[]>(['leetcode', 'codeforces', 'codechef']);
+  const ss = <T,>(key: string, fallback: T): T => {
+    try {
+      const v = sessionStorage.getItem(`app_${key}`);
+      if (v !== null) return JSON.parse(v) as T;
+    } catch { /* ignore */ }
+    return fallback;
+  };
+  const setSS = <T,>(key: string, value: T) => {
+    try { sessionStorage.setItem(`app_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
+  };
+
+  const [sortBy, _setSortBy] = useState<'name' | 'problems' | 'recent' | 'streak'>(() => ss('sortBy', 'recent'));
+  const setSortBy = (v: 'name' | 'problems' | 'recent' | 'streak') => { setSS('sortBy', v); _setSortBy(v); };
+
+  const [platformFilters, _setPlatformFilters] = useState<Platform[]>(() => ss('platFilters', ['leetcode', 'codeforces', 'codechef']));
+  const setPlatformFilters = (v: Platform[] | ((prev: Platform[]) => Platform[])) => {
+    _setPlatformFilters(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('platFilters', next);
+      return next;
+    });
+  };
+
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [fontSizeScale, setFontSizeScale] = useState(100);
   const [displayZoomScale, setDisplayZoomScale] = useState(100);
+  const [disabledPlatforms, setDisabledPlatforms] = useState<string[]>([]);
   // Incrementing this key forces <UpcomingContests /> to remount and re-fetch fresh data
   const [refreshContestsKey, setRefreshContestsKey] = useState(0);
 
 
-  const [activeTab, setActiveTab] = useState<'friends' | 'compare' | 'settings'>('friends');
+  const [activeTab, _setActiveTab] = useState<'friends' | 'compare' | 'settings'>(() => ss('activeTab', 'friends'));
+  const setActiveTab = (v: 'friends' | 'compare' | 'settings') => { setSS('activeTab', v); _setActiveTab(v); };
+
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [ownUsername, setOwnUsername] = useState<string>('');
   const [ownCodeforcesHandle, setOwnCodeforcesHandle] = useState<string>('');
   const [ownCodechefHandle, setOwnCodechefHandle] = useState<string>('');
-  const [selectedFriendIndex, setSelectedFriendIndex] = useState(0);
-  const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<string>('');
-  const [selectedFilter, setSelectedFilter] = useState<string>('all');
+  const [ownCsesHandle, setOwnCsesHandle] = useState<string>('');
+
+  const [selectedFriendIndex, _setSelectedFriendIndex] = useState<number>(() => ss('selectedFriendIndex', 0));
+  const setSelectedFriendIndex = (v: number | ((prev: number) => number)) => {
+    _setSelectedFriendIndex(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('selectedFriendIndex', next);
+      return next;
+    });
+  };
+
+  const [selectedFriend, _setSelectedFriend] = useState<Friend | null>(() => ss('selectedFriend', null));
+  const setSelectedFriend = (v: Friend | null | ((prev: Friend | null) => Friend | null)) => {
+    _setSelectedFriend(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('selectedFriend', next);
+      return next;
+    });
+  };
+
+  const [selectedPlatform, _setSelectedPlatform] = useState<string>(() => ss('selectedPlatform', ''));
+  const setSelectedPlatform = (v: string | ((prev: string) => string)) => {
+    _setSelectedPlatform(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('selectedPlatform', next);
+      return next;
+    });
+  };
+
+  const [selectedFilter, _setSelectedFilter] = useState<string>(() => ss('selectedFilter', 'all'));
+  const setSelectedFilter = (v: string | ((prev: string) => string)) => {
+    _setSelectedFilter(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('selectedFilter', next);
+      return next;
+    });
+  };
+
   const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info'; action?: { label: string; onClick: () => void } } | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info'; action?: { label: string; onClick: () => void }; duration?: number } | null>(null);
   const [pendingDeletions, setPendingDeletions] = useState<Set<string>>(new Set());
+  const [pinnedFriends, setPinnedFriends] = useState<string[]>([]);
+  const [dailyGoal, setDailyGoal] = useState(3);
+  const [searchQuery, setSearchQuery] = useState('');
   const [modal, setModal] = useState<{ isOpen: boolean; title: string; message: string; type: 'info' | 'error' | 'success' }>({
     isOpen: false,
     title: '',
@@ -82,6 +143,20 @@ export const App: React.FC = () => {
       if (changes[STORAGE_KEYS.FONT_SIZE_SCALE]) setFontSizeScale(changes[STORAGE_KEYS.FONT_SIZE_SCALE].newValue ?? 100);
       if (changes[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]) setDisplayZoomScale(changes[STORAGE_KEYS.DISPLAY_ZOOM_SCALE].newValue ?? 100);
       if (changes[STORAGE_KEYS.DARK_MODE]) setIsDarkMode(changes[STORAGE_KEYS.DARK_MODE].newValue);
+      if (changes[STORAGE_KEYS.DISABLED_PLATFORMS]) {
+        const disabled = changes[STORAGE_KEYS.DISABLED_PLATFORMS].newValue || [];
+        setDisabledPlatforms(disabled);
+        setPlatformFilters(prev => prev.filter(p => !disabled.includes(p)));
+      }
+      if (changes[STORAGE_KEYS.COMPACT_VIEW]) {
+        if (changes[STORAGE_KEYS.COMPACT_VIEW].newValue) {
+          document.body.classList.add('compact-view-enabled');
+        } else {
+          document.body.classList.remove('compact-view-enabled');
+        }
+      }
+      if (changes.daily_goal) setDailyGoal(changes.daily_goal.newValue ?? 3);
+      if (changes.pinned_friends) setPinnedFriends(changes.pinned_friends.newValue || []);
     };
     chrome.storage.onChanged.addListener(handleStorageChange);
 
@@ -101,12 +176,16 @@ export const App: React.FC = () => {
 
 
   const checkOnboarding = async () => {
+    // Save last opened timestamp for smart background refresh
+    chrome.storage.local.set({ [STORAGE_KEYS.LAST_OPENED_TS]: Date.now() });
+
     // Single storage read — all keys merged into one call
     const result = await chrome.storage.local.get([
       STORAGE_KEYS.ONBOARDING_COMPLETE,
       STORAGE_KEYS.OWN_USERNAME,
       STORAGE_KEYS.OWN_CF_HANDLE,
       STORAGE_KEYS.OWN_CC_HANDLE,
+      STORAGE_KEYS.OWN_CSES_HANDLE,
       STORAGE_KEYS.SORT_BY,
       STORAGE_KEYS.PLATFORM_FILTERS,
       STORAGE_KEYS.ACTIVE_TAB,
@@ -115,6 +194,11 @@ export const App: React.FC = () => {
       STORAGE_KEYS.FONT_SIZE_SCALE,
       STORAGE_KEYS.DISPLAY_ZOOM_SCALE,
       STORAGE_KEYS.DARK_MODE,
+      STORAGE_KEYS.DEFAULT_STARTUP_TAB,
+      STORAGE_KEYS.DISABLED_PLATFORMS,
+      STORAGE_KEYS.COMPACT_VIEW,
+      'daily_goal',
+      'pinned_friends'
     ]);
     if (!result[STORAGE_KEYS.ONBOARDING_COMPLETE]) {
       setShowOnboarding(true);
@@ -124,15 +208,47 @@ export const App: React.FC = () => {
       setOwnUsername(username);
       setOwnCodeforcesHandle(result[STORAGE_KEYS.OWN_CF_HANDLE] || '');
       setOwnCodechefHandle(result[STORAGE_KEYS.OWN_CC_HANDLE] || '');
+      setOwnCsesHandle(result[STORAGE_KEYS.OWN_CSES_HANDLE] || '');
       // Restore persisted UI state
       if (result[STORAGE_KEYS.SORT_BY]) setSortBy(result[STORAGE_KEYS.SORT_BY]);
-      if (result[STORAGE_KEYS.PLATFORM_FILTERS]) setPlatformFilters(result[STORAGE_KEYS.PLATFORM_FILTERS]);
-      if (result[STORAGE_KEYS.ACTIVE_TAB]) setActiveTab(result[STORAGE_KEYS.ACTIVE_TAB]);
+      
+      const disabled = result[STORAGE_KEYS.DISABLED_PLATFORMS] || [];
+      setDisabledPlatforms(disabled);
+      if (result[STORAGE_KEYS.PLATFORM_FILTERS]) {
+        // Automatically remove disabled platforms from filters
+        const activeFilters = result[STORAGE_KEYS.PLATFORM_FILTERS].filter((p: string) => !disabled.includes(p));
+        setPlatformFilters(activeFilters);
+      }
+
+      // Feature 7: Default Startup Tab
+      if (result[STORAGE_KEYS.DEFAULT_STARTUP_TAB]) {
+        const startupTab = result[STORAGE_KEYS.DEFAULT_STARTUP_TAB];
+        if (startupTab.startsWith('dash_')) {
+          const dashTab = startupTab.replace('dash_', '');
+          chrome.tabs.create({ url: `dashboard.html#${dashTab}` });
+          setActiveTab('friends');
+        } else {
+          setActiveTab(startupTab);
+        }
+      } else if (result[STORAGE_KEYS.ACTIVE_TAB]) {
+        setActiveTab(result[STORAGE_KEYS.ACTIVE_TAB]);
+      }
+
       if (result[STORAGE_KEYS.LAST_UPDATED]) setLastUpdated(result[STORAGE_KEYS.LAST_UPDATED]);
       // Also restore theme from the same single read (avoids a separate loadTheme() call)
       if (result[STORAGE_KEYS.DARK_MODE] !== undefined) setIsDarkMode(result[STORAGE_KEYS.DARK_MODE]);
       if (result[STORAGE_KEYS.FONT_SIZE_SCALE]) setFontSizeScale(result[STORAGE_KEYS.FONT_SIZE_SCALE]);
       if (result[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]) setDisplayZoomScale(result[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]);
+      if (result.daily_goal !== undefined) setDailyGoal(result.daily_goal);
+      if (result.pinned_friends) setPinnedFriends(result.pinned_friends);
+      
+      // Feature 8: Compact View
+      if (result[STORAGE_KEYS.COMPACT_VIEW]) {
+        document.body.classList.add('compact-view-enabled');
+      } else {
+        document.body.classList.remove('compact-view-enabled');
+      }
+
       // If a refresh was running when popup was last closed, re-start it after load
       loadData(username).then(() => {
         if (result[STORAGE_KEYS.REFRESH_IN_PROGRESS]) {
@@ -377,12 +493,14 @@ export const App: React.FC = () => {
       setToast({ 
         message: `${displayName} removed`, 
         type: 'info',
+        duration: 5000,
         action: { 
           label: 'Undo', 
           onClick: async () => {
             try {
               await StorageService.restoreIdentity(identityToRestore, profilesToDelete);
               await loadData();
+              setToast(null);
             } catch (error) {
               console.error('Failed to restore friend', error);
             }
@@ -503,6 +621,7 @@ export const App: React.FC = () => {
     setRefreshingFriend(username);
     try {
       const targetFriend = friends.find(f => f.username.toLowerCase() === username.toLowerCase());
+      setToast({ message: `Refreshing ${targetFriend?.displayName || username}...`, type: 'info' });
       if (targetFriend && targetFriend.accounts && targetFriend.accounts.length > 0) {
         const tasks = targetFriend.accounts.map(async (acc) => {
           const profile = await PlatformService.fetchProfile(acc.platform, acc.handle);
@@ -531,6 +650,33 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleRefreshOwn = async () => {
+    setRefreshingFriend('You');
+    setToast({ message: 'Refreshing your profiles...', type: 'info' });
+    try {
+      const tasks = [];
+      if (ownUsername) {
+        tasks.push(PlatformService.fetchProfile('leetcode', ownUsername).then(p => StorageService.saveProfile(p)));
+      }
+      if (ownCodeforcesHandle) {
+        tasks.push(PlatformService.fetchProfile('codeforces', ownCodeforcesHandle).then(p => StorageService.saveProfile(p)));
+      }
+      if (ownCodechefHandle) {
+        tasks.push(PlatformService.fetchProfile('codechef', ownCodechefHandle).then(p => StorageService.saveProfile(p)));
+      }
+      await Promise.allSettled(tasks);
+      await loadData();
+      const t = Date.now();
+      setLastUpdated(t);
+      chrome.storage.local.set({ ui_last_updated: t });
+      setToast({ message: 'Your profiles refreshed!', type: 'success' });
+    } catch (error) {
+      setToast({ message: 'Failed to refresh your profiles', type: 'error' });
+    } finally {
+      setRefreshingFriend(null);
+    }
+  };
+
   const handleTabChange = (tab: 'friends' | 'compare' | 'settings') => {
     setActiveTab(tab);
     chrome.storage.local.set({ ui_active_tab: tab });
@@ -539,6 +685,32 @@ export const App: React.FC = () => {
   const handleSortChange = (sort: 'name' | 'problems' | 'recent') => {
     setSortBy(sort);
     chrome.storage.local.set({ ui_sort_by: sort });
+  };
+
+  const dailySolvesCount = useMemo(() => {
+    let count = 0;
+    const now = new Date();
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 1000;
+
+    const getSolvesForHandle = (platform: string, handle: string) => {
+      const p = profiles[`${platform}:${handle.toLowerCase()}`] || profiles[handle.toLowerCase()];
+      if (!p?.recentSubmissions) return 0;
+      return p.recentSubmissions.filter(s => s.timestamp >= startOfDay && (s.statusDisplay === 'Accepted' || s.statusDisplay === 'AC')).length;
+    };
+
+    if (ownUsername) count += getSolvesForHandle('leetcode', ownUsername);
+    if (ownCodeforcesHandle) count += getSolvesForHandle('codeforces', ownCodeforcesHandle);
+    if (ownCodechefHandle) count += getSolvesForHandle('codechef', ownCodechefHandle);
+
+    return count;
+  }, [profiles, ownUsername, ownCodeforcesHandle, ownCodechefHandle]);
+
+  const handleTogglePin = async (friendId: string) => {
+    const nextPinned = pinnedFriends.includes(friendId)
+      ? pinnedFriends.filter(id => id !== friendId)
+      : [...pinnedFriends, friendId];
+    setPinnedFriends(nextPinned);
+    await chrome.storage.local.set({ pinned_friends: nextPinned });
   };
 
   const sortedFriends = useMemo(() => {
@@ -558,6 +730,13 @@ export const App: React.FC = () => {
                                 (profiles[f.username.toLowerCase()]?.platform && platformFilters.includes(profiles[f.username.toLowerCase()].platform as Platform));
       if (!hasActivePlatform) return false;
 
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const nameMatch = f.displayName?.toLowerCase().includes(q) || f.username.toLowerCase().includes(q);
+        const accMatch = f.accounts?.some(a => a.handle.toLowerCase().includes(q));
+        if (!nameMatch && !accMatch) return false;
+      }
+
       return true;
     });
 
@@ -573,9 +752,16 @@ export const App: React.FC = () => {
       ]
     } : null;
 
-    const listToSort = ownFriend ? [ownFriend, ...filteredFriends] : filteredFriends;
+    const listToSort = ownFriend ? (searchQuery.trim() && !'you'.includes(searchQuery.toLowerCase()) && !ownUsername?.toLowerCase().includes(searchQuery.toLowerCase()) && !ownCodeforcesHandle?.toLowerCase().includes(searchQuery.toLowerCase()) && !ownCodechefHandle?.toLowerCase().includes(searchQuery.toLowerCase()) ? filteredFriends : [ownFriend, ...filteredFriends]) : filteredFriends;
 
     return listToSort.sort((a, b) => {
+      if (a.id === 'own-user') return -1;
+      if (b.id === 'own-user') return 1;
+      const isPinnedA = pinnedFriends.includes(a.id || a.username);
+      const isPinnedB = pinnedFriends.includes(b.id || b.username);
+      if (isPinnedA && !isPinnedB) return -1;
+      if (!isPinnedA && isPinnedB) return 1;
+
       const getProfile = (f: Friend, platform: Platform) => {
         const handle = f.accounts?.find(acc => acc.platform === platform)?.handle || (profiles[f.username.toLowerCase()]?.platform === platform ? f.username : undefined);
         if (!handle) return undefined;
@@ -700,6 +886,8 @@ export const App: React.FC = () => {
             handleTabChange(tab);
           }}
           friendCount={friends.length}
+          dailyGoal={dailyGoal}
+          dailySolves={dailySolvesCount}
         />
 
         <div className="content-area">
@@ -773,6 +961,7 @@ export const App: React.FC = () => {
           message={toast.message} 
           type={toast.type} 
           action={toast.action}
+          duration={toast.duration}
           onClose={() => setToast(null)} 
         />
       )}
@@ -803,6 +992,8 @@ export const App: React.FC = () => {
           activeTab={activeTab} 
           onTabChange={setActiveTab}
           friendCount={0}
+          dailyGoal={dailyGoal}
+          dailySolves={dailySolvesCount}
         />
         <Skeleton />
       </div>
@@ -818,11 +1009,14 @@ export const App: React.FC = () => {
           chrome.storage.local.set({ ui_active_tab: tab });
         }}
         friendCount={friends.length}
+        dailyGoal={dailyGoal}
+        dailySolves={dailySolvesCount}
       />
 
       {activeTab === 'friends' && friends.length > 0 && (
-        <div className="controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+        <div className="controls-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '8px 16px', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-color, #222)' }}>
+          <div className="controls" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', padding: 0, border: 'none', background: 'transparent' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
             <label title="Sort your friends list by different criteria" style={{ margin: 0 }}>
               Sort by:
               <select value={sortBy} onChange={(e) => {
@@ -837,7 +1031,9 @@ export const App: React.FC = () => {
               </select>
             </label>
             <div className="platform-filters" style={{ display: 'flex', gap: '4px' }}>
-              {(['leetcode', 'codeforces', 'codechef'] as Platform[]).map(plat => {
+              {(['leetcode', 'codeforces', 'codechef'] as Platform[])
+                .filter(plat => !disabledPlatforms.includes(plat))
+                .map(plat => {
                 const isActive = platformFilters.includes(plat);
                 const initials = plat === 'leetcode' ? 'LC' : plat === 'codeforces' ? 'CF' : 'CC';
                 return (
@@ -880,6 +1076,7 @@ export const App: React.FC = () => {
           <span className="last-updated-info" style={{ whiteSpace: 'nowrap', marginLeft: '8px', flexShrink: 1, textOverflow: 'ellipsis', overflow: 'hidden' }}>
             Updated {formatTimestamp(lastUpdated)}
           </span>
+          </div>
         </div>
       )}
 
@@ -896,11 +1093,17 @@ export const App: React.FC = () => {
                   <div className="empty-state">
                     <img src="empty-state.svg" alt="No friends yet" style={{ width: '150px', height: '150px', marginBottom: '16px', opacity: 0.7 }} />
                     <p className="empty-title">Welcome to L'Amigo!</p>
-                    <p className="empty-message">Track your friends' LeetCode progress</p>
-                    <p className="hint">Start by adding a friend's LeetCode username or profile URL below</p>
+                    <p className="empty-message">Track your friends' problem solving progress across platforms</p>
+                    <p className="hint">Start by adding a friend's handle below</p>
                     <div className="example-hint">
-                      <small>Examples: "john_doe" or "https://leetcode.com/john_doe"</small>
+                      <small>Examples: "john_doe" or "tourist"</small>
                     </div>
+                    <button
+                      onClick={() => { setEditingFriend(null); setShowAddModal(true); }}
+                      style={{ marginTop: '16px', padding: '8px 16px', background: 'var(--rank-leetcode-knight, #2b7af7)', color: '#fff', border: 'none', borderRadius: '4px', fontSize: 'var(--font-size-base)', fontWeight: 'bold', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                    >
+                      Add your first friend ➔
+                    </button>
                   </div>
                 ) : (
                   <div className="friends-list">
@@ -923,14 +1126,12 @@ export const App: React.FC = () => {
                           leetcodeProfile={lcProfile}
                           codeforcesProfile={cfProfile}
                           codechefProfile={ccProfile}
+                          isPinned={pinnedFriends.includes(friend.id || friend.username)}
+                          onTogglePin={() => { if (!isOwn) handleTogglePin(friend.id || friend.username); }}
                           onRemove={() => { if (!isOwn) handleRemoveFriend(friend.id || friend.username, friend.displayName || friend.username); }}
                           onRefresh={() => {
                             if (isOwn) {
-                              const tasks = [];
-                              if (ownUsername) tasks.push(handleRefreshFriend(ownUsername));
-                              if (ownCodeforcesHandle) tasks.push(handleRefreshFriend(ownCodeforcesHandle));
-                              if (ownCodechefHandle) tasks.push(handleRefreshFriend(ownCodechefHandle));
-                              return Promise.all(tasks).then(() => {});
+                              return handleRefreshOwn();
                             } else {
                               return handleRefreshFriend(friend.username);
                             }
@@ -971,6 +1172,8 @@ export const App: React.FC = () => {
                 onCodeforcesHandleChange={setOwnCodeforcesHandle}
                 ownCodechefHandle={ownCodechefHandle}
                 onCodechefHandleChange={setOwnCodechefHandle}
+                ownCsesHandle={ownCsesHandle}
+                onCsesHandleChange={setOwnCsesHandle}
                 onToast={(message, type) => setToast({ message, type })}
                 onConfirmAction={requestConfirm}
                 onOpenImportExport={() => setShowImportExport(true)}
@@ -1099,6 +1302,7 @@ export const App: React.FC = () => {
           message={toast.message}
           type={toast.type}
           action={toast.action}
+          duration={toast.duration}
           onClose={() => setToast(null)}
         />
       )}

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "L'Amigo - LeetCode & Codeforces Friend Tracker & GitHub Sync",
   "short_name": "L'Amigo",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "LeetCode & Codeforces friend tracker. Auto-sync code to GitHub, compete on custom Leaderboards, and track 50+ Problem Sheets.",
   "permissions": [
     "storage",
@@ -12,7 +12,8 @@
   "host_permissions": [
     "https://leetcode.com/*",
     "https://codeforces.com/*",
-    "https://www.codechef.com/*"
+    "https://www.codechef.com/*",
+    "https://cses.fi/*"
   ],
   "optional_permissions": [
     "notifications",
@@ -23,7 +24,7 @@
     "https://github.com/*"
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://leetcode.com https://codeforces.com https://www.codechef.com https://api.github.com https://github.com https://fonts.googleapis.com https://fonts.gstatic.com;"
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ws://localhost:9091 https://leetcode.com https://codeforces.com https://www.codechef.com https://cses.fi https://api.github.com https://github.com https://fonts.googleapis.com https://fonts.gstatic.com;"
   },
   "action": {
     "default_popup": "popup.html",

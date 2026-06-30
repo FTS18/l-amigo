@@ -21,6 +21,17 @@ export class RefreshHandler implements MessageHandler {
 
   async refreshAllFriends(): Promise<void> {
     try {
+      const { smart_bg_refresh, last_opened_timestamp } = await chrome.storage.local.get(['smart_bg_refresh', 'last_opened_timestamp']);
+      const isSmartRefreshEnabled = smart_bg_refresh !== false; // Default true
+      
+      if (isSmartRefreshEnabled && last_opened_timestamp) {
+        const timeSinceOpen = Date.now() - last_opened_timestamp;
+        if (timeSinceOpen > 86400000) { // 24 hours
+          console.log('[RefreshHandler] Skipping background refresh. Extension not opened in last 24h.');
+          return;
+        }
+      }
+
       const identities = await StorageService.getIdentities();
       const { own_username: ownUsername, own_codeforces_handle: ownCodeforcesHandle, own_codechef_handle: ownCodechefHandle } =
         await chrome.storage.local.get(["own_username", "own_codeforces_handle", "own_codechef_handle"]);
@@ -30,6 +41,7 @@ export class RefreshHandler implements MessageHandler {
           const oldOwn = await StorageService.getProfile(ownUsername);
           const p = await LeetCodeService.fetchUserProfile(ownUsername);
           await NotificationService.checkOwnMilestones(ownUsername, oldOwn, p);
+          await NotificationService.checkStreakSavior(ownUsername, p);
           await StorageService.saveProfile(p);
         } catch (e) {
           console.error("Error refreshing own LeetCode profile:", e);

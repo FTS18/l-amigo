@@ -1,4 +1,4 @@
-export type Platform = "leetcode" | "codeforces" | "codechef";
+export type Platform = "leetcode" | "codeforces" | "codechef" | "gfg" | "cses";
 
 export interface PlatformAccount {
   platform: Platform;

@@ -19,6 +19,8 @@ interface FriendProfileViewProps {
   onBack: () => void;
   initialFilter?: 'all' | 'Easy' | 'Medium' | 'Hard';
   initialPlatform?: Platform;
+  isExpanded?: boolean;
+  preloadedSubmissions?: RecentSubmission[];
 }
 
 const RatingChart: React.FC<{
@@ -136,16 +138,18 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
   isDarkMode = true,
   onBack,
   initialFilter = 'all',
-  initialPlatform
+  initialPlatform,
+  isExpanded = false,
+  preloadedSubmissions
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'submissions'>('overview');
   const [activePlatform, setActivePlatform] = useState<Platform>(
     initialPlatform || (leetcodeProfile ? 'leetcode' : codeforcesProfile ? 'codeforces' : 'codechef')
   );
   const [filterLevel, setFilterLevel] = useState<'all' | 'Easy' | 'Medium' | 'Hard'>(initialFilter);
-  const [submissions, setSubmissions] = useState<RecentSubmission[]>([]);
+  const [submissions, setSubmissions] = useState<RecentSubmission[]>(preloadedSubmissions || []);
   const [loadingSubmissions, setLoadingSubmissions] = useState(false);
-  const [submissionLimit, setSubmissionLimit] = useState(30);
+  const [submissionLimit, setSubmissionLimit] = useState(isExpanded ? 150 : 30);
   const [showInfo, setShowInfo] = useState(false);
 
   // Sync initialFilter prop to filterLevel state
@@ -174,10 +178,15 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
   }, [initialPlatform, leetcodeProfile, codeforcesProfile, codechefProfile]);
 
   useEffect(() => {
+    if (preloadedSubmissions && preloadedSubmissions.length > 0) {
+      setSubmissions(preloadedSubmissions);
+      return;
+    }
+
     const fetchSubmissions = async () => {
       const cacheKey = `lamigo:subcache:${leetcodeProfile?.username || ''}:${codeforcesProfile?.username || ''}:${codechefProfile?.username || ''}`;
       
-      if (submissionLimit === 30) {
+      if (submissionLimit <= 150) {
         chrome.storage.local.get([cacheKey], (res) => {
           if (res[cacheKey]) {
             setSubmissions(res[cacheKey]);
@@ -192,14 +201,14 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
           promises.push(LeetCodeService.getRecentSubmissions(leetcodeProfile.username, submissionLimit));
         }
         if (codeforcesProfile?.username) {
-          promises.push(CodeforcesService.getRecentSubmissions(codeforcesProfile.username, Math.floor(submissionLimit * 1.5)));
+          promises.push(CodeforcesService.getRecentSubmissions(codeforcesProfile.username, Math.floor(submissionLimit * (isExpanded ? 3 : 1.5))));
         }
         // codechef doesn't currently support getRecentSubmissions
         const results = await Promise.all(promises);
         const combined = results.flat().sort((a, b) => b.timestamp - a.timestamp);
         
         setSubmissions(combined);
-        if (submissionLimit === 30) {
+        if (submissionLimit <= 150) {
           chrome.storage.local.set({ [cacheKey]: combined });
         }
       } catch (err) {
@@ -210,7 +219,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
     };
 
     fetchSubmissions();
-  }, [leetcodeProfile, codeforcesProfile, codechefProfile, submissionLimit]);
+  }, [leetcodeProfile, codeforcesProfile, codechefProfile, submissionLimit, preloadedSubmissions, isExpanded]);
 
   const activeChartProfile = activePlatform === 'leetcode' ? leetcodeProfile : activePlatform === 'codechef' ? codechefProfile : codeforcesProfile;
   const platformSubmissions = submissions.filter(sub => sub.platform === activePlatform);
@@ -327,7 +336,7 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                       title={`${StreakCalculator.calculateStreak(activeChartProfile).currentStreak} Day Streak on ${activePlatform}`}
                       style={{ fontSize: 'var(--font-size-md)', fontWeight: 600, color: '#ff9800', display: 'flex', alignItems: 'center', gap: '2px', cursor: 'default' }}
                     >
-                      {StreakCalculator.calculateStreak(activeChartProfile).currentStreak} <span style={{ fontSize: 'var(--font-size-md)' }}>🔥</span>
+                      {StreakCalculator.calculateStreak(activeChartProfile).currentStreak} <span style={{ fontSize: 'var(--font-size-xs)', marginLeft: '2px', color: 'var(--text-muted)', fontWeight: 'normal' }}>days</span>
                     </span>
                   )}
                 </div>
@@ -918,10 +927,10 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
                 })()}
               </div>
               
-              {deduplicatedPlatformSubmissions.length > 0 && filterLevel === 'all' && (
+              {deduplicatedPlatformSubmissions.length > submissionLimit && filterLevel === 'all' && (
                 <button 
                   className="load-more-btn"
-                  onClick={() => setSubmissionLimit(prev => prev + 30)}
+                  onClick={() => setSubmissionLimit(prev => prev + (isExpanded ? 150 : 30))}
                   disabled={loadingSubmissions}
                   style={{ width: '100%', padding: '8px', marginTop: '12px', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)', border: '1px dashed var(--border-primary)', borderRadius: '0px', cursor: loadingSubmissions ? 'not-allowed' : 'pointer' }}
                 >

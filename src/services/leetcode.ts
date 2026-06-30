@@ -1,6 +1,7 @@
 import { FriendProfile, RecentSubmission } from "../types";
 import { API_CONSTANTS, DATA_LIMITS } from "../constants";
 import { CircuitBreaker } from "../utils/circuit-breaker";
+import { fetchWithTimeout } from "../utils/network";
 
 /**
  * Represents a single accepted submission fetched from LeetCode's GraphQL API.
@@ -20,7 +21,7 @@ export interface AcceptedSubmission {
 
 export class LeetCodeService {
   private static readonly GQL = API_CONSTANTS.LEETCODE_GRAPHQL;
-  private static circuitBreaker = new CircuitBreaker({
+  private static circuitBreaker = new CircuitBreaker("leetcode", {
     failureThreshold: 5,
     resetTimeout: 60000,
   });
@@ -96,6 +97,17 @@ export class LeetCodeService {
   ): Promise<T> {
     const bodyStr = JSON.stringify({ query, variables });
 
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+      try {
+        const s = await chrome.storage.local.get("leetcode_cooldown");
+        if (s.leetcode_cooldown && s.leetcode_cooldown > Date.now()) {
+          const wait = s.leetcode_cooldown - Date.now();
+          console.warn(`[LC] Cooldown active. Delaying execution by ${wait}ms.`);
+          await this.sleep(wait);
+        }
+      } catch (e) { /* ignore */ }
+    }
+
     // Hash for synthetic Cache API request
     let hash = 0;
     for (let i = 0; i < bodyStr.length; i++) {
@@ -121,22 +133,20 @@ export class LeetCodeService {
 
       for (let attempt = 0; attempt <= retries; attempt++) {
         try {
-          const ctl = new AbortController();
-          const timer = setTimeout(
-            () => ctl.abort(),
-            API_CONSTANTS.REQUEST_TIMEOUT,
-          );
-
-          const res = await fetch(this.GQL, {
+          const res = await fetchWithTimeout(this.GQL, {
             method: "POST",
             headers,
             credentials: "include",
             body: bodyStr,
-            signal: ctl.signal,
+            timeout: API_CONSTANTS.REQUEST_TIMEOUT,
           });
-          clearTimeout(timer);
 
           if (res.status === 429 || res.status === 403) {
+            const duration = res.status === 429 ? 60000 : 30000;
+            const cooldownTime = Date.now() + duration;
+            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+              await chrome.storage.local.set({ leetcode_cooldown: cooldownTime });
+            }
             if (attempt < retries) {
               const wait = API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt);
               console.warn(
@@ -161,7 +171,10 @@ export class LeetCodeService {
           if (cache && !json.errors?.length) {
             const syntheticRes = new Response(resClone.body, {
                status: 200,
-               headers: new Headers({ "Content-Type": "application/json" })
+               headers: new Headers({ 
+                 "Content-Type": "application/json",
+                 "X-Cache-Timestamp": Date.now().toString()
+               })
             });
             cache.put(syntheticReq, syntheticRes).catch(console.error);
           }
@@ -179,9 +192,14 @@ export class LeetCodeService {
       try {
         const cachedRes = await cache.match(syntheticReq);
         if (cachedRes) {
-          const cachedJson = await cachedRes.json();
-          fetchPromise.catch(err => console.error("SWR background fetch failed:", err));
-          return cachedJson.data as T;
+          const ts = cachedRes.headers.get("X-Cache-Timestamp");
+          const age = ts ? Date.now() - parseInt(ts, 10) : Infinity;
+          const MAX_AGE = 12 * 60 * 60 * 1000; // 12 hours TTL
+          if (age < MAX_AGE) {
+            const cachedJson = await cachedRes.json();
+            fetchPromise.catch(err => console.error("SWR background fetch failed:", err));
+            return cachedJson.data as T;
+          }
         }
       } catch (e) {
         console.error("Cache match failed", e);
@@ -208,7 +226,8 @@ export class LeetCodeService {
   static async fetchAllAcceptedSubmissions(
     onProgress?: (fetched: number) => void,
     knownIds?: Set<string>,
-    minTimestamp: number = 0
+    minTimestamp: number = 0,
+    stopEarly: boolean = true
   ): Promise<AcceptedSubmission[]> {
     const PAGE = 20;
     const SAFETY_CAP = 10000;
@@ -217,6 +236,12 @@ export class LeetCodeService {
     let consecutiveKnownPages = 0;
 
     while (offset < SAFETY_CAP) {
+      const { cancel_sync } = await chrome.storage.session.get('cancel_sync');
+      if (cancel_sync) {
+        console.log('[LC] Fetch cancelled by user');
+        break;
+      }
+
       const data = await this.gql<{
         submissionList: {
           hasNext: boolean;
@@ -275,7 +300,7 @@ export class LeetCodeService {
       }
 
       // Incremental: stop after 2 consecutive pages with zero new accepted
-      if (knownIds) {
+      if (knownIds && stopEarly) {
         if (newInPage === 0) {
           consecutiveKnownPages++;
           if (consecutiveKnownPages >= 2) {
@@ -534,24 +559,32 @@ export class LeetCodeService {
       const slugs = basicSubmissions.map(s => s.titleSlug);
       const uniqueSlugs = Array.from(new Set(slugs));
       
-      const difficultyQuery = `
-        query getDifficulties {
-          ${uniqueSlugs.map((slug, idx) => `
-            q${idx}: question(titleSlug: "${slug}") {
-              difficulty
-              titleSlug
-            }
-          `).join('\n')}
-        }
-      `;
-
-      const diffData = await this.gql<any>(difficultyQuery);
       const diffMap: Record<string, string> = {};
+      const SLUG_BATCH_SIZE = 15;
       
-      Object.keys(diffData || {}).forEach(key => {
-        const q = diffData[key];
-        if (q) diffMap[q.titleSlug] = q.difficulty;
-      });
+      for (let i = 0; i < uniqueSlugs.length; i += SLUG_BATCH_SIZE) {
+        const batch = uniqueSlugs.slice(i, i + SLUG_BATCH_SIZE);
+        const difficultyQuery = `
+          query getDifficulties {
+            ${batch.map((slug, idx) => `
+              q${idx}: question(titleSlug: "${slug}") {
+                difficulty
+                titleSlug
+              }
+            `).join('\n')}
+          }
+        `;
+        
+        try {
+          const diffData = await this.gql<any>(difficultyQuery);
+          Object.keys(diffData || {}).forEach(key => {
+            const q = diffData[key];
+            if (q) diffMap[q.titleSlug] = q.difficulty;
+          });
+        } catch (e) {
+          console.warn("[LC] Failed to fetch difficulty batch:", batch, e);
+        }
+      }
 
       return basicSubmissions.map((s) => ({
         title: s.title,

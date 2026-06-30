@@ -317,7 +317,7 @@ chrome.runtime.onMessage.addListener((message) => {
     
     const icon = document.createElement("span");
     icon.className = "lamigo-toast-success-icon";
-    icon.textContent = "✓";
+    icon.textContent = "";
     
     const text = document.createElement("span");
     text.textContent = message.message;

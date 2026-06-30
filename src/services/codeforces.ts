@@ -1,6 +1,7 @@
 import { API_CONSTANTS, DATA_LIMITS } from "../constants";
 import { FriendProfile, RecentSubmission, TopicStat, LanguageStat } from "../types";
 import { CircuitBreaker } from "../utils/circuit-breaker";
+import { fetchWithTimeout } from "../utils/network";
 
 interface CodeforcesApiResponse<T> {
   status: "OK" | "FAILED";
@@ -54,7 +55,7 @@ interface CodeforcesContest {
 
 export class CodeforcesService {
   private static readonly API = API_CONSTANTS.CODEFORCES_API;
-  private static circuitBreaker = new CircuitBreaker({
+  private static circuitBreaker = new CircuitBreaker("codeforces", {
     failureThreshold: 5,
     resetTimeout: 60000,
   });
@@ -137,18 +138,31 @@ export class CodeforcesService {
   }
 
   private static async executeRequest<T>(endpoint: string, retries = 2): Promise<T> {
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+      try {
+        const s = await chrome.storage.local.get("codeforces_cooldown");
+        if (s.codeforces_cooldown && s.codeforces_cooldown > Date.now()) {
+          const wait = s.codeforces_cooldown - Date.now();
+          console.warn(`[CF] Cooldown active. Delaying execution by ${wait}ms.`);
+          await new Promise(r => setTimeout(r, wait));
+        }
+      } catch (e) { /* ignore */ }
+    }
+
     return this.circuitBreaker.execute(async () => {
       const url = `${this.API}/${endpoint}`;
       
       for (let attempt = 1; attempt <= retries + 1; attempt++) {
-        const ctl = new AbortController();
-        const timer = setTimeout(
-          () => ctl.abort(),
-          45000, // 45s timeout for heavy CF queries (e.g. 2000 subs for active users)
-        );
-
         try {
-          const res = await fetch(url, { signal: ctl.signal });
+          const res = await fetchWithTimeout(url, {
+            timeout: 45000,
+          });
+          if (res.status === 429 || res.status === 403) {
+            const cooldownTime = Date.now() + (res.status === 429 ? 60000 : 30000);
+            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+              await chrome.storage.local.set({ codeforces_cooldown: cooldownTime });
+            }
+          }
           if (!res.ok) {
             throw new Error(`Codeforces HTTP ${res.status}`);
           }
@@ -165,8 +179,6 @@ export class CodeforcesService {
             continue;
           }
           throw err;
-        } finally {
-          clearTimeout(timer);
         }
       }
       throw new Error("Codeforces API failed after retries");
@@ -391,6 +403,7 @@ export class CodeforcesService {
     const urls = [
       `https://codeforces.com/contest/${contestId}/submission/${submissionId}`,
       `https://codeforces.com/problemset/submission/${contestId}/${submissionId}`,
+      `https://codeforces.com/gym/${contestId}/submission/${submissionId}`,
     ];
 
     /**
@@ -399,18 +412,41 @@ export class CodeforcesService {
      */
     const extractCode = (html: string): string | null => {
       try {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const candidates = [
-          doc.querySelector('#program-source-text'),
-          doc.querySelector('[class*="source-code"]'),
-          doc.querySelector('textarea[name="source"]'),
-        ];
-        for (const el of candidates) {
-          const code = el?.textContent?.trim();
-          if (code && code.length > 10) return code;
+        if (typeof DOMParser !== 'undefined') {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const candidates = [
+            doc.querySelector('#program-source-text'),
+            doc.querySelector('[class*="source-code"]'),
+            doc.querySelector('textarea[name="source"]'),
+          ];
+          for (const el of candidates) {
+            const code = el?.textContent?.trim();
+            if (code && code.length > 10) return code;
+          }
         }
       } catch {
         // DOMParser unavailable in this context
+      }
+      
+      // Fallback for Service Workers where DOMParser is unavailable!
+      const regexes = [
+        /<pre[^>]*id="program-source-text"[^>]*>(.*?)<\/pre>/s,
+        /<pre[^>]*class="[^"]*source-code[^"]*"[^>]*>(.*?)<\/pre>/s,
+        /<textarea[^>]*name="source"[^>]*>(.*?)<\/textarea>/s,
+        /<pre[^>]*>(.*?)<\/pre>/s
+      ];
+      for (const regex of regexes) {
+        const match = regex.exec(html);
+        if (match && match[1]) {
+          const code = match[1]
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .trim();
+          if (code.length > 10) return code;
+        }
       }
       return null;
     };
@@ -424,10 +460,50 @@ export class CodeforcesService {
             'Accept-Language': 'en-US,en;q=0.9',
           },
         });
+        
+        if (res.status === 429 || res.status === 403 || res.status === 503) {
+          console.warn(`[CF] Rate limit/Cloudflare hit (${res.status}) for ${url}. Waiting 8 seconds before retry...`);
+          await new Promise(r => setTimeout(r, 8000));
+          const retryRes = await fetch(url, {
+            credentials: 'include',
+            headers: {
+              'Accept': 'text/html,application/xhtml+xml',
+              'Accept-Language': 'en-US,en;q=0.9',
+            },
+          });
+          if (retryRes.status === 403) {
+            console.warn(`[CF] Permanent Forbidden (403) for ${url}. Treating as private group contest.`);
+            return "// Codeforces Private Group Submission\n// Code is not publicly accessible.";
+          }
+          if (retryRes.ok) {
+            const retryHtml = await retryRes.text();
+            const retryCode = extractCode(retryHtml);
+            if (retryCode) return retryCode;
+          }
+          continue;
+        }
+
         if (!res.ok) continue;
         const html = await res.text();
-        // Skip Cloudflare challenge pages
-        if (html.includes('Just a moment...') || html.includes('cf-mitigated')) continue;
+        
+        // Handle Cloudflare challenge pages with backoff retry
+        if (html.includes('Just a moment...') || html.includes('cf-mitigated')) {
+          console.warn(`[CF] Cloudflare challenge hit for ${url}. Waiting 8 seconds before retry...`);
+          await new Promise(r => setTimeout(r, 8000));
+          const retryRes = await fetch(url, {
+            credentials: 'include',
+            headers: {
+              'Accept': 'text/html,application/xhtml+xml',
+              'Accept-Language': 'en-US,en;q=0.9',
+            },
+          });
+          if (retryRes.ok) {
+            const retryHtml = await retryRes.text();
+            const retryCode = extractCode(retryHtml);
+            if (retryCode) return retryCode;
+          }
+          continue;
+        }
         const code = extractCode(html);
         if (code) return code;
       } catch (e) {
@@ -441,7 +517,7 @@ export class CodeforcesService {
     try {
       const data = await this.request<CodeforcesContest[]>('contest.list?gym=false');
       return data
-        .filter(c => c.phase === 'BEFORE')
+        .filter(c => c.phase === 'BEFORE' || c.phase === 'CODING')
         .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
     } catch (error) {
       console.error('Failed to fetch upcoming contests:', error);

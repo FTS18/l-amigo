@@ -367,6 +367,13 @@
 .platform-toggle-group {
   display: flex;
   gap: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+}
+
+.platform-toggle-group::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .platform-toggle-group .platform-toggle-btn {

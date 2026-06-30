@@ -300,9 +300,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       return <span className="verification-badge verifying">Verifying...</span>;
     }
     if (status === 'valid') {
-      return <span className="verification-badge valid">✓ Valid</span>;
+      return <span className="verification-badge valid"> Valid</span>;
     }
-    return <span className="verification-badge invalid">✗ Invalid</span>;
+    return <span className="verification-badge invalid"> Invalid</span>;
   };
 
   return (
@@ -335,14 +335,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             onClick={() => setShowPrivacy(!showPrivacy)}
             style={{ color: showPrivacy ? '#ffa116' : 'inherit' }}
           >
-            🔒 Privacy
+             Privacy
           </button>
         </div>
 
         {showPrivacy && (
           <div style={{ marginBottom: '20px', padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-              <strong>🔒 100% Local & Private</strong>
+              <strong> 100% Local & Private</strong>
               <button onClick={() => setShowPrivacy(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
             </div>
             L'Amigo operates entirely within your browser. All friend lists, submission caches, and GitHub tokens are stored securely in <code>chrome.storage.local</code>. Zero personal data or tracking analytics are sent to any external proprietary servers.
@@ -350,11 +350,15 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
         )}
 
         {mode === 'setup' ? (
-          <form onSubmit={handleSubmit} className="onboarding-form">
+          <>
+            <p className="onboarding-hint" style={{ marginBottom: '16px', color: 'var(--text-secondary)' }}>
+              💡 Your handles allow L'Amigo to track your live progress and build your baseline statistics.
+            </p>
+            <form onSubmit={handleSubmit} className="onboarding-form">
             <div className="onboarding-field">
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>Your LeetCode Username (Optional)</span>
-                <span title="Providing your own handle prevents you from showing up in your own friend comparison lists and helps calculate relative head-to-head stats." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                <span title="Providing your own handle prevents you from showing up in your own friend comparison lists and helps calculate relative head-to-head stats." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
               </label>
               <p className="onboarding-hint">
                 We'll exclude you from the friends list to avoid confusion
@@ -376,7 +380,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             <div className="onboarding-field">
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>Your Codeforces Handle (Optional)</span>
-                <span title="Your exact Codeforces handle (case-sensitive). Allows L'Amigo to track your live submissions and compare ratings accurately." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                <span title="Your exact Codeforces handle (case-sensitive). Allows L'Amigo to track your live submissions and compare ratings accurately." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
               </label>
               <p className="onboarding-hint">
                 Handle is case-sensitive (e.g. Tourist, not tourist)
@@ -397,7 +401,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             <div className="onboarding-field">
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>Your CodeChef Handle (Optional)</span>
-                <span title="Your exact CodeChef handle. Used to establish your baseline star rating and practice metrics." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                <span title="Your exact CodeChef handle. Used to establish your baseline star rating and practice metrics." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
               </label>
               <input
                 type="text"
@@ -422,6 +426,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               </button>
             </div>
           </form>
+          </>
         ) : (
           <>
           <form onSubmit={handleRestore} className="onboarding-form">
@@ -429,8 +434,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               <div style={{ marginBottom: '16px' }}>
                 <label className="onboarding-field-label" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', marginBottom: '8px', fontSize: 'var(--font-size-md)' }}>
                   <span>Option A: Authenticate with GitHub (Recommended)</span>
-                  <span title="Securely connects L'Amigo to GitHub via OAuth device flow so you can automatically backup and sync your solved problem history." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                  <span title="Securely connects L'Amigo to GitHub via OAuth device flow so you can automatically backup and sync your solved problem history." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
                 </label>
+                <p className="onboarding-hint" style={{ marginTop: '-4px', marginBottom: '12px', fontStyle: 'italic', color: 'var(--text-secondary)' }}>
+                  We'll look for a .lamigo-backup.json file in your selected repository to instantly restore your configuration and friends list.
+                </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {!deviceFlowState ? (
                     <button
@@ -473,7 +481,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               </div>
             ) : (
               <div style={{ marginBottom: '16px', padding: '12px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', color: 'var(--color-easy)', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span>✓ Connected to GitHub</span>
+                <span> Connected to GitHub</span>
                 <button
                   type="button"
                   onClick={() => { setGhToken(''); setDeviceFlowState(null); }}
@@ -488,7 +496,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             <div className="onboarding-field">
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>Option B: Manual Personal Access Token (PAT)</span>
-                <span title="If you prefer manual control, paste a classic GitHub Personal Access Token (PAT) with 'repo' scope enabled." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                <span title="If you prefer manual control, paste a classic GitHub Personal Access Token (PAT) with 'repo' scope enabled." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
               </label>
               <p className="onboarding-hint">
                 Provide token manually with "repo" scope if you prefer not to use Device Flow
@@ -509,7 +517,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             <div className="onboarding-field">
               <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>GitHub Repository Name</span>
-                <span title="The exact name of the private or public repository on your GitHub account where L'Amigo stores backup files and solution code." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+                <span title="The exact name of the private or public repository on your GitHub account where L'Amigo stores backup files and solution code." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
               </label>
               <p className="onboarding-hint">
                 The private repository where your L'Amigo solutions and backup are synced
@@ -545,7 +553,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <label className="onboarding-field-label" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold', fontSize: 'var(--font-size-md)' }}>
               <span>Option C: Local Import JSON</span>
-              <span title="Allows you to restore your complete friends list, aliases, and custom settings from a previously exported backup file on your local drive." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>ⓘ</span>
+              <span title="Allows you to restore your complete friends list, aliases, and custom settings from a previously exported backup file on your local drive." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
             </label>
             <p className="onboarding-hint" style={{ margin: '0 0 8px', fontSize: 'var(--font-size-sm)', color: 'var(--text-muted)' }}>
               Restore your complete configuration and friends list from a local JSON backup file

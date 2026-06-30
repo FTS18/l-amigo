@@ -66,4 +66,46 @@ export class NotificationService {
       }
     }
   }
+
+  static async checkStreakSavior(username: string, profile: any) {
+    const { streak_savior_alerts, last_streak_savior_alert_date } = await chrome.storage.local.get([
+      "streak_savior_alerts", 
+      "last_streak_savior_alert_date"
+    ]);
+    
+    // Default to off if not explicitly enabled
+    if (!streak_savior_alerts) return;
+
+    const streakInfo = StreakCalculator.calculateStreak(profile);
+    
+    let isActiveToday = false;
+    if (streakInfo.lastSubmissionDate) {
+      const today = new Date();
+      isActiveToday = streakInfo.lastSubmissionDate.getDate() === today.getDate() &&
+                      streakInfo.lastSubmissionDate.getMonth() === today.getMonth() &&
+                      streakInfo.lastSubmissionDate.getFullYear() === today.getFullYear();
+    }
+
+    // Only warn if they actually have a streak going but haven't solved today
+    if (streakInfo.currentStreak > 0 && !isActiveToday) {
+      const now = new Date();
+      // Check if it's past 8 PM local time
+      if (now.getHours() >= 20) {
+        const todayStr = now.toDateString();
+        
+        // Don't spam, only once per day
+        if (last_streak_savior_alert_date !== todayStr) {
+          chrome.notifications.create({
+            type: "basic",
+            iconUrl: "public/favicon-32x32.png",
+            title: "🔥 Streak Savior Warning!",
+            message: `You haven't solved any problems today! Keep your ${streakInfo.currentStreak}-day streak alive before midnight!`,
+            priority: 2,
+          });
+          
+          await chrome.storage.local.set({ last_streak_savior_alert_date: todayStr });
+        }
+      }
+    }
+  }
 }

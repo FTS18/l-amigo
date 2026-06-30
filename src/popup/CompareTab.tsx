@@ -5,7 +5,7 @@ import { StreakCalculator, StreakInfo } from '../services/streak';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { Toast } from './Toast'; // for error handling UI
 import { Modal } from './Modal'; // documentation overlay
-import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../utils/PlatformIcons';
+import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon, PlatformIcon } from '../utils/PlatformIcons';
 
 
 
@@ -26,11 +26,68 @@ export const CompareTab: React.FC<CompareTabProps> = ({
   ownCodeforcesHandle,
   ownCodechefHandle,
 }) => {
-  const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
-  const [showAllTopics, setShowAllTopics] = useState(false);
-  const [showAllLangs, setShowAllLangs] = useState(false);
-  const [activePlatform, setActivePlatform] = useState<Platform>('leetcode');
-  const [hideUnrated, setHideUnrated] = useState(false);
+  const ss = <T,>(key: string, fallback: T): T => {
+    try {
+      const v = localStorage.getItem(`cmp_${key}`);
+      if (v !== null) return JSON.parse(v) as T;
+    } catch { /* ignore */ }
+    return fallback;
+  };
+  const setSS = <T,>(key: string, value: T) => {
+    try { localStorage.setItem(`cmp_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
+  };
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'cmp_selectedFriends' && e.newValue) {
+        try { _setSelectedFriends(JSON.parse(e.newValue)); } catch {}
+      } else if (e.key === 'cmp_showAllTopics' && e.newValue) {
+        try { _setShowAllTopics(JSON.parse(e.newValue)); } catch {}
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  const [selectedFriends, _setSelectedFriends] = useState<string[]>(() => ss('selectedFriends', []));
+  const setSelectedFriends = (v: string[] | ((prev: string[]) => string[])) => {
+    _setSelectedFriends(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('selectedFriends', next);
+      return next;
+    });
+  };
+
+  const [showAllTopics, _setShowAllTopics] = useState<boolean>(() => ss('showAllTopics', false));
+  const setShowAllTopics = (v: boolean | ((prev: boolean) => boolean)) => {
+    _setShowAllTopics(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('showAllTopics', next);
+      return next;
+    });
+  };
+
+  const [showAllLangs, _setShowAllLangs] = useState<boolean>(() => ss('showAllLangs', false));
+  const setShowAllLangs = (v: boolean | ((prev: boolean) => boolean)) => {
+    _setShowAllLangs(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('showAllLangs', next);
+      return next;
+    });
+  };
+
+  const [activePlatform, _setActivePlatform] = useState<Platform>(() => ss('activePlatform', 'leetcode'));
+  const setActivePlatform = (v: Platform) => { setSS('activePlatform', v); _setActivePlatform(v); };
+
+  const [hideUnrated, _setHideUnrated] = useState<boolean>(() => ss('hideUnrated', false));
+  const setHideUnrated = (v: boolean | ((prev: boolean) => boolean)) => {
+    _setHideUnrated(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('hideUnrated', next);
+      return next;
+    });
+  };
+
   const [isLoadingPlatform, setIsLoadingPlatform] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [showDocs, setShowDocs] = useState(false);
@@ -126,7 +183,10 @@ export const CompareTab: React.FC<CompareTabProps> = ({
   // Build the list of all users that have an account on the active platform
   const allPlatformUsers = useMemo(() => {
     const list = [];
-    const ownHandle = activePlatform === 'leetcode' ? ownUsername : activePlatform === 'codeforces' ? ownCodeforcesHandle : ownCodechefHandle;
+    const ownHandle = 
+      activePlatform === 'leetcode' ? ownUsername : 
+      activePlatform === 'codeforces' ? ownCodeforcesHandle : 
+      activePlatform === 'codechef' ? ownCodechefHandle : undefined;
     if (ownHandle) {
       list.push({ username: ownHandle, isOwn: true });
     }
@@ -329,9 +389,9 @@ export const CompareTab: React.FC<CompareTabProps> = ({
       ];
     } else if (activePlatform === 'codechef') {
       return [
-        { key: 'Stars', label: 'Stars', tooltip: 'CodeChef Star division tier (1★ to 7★)', getValue: (p: FriendProfile) => {
+        { key: 'Stars', label: 'Stars', tooltip: 'CodeChef Star division tier (1 to 7)', getValue: (p: FriendProfile) => {
             const stars = Math.floor((p.contestRating || 0) / 200) - 2; // Approximate stars calculation if needed, or simply extract from profile if we saved it
-            return p.contestRating ? `${Math.max(1, Math.min(7, Math.floor((p.contestRating - 1200) / 200) + 1))}★` : '-';
+            return p.contestRating ? `${Math.max(1, Math.min(7, Math.floor((p.contestRating - 1200) / 200) + 1))}` : '-';
           }
         },
         { key: 'Current Streak', label: 'Current Streak', tooltip: 'Current consecutive days with at least 1 accepted submission', getValue: (p: FriendProfile) => {
@@ -599,7 +659,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
                   />
                 )}
                 <span>{user.username} {user.isOwn && '(You)'}</span>
-                {isSelected && <span className="check-icon">✓</span>}
+                {isSelected && <span className="check-icon"></span>}
               </button>
             );
           })}
@@ -638,7 +698,7 @@ export const CompareTab: React.FC<CompareTabProps> = ({
                     <tr key={metric.key}>
                       <td className="metric-label" title={(metric as any).tooltip}>
                         {metric.label}
-                        {(metric as any).tooltip && <span style={{ cursor: 'help', opacity: 0.7, marginLeft: '4px' }}>ⓘ</span>}
+                        {(metric as any).tooltip && <span style={{ cursor: 'help', opacity: 0.7, marginLeft: '4px' }}>(i)</span>}
                       </td>
                       {selectedProfiles.map(profile => {
                         const val = metric.getValue(profile);

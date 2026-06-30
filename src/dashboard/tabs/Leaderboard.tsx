@@ -9,7 +9,29 @@ interface Props {
 }
 
 export const Leaderboard: React.FC<Props> = ({ friends, profiles, selectedGlobalPlatforms = ['leetcode', 'codeforces', 'codechef'] }) => {
-  const [rankingMode, setRankingMode] = useState<'power' | 'mastery' | 'solves'>('power');
+  const ss = <T,>(key: string, fallback: T): T => {
+    try {
+      const v = localStorage.getItem(`lb_${key}`);
+      if (v !== null) return JSON.parse(v) as T;
+    } catch { /* ignore */ }
+    return fallback;
+  };
+  const setSS = <T,>(key: string, value: T) => {
+    try { localStorage.setItem(`lb_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
+  };
+
+  const [rankingMode, _setRankingMode] = useState<'power' | 'mastery' | 'solves'>(() => ss('rankingMode', 'power'));
+  const setRankingMode = (v: 'power' | 'mastery' | 'solves') => { setSS('rankingMode', v); _setRankingMode(v); };
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'lb_rankingMode' && e.newValue) {
+        try { _setRankingMode(JSON.parse(e.newValue)); } catch {}
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
   const [dismissedNotice, setDismissedNotice] = useState(false);
 
   useEffect(() => {
@@ -19,12 +41,9 @@ export const Leaderboard: React.FC<Props> = ({ friends, profiles, selectedGlobal
   }, []);
 
   const getProfile = (f: Friend, platform: 'leetcode'|'codeforces'|'codechef') => {
-    if (f.id === 'own-user') {
-      return Object.values(profiles).find(p => p.username === f.username && p.platform === platform);
-    }
-    const acc = f.accounts?.find(a => a.platform === platform);
-    if (!acc) return undefined;
-    return profiles[`${platform}:${acc.handle.toLowerCase()}`] || profiles[acc.handle.toLowerCase()];
+    const handle = f.accounts?.find(acc => acc.platform === platform)?.handle || (profiles[f.username.toLowerCase()]?.platform === platform ? f.username : undefined);
+    if (!handle) return undefined;
+    return profiles[`${platform}:${handle.toLowerCase()}`] || profiles[handle.toLowerCase()];
   };
 
   const rankedFriends = useMemo(() => {
@@ -188,28 +207,28 @@ export const Leaderboard: React.FC<Props> = ({ friends, profiles, selectedGlobal
               <th>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Total Solved</span>
-                  <span title="Sum of raw problems solved across active platform filters." style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
+                  <span title="Sum of raw problems solved across active platform filters." style={{ cursor: 'help', opacity: 0.7 }}>(i)</span>
                 </div>
               </th>
               <th>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <LeetCodeIcon size={16} />
                   <span>LC Rating</span>
-                  <span title="LeetCode Official Contest Rating (e.g. Guardian ≥ 2150, Knight ≥ 1850)" style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
+                  <span title="LeetCode Official Contest Rating (e.g. Guardian ≥ 2150, Knight ≥ 1850)" style={{ cursor: 'help', opacity: 0.7 }}>(i)</span>
                 </div>
               </th>
               <th>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <CodeforcesIcon size={16} />
                   <span>CF Rating</span>
-                  <span title="Codeforces Official Rating (Normalized by 1.25x for cross-platform comparison)" style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
+                  <span title="Codeforces Official Rating (Normalized by 1.25x for cross-platform comparison)" style={{ cursor: 'help', opacity: 0.7 }}>(i)</span>
                 </div>
               </th>
               <th>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <CodeChefIcon size={16} />
                   <span>CC Rating</span>
-                  <span title="CodeChef Official Rating (e.g. 3★ ≥ 1600, 4★ ≥ 1800)" style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
+                  <span title="CodeChef Official Rating (e.g. 3 ≥ 1600, 4 ≥ 1800)" style={{ cursor: 'help', opacity: 0.7 }}>(i)</span>
                 </div>
               </th>
             </tr>

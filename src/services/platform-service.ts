@@ -38,13 +38,13 @@ class CodechefAdapter implements PlatformAdapter {
 }
 
 export class PlatformService {
-  private static adapters: Record<Platform, PlatformAdapter> = {
+  private static adapters: Partial<Record<Platform, PlatformAdapter>> = {
     leetcode: new LeetCodeAdapter(),
     codeforces: new CodeforcesAdapter(),
     codechef: new CodechefAdapter(),
   };
 
-  static getAdapter(platform: Platform): PlatformAdapter {
+  static getAdapter(platform: Platform): PlatformAdapter | undefined {
     return this.adapters[platform];
   }
 
@@ -53,6 +53,9 @@ export class PlatformService {
     handle: string,
   ): Promise<FriendProfile> {
     const adapter = this.getAdapter(platform);
+    if (!adapter) {
+      throw new Error(`Platform adapter not found for ${platform}`);
+    }
     return adapter.fetchProfile(handle);
   }
 
@@ -61,6 +64,9 @@ export class PlatformService {
     handle: string,
   ): Promise<boolean> {
     const adapter = this.getAdapter(platform);
+    if (!adapter) {
+      throw new Error(`Platform adapter not found for ${platform}`);
+    }
     if (adapter.verifyHandle) {
       return adapter.verifyHandle(handle);
     }

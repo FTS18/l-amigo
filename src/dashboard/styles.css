@@ -187,3 +187,22 @@
   filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.5));
   transform: scale(1.15);
 }
+
+/* Accessibility & Font Scaling Adaptations */
+.dashboard-container {
+  min-height: 100vh;
+  height: auto !important;
+}
+
+.sidebar {
+  min-height: 100vh;
+  height: auto !important;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.main-content {
+  min-height: 100vh;
+  height: auto !important;
+  overflow-y: auto;
+}

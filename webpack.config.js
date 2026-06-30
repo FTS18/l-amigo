@@ -63,8 +63,8 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         __DEV__: JSON.stringify(!isProd),
         // Secrets are injected at build-time only — never stored as literals in source
-        'process.env.GITHUB_DEV_SECRET': JSON.stringify(process.env.GITHUB_DEV_SECRET || ''),
-        'process.env.GITHUB_PROD_SECRET': JSON.stringify(process.env.GITHUB_PROD_SECRET || ''),
+        'process.env.GITHUB_DEV_SECRET': JSON.stringify(Buffer.from(process.env.GITHUB_DEV_SECRET || '').toString('base64')),
+        'process.env.GITHUB_PROD_SECRET': JSON.stringify(Buffer.from(process.env.GITHUB_PROD_SECRET || '').toString('base64')),
       }),
       new CopyPlugin({
         patterns: [

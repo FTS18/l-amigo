@@ -52,6 +52,7 @@ export const STORAGE_KEYS = {
   OWN_USERNAME:      'own_username',
   OWN_CF_HANDLE:     'own_codeforces_handle',
   OWN_CC_HANDLE:     'own_codechef_handle',
+  OWN_CSES_HANDLE:   'own_cses_handle',
 
   // ── UI State ────────────────────────────────────────────────────────
   DARK_MODE:             'darkMode',
@@ -63,6 +64,10 @@ export const STORAGE_KEYS = {
   LAST_UPDATED:          'ui_last_updated',
   REFRESH_IN_PROGRESS:   'ui_refresh_in_progress',
   ONBOARDING_COMPLETE:   'onboarding_complete',
+  DEFAULT_STARTUP_TAB:   'default_startup_tab',
+  BLIND_MODE:            'blind_mode',
+  DISABLED_PLATFORMS:    'disabled_platforms',
+  COMPACT_VIEW:          'compact_view',
 
   // ── Sync ────────────────────────────────────────────────────────────
   ALL_ACCEPTED_SUBS:     'all_accepted_submissions',
@@ -88,6 +93,10 @@ export const STORAGE_KEYS = {
   REFRESH_INTERVAL:      'refresh_interval',
   CONTEST_REMINDERS:     'contest_reminders',
   UPCOMING_CONTESTS_CACHE: 'lamigo:upcomingContests:v8',
+  SYNC_STRICTNESS:       'sync_strictness',
+  COMMIT_FREQUENCY:      'commit_frequency',
+  SMART_BG_REFRESH:      'smart_bg_refresh',
+  LAST_OPENED_TS:        'last_opened_timestamp',
 
   // ── session storage keys (chrome.storage.session) ───────────────────
   SESSION_SYNC_IN_PROGRESS: 'sync_in_progress',

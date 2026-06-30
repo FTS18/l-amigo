@@ -35,47 +35,34 @@ interface OfficialRatingChange {
 /** Session cache: contestId -> actual rating changes (if contest is already rated) */
 const _actualChangesCache: Record<string, Record<string, OfficialRatingChange> | null> = {};
 
-async function fetchRatingsForHandles(handles: string[]): Promise<Record<string, number>> {
-  const result: Record<string, number> = {};
-  const toFetch: string[] = [];
+let _globalRatingCachePromise: Promise<void> | null = null;
+let _globalRatingCacheLoaded = false;
 
-  for (const h of handles) {
-    const lower = h.toLowerCase();
-    if (_handleRatingCache[lower] !== undefined) {
-      result[lower] = _handleRatingCache[lower];
-    } else {
-      toFetch.push(h);
-    }
-  }
+async function ensureGlobalRatingCache(): Promise<void> {
+  if (_globalRatingCacheLoaded) return;
+  if (_globalRatingCachePromise) return _globalRatingCachePromise;
 
-  for (let i = 0; i < toFetch.length; i += 500) {
-    const batch = toFetch.slice(i, i + 500);
+  _globalRatingCachePromise = (async () => {
     try {
-      const res = await fetch(
-        `https://codeforces.com/api/user.info?handles=${encodeURIComponent(batch.join(';'))}`
-      );
+      const res = await fetch('https://codeforces.com/api/user.ratedList?activeOnly=true');
       const data = await res.json();
-      if (data.status === 'OK') {
+      if (data.status === 'OK' && Array.isArray(data.result)) {
         for (const u of data.result) {
-          const lower = u.handle.toLowerCase();
-          const rating = u.rating ?? 0;
-          _handleRatingCache[lower] = rating;
-          result[lower] = rating;
+          if (u.handle && u.rating) {
+            _handleRatingCache[u.handle.toLowerCase()] = u.rating;
+          }
         }
+        _globalRatingCacheLoaded = true;
       }
     } catch (e) {
-      console.warn('[L\'Amigo] Rating batch failed', e);
+      console.warn("[L'Amigo] Failed to fetch global rating cache", e);
     }
-    if (i + 500 < toFetch.length) await new Promise(r => setTimeout(r, 400));
-  }
+  })();
+  return _globalRatingCachePromise;
+}
 
-  for (const h of handles) {
-    const lower = h.toLowerCase();
-    if (_handleRatingCache[lower] !== undefined && result[lower] === undefined) {
-      result[lower] = _handleRatingCache[lower];
-    }
-  }
-  return result;
+function getCachedRating(handle: string): number {
+  return _handleRatingCache[handle.toLowerCase()] ?? 0;
 }
 
 /**
@@ -83,6 +70,8 @@ async function fetchRatingsForHandles(handles: string[]): Promise<Record<string,
  * Returns null if the contest hasn't been rated yet.
  */
 async function fetchActualRatingChanges(contestId: string): Promise<Record<string, OfficialRatingChange> | null> {
+  return null; // TEMPORARILY DISABLED FOR TESTING PREDICTIONS
+
   if (contestId in _actualChangesCache) return _actualChangesCache[contestId];
 
   try {
@@ -111,78 +100,204 @@ function winProbability(opponentRating: number, targetRating: number): number {
   return 1.0 / (1.0 + Math.pow(6, (targetRating - opponentRating) / 400.0));
 }
 
-/** Expected rank (seed) of myRating against a pool of contestant ratings */
-function calculateSeed(myRating: number, pool: number[]): number {
-  let seed = 1.0;
-  for (const r of pool) seed += winProbability(r, myRating);
-  return seed;
+class FFTConv {
+  n: number;
+  wr: number[];
+  wi: number[];
+  rev: number[];
+
+  constructor(n: number) {
+    let k = 1;
+    while ((1 << k) < n) k++;
+    this.n = 1 << k;
+    const n2 = this.n >> 1;
+    this.wr = [];
+    this.wi = [];
+    const ang = 2 * Math.PI / this.n;
+    for (let i = 0; i < n2; i++) {
+      this.wr[i] = Math.cos(i * ang);
+      this.wi[i] = Math.sin(i * ang);
+    }
+    this.rev = [0];
+    for (let i = 1; i < this.n; i++) {
+      this.rev[i] = (this.rev[i >> 1] >> 1) | ((i & 1) << (k - 1));
+    }
+  }
+
+  reverse(a: number[]) {
+    for (let i = 1; i < this.n; i++) {
+      if (i < this.rev[i]) {
+        const tmp = a[i];
+        a[i] = a[this.rev[i]];
+        a[this.rev[i]] = tmp;
+      }
+    }
+  }
+
+  transform(ar: number[], ai: number[]) {
+    this.reverse(ar);
+    this.reverse(ai);
+    const wr = this.wr;
+    const wi = this.wi;
+    for (let len = 2; len <= this.n; len <<= 1) {
+      const half = len >> 1;
+      const diff = this.n / len;
+      for (let i = 0; i < this.n; i += len) {
+        let pw = 0;
+        for (let j = i; j < i + half; j++) {
+          const k = j + half;
+          const vr = ar[k] * wr[pw] - ai[k] * wi[pw];
+          const vi = ar[k] * wi[pw] + ai[k] * wr[pw];
+          ar[k] = ar[j] - vr;
+          ai[k] = ai[j] - vi;
+          ar[j] += vr;
+          ai[j] += vi;
+          pw += diff;
+        }
+      }
+    }
+  }
+
+  convolve(a: number[], b: number[]): number[] {
+    if (a.length === 0 || b.length === 0) return [];
+    const n = this.n;
+    const resLen = a.length + b.length - 1;
+    if (resLen > n) throw new Error("a+b-1 > n");
+    
+    const cr = new Array(n).fill(0);
+    const ci = new Array(n).fill(0);
+    cr.splice(0, a.length, ...a);
+    ci.splice(0, b.length, ...b);
+    this.transform(cr, ci);
+
+    cr[0] = 4 * cr[0] * ci[0];
+    ci[0] = 0;
+    for (let i = 1, j = n - 1; i <= j; i++, j--) {
+      const ar = cr[i] + cr[j];
+      const ai = ci[i] - ci[j];
+      const br = ci[j] + ci[i];
+      const bi = cr[j] - cr[i];
+      cr[i] = ar * br - ai * bi;
+      ci[i] = ar * bi + ai * br;
+      cr[j] = cr[i];
+      ci[j] = -ci[i];
+    }
+
+    this.transform(cr, ci);
+    const res = [];
+    res[0] = cr[0] / (4 * n);
+    for (let i = 1, j = n - 1; i <= j; i++, j--) {
+      res[i] = cr[j] / (4 * n);
+      res[j] = cr[i] / (4 * n);
+    }
+    res.splice(resLen);
+    return res;
+  }
 }
 
-/** Binary-search: find the rating whose seed == targetSeed */
-function getRatingForSeed(targetSeed: number, pool: number[]): number {
-  let lo = 0, hi = 8000;
-  while (lo < hi) {
-    const mid = (lo + hi) >> 1;
-    if (calculateSeed(mid, pool) < targetSeed) hi = mid;
-    else lo = mid + 1;
-  }
-  return lo - 1;
+function binarySearch(left: number, right: number, predicate: (mid: number) => boolean): number {
+    while (left < right) {
+        const mid = Math.floor((left + right) / 2);
+        if (predicate(mid)) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
 }
+
+const MAX_RATING_LIMIT = 6000;
+const MIN_RATING_LIMIT = -500;
+const RATING_RANGE_LEN = MAX_RATING_LIMIT - MIN_RATING_LIMIT;
+const ELO_OFFSET = RATING_RANGE_LEN;
+const RATING_OFFSET = -MIN_RATING_LIMIT;
+
+const ELO_WIN_PROB = new Array(2 * RATING_RANGE_LEN + 1);
+for (let i = -RATING_RANGE_LEN; i <= RATING_RANGE_LEN; i++) {
+  ELO_WIN_PROB[i + ELO_OFFSET] = 1 / (1 + Math.pow(10, i / 400));
+}
+const fftConv = new FFTConv(ELO_WIN_PROB.length + RATING_RANGE_LEN - 1);
 
 interface ContestantInput {
   handle: string;
-  rating: number; // 0 = unrated/newbie (excluded from computation)
+  rating: number; 
   rank: number;
 }
 
-/**
- * Compute predicted deltas for ALL contestants at once — matches carrot's algorithm exactly:
- *
- *   Step 1  Raw delta = floor((needRating - rating) / 2)
- *             where needRating satisfies: seed(needRating) == sqrt(seed(rating) * actualRank)
- *
- *   Step 2  Correction 1 (inflation): inc = clamp(-totalDelta/n, -10, 0)
- *             Add inc to all deltas so total doesn't inflate the rating pool.
- *
- *   Step 3  Correction 2 (top-rated): Highest-rated contestant must not lose points.
- *             If their delta < 0, lift everyone by |delta|.
- *
- * Returns Map<handle_lowercase, delta>.
- */
-function computeBatchDeltas(contestants: ContestantInput[]): Map<string, number> {
-  const rated = contestants.filter(c => c.rating > 0);
-  if (rated.length === 0) return new Map();
+class RatingCalculator {
+  contestants: (ContestantInput & { effectiveRating: number, delta: number })[];
+  seed: number[] = [];
+  adjustment: number = 0;
 
-  const allRatings = rated.map(c => c.rating);
-
-  // Step 1: raw delta per rated contestant
-  const deltas: number[] = rated.map(c => {
-    let removed = false;
-    const others = allRatings.filter(r => {
-      if (!removed && r === c.rating) { removed = true; return false; }
-      return true;
-    });
-    const seed = calculateSeed(c.rating, others);
-    const needRank = Math.sqrt(seed * c.rank);
-    const needRating = getRatingForSeed(needRank, others);
-    return Math.floor((needRating - c.rating) / 2);
-  });
-
-  // Step 2: Correction 1 — zero-sum inflation fix
-  const sumDelta = deltas.reduce((s, d) => s + d, 0);
-  const inc1 = Math.max(Math.min(Math.floor(-sumDelta / rated.length), 0), -10);
-  for (let i = 0; i < deltas.length; i++) deltas[i] += inc1;
-
-  // Step 3: Correction 2 — top-rated participant must not lose points
-  let topIdx = 0;
-  for (let i = 1; i < rated.length; i++) {
-    if (rated[i].rating > rated[topIdx].rating) topIdx = i;
+  constructor(contestants: ContestantInput[]) {
+    this.contestants = contestants.map(c => ({
+      ...c,
+      effectiveRating: c.rating === 0 ? 1400 : c.rating,
+      delta: 0
+    }));
   }
-  const inc2 = Math.max(0, -deltas[topIdx]);
-  if (inc2 > 0) for (let i = 0; i < deltas.length; i++) deltas[i] += inc2;
 
+  calculateDeltas() {
+    this.calcSeed();
+    this.calcDeltas();
+    this.adjustDeltas();
+  }
+
+  calcSeed() {
+    const counts = new Array(RATING_RANGE_LEN).fill(0);
+    for (const c of this.contestants) {
+      counts[c.effectiveRating + RATING_OFFSET] += 1;
+    }
+    this.seed = fftConv.convolve(ELO_WIN_PROB, counts);
+    for (let i = 0; i < this.seed.length; i++) this.seed[i] += 1;
+  }
+
+  getSeed(r: number, exclude: number) {
+    return this.seed[r + ELO_OFFSET + RATING_OFFSET] - ELO_WIN_PROB[r - exclude + ELO_OFFSET];
+  }
+
+  calcDelta(c: any, assumedRating: number) {
+    const seed = this.getSeed(assumedRating, c.effectiveRating);
+    const midRank = Math.sqrt(c.rank * seed);
+    const needRating = binarySearch(
+      2, MAX_RATING_LIMIT,
+      (rating) => this.getSeed(rating, c.effectiveRating) < midRank) - 1;
+    return Math.trunc((needRating - assumedRating) / 2);
+  }
+
+  calcDeltas() {
+    for (const c of this.contestants) {
+      c.delta = this.calcDelta(c, c.effectiveRating);
+    }
+  }
+
+  adjustDeltas() {
+    this.contestants.sort((a, b) => b.effectiveRating - a.effectiveRating);
+    const n = this.contestants.length;
+    {
+      const deltaSum = this.contestants.reduce((a, b) => a + b.delta, 0);
+      const inc = Math.trunc(-deltaSum / n) - 1;
+      this.adjustment = inc;
+      for (const c of this.contestants) c.delta += inc;
+    }
+    {
+      const zeroSumCount = Math.min(4 * Math.round(Math.sqrt(n)), n);
+      const deltaSum = this.contestants.slice(0, zeroSumCount).reduce((a, b) => a + b.delta, 0);
+      const inc = Math.min(Math.max(Math.trunc(-deltaSum / zeroSumCount), -10), 0);
+      this.adjustment += inc;
+      for (const c of this.contestants) c.delta += inc;
+    }
+  }
+}
+
+function computeBatchDeltas(contestants: ContestantInput[]): Map<string, number> {
+  if (contestants.length === 0) return new Map();
+  const calc = new RatingCalculator(contestants);
+  calc.calculateDeltas();
+  
   const result = new Map<string, number>();
-  rated.forEach((c, i) => result.set(c.handle.toLowerCase(), deltas[i]));
+  calc.contestants.forEach(c => result.set(c.handle.toLowerCase(), c.delta));
   return result;
 }
 
@@ -260,7 +375,7 @@ function injectAddButtons() {
           }
         }, (response) => {
           if (response && response.success) {
-            btn.innerHTML = '✓';
+            btn.innerHTML = '';
             btn.classList.add('lamigo-success');
             friendUsernames.add(username.toLowerCase());
             setTimeout(() => { btn.remove(); }, 2000);
@@ -323,11 +438,11 @@ function injectBookmarkButton() {
 
   const updateBtnUI = () => {
     if (isBookmarked) {
-      btn.innerHTML = '★ Unbookmark';
+      btn.innerHTML = ' Unbookmark';
       btn.classList.add('bookmarked');
       btn.title = `Unbookmark ${orgName}`;
     } else {
-      btn.innerHTML = '☆ Bookmark';
+      btn.innerHTML = ' Bookmark';
       btn.classList.remove('bookmarked');
       btn.title = `Bookmark ${orgName} for College Standings`;
     }
@@ -510,7 +625,7 @@ function injectCollegeStandingsTab() {
         if (datatable) {
           datatable.innerHTML = buildErrorHtml(
             'No cached college members found!',
-            `To display your college standings, visit your organization's ratings page and click <strong>★ Bookmark</strong> to cache members.`,
+            `To display your college standings, visit your organization's ratings page and click <strong> Bookmark</strong> to cache members.`,
             orgId, orgName
           );
         }
@@ -679,28 +794,26 @@ async function renderCollegeStandings(
     // 1. Check if contest is already rated — use actual deltas if so
     const actualChanges = contestIdForDelta ? await fetchActualRatingChanges(contestIdForDelta) : null;
 
-    // 2. Fetch ratings for college members
-    const memberRatings = await fetchRatingsForHandles(memberHandlesInContest);
+    await ensureGlobalRatingCache();
 
-    // 3. Build full contestant pool for batch computation (top 3000 for seed accuracy)
+    // 3. Build full contestant pool for batch computation
     let contestantPool: ContestantInput[] = [];
     if (!actualChanges && allContestRows && allContestRows.length > 0) {
-      const top3000 = allContestRows.slice(0, 3000);
-      const allHandles = top3000.flatMap((row: any) => row.party.members.map((m: any) => m.handle));
-      const allRatingsMap = await fetchRatingsForHandles(allHandles);
-      contestantPool = top3000.map((row: any) => ({
-        handle: row.party.members[0]?.handle || '',
-        rating: allRatingsMap[(row.party.members[0]?.handle || '').toLowerCase()] ?? 0,
-        rank: row.rank
-      })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+      contestantPool = allContestRows
+        .filter((row: any) => row.party?.participantType === 'CONTESTANT')
+        .map((row: any) => ({
+          handle: row.party.members[0]?.handle || '',
+          rating: getCachedRating(row.party.members[0]?.handle || ''),
+          rank: row.rank
+        })).filter((c: ContestantInput) => !!c.handle);
     }
     if (!actualChanges && contestantPool.length === 0) {
       // Fallback: use only college members for seed calculation
       contestantPool = filteredRows.map((row: any) => ({
         handle: row.party.members[0]?.handle || '',
-        rating: memberRatings[(row.party.members[0]?.handle || '').toLowerCase()] ?? 0,
+        rating: getCachedRating(row.party.members[0]?.handle || ''),
         rank: row.rank
-      })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+      })).filter((c: ContestantInput) => !!c.handle);
     }
 
     // 4. Compute batch deltas (with both corrections) — or use actual if already rated
@@ -715,7 +828,7 @@ async function renderCollegeStandings(
       if (!lastTd) continue;
 
       const firstHandle = row.party.members[0]?.handle?.toLowerCase();
-      const myRating = memberRatings[firstHandle] ?? 0;
+      const myRating = getCachedRating(firstHandle || '');
 
       if (myRating === 0) {
         lastTd.textContent = 'N/A';
@@ -738,7 +851,7 @@ async function renderCollegeStandings(
         // Fallback if not found in prediction
       }
 
-      const label = isOfficial ? '✓' : '~';
+      const label = isOfficial ? '' : '~';
       lastTd.innerHTML = `<span style="color:${deltaColor(delta)};font-weight:700;" title="${isOfficial ? 'Official' : 'Predicted'}">${label}${formatDelta(delta)}</span><br><span style="font-size:10px;color:#888;">${newRating}</span>`;
     }
   } catch (err) {
@@ -804,7 +917,6 @@ async function injectNativeStandingsDeltaColumn() {
   try {
     const actualChanges = await fetchActualRatingChanges(contestId);
     let batchDeltas: Map<string, number> | null = null;
-    let ratingsMap: Record<string, number> = {};
 
     if (!actualChanges) {
       if (!_standingsCache[contestId]) {
@@ -820,26 +932,27 @@ async function injectNativeStandingsDeltaColumn() {
           return;
         }
       }
+      
+      await ensureGlobalRatingCache();
       const allRows = _standingsCache[contestId].allRows || _standingsCache[contestId].filteredRows;
-      const top3000 = allRows.slice(0, 3000);
-      const allHandles = top3000.flatMap((r: any) => r.party.members.map((m: any) => m.handle));
-      const extraHandles = pageContestants.map(c => c.handle);
-      ratingsMap = await fetchRatingsForHandles([...allHandles, ...extraHandles]);
 
-      const contestantPool: ContestantInput[] = top3000.map((r: any) => ({
-        handle: r.party.members[0]?.handle || '',
-        rating: ratingsMap[(r.party.members[0]?.handle || '').toLowerCase()] ?? 0,
-        rank: r.rank
-      })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+      const contestantPool: ContestantInput[] = allRows
+        .filter((r: any) => r.party?.participantType === 'CONTESTANT')
+        .map((r: any) => ({
+          handle: r.party.members[0]?.handle || '',
+          rating: getCachedRating(r.party.members[0]?.handle || ''),
+          rank: r.rank
+        }))
+        .filter((c: ContestantInput) => !!c.handle);
 
       batchDeltas = computeBatchDeltas(contestantPool);
     } else {
-      ratingsMap = await fetchRatingsForHandles(pageContestants.map(c => c.handle));
+      await ensureGlobalRatingCache();
     }
 
     for (const { handle, td } of pageContestants) {
       const lower = handle.toLowerCase();
-      const myRating = ratingsMap[lower] ?? 0;
+      const myRating = getCachedRating(lower);
 
       if (myRating === 0) {
         td.textContent = 'N/A';
@@ -863,7 +976,7 @@ async function injectNativeStandingsDeltaColumn() {
         continue;
       }
 
-      const label = isOfficial ? '✓' : '~';
+      const label = isOfficial ? '' : '~';
       td.innerHTML = `<span style="color:${deltaColor(delta)};font-weight:700;" title="${isOfficial ? 'Official' : 'Predicted'}">${label}${formatDelta(delta)}</span><br><span style="font-size:10px;color:#888;">${newRating}</span>`;
     }
 
@@ -947,7 +1060,7 @@ async function injectOwnRowDeltaBadge() {
       badge.style.borderColor = color;
       badge.style.background = `${color}18`;
       badge.title = `Official delta: ${formatDelta(delta)} → ${newRating}`;
-      badge.innerHTML = `✓${formatDelta(delta)} <span style="font-size:10px;opacity:0.8;">(→${newRating})</span>`;
+      badge.innerHTML = `${formatDelta(delta)} <span style="font-size:10px;opacity:0.8;">(→${newRating})</span>`;
       return;
     }
 
@@ -964,23 +1077,21 @@ async function injectOwnRowDeltaBadge() {
       };
     }
 
+    await ensureGlobalRatingCache();
     const allRows = _standingsCache[contestId].allRows || _standingsCache[contestId].filteredRows;
     badge.textContent = 'rating…';
 
-    // Fetch ratings for top 3000 for accurate seed
-    const top3000 = allRows.slice(0, 3000);
-    const allHandles = top3000.flatMap((row: any) => row.party.members.map((m: any) => m.handle));
-    const ratingsMap = await fetchRatingsForHandles(allHandles);
-
-    const ownRating = ratingsMap[ownHandle] ?? 0;
+    const ownRating = getCachedRating(ownHandle);
     if (ownRating === 0) { badge.textContent = 'unrated'; return; }
 
     // Build contestant pool and use batch computation (with both corrections)
-    const contestantPool: ContestantInput[] = top3000.map((row: any) => ({
-      handle: row.party.members[0]?.handle || '',
-      rating: ratingsMap[(row.party.members[0]?.handle || '').toLowerCase()] ?? 0,
-      rank: row.rank
-    })).filter((c: ContestantInput) => c.handle && c.rating > 0);
+    const contestantPool: ContestantInput[] = allRows
+      .filter((r: any) => r.party?.participantType === 'CONTESTANT')
+      .map((r: any) => ({
+        handle: r.party.members[0]?.handle || '',
+        rating: getCachedRating(r.party.members[0]?.handle || ''),
+        rank: r.rank
+    })).filter((c: ContestantInput) => !!c.handle);
 
     const batchDeltas = computeBatchDeltas(contestantPool);
     const delta = batchDeltas.get(ownHandle) ?? 0;
@@ -1023,11 +1134,11 @@ function injectProfileBookmarkButton() {
 
   const updateBtnUI = () => {
     if (isBookmarked) {
-      btn.innerHTML = '★ Unbookmark';
+      btn.innerHTML = ' Unbookmark';
       btn.classList.add('bookmarked');
       btn.title = `Unbookmark ${orgName}`;
     } else {
-      btn.innerHTML = '☆ Bookmark';
+      btn.innerHTML = ' Bookmark';
       btn.classList.remove('bookmarked');
       btn.title = `Bookmark ${orgName} for College Standings`;
     }
@@ -1521,7 +1632,7 @@ chrome.runtime.onMessage.addListener((message) => {
       font-size: 12px;
       font-weight: bold;
     `;
-    icon.textContent = "✓";
+    icon.textContent = "";
     
     const text = document.createElement("span");
     text.textContent = message.message;

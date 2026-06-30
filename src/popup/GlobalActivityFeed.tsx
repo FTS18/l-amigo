@@ -72,7 +72,7 @@ export const GlobalActivityFeed: React.FC<GlobalActivityFeedProps> = ({ profiles
         title="Real-time activity feed showing latest accepted problem submissions from your friends list"
       >
         Recent Solves {expanded ? <ChevronDown size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} /> : <ChevronRight size={14} style={{ verticalAlign: 'middle', marginLeft: '4px' }} />}
-        <span onClick={(e) => { e.stopPropagation(); setShowInfo(!showInfo); if (!expanded) setExpanded(true); }} style={{ marginLeft: '6px', fontSize: 'var(--font-size-md)', opacity: showInfo ? 1 : 0.7, color: showInfo ? '#ffa116' : 'inherit', cursor: 'pointer', verticalAlign: 'middle' }} title="Click to learn about Background Refresh">ⓘ</span>
+        <span onClick={(e) => { e.stopPropagation(); setShowInfo(!showInfo); if (!expanded) setExpanded(true); }} style={{ marginLeft: '6px', fontSize: 'var(--font-size-md)', opacity: showInfo ? 1 : 0.7, color: showInfo ? '#ffa116' : 'inherit', cursor: 'pointer', verticalAlign: 'middle' }} title="Click to learn about Background Refresh">(i)</span>
       </button>
 
       {expanded && (
@@ -80,7 +80,7 @@ export const GlobalActivityFeed: React.FC<GlobalActivityFeedProps> = ({ profiles
           {showInfo && (
             <div style={{ marginBottom: '12px', padding: '10px 14px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-sm)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                <strong>ⓘ Background Refresh & Battery Saving</strong>
+                <strong>(i) Background Refresh & Battery Saving</strong>
                 <button onClick={() => setShowInfo(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
               </div>
               To comply with Chrome Manifest V3 efficiency standards and prevent platform IP bans, automatic background syncing runs at your configured intervals (e.g., every 30 or 60 minutes). For instant real-time updates, use the manual refresh button above.

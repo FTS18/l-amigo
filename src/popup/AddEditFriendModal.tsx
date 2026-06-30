@@ -199,9 +199,9 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
       return <span className="verification-badge verifying">Verifying...</span>;
     }
     if (status === 'valid') {
-      return <span className="verification-badge valid">✓ Valid Account</span>;
+      return <span className="verification-badge valid"> Valid Account</span>;
     }
-    return <span className="verification-badge invalid">✗ Account Not Found</span>;
+    return <span className="verification-badge invalid"> Account Not Found</span>;
   };
 
   return (
@@ -279,6 +279,9 @@ export const AddEditFriendModal: React.FC<Props> = ({ isOpen, onClose, onSuccess
               />
               {renderVerificationBadge(ccStatus)}
             </div>
+            <p className="modal-hint" style={{ marginTop: '16px', fontSize: '13px', fontStyle: 'italic', color: 'var(--text-secondary)' }}>
+              💡 Once added, L'Amigo will track their recent solved problems and compare their progress with yours in real-time.
+            </p>
           </div>
 
           <div className="modal-footer">

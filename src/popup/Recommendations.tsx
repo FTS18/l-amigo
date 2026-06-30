@@ -15,14 +15,53 @@ type PlatformFilter = 'lc' | 'cf';
 export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownUsername }) => {
   const [recommendations, setRecommendations] = useState<ProblemRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const ss = <T,>(key: string, fallback: T): T => {
+    try {
+      const v = sessionStorage.getItem(`rec_${key}`);
+      if (v !== null) return JSON.parse(v) as T;
+    } catch { /* ignore */ }
+    return fallback;
+  };
+  const setSS = <T,>(key: string, value: T) => {
+    try { sessionStorage.setItem(`rec_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
+  };
+
+  const [expanded, _setExpanded] = useState<boolean>(() => ss('expanded', false));
+  const setExpanded = (v: boolean | ((prev: boolean) => boolean)) => {
+    _setExpanded(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('expanded', next);
+      return next;
+    });
+  };
 
   // Filters
-  const [diffFilter, setDiffFilter] = useState<DiffFilter>('All');
-  const [platformFilters, setPlatformFilters] = useState<Set<PlatformFilter>>(new Set());
-  const [ratingMin, setRatingMin] = useState('');
-  const [ratingMax, setRatingMax] = useState('');
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [diffFilter, _setDiffFilter] = useState<DiffFilter>(() => ss('diffFilter', 'All'));
+  const setDiffFilter = (v: DiffFilter) => { setSS('diffFilter', v); _setDiffFilter(v); };
+
+  const [platformFilters, _setPlatformFilters] = useState<Set<PlatformFilter>>(() => new Set(ss('platformFilters', [])));
+  const setPlatformFilters = (v: Set<PlatformFilter> | ((prev: Set<PlatformFilter>) => Set<PlatformFilter>)) => {
+    _setPlatformFilters(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('platformFilters', Array.from(next));
+      return next;
+    });
+  };
+
+  const [ratingMin, _setRatingMin] = useState<string>(() => ss('ratingMin', ''));
+  const setRatingMin = (v: string) => { setSS('ratingMin', v); _setRatingMin(v); };
+
+  const [ratingMax, _setRatingMax] = useState<string>(() => ss('ratingMax', ''));
+  const setRatingMax = (v: string) => { setSS('ratingMax', v); _setRatingMax(v); };
+
+  const [showAdvanced, _setShowAdvanced] = useState<boolean>(() => ss('showAdvanced', false));
+  const setShowAdvanced = (v: boolean | ((prev: boolean) => boolean)) => {
+    _setShowAdvanced(prev => {
+      const next = typeof v === 'function' ? v(prev) : v;
+      setSS('showAdvanced', next);
+      return next;
+    });
+  };
 
   const loadRecommendations = async () => {
     if (Object.keys(profiles).length === 0) return;
@@ -417,7 +456,7 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
                               color: 'var(--accent-codeforces-blue)',
                               background: 'rgba(59,130,246,0.1)',
                             }}>
-                              ★{rec.rating.toLocaleString()}
+                              {rec.rating.toLocaleString()}
                             </span>
                           )}
                           {/* Difficulty badge */}

@@ -33,7 +33,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose, action, du
       {action && (
         <button 
           className="toast-action-btn" 
-          onClick={(e) => { e.stopPropagation(); action.onClick(); }}
+          onClick={(e) => { e.stopPropagation(); action.onClick(); onClose(); }}
           style={{ marginLeft: '8px', padding: '4px 10px', fontSize: 'var(--font-size-base)', background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)', borderRadius: '0px', cursor: 'pointer', color: 'var(--text-primary)', fontWeight: 600 }}
         >
           {action.label}

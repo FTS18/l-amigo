@@ -52,10 +52,11 @@ const handlers: MessageHandler[] = [
   new SyncHandler(),
 ];
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async () => {
   console.log("L'Amigo installed");
+  const { refresh_interval } = await chrome.storage.local.get("refresh_interval");
   chrome.alarms.create("refreshFriends", {
-    periodInMinutes: REFRESH_CONSTANTS.INTERVAL_MINUTES,
+    periodInMinutes: refresh_interval || REFRESH_CONSTANTS.INTERVAL_MINUTES,
   });
   chrome.alarms.create("syncGitHub", {
     periodInMinutes: GITHUB_SYNC_INTERVAL_MINUTES,
@@ -80,6 +81,13 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   } else if (alarm.name === "syncGitHub") {
     console.log("[L'Amigo] Periodic background sync triggered by alarm");
     await SyncManager.handleIncrementalSync();
+  } else if (alarm.name === "retry_sync_offline") {
+    if (typeof navigator !== 'undefined' && navigator.onLine) {
+      console.log("[L'Amigo] Device came online. Resuming pending sync...");
+      await chrome.alarms.clear("retry_sync_offline");
+      await chrome.storage.local.set({ sync_pending_online: false });
+      await SyncManager.handleIncrementalSync();
+    }
   } else if (alarm.name.startsWith("contest-")) {
     // Expected format: contest-{contestId}-{interval}
     const parts = alarm.name.split("-");

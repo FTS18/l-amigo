@@ -32,6 +32,20 @@ export class AlarmsService {
 
     return new Promise((resolve) => {
       chrome.storage.local.set({ [this.STORAGE_KEY]: reminders }, () => {
+        if (!isSet) {
+          // Immediately notify the user that reminders were scheduled
+          const platformName = contest.platform === "leetcode" ? "LeetCode" 
+                            : contest.platform === "codechef" ? "CodeChef" 
+                            : "Codeforces";
+                            
+          chrome.notifications.create(`notify-scheduled-${contest.id}`, {
+            type: "basic",
+            iconUrl: "android-chrome-192x192.png",
+            title: "Reminder Scheduled!",
+            message: `We'll notify you 24h, 1h, and 10m before ${platformName}: ${contest.name} starts.`,
+            priority: 1
+          });
+        }
         resolve(!isSet);
       });
     });

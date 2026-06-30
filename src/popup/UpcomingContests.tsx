@@ -102,10 +102,11 @@ export const UpcomingContests: React.FC = () => {
     fetchContests();
   }, []);
 
-  // Filter out contests that have already started or are more than 30 days away
+  // Filter out contests that have already finished or are more than 30 days away
   const upcomingContests = contests.filter(c => {
     const startTimeMs = c.startTimeSeconds * 1000;
-    return startTimeMs > Date.now() && startTimeMs < Date.now() + 30 * 24 * 60 * 60 * 1000;
+    const durationMs = (c.durationSeconds || 7200) * 1000;
+    return startTimeMs + durationMs > Date.now() && startTimeMs < Date.now() + 30 * 24 * 60 * 60 * 1000;
   });
 
   // If we have loaded but have no upcoming contests, hide the section
@@ -173,7 +174,11 @@ export const UpcomingContests: React.FC = () => {
                     </a>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {c.startTimeSeconds * 1000 - currentTime < 24 * 60 * 60 * 1000 && c.startTimeSeconds * 1000 > currentTime ? (
+                    {c.startTimeSeconds * 1000 <= currentTime && c.startTimeSeconds * 1000 + (c.durationSeconds || 7200) * 1000 > currentTime ? (
+                      <span className="live-now-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(0, 200, 83, 0.15)', border: '1px solid #00C853', color: '#00C853', padding: '2px 8px', borderRadius: '4px', animation: 'pulse 2s infinite', fontWeight: 'bold', fontSize: 'var(--font-size-xs)' }}>
+                        ● LIVE NOW
+                      </span>
+                    ) : c.startTimeSeconds * 1000 - currentTime < 24 * 60 * 60 * 1000 && c.startTimeSeconds * 1000 > currentTime ? (
                       <span style={{ color: 'var(--color-easy)', whiteSpace: 'nowrap', flexShrink: 0, fontWeight: 600, fontSize: 'var(--font-size-sm)', fontFamily: 'monospace' }}>
                         {(() => {
                            const diff = c.startTimeSeconds * 1000 - currentTime;
