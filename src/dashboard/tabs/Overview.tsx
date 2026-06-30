@@ -77,6 +77,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
   }, []);
 
   useEffect(() => {
+    let active = true;
     const fetchContests = async () => {
       const cacheKey = STORAGE_KEYS.UPCOMING_CONTESTS_CACHE;
       const cached = await new Promise<any>(resolve => {
@@ -84,8 +85,10 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       });
 
       if (cached && cached.timestamp > Date.now() - 1000 * 60 * 60) {
-        setContests(cached.data);
-        setLoadingContests(false);
+        if (active) {
+          setContests(cached.data);
+          setLoadingContests(false);
+        }
         return;
       }
 
@@ -117,7 +120,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
           ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, 4),
         ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
 
-        setContests(mergedData);
+        if (active) setContests(mergedData);
         chrome.storage.local.set({
           [cacheKey]: {
             data: mergedData,
@@ -127,10 +130,21 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       } catch (err) {
         console.error(err);
       } finally {
-        setLoadingContests(false);
+        if (active) setLoadingContests(false);
       }
     };
     fetchContests();
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE]) {
+        const cached = changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE].newValue;
+        if (cached && cached.data) {
+          setContests(cached.data);
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   const upcomingContests = useMemo(() => {
@@ -176,12 +190,30 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       }
     };
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+
+    const handleChromeStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName !== 'local') return;
+      if (changes.followed_sheets) {
+        const sid = localStorage.getItem("st_sheetId");
+        if (!sid) {
+            const arr = changes.followed_sheets.newValue;
+            if (arr && Array.isArray(arr) && arr.length > 0) setActiveSheetId(arr[0]);
+            else setActiveSheetId("striversA2Z");
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleChromeStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      chrome.storage.onChanged.removeListener(handleChromeStorageChange);
+    };
   }, []);
 
   useEffect(() => {
     if (!activeSheetId) return;
     setLoadingSheet(true);
+    let active = true;
     const fetchSheetData = async () => {
       try {
         const meta = (SHEET_METADATA as any[]).find((s) => s.id === activeSheetId);
@@ -195,20 +227,21 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
               combined = [...combined, ...data];
             } catch {}
           }
-          setSheetProblems(combined);
+          if (active) setSheetProblems(combined);
         } else {
           const url = chrome.runtime.getURL(`sheets/${activeSheetId}.json`);
           const res = await fetch(url);
           const data = await res.json();
-          setSheetProblems(data);
+          if (active) setSheetProblems(data);
         }
       } catch (err) {
         console.error("Failed to fetch sheet in overview:", err);
       } finally {
-        setLoadingSheet(false);
+        if (active) setLoadingSheet(false);
       }
     };
     fetchSheetData();
+    return () => { active = false; };
   }, [activeSheetId]);
 
   const [manuallySolved, setManuallySolved] = useState<
@@ -221,6 +254,14 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         setManuallySolved(res.manually_solved_problems);
       }
     });
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes.manually_solved_problems) {
+        setManuallySolved(changes.manually_solved_problems.newValue || {});
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   const getProfile = (
@@ -378,8 +419,8 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
   // ── Personal Consistency & Daily Streak (Last 30 Days) ──
   const activityData = useMemo(() => {
     const today = new Date();
-    const daysMap = new Map<string, { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean }>();
-    const daysList: { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean }[] = [];
+    const daysMap = new Map<string, { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean; uniqueSlugs: Set<string> }>();
+    const daysList: { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean; uniqueSlugs: Set<string> }[] = [];
 
     for (let idx = 29; idx >= 0; idx--) {
       const d = new Date(today.getTime() - idx * 24 * 60 * 60 * 1000);
@@ -388,13 +429,13 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       const day = String(d.getDate()).padStart(2, '0');
       const key = `${year}-${month}-${day}`;
       const label = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-      const obj = { date: key, count: 0, platforms: new Set<string>(), label, isToday: idx === 0 };
+      const obj = { date: key, count: 0, platforms: new Set<string>(), label, isToday: idx === 0, uniqueSlugs: new Set<string>() };
       daysMap.set(key, obj);
       daysList.push(obj);
     }
 
-    const addSubmission = (timestamp: number, platform: string) => {
-      if (!timestamp) return;
+    const addSubmission = (timestamp: number, platform: string, slug: string) => {
+      if (!timestamp || !selectedGlobalPlatforms.includes(platform) || !slug) return;
       const t = timestamp > 1e12 ? timestamp : timestamp * 1000;
       const d = new Date(t);
       const year = d.getFullYear();
@@ -403,7 +444,10 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       const key = `${year}-${month}-${day}`;
       if (daysMap.has(key)) {
         const entry = daysMap.get(key)!;
-        entry.count++;
+        if (!entry.uniqueSlugs.has(slug)) {
+          entry.uniqueSlugs.add(slug);
+          entry.count++;
+        }
         entry.platforms.add(platform);
       }
     };
@@ -414,7 +458,8 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         const profile = getProfile(ownFriend, plat);
         profile?.recentSubmissions?.forEach((sub) => {
           if (sub.statusDisplay === "Accepted" && sub.timestamp) {
-            addSubmission(sub.timestamp, plat);
+            const slug = (plat === "codeforces" && sub.titleSlug) ? sub.titleSlug.replace("/", "") : (sub.titleSlug || sub.title);
+            if (slug) addSubmission(sub.timestamp, plat, slug);
           }
         });
       });
@@ -422,7 +467,9 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
 
     allSubmissions?.forEach((sub) => {
       if (sub.statusDisplay === "Accepted" && sub.timestamp) {
-        addSubmission(sub.timestamp, sub.platform || "unknown");
+        const plat = sub.platform || "unknown";
+        const slug = (plat === "codeforces" && sub.titleSlug) ? sub.titleSlug.replace("/", "") : (sub.titleSlug || sub.title);
+        if (slug) addSubmission(sub.timestamp, plat, slug);
       }
     });
 
@@ -440,7 +487,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
     const totalSolves30Days = daysList.reduce((acc, curr) => acc + curr.count, 0);
 
     return { daysList, streak, totalSolves30Days };
-  }, [friends, profiles, allSubmissions]);
+  }, [friends, profiles, allSubmissions, selectedGlobalPlatforms]);
 
   // ── Personal Stats Showcase (LeetCode, Codeforces, CodeChef, CSES) ──
   // ── Personal Stats Showcase (LeetCode, Codeforces, CodeChef, CSES) ──

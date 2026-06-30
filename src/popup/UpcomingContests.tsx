@@ -23,7 +23,7 @@ export const UpcomingContests: React.FC = () => {
   }, [expanded]);
 
   useEffect(() => {
-    AlarmsService.getReminders().then(setReminders);
+    AlarmsService.getReminders().then(setReminders).catch(console.error);
   }, []);
 
   const handleToggleReminder = async (e: React.MouseEvent, c: any) => {
@@ -100,6 +100,17 @@ export const UpcomingContests: React.FC = () => {
       }
     };
     fetchContests();
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE]) {
+        const cached = changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE].newValue;
+        if (cached && cached.data) {
+          setContests(cached.data);
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   // Filter out contests that have already finished or are more than 30 days away

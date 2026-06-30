@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { DashboardApp } from './DashboardApp';
+import { ErrorBoundary } from '../popup/ErrorBoundary';
 import '../popup/App.css';
 import '../popup/styles/chrome.css';
 import './styles.css';
@@ -11,6 +12,8 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <DashboardApp />
+    <ErrorBoundary>
+      <DashboardApp />
+    </ErrorBoundary>
   </React.StrictMode>
 );

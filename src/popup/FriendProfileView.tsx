@@ -219,6 +219,17 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
     };
 
     fetchSubmissions();
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local') {
+        const cacheKey = `lamigo:subcache:${leetcodeProfile?.username || ''}:${codeforcesProfile?.username || ''}:${codechefProfile?.username || ''}`;
+        if (changes[cacheKey] && changes[cacheKey].newValue) {
+          setSubmissions(changes[cacheKey].newValue);
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, [leetcodeProfile, codeforcesProfile, codechefProfile, submissionLimit, preloadedSubmissions, isExpanded]);
 
   const activeChartProfile = activePlatform === 'leetcode' ? leetcodeProfile : activePlatform === 'codechef' ? codechefProfile : codeforcesProfile;

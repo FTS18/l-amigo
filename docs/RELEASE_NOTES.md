@@ -1,3 +1,15 @@
+# L'Amigo v1.6.5 Release Notes
+
+**Welcome to the IDE Update!** This release brings a fully functional, browser-based code editor directly into your dashboard.
+
+## NEW: Integrated Code Editor (IDE)
+We've integrated a powerful Monaco-based Code Editor so you can code, compile, and run your solutions directly within the extension.
+*   **Multi-Language Compiler**: Run C++, Python, Java, and JavaScript instantly using the remote Wandbox compiler API.
+*   **Offline Experience**: Full syntax highlighting, error checking, and code folding exactly like VS Code.
+*   **Customization**: Dark and Light themes to match the dashboard, customizable font sizing, and full-screen modes.
+
+---
+
 # L'Amigo v1.6.3 Release Notes
 
 **Welcome to the biggest update to L'Amigo yet!** We've completely overhauled the user experience, added a massive new full-page Analytics Dashboard, improved sync reliability, and introduced a ton of requested features. 

@@ -38,6 +38,14 @@ export const Leaderboard: React.FC<Props> = ({ friends, profiles, selectedGlobal
     chrome.storage.local.get(['dismissed_leaderboard_info'], (res) => {
       if (res.dismissed_leaderboard_info) setDismissedNotice(true);
     });
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes.dismissed_leaderboard_info) {
+        setDismissedNotice(!!changes.dismissed_leaderboard_info.newValue);
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   const getProfile = (f: Friend, platform: 'leetcode'|'codeforces'|'codechef') => {

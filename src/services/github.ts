@@ -3,6 +3,7 @@ import { CodeforcesService } from "./codeforces";
 import { CodeChefService } from "./codechef";
 import { API_CONSTANTS } from "../constants";
 import { StorageService } from "./storage";
+import { fetchWithTimeout } from "../utils/network";
 
 export interface SyncResult {
   count: number;
@@ -100,7 +101,7 @@ export class GitHubSyncService {
         const isProd = chrome.runtime.id === this.PROD_EXT_ID;
         const clientId = isProd ? this.PROD_CLIENT_ID : this.DEV_CLIENT_ID;
         const clientSecret = isProd ? this.PROD_CLIENT_SECRET : this.DEV_CLIENT_SECRET;
-        await fetch(`${this.API}/applications/${clientId}/token`, {
+        await fetchWithTimeout(`${this.API}/applications/${clientId}/token`, {
           method: 'DELETE',
           headers: {
             Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
@@ -199,7 +200,7 @@ export class GitHubSyncService {
 
           try {
             // Exchange code for access token
-            const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+            const tokenResponse = await fetchWithTimeout("https://github.com/login/oauth/access_token", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -235,7 +236,7 @@ export class GitHubSyncService {
     const isProd = chrome.runtime.id === this.PROD_EXT_ID;
     const clientId = isProd ? this.PROD_CLIENT_ID : this.DEV_CLIENT_ID;
 
-    const r = await fetch(this.DEVICE_CODE_URL, {
+    const r = await fetchWithTimeout(this.DEVICE_CODE_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -275,7 +276,7 @@ export class GitHubSyncService {
         throw new Error("Device authorization cancelled.");
       }
 
-      const r = await fetch(this.ACCESS_TOKEN_URL, {
+      const r = await fetchWithTimeout(this.ACCESS_TOKEN_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -911,7 +912,7 @@ ${code || "// Code not available"}
   // ── GitHub REST helpers ─────────────────────────────────────────────
 
   static async getGitHubUsername(token: string): Promise<string> {
-    const r = await fetch(`${this.API}/user`, {
+    const r = await fetchWithTimeout(`${this.API}/user`, {
       headers: {
         Authorization: `token ${token}`,
         Accept: "application/vnd.github.v3+json",
@@ -926,7 +927,7 @@ ${code || "// Code not available"}
     user: string,
     repo: string,
   ): Promise<boolean> {
-    const r = await fetch(`${this.API}/repos/${user}/${repo}`, {
+    const r = await fetchWithTimeout(`${this.API}/repos/${user}/${repo}`, {
       headers: {
         Authorization: `token ${token}`,
         Accept: "application/vnd.github.v3+json",
@@ -936,7 +937,7 @@ ${code || "// Code not available"}
   }
 
   private static async createRepo(token: string, name: string): Promise<void> {
-    const r = await fetch(`${this.API}/user/repos`, {
+    const r = await fetchWithTimeout(`${this.API}/user/repos`, {
       method: "POST",
       headers: {
         Authorization: `token ${token}`,
@@ -963,7 +964,7 @@ ${code || "// Code not available"}
     repo: string,
   ): Promise<string[]> {
     try {
-      const g = await fetch(
+      const g = await fetchWithTimeout(
         `${this.API}/repos/${user}/${repo}/contents/lamigo_sync_state.json`,
         {
           headers: {
@@ -1008,7 +1009,7 @@ ${code || "// Code not available"}
     // Get SHA if file already exists
     let sha: string | undefined;
     try {
-      const g = await fetch(
+      const g = await fetchWithTimeout(
         `${this.API}/repos/${user}/${repo}/contents/${path}`,
         {
           headers: {
@@ -1023,7 +1024,7 @@ ${code || "// Code not available"}
       /* file doesn't exist yet */
     }
 
-    const r = await fetch(
+    const r = await fetchWithTimeout(
       `${this.API}/repos/${user}/${repo}/contents/${path}`,
       {
         method: "PUT",
@@ -1078,7 +1079,7 @@ ${code || "// Code not available"}
     try {
       const ghUser = await this.getGitHubUsername(token);
       // Fetch file content from GitHub
-      const r = await fetch(`${this.API}/repos/${ghUser}/${repo}/contents/.lamigo-backup.json`, {
+      const r = await fetchWithTimeout(`${this.API}/repos/${ghUser}/${repo}/contents/.lamigo-backup.json`, {
         headers: {
           Authorization: `token ${token}`,
           Accept: "application/vnd.github.v3+json",

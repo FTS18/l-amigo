@@ -160,12 +160,27 @@ export const CompareTab: React.FC<CompareTabProps> = ({
       if (items.activePlatform) setActivePlatform(items.activePlatform as Platform);
       if (typeof items.hideUnrated === 'boolean') setHideUnrated(items.hideUnrated);
     });
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local') {
+        if (changes.activePlatform) setActivePlatform(changes.activePlatform.newValue as Platform);
+        if (changes.hideUnrated) setHideUnrated(changes.hideUnrated.newValue as boolean);
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
-  // Save state whenever it changes
-  useEffect(() => {
-    chrome.storage.local.set({ activePlatform, hideUnrated });
-  }, [activePlatform, hideUnrated]);
+  // Save state whenever it changes locally, but avoid infinite loops
+  const handleSetActivePlatform = (platform: Platform) => {
+    setActivePlatform(platform);
+    chrome.storage.local.set({ activePlatform: platform });
+  };
+
+  const handleSetHideUnrated = (hide: boolean) => {
+    setHideUnrated(hide);
+    chrome.storage.local.set({ hideUnrated: hide });
+  };
 
   // Synchronize and clean up selected friends when activePlatform changes
   useEffect(() => {

@@ -185,12 +185,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   (async () => {
-    for (const handler of handlers) {
-      const response = await (handler as MessageHandler).handle(message, sender);
-      if (response.error !== 'Unknown action') {
-        sendResponse(response);
-        return;
+    try {
+      for (const handler of handlers) {
+        const response = await (handler as MessageHandler).handle(message, sender);
+        if (response.error !== 'Unknown action') {
+          sendResponse(response);
+          return;
+        }
       }
+      sendResponse({ success: false, error: 'Unknown action' });
+    } catch (err: any) {
+      console.error("[L'Amigo] Message handler error:", err);
+      sendResponse({ success: false, error: err.message || 'Internal error' });
     }
   })();
 

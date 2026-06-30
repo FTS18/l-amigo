@@ -100,7 +100,15 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
 
   useEffect(() => {
     if (expanded) loadRecommendations();
-  }, [expanded]);
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes.all_accepted_submissions && expanded) {
+        loadRecommendations();
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
+  }, [expanded, profiles, ownUsername]);
 
   if (Object.keys(profiles).length === 0) return null;
 

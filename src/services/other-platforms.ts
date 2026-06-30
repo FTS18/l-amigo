@@ -15,7 +15,7 @@ export class OtherPlatformsService {
       if (isNaN(Number(handle))) {
         // Alphanumeric handle: fetch user page to find numeric ID or redirect target
         try {
-          const profileRes = await fetch(`https://cses.fi/user/${handle}`);
+          const profileRes = await fetchWithTimeout(`https://cses.fi/user/${handle}`);
           if (profileRes.ok) {
             const profileHtml = await profileRes.text();
             const idMatch = /\/problemset\/user\/(\d+)\//.exec(profileHtml);
@@ -74,7 +74,7 @@ export class OtherPlatformsService {
           let lang = 'C++';
           let code = '';
           try {
-            const res = await fetch(`https://cses.fi/problemset/view/${slug}/`, { credentials: 'include' });
+            const res = await fetchWithTimeout(`https://cses.fi/problemset/view/${slug}/`, { credentials: 'include' });
             if (res.ok) {
               const text = await res.text();
               const match = /<td><td>(?:<a[^>]*>)?(C\+\+|Java|Python3?|Rust|Go|C|Haskell)(?:<\/a>)?<\/td>/.exec(text) || /<td>(?:<a[^>]*>)?(C\+\+|Java|Python3?|Rust|Go|C|Haskell)(?:<\/a>)?<\/td>/.exec(text);
@@ -83,7 +83,7 @@ export class OtherPlatformsService {
               const resultMatch = /href="(\/problemset\/result\/\d+\/)"/.exec(text);
               if (resultMatch) {
                 const fullResultUrl = `https://cses.fi${resultMatch[1]}`;
-                const resultRes = await fetch(fullResultUrl, { credentials: 'include' });
+                const resultRes = await fetchWithTimeout(fullResultUrl, { credentials: 'include' });
                 if (resultRes.ok) {
                   const resultText = await resultRes.text();
                   const codeMatch = /<pre[^>]*>(.*?)<\/pre>/s.exec(resultText);

@@ -32,6 +32,12 @@ The extension popup features a massive full-page dashboard interface (accessible
 - **Contest Hub**: A dense, brutalist chronological list view of upcoming live contests across LeetCode, Codeforces, and CodeChef. Includes 1-click Google Calendar integration and Chrome alarm reminders.
 - **Rating History & Analytics**: Multi-platform rating trajectory charts for any tracked friend, along with a granular Contest Performance Log detailing rating deltas, win rates, and recent battle history.
 
+### Integrated Code Editor (IDE)
+The extension features a fully-functional Monaco-based code editor integrated directly into the dashboard.
+- **Multi-Language Compiler**: Write, compile, and execute code in C++, Python, Java, and JavaScript.
+- **Remote Execution Engine**: Integrates with the Wandbox compiler API for blazing-fast remote code execution without a local backend.
+- **Developer Experience**: Includes features like syntax highlighting, code folding, dark/light themes, and custom font sizing (powered by the same engine as VS Code).
+
 ### Multi-Platform Engine
 L'Amigo natively supports concurrent tracking across three major competitive programming platforms:
 - **LeetCode**: GraphQL pipelines with advanced submission verdict tracking (Accepted, WA, TLE) via [leetcode-monitor.ts](file:///c:/Users/dubey/extension/src/content/leetcode-monitor.ts).

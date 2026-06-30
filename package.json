@@ -1,6 +1,6 @@
 {
   "name": "lamigo",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "private": true,
   "description": "Track friends across LeetCode & Codeforces. Compare stats, get recommendations, view activity, and sync with GitHub.",
   "scripts": {
@@ -12,10 +12,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
     "lucide-react": "^1.17.0",
+    "monaco-editor": "^0.55.1",
+    "monaco-editor-webpack-plugin": "^7.1.1",
+    "preact": "^10.29.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-is": "^19.2.5",
     "recharts": "^3.7.0"
   },
   "devDependencies": {
@@ -36,7 +39,6 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.90.0",
-    "webpack-cli": "^5.1.4",
-    "ws": "^8.20.0"
+    "webpack-cli": "^5.1.4"
   }
 }

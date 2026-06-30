@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const DevExtensionReloadPlugin = require('./scripts/dev-extension-reload-plugin');
 const dotenv = require('dotenv');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 // Load .env file (silently skipped if missing — CI/CD may inject env vars directly)
 dotenv.config();
@@ -16,6 +17,7 @@ module.exports = (env, argv) => {
   return {
     mode: argv.mode || 'production',
     devtool: isProd ? false : 'cheap-source-map',
+    cache: { type: 'filesystem' },
     entry: {
       popup: './src/popup/popup.tsx',
       background: './src/background/background.ts',
@@ -42,21 +44,20 @@ module.exports = (env, argv) => {
       ],
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      alias: {
+        'react': 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
+        'react/jsx-runtime': 'preact/jsx-runtime'
+      }
     },
     optimization: {
       usedExports: true,
       minimize: isProd,
       minimizer: [new TerserPlugin()],
       splitChunks: {
-        chunks: (chunk) => chunk.name === 'popup' || chunk.name === 'dashboard',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-        },
+        chunks: 'all',
       },
     },
     plugins: [
@@ -90,6 +91,10 @@ module.exports = (env, argv) => {
         cache: false,
       }),
       new MiniCssExtractPlugin({ filename: '[name].css' }),
+      new MonacoWebpackPlugin({
+        languages: ['cpp', 'python', 'java', 'javascript', 'rust', 'go'],
+        features: ['suggest', 'bracketMatching', 'clipboard', 'coreCommands', 'format', 'wordHighlighter']
+      }),
       ...(isProd
         ? []
         : [

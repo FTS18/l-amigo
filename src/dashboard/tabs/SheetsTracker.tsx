@@ -371,6 +371,22 @@ export const SheetsTracker: React.FC<Props> = ({
         }
       },
     );
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local') {
+        if (changes.revision_stars) {
+          setRevisionStars(new Set(changes.revision_stars.newValue || []));
+        }
+        if (changes.dismissed_sheetstracker_info) {
+          setDismissedNotice(!!changes.dismissed_sheetstracker_info.newValue);
+        }
+        if (changes.followed_sheets) {
+          setFollowedSheets(changes.followed_sheets.newValue || []);
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   const toggleFollowSheet = (id: string, e: React.MouseEvent) => {
@@ -509,13 +525,18 @@ export const SheetsTracker: React.FC<Props> = ({
       }
     });
 
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'blind_mode' && e.newValue) {
-        try { setBlindMode(JSON.parse(e.newValue)); } catch {}
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local') {
+        if (changes.blind_mode) {
+          setBlindMode(!!changes.blind_mode.newValue);
+        }
+        if (changes.manually_solved_problems) {
+          setManuallySolved(changes.manually_solved_problems.newValue || {});
+        }
       }
     };
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   const toggleManualSolve = (titleSlug: string, title: string, platform: string) => {
@@ -749,9 +770,9 @@ export const SheetsTracker: React.FC<Props> = ({
       });
     });
     return index;
-  // Re-compute whenever sheetData changes (a new sheet was loaded into cache)
+  // Re-compute whenever sheetData changes or the global index finishes building
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sheetData, selectedSheetId]);
+  }, [sheetData, selectedSheetId, indexReady]);
 
   // Helper: get short display name for a sheet id
   const getSheetName = (id: string): string => {

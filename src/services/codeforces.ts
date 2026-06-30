@@ -1,7 +1,8 @@
 import { API_CONSTANTS, DATA_LIMITS } from "../constants";
 import { FriendProfile, RecentSubmission, TopicStat, LanguageStat } from "../types";
 import { CircuitBreaker } from "../utils/circuit-breaker";
-import { fetchWithTimeout } from "../utils/network";
+import { fetchWithTimeout } from '../utils/network';
+import { friendAddRateLimiter } from "../utils/rate-limiter";
 
 interface CodeforcesApiResponse<T> {
   status: "OK" | "FAILED";
@@ -453,7 +454,7 @@ export class CodeforcesService {
 
     for (const url of urls) {
       try {
-        const res = await fetch(url, {
+        const res = await fetchWithTimeout(url, {
           credentials: 'include',
           headers: {
             'Accept': 'text/html,application/xhtml+xml',
@@ -464,7 +465,7 @@ export class CodeforcesService {
         if (res.status === 429 || res.status === 403 || res.status === 503) {
           console.warn(`[CF] Rate limit/Cloudflare hit (${res.status}) for ${url}. Waiting 8 seconds before retry...`);
           await new Promise(r => setTimeout(r, 8000));
-          const retryRes = await fetch(url, {
+          const retryRes = await fetchWithTimeout(url, {
             credentials: 'include',
             headers: {
               'Accept': 'text/html,application/xhtml+xml',
@@ -490,7 +491,7 @@ export class CodeforcesService {
         if (html.includes('Just a moment...') || html.includes('cf-mitigated')) {
           console.warn(`[CF] Cloudflare challenge hit for ${url}. Waiting 8 seconds before retry...`);
           await new Promise(r => setTimeout(r, 8000));
-          const retryRes = await fetch(url, {
+          const retryRes = await fetchWithTimeout(url, {
             credentials: 'include',
             headers: {
               'Accept': 'text/html,application/xhtml+xml',

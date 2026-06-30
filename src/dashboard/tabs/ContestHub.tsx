@@ -62,6 +62,14 @@ export const ContestHub: React.FC<ContestHubProps> = ({
     chrome.storage.local.get(['dismissed_contesthub_info'], (res) => {
       if (res.dismissed_contesthub_info) setDismissedNotice(true);
     });
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes.dismissed_contesthub_info) {
+        setDismissedNotice(!!changes.dismissed_contesthub_info.newValue);
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   // Live timer for countdowns
@@ -71,7 +79,7 @@ export const ContestHub: React.FC<ContestHubProps> = ({
   }, []);
 
   useEffect(() => {
-    AlarmsService.getReminders().then(setReminders);
+    AlarmsService.getReminders().then(setReminders).catch(console.error);
   }, []);
 
   const handleToggleReminder = async (e: React.MouseEvent, c: any) => {
@@ -160,6 +168,17 @@ export const ContestHub: React.FC<ContestHubProps> = ({
       }
     };
     fetchContests();
+
+    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+      if (areaName === 'local' && changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE]) {
+        const cached = changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE].newValue;
+        if (cached && cached.data) {
+          setContests(cached.data);
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
   }, []);
 
   const upcomingContests = useMemo(() => {

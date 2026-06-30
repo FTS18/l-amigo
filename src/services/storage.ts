@@ -130,166 +130,172 @@ export class StorageService {
   static async createIdentity(
     input: CreateIdentityInput,
   ): Promise<FriendIdentity> {
-    await this.ensureMigration();
+    return navigator.locks.request("lamigo_identities_lock", async () => {
+      await this.ensureMigration();
 
-    const displayName = input.displayName.trim();
-    if (!displayName) {
-      throw new Error("Display name is required");
-    }
-
-    if (!input.accounts || input.accounts.length === 0) {
-      throw new Error("At least one account is required");
-    }
-
-    const identities = await this.getIdentities();
-    if (identities.length >= DATA_LIMITS.MAX_FRIENDS) {
-      throw new Error(`Maximum ${DATA_LIMITS.MAX_FRIENDS} friends allowed`);
-    }
-
-    const aliases = (input.aliases || [])
-      .map((a) => this.normalizeAlias(a))
-      .filter(Boolean)
-      .slice(0, DATA_LIMITS.MAX_ALIASES_PER_IDENTITY);
-
-    const dedupedInputAccounts = Array.from(
-      new Map(
-        input.accounts.map((a) => [
-          `${a.platform}:${this.normalizeHandle(a.platform, a.handle).toLowerCase()}`,
-          a,
-        ]),
-      ).values(),
-    );
-
-    const accounts: PlatformAccount[] = dedupedInputAccounts
-      .map((a) => ({
-        platform: a.platform,
-        handle: this.normalizeHandle(a.platform, a.handle),
-        status: "active" as const,
-        lastFetched: Date.now(),
-      }))
-      .slice(0, DATA_LIMITS.MAX_ACCOUNTS_PER_IDENTITY);
-
-    for (const account of accounts) {
-      const exists = identities.find((i) =>
-        i.accounts.some(
-          (a) =>
-            a.platform === account.platform &&
-            a.handle.toLowerCase() === account.handle.toLowerCase(),
-        ),
-      );
-      if (exists) {
-        throw new Error(
-          `${account.platform} handle already linked to another friend`,
-        );
+      const displayName = input.displayName.trim();
+      if (!displayName) {
+        throw new Error("Display name is required");
       }
-    }
 
-    const now = Date.now();
-    const identity: FriendIdentity = {
-      id: this.makeId(),
-      displayName,
-      aliases,
-      accounts,
-      addedAt: now,
-      updatedAt: now,
-    };
+      if (!input.accounts || input.accounts.length === 0) {
+        throw new Error("At least one account is required");
+      }
 
-    identities.push(identity);
-    await this.saveIdentities(identities);
-    return identity;
+      const identities = await this.getIdentities();
+      if (identities.length >= DATA_LIMITS.MAX_FRIENDS) {
+        throw new Error(`Maximum ${DATA_LIMITS.MAX_FRIENDS} friends allowed`);
+      }
+
+      const aliases = (input.aliases || [])
+        .map((a) => this.normalizeAlias(a))
+        .filter(Boolean)
+        .slice(0, DATA_LIMITS.MAX_ALIASES_PER_IDENTITY);
+
+      const dedupedInputAccounts = Array.from(
+        new Map(
+          input.accounts.map((a) => [
+            `${a.platform}:${this.normalizeHandle(a.platform, a.handle).toLowerCase()}`,
+            a,
+          ]),
+        ).values(),
+      );
+
+      const accounts: PlatformAccount[] = dedupedInputAccounts
+        .map((a) => ({
+          platform: a.platform,
+          handle: this.normalizeHandle(a.platform, a.handle),
+          status: "active" as const,
+          lastFetched: Date.now(),
+        }))
+        .slice(0, DATA_LIMITS.MAX_ACCOUNTS_PER_IDENTITY);
+
+      for (const account of accounts) {
+        const exists = identities.find((i) =>
+          i.accounts.some(
+            (a) =>
+              a.platform === account.platform &&
+              a.handle.toLowerCase() === account.handle.toLowerCase(),
+          ),
+        );
+        if (exists) {
+          throw new Error(
+            `${account.platform} handle already linked to another friend`,
+          );
+        }
+      }
+
+      const now = Date.now();
+      const identity: FriendIdentity = {
+        id: this.makeId(),
+        displayName,
+        aliases,
+        accounts,
+        addedAt: now,
+        updatedAt: now,
+      };
+
+      identities.push(identity);
+      await this.saveIdentities(identities);
+      return identity;
+    });
   }
 
   static async updateIdentity(
     identityId: string,
     input: UpdateIdentityInput,
   ): Promise<FriendIdentity> {
-    await this.ensureMigration();
+    return navigator.locks.request("lamigo_identities_lock", async () => {
+      await this.ensureMigration();
 
-    const displayName = input.displayName.trim();
-    if (!displayName) {
-      throw new Error("Display name is required");
-    }
-
-    if (!input.accounts || input.accounts.length === 0) {
-      throw new Error("At least one account is required");
-    }
-
-    const identities = await this.getIdentities();
-    const target = identities.find((i) => i.id === identityId);
-    if (!target) {
-      throw new Error("Identity not found");
-    }
-
-    const aliases = (input.aliases || [])
-      .map((a) => this.normalizeAlias(a))
-      .filter(Boolean)
-      .slice(0, DATA_LIMITS.MAX_ALIASES_PER_IDENTITY);
-
-    const dedupedInputAccounts = Array.from(
-      new Map(
-        input.accounts.map((a) => [
-          `${a.platform}:${this.normalizeHandle(a.platform, a.handle).toLowerCase()}`,
-          a,
-        ]),
-      ).values(),
-    );
-
-    const normalizedAccounts: PlatformAccount[] = dedupedInputAccounts
-      .map((a) => ({
-        platform: a.platform,
-        handle: this.normalizeHandle(a.platform, a.handle),
-        status: "active" as const,
-        lastFetched: Date.now(),
-      }))
-      .slice(0, DATA_LIMITS.MAX_ACCOUNTS_PER_IDENTITY);
-
-    for (const account of normalizedAccounts) {
-      const duplicated = identities.some(
-        (i) =>
-          i.id !== identityId &&
-          i.accounts.some(
-            (a) =>
-              a.platform === account.platform &&
-              a.handle.toLowerCase() === account.handle.toLowerCase(),
-          ),
-      );
-      if (duplicated) {
-        throw new Error(
-          `${account.platform} handle already linked to another friend`,
-        );
+      const displayName = input.displayName.trim();
+      if (!displayName) {
+        throw new Error("Display name is required");
       }
-    }
 
-    const prevRefs = new Set(
-      target.accounts.map((a) => this.profileRef(a.platform, a.handle)),
-    );
-    const nextRefs = new Set(
-      normalizedAccounts.map((a) => this.profileRef(a.platform, a.handle)),
-    );
+      if (!input.accounts || input.accounts.length === 0) {
+        throw new Error("At least one account is required");
+      }
 
-    target.displayName = displayName;
-    target.aliases = aliases;
-    target.accounts = normalizedAccounts;
-    target.updatedAt = Date.now();
+      const identities = await this.getIdentities();
+      const target = identities.find((i) => i.id === identityId);
+      if (!target) {
+        throw new Error("Identity not found");
+      }
 
-    await this.saveIdentities(identities);
+      const aliases = (input.aliases || [])
+        .map((a) => this.normalizeAlias(a))
+        .filter(Boolean)
+        .slice(0, DATA_LIMITS.MAX_ALIASES_PER_IDENTITY);
 
-    // Remove cached profiles for accounts detached from this identity.
-    const removedRefs = Array.from(prevRefs).filter((r) => !nextRefs.has(r));
-    if (removedRefs.length > 0) {
-      const keysToRemove = removedRefs.map((r) => {
-        const [platform, handle] = r.split(":");
-        return this.getProfileV2Key(platform as Platform, handle);
-      });
-      await chrome.storage.local.remove(keysToRemove);
+      const dedupedInputAccounts = Array.from(
+        new Map(
+          input.accounts.map((a) => [
+            `${a.platform}:${this.normalizeHandle(a.platform, a.handle).toLowerCase()}`,
+            a,
+          ]),
+        ).values(),
+      );
 
-      const indexRes = await chrome.storage.local.get(PROFILE_V2_INDEX_KEY);
-      const index: string[] = indexRes[PROFILE_V2_INDEX_KEY] || [];
-      const newIndex = index.filter((r) => !removedRefs.includes(r));
-      await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
-    }
+      const normalizedAccounts: PlatformAccount[] = dedupedInputAccounts
+        .map((a) => ({
+          platform: a.platform,
+          handle: this.normalizeHandle(a.platform, a.handle),
+          status: "active" as const,
+          lastFetched: Date.now(),
+        }))
+        .slice(0, DATA_LIMITS.MAX_ACCOUNTS_PER_IDENTITY);
 
-    return target;
+      for (const account of normalizedAccounts) {
+        const duplicated = identities.some(
+          (i) =>
+            i.id !== identityId &&
+            i.accounts.some(
+              (a) =>
+                a.platform === account.platform &&
+                a.handle.toLowerCase() === account.handle.toLowerCase(),
+            ),
+        );
+        if (duplicated) {
+          throw new Error(
+            `${account.platform} handle already linked to another friend`,
+          );
+        }
+      }
+
+      const prevRefs = new Set(
+        target.accounts.map((a) => this.profileRef(a.platform, a.handle)),
+      );
+      const nextRefs = new Set(
+        normalizedAccounts.map((a) => this.profileRef(a.platform, a.handle)),
+      );
+
+      target.displayName = displayName;
+      target.aliases = aliases;
+      target.accounts = normalizedAccounts;
+      target.updatedAt = Date.now();
+
+      await this.saveIdentities(identities);
+
+      // Remove cached profiles for accounts detached from this identity.
+      const removedRefs = Array.from(prevRefs).filter((r) => !nextRefs.has(r));
+      if (removedRefs.length > 0) {
+        const keysToRemove = removedRefs.map((r) => {
+          const [platform, handle] = r.split(":");
+          return this.getProfileV2Key(platform as Platform, handle);
+        });
+        await chrome.storage.local.remove(keysToRemove);
+
+        await navigator.locks.request("lamigo_profile_index_lock", async () => {
+          const indexRes = await chrome.storage.local.get(PROFILE_V2_INDEX_KEY);
+          const index: string[] = indexRes[PROFILE_V2_INDEX_KEY] || [];
+          const newIndex = index.filter((r) => !removedRefs.includes(r));
+          await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
+        });
+      }
+
+      return target;
+    });
   }
 
   static async addAccountToIdentity(
@@ -297,111 +303,121 @@ export class StorageService {
     platform: Platform,
     handle: string,
   ): Promise<void> {
-    await this.ensureMigration();
-    const normalizedHandle = this.normalizeHandle(platform, handle);
-    const identities = await this.getIdentities();
-    const identity = identities.find((i) => i.id === identityId);
-    if (!identity) {
-      throw new Error("Identity not found");
-    }
+    return navigator.locks.request("lamigo_identities_lock", async () => {
+      await this.ensureMigration();
+      const normalizedHandle = this.normalizeHandle(platform, handle);
+      const identities = await this.getIdentities();
+      const identity = identities.find((i) => i.id === identityId);
+      if (!identity) {
+        throw new Error("Identity not found");
+      }
 
-    if (identity.accounts.length >= DATA_LIMITS.MAX_ACCOUNTS_PER_IDENTITY) {
-      throw new Error("Maximum accounts reached for this friend");
-    }
+      if (identity.accounts.length >= DATA_LIMITS.MAX_ACCOUNTS_PER_IDENTITY) {
+        throw new Error("Maximum accounts reached for this friend");
+      }
 
-    const duplicated = identities.some(
-      (i) =>
-        i.id !== identityId &&
-        i.accounts.some(
-          (a) =>
-            a.platform === platform &&
-            a.handle.toLowerCase() === normalizedHandle.toLowerCase(),
-        ),
-    );
-    if (duplicated) {
-      throw new Error(`${platform} handle already linked to another friend`);
-    }
+      const duplicated = identities.some(
+        (i) =>
+          i.id !== identityId &&
+          i.accounts.some(
+            (a) =>
+              a.platform === platform &&
+              a.handle.toLowerCase() === normalizedHandle.toLowerCase(),
+          ),
+      );
+      if (duplicated) {
+        throw new Error(`${platform} handle already linked to another friend`);
+      }
 
-    const alreadyExists = identity.accounts.some(
-      (a) =>
-        a.platform === platform &&
-        a.handle.toLowerCase() === normalizedHandle.toLowerCase(),
-    );
-    if (alreadyExists) {
-      throw new Error("Account already exists on this friend");
-    }
+      const alreadyExists = identity.accounts.some(
+        (a) =>
+          a.platform === platform &&
+          a.handle.toLowerCase() === normalizedHandle.toLowerCase(),
+      );
+      if (alreadyExists) {
+        throw new Error("Account already exists on this friend");
+      }
 
-    identity.accounts.push({
-      platform,
-      handle: normalizedHandle,
-      status: "active",
-      lastFetched: Date.now(),
+      identity.accounts.push({
+        platform,
+        handle: normalizedHandle,
+        status: "active",
+        lastFetched: Date.now(),
+      });
+      identity.updatedAt = Date.now();
+      await this.saveIdentities(identities);
     });
-    identity.updatedAt = Date.now();
-    await this.saveIdentities(identities);
   }
 
   static async addAlias(identityId: string, alias: string): Promise<void> {
-    await this.ensureMigration();
-    const normalizedAlias = this.normalizeAlias(alias);
-    if (!normalizedAlias) {
-      throw new Error("Alias is empty");
-    }
+    return navigator.locks.request("lamigo_identities_lock", async () => {
+      await this.ensureMigration();
+      const normalizedAlias = this.normalizeAlias(alias);
+      if (!normalizedAlias) {
+        throw new Error("Alias is empty");
+      }
 
-    const identities = await this.getIdentities();
-    const identity = identities.find((i) => i.id === identityId);
-    if (!identity) {
-      throw new Error("Identity not found");
-    }
+      const identities = await this.getIdentities();
+      const identity = identities.find((i) => i.id === identityId);
+      if (!identity) {
+        throw new Error("Identity not found");
+      }
 
-    if (identity.aliases.includes(normalizedAlias)) {
-      throw new Error("Alias already exists");
-    }
+      if (identity.aliases.includes(normalizedAlias)) {
+        throw new Error("Alias already exists");
+      }
 
-    if (identity.aliases.length >= DATA_LIMITS.MAX_ALIASES_PER_IDENTITY) {
-      throw new Error("Maximum aliases reached for this friend");
-    }
+      if (identity.aliases.length >= DATA_LIMITS.MAX_ALIASES_PER_IDENTITY) {
+        throw new Error("Maximum aliases reached for this friend");
+      }
 
-    identity.aliases.push(normalizedAlias);
-    identity.updatedAt = Date.now();
-    await this.saveIdentities(identities);
+      identity.aliases.push(normalizedAlias);
+      identity.updatedAt = Date.now();
+      await this.saveIdentities(identities);
+    });
   }
 
   static async removeIdentity(identityId: string): Promise<void> {
-    await this.ensureMigration();
-    const identities = await this.getIdentities();
-    const identity = identities.find((i) => i.id === identityId);
-    if (!identity) return;
+    return navigator.locks.request("lamigo_identities_lock", async () => {
+      await this.ensureMigration();
+      const identities = await this.getIdentities();
+      const identity = identities.find((i) => i.id === identityId);
+      if (!identity) return;
 
-    const filtered = identities.filter((i) => i.id !== identityId);
-    await this.saveIdentities(filtered);
+      const filtered = identities.filter((i) => i.id !== identityId);
+      await this.saveIdentities(filtered);
 
-    const profileKeys = identity.accounts.map((a) =>
-      this.getProfileV2Key(a.platform, a.handle),
-    );
-    if (profileKeys.length > 0) {
-      await chrome.storage.local.remove(profileKeys);
-    }
+      const profileKeys = identity.accounts.map((a) =>
+        this.getProfileV2Key(a.platform, a.handle),
+      );
+      if (profileKeys.length > 0) {
+        await chrome.storage.local.remove(profileKeys);
+      }
 
-    const res = await chrome.storage.local.get(PROFILE_V2_INDEX_KEY);
-    const index: string[] = res[PROFILE_V2_INDEX_KEY] || [];
-    const accountRefs = new Set(
-      identity.accounts.map((a) => this.profileRef(a.platform, a.handle)),
-    );
-    const newIndex = index.filter((ref) => !accountRefs.has(ref));
-    await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
+      await navigator.locks.request("lamigo_profile_index_lock", async () => {
+        const res = await chrome.storage.local.get(PROFILE_V2_INDEX_KEY);
+        const index: string[] = res[PROFILE_V2_INDEX_KEY] || [];
+        const accountRefs = new Set(
+          identity.accounts.map((a) => this.profileRef(a.platform, a.handle)),
+        );
+        const newIndex = index.filter((ref) => !accountRefs.has(ref));
+        await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
+      });
+    });
   }
 
   static async restoreIdentity(
     identity: FriendIdentity,
     profiles: FriendProfile[],
   ): Promise<void> {
-    await this.ensureMigration();
-    const identities = await this.getIdentities();
-    if (!identities.some((i) => i.id === identity.id)) {
-      identities.push(identity);
-      await this.saveIdentities(identities);
-    }
+    await navigator.locks.request("lamigo_identities_lock", async () => {
+      await this.ensureMigration();
+      const identities = await this.getIdentities();
+      if (!identities.some((i) => i.id === identity.id)) {
+        identities.push(identity);
+        await this.saveIdentities(identities);
+      }
+    });
     for (const profile of profiles) {
       await this.saveProfile(profile);
     }
@@ -535,39 +551,41 @@ export class StorageService {
   }
 
   static async saveProfile(profile: FriendProfile): Promise<void> {
-    await this.ensureMigration();
+    await navigator.locks.request("lamigo_profile_index_lock", async () => {
+      await this.ensureMigration();
 
-    // Validate schema before persisting — rejects malformed / spoofed API data
-    const validated = validateProfile(profile);
-    if (!validated) {
-      console.warn('[StorageService] Rejected invalid profile:', profile?.username);
-      return;
-    }
-    const platform = profile.platform || "leetcode";
-    const username = this.normalizeHandle(platform, profile.username);
+      // Validate schema before persisting — rejects malformed / spoofed API data
+      const validated = validateProfile(profile);
+      if (!validated) {
+        console.warn('[StorageService] Rejected invalid profile:', profile?.username);
+        return;
+      }
+      const platform = profile.platform || "leetcode";
+      const username = this.normalizeHandle(platform, profile.username);
 
-    // Limit recent submissions to prevent bloat
-    const limitedProfile = {
-      ...profile,
-      username,
-      platform,
-      recentSubmissions: profile.recentSubmissions?.slice(
-        0,
-        DATA_LIMITS.MAX_RECENT_SUBMISSIONS,
-      ),
-      lastFetched: Date.now(),
-    };
+      // Limit recent submissions to prevent bloat
+      const limitedProfile = {
+        ...profile,
+        username,
+        platform,
+        recentSubmissions: profile.recentSubmissions?.slice(
+          0,
+          DATA_LIMITS.MAX_RECENT_SUBMISSIONS,
+        ),
+        lastFetched: Date.now(),
+      };
 
-    const profileKey = this.getProfileV2Key(platform, username);
-    await chrome.storage.local.set({ [profileKey]: limitedProfile });
+      const profileKey = this.getProfileV2Key(platform, username);
+      await chrome.storage.local.set({ [profileKey]: limitedProfile });
 
-    const res = await chrome.storage.local.get(PROFILE_V2_INDEX_KEY);
-    const index: string[] = res[PROFILE_V2_INDEX_KEY] || [];
-    const ref = this.profileRef(platform, username);
-    if (!index.includes(ref)) {
-      index.push(ref);
-      await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: index });
-    }
+      const res = await chrome.storage.local.get(PROFILE_V2_INDEX_KEY);
+      const index: string[] = res[PROFILE_V2_INDEX_KEY] || [];
+      const ref = this.profileRef(platform, username);
+      if (!index.includes(ref)) {
+        index.push(ref);
+        await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: index });
+      }
+    });
   }
 
   private static async getAllPlatformProfiles(): Promise<
@@ -596,66 +614,68 @@ export class StorageService {
   }
 
   private static async cleanupProfiles(index: string[]): Promise<void> {
-    const identities = await this.getIdentities();
-    const allowedRefs = new Set<string>();
-    identities.forEach((identity) => {
-      identity.accounts.forEach((account) => {
-        allowedRefs.add(this.profileRef(account.platform, account.handle));
+    await navigator.locks.request("lamigo_profile_index_lock", async () => {
+      const identities = await this.getIdentities();
+      const allowedRefs = new Set<string>();
+      identities.forEach((identity) => {
+        identity.accounts.forEach((account) => {
+          allowedRefs.add(this.profileRef(account.platform, account.handle));
+        });
       });
-    });
 
-    const { own_username: ownUser, own_codeforces_handle: ownCodeforcesHandle, own_codechef_handle: ownCodechefHandle } =
-      await chrome.storage.local.get(["own_username", "own_codeforces_handle", "own_codechef_handle"]);
-    if (ownUser) {
-      allowedRefs.add(
-        this.profileRef("leetcode", String(ownUser).toLowerCase()),
-      );
-    }
-    if (ownCodeforcesHandle) {
-      allowedRefs.add(
-        this.profileRef("codeforces", String(ownCodeforcesHandle).trim().toLowerCase()),
-      );
-    }
-    if (ownCodechefHandle) {
-      allowedRefs.add(
-        this.profileRef("codechef", String(ownCodechefHandle).trim().toLowerCase()),
-      );
-    }
-
-    // To prevent orphaned profiles that aren't even in the index, scan all chrome.storage.local keys
-    const allStorage = await chrome.storage.local.get(null);
-    const allStorageKeys = Object.keys(allStorage);
-    const profileKeysInStorage = allStorageKeys.filter(key => key.startsWith(PROFILE_V2_KEY_PREFIX));
-
-    const toRemove: string[] = [];
-
-    // Check keys in storage
-    for (const key of profileKeysInStorage) {
-      const refPart = key.slice(PROFILE_V2_KEY_PREFIX.length);
-      if (!allowedRefs.has(refPart)) {
-        toRemove.push(key);
+      const { own_username: ownUser, own_codeforces_handle: ownCodeforcesHandle, own_codechef_handle: ownCodechefHandle } =
+        await chrome.storage.local.get(["own_username", "own_codeforces_handle", "own_codechef_handle"]);
+      if (ownUser) {
+        allowedRefs.add(
+          this.profileRef("leetcode", String(ownUser).toLowerCase()),
+        );
       }
-    }
+      if (ownCodeforcesHandle) {
+        allowedRefs.add(
+          this.profileRef("codeforces", String(ownCodeforcesHandle).trim().toLowerCase()),
+        );
+      }
+      if (ownCodechefHandle) {
+        allowedRefs.add(
+          this.profileRef("codechef", String(ownCodechefHandle).trim().toLowerCase()),
+        );
+      }
 
-    // Also check index entries that are not allowed or not in storage
-    const newIndex: string[] = [];
-    for (const ref of index) {
-      if (allowedRefs.has(ref)) {
-        newIndex.push(ref);
-      } else {
-        const [platform, handle] = ref.split(":");
-        const key = this.getProfileV2Key(platform as Platform, handle);
-        if (!toRemove.includes(key)) {
+      // To prevent orphaned profiles that aren't even in the index, scan all chrome.storage.local keys
+      const allStorage = await chrome.storage.local.get(null);
+      const allStorageKeys = Object.keys(allStorage);
+      const profileKeysInStorage = allStorageKeys.filter(key => key.startsWith(PROFILE_V2_KEY_PREFIX));
+
+      const toRemove: string[] = [];
+
+      // Check keys in storage
+      for (const key of profileKeysInStorage) {
+        const refPart = key.slice(PROFILE_V2_KEY_PREFIX.length);
+        if (!allowedRefs.has(refPart)) {
           toRemove.push(key);
         }
       }
-    }
 
-    if (toRemove.length > 0) {
-      await chrome.storage.local.remove(toRemove);
-    }
+      // Also check index entries that are not allowed or not in storage
+      const newIndex: string[] = [];
+      for (const ref of index) {
+        if (allowedRefs.has(ref)) {
+          newIndex.push(ref);
+        } else {
+          const [platform, handle] = ref.split(":");
+          const key = this.getProfileV2Key(platform as Platform, handle);
+          if (!toRemove.includes(key)) {
+            toRemove.push(key);
+          }
+        }
+      }
 
-    await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
+      if (toRemove.length > 0) {
+        await chrome.storage.local.remove(toRemove);
+      }
+
+      await chrome.storage.local.set({ [PROFILE_V2_INDEX_KEY]: newIndex });
+    });
   }
 
   static async getProfile(username: string): Promise<FriendProfile | null> {

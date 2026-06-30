@@ -84,12 +84,14 @@ export class PersistentRateLimiter {
   }
 
   async canProceed(): Promise<boolean> {
-    const now = Date.now();
-    const timestamps = await this._load();
-    if (timestamps.length >= this.maxRequests) return false;
-    timestamps.push(now);
-    await this._save(timestamps);
-    return true;
+    return navigator.locks.request(this.storageKey, async () => {
+      const now = Date.now();
+      const timestamps = await this._load();
+      if (timestamps.length >= this.maxRequests) return false;
+      timestamps.push(now);
+      await this._save(timestamps);
+      return true;
+    });
   }
 
   async getTimeUntilReset(): Promise<number> {
@@ -104,7 +106,9 @@ export class PersistentRateLimiter {
   }
 
   async reset(): Promise<void> {
-    await this._save([]);
+    return navigator.locks.request(this.storageKey, async () => {
+      await this._save([]);
+    });
   }
 }
 

@@ -7,6 +7,8 @@ import {
   Calendar,
   Settings as SettingsIcon,
   Users,
+  Code2,
+  Loader2,
 } from "lucide-react";
 import { Friend, FriendProfile } from "../types";
 import { Overview } from "./tabs/Overview";
@@ -14,6 +16,7 @@ import { Friends } from "./tabs/Friends";
 import { Leaderboard } from "./tabs/Leaderboard";
 import { SheetsTracker } from "./tabs/SheetsTracker";
 import { ContestHub } from "./tabs/ContestHub";
+const IdeTab = React.lazy(() => import('./tabs/IdeTab').then(m => ({ default: m.IdeTab })));
 import { StorageService } from "../services/storage";
 import { PlatformIcon } from "../utils/PlatformIcons";
 import { SettingsTab } from "../popup/SettingsTab";
@@ -30,6 +33,7 @@ export const DashboardApp: React.FC = () => {
     | "sheets"
     | "head-to-head"
     | "contests"
+    | "ide"
     | "settings"
   >(() => {
     const hash = window.location.hash.replace("#", "");
@@ -41,6 +45,7 @@ export const DashboardApp: React.FC = () => {
         "sheets",
         "head-to-head",
         "contests",
+        "ide",
         "settings",
       ].includes(hash)
     ) {
@@ -241,7 +246,7 @@ export const DashboardApp: React.FC = () => {
         "friend_profiles",
         "profiles"
       ];
-      if (Object.keys(changes).some(k => reloadKeys.includes(k))) {
+      if (Object.keys(changes).some(k => reloadKeys.includes(k) || k.startsWith('lamigo_profile:') || k === 'lamigo_identities')) {
         loadData();
       }
     };
@@ -363,6 +368,13 @@ export const DashboardApp: React.FC = () => {
             >
               <FileSpreadsheet size={20} />
               <span>Sheets Tracker</span>
+            </div>
+            <div
+              className={`nav-item ${activeTab === "ide" ? "active" : ""}`}
+              onClick={() => setActiveTab("ide")}
+            >
+              <Code2 size={20} />
+              <span>IDE</span>
             </div>
             <div
               className={`nav-item ${activeTab === "head-to-head" ? "active" : ""}`}
@@ -532,6 +544,11 @@ export const DashboardApp: React.FC = () => {
               allSubmissions={allSubmissions}
               selectedGlobalPlatforms={selectedGlobalPlatforms}
             />
+          )}
+          {activeTab === "ide" && (
+            <React.Suspense fallback={<div className="flex h-full items-center justify-center text-gray-400"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
+              <IdeTab />
+            </React.Suspense>
           )}
           {activeTab === "head-to-head" && (
             <div
