@@ -24,7 +24,10 @@ function setupDevAutoReload(): void {
       try {
         const payload = JSON.parse(String(event.data));
         if (payload?.type === "reload") {
-          // chrome.runtime.reload(); // Disabled to prevent popup white screens
+          // Set a flag so the popup knows the SW is freshly booting
+          chrome.storage.session.set({ sw_reloading: true }).finally(() => {
+            chrome.runtime.reload();
+          });
         }
       } catch {
         // Ignore malformed dev-reload messages.
@@ -162,6 +165,35 @@ async function sweepStaleContestAlarms(): Promise<void> {
   }
 }
 
+// Port-based RPC handler: popup uses chrome.runtime.connect('popup-rpc') to
+// reliably wake the SW and send messages (sendMessage cannot wake a sleeping SW).
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name === 'wake-ping') {
+    // Legacy wake-only: just accept and let disconnect naturally
+    port.onDisconnect.addListener(() => { void chrome.runtime.lastError; });
+    return;
+  }
+
+  if (port.name === 'popup-rpc') {
+    // Immediately signal popup that SW is booted and ready to receive messages
+    try { port.postMessage({ type: 'ready' }); } catch {}
+
+    port.onMessage.addListener(async (message) => {
+      try {
+        let response: any = { success: false, error: 'Unknown action' };
+        for (const handler of handlers) {
+          response = await (handler as MessageHandler).handle(message, {} as any);
+          if (response.error !== 'Unknown action') break;
+        }
+        try { port.postMessage(response); } catch {}
+      } catch (err: any) {
+        try { port.postMessage({ success: false, error: err.message || 'Internal error' }); } catch {}
+      }
+    });
+    port.onDisconnect.addListener(() => { void chrome.runtime.lastError; });
+  }
+});
+
 // Central Message Dispatcher
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // Security: only process messages from this extension itself (popup, content scripts, options page).
@@ -244,3 +276,4 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     }, BACKUP_DEBOUNCE_MS);
   }
 });
+

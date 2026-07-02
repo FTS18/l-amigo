@@ -29,6 +29,11 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].js',
       clean: true,
+      // Required for MV3 service workers: webpack's chunk loader must use
+      // importScripts() (available in SW) instead of document.createElement('script')
+      // (unavailable in SW). Without this, split chunks like 4698.js silently fail
+      // to load in the background service worker.
+      globalObject: 'self',
     },
     module: {
       rules: [
@@ -57,7 +62,12 @@ module.exports = (env, argv) => {
       minimize: isProd,
       minimizer: [new TerserPlugin()],
       splitChunks: {
-        chunks: 'all',
+        chunks(chunk) {
+          // Do NOT split chunks for background service worker or content scripts.
+          // They must be completely self-contained, single-file bundles to load
+          // synchronously on startup and avoid MV3 registration issues.
+          return chunk.name !== 'background' && chunk.name !== 'content' && chunk.name !== 'codeforces';
+        },
       },
     },
     plugins: [

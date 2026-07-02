@@ -9,6 +9,8 @@ import {
   Users,
   Code2,
   Loader2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Friend, FriendProfile } from "../types";
 import { Overview } from "./tabs/Overview";
@@ -63,6 +65,21 @@ export const DashboardApp: React.FC = () => {
   const [fontSizeScale, setFontSizeScale] = useState(100);
   const [displayZoomScale, setDisplayZoomScale] = useState(100);
   const [disabledPlatforms, setDisabledPlatforms] = useState<string[]>([]);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem("sidebar_collapsed") === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  const toggleSidebar = () => {
+    const newVal = !sidebarCollapsed;
+    setSidebarCollapsed(newVal);
+    try {
+      localStorage.setItem("sidebar_collapsed", String(newVal));
+    } catch {}
+  };
 
   const [allSubmissions, setAllSubmissions] = useState<any[]>([]);
 
@@ -99,6 +116,32 @@ export const DashboardApp: React.FC = () => {
     type: "info",
   });
   const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
+
+  const [selectedSheetId, _setSelectedSheetId] = useState<string>(() => {
+    try {
+      const v = localStorage.getItem("st_sheetId");
+      if (v !== null) return JSON.parse(v);
+    } catch {}
+    return "";
+  });
+  const setSelectedSheetId = (id: string) => {
+    try {
+      localStorage.setItem("st_sheetId", JSON.stringify(id));
+    } catch {}
+    _setSelectedSheetId(id);
+  };
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "st_sheetId" && e.newValue) {
+        try {
+          _setSelectedSheetId(JSON.parse(e.newValue));
+        } catch {}
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   useEffect(() => {
     window.location.hash = activeTab;
@@ -325,20 +368,44 @@ export const DashboardApp: React.FC = () => {
       style={customStyles}
     >
       <div className="dashboard-container">
-        <div className="sidebar">
-          <div className="sidebar-header">
-            <h1>L'Amigo</h1>
-            <div
+        <div className={`sidebar ${sidebarCollapsed ? "collapsed" : ""}`}>
+          <div className="sidebar-header" style={{ display: 'flex', alignItems: 'center', justifyContent: sidebarCollapsed ? 'center' : 'space-between', padding: sidebarCollapsed ? '0' : '16px 20px', gap: '8px' }}>
+            {!sidebarCollapsed && (
+              <div>
+                <h1>L'Amigo</h1>
+                <div
+                  style={{
+                    fontSize: "var(--font-size-sm)",
+                    color: "#888",
+                    marginTop: "4px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Analytics Dashboard
+                </div>
+              </div>
+            )}
+            <button
+              onClick={toggleSidebar}
+              title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
               style={{
-                fontSize: "var(--font-size-sm)",
-                color: "#888",
-                marginTop: "4px",
-                letterSpacing: "1px",
-                textTransform: "uppercase",
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'var(--text-secondary, #aaa)',
+                padding: '6px',
+                borderRadius: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'background 0.2s',
               }}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
             >
-              Analytics Dashboard
-            </div>
+              {sidebarCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+            </button>
           </div>
           <div className="nav-menu">
             <div
@@ -364,7 +431,13 @@ export const DashboardApp: React.FC = () => {
             </div>
             <div
               className={`nav-item ${activeTab === "sheets" ? "active" : ""}`}
-              onClick={() => setActiveTab("sheets")}
+              onClick={() => {
+                if (activeTab === "sheets") {
+                  setSelectedSheetId("");
+                } else {
+                  setActiveTab("sheets");
+                }
+              }}
             >
               <FileSpreadsheet size={20} />
               <span>Sheets Tracker</span>
@@ -399,43 +472,66 @@ export const DashboardApp: React.FC = () => {
             </div>
           </div>
 
+          <div style={{ flex: 1 }} />
+
           <div
             className="global-filter-section"
-            style={{ marginTop: "32px", padding: "0 16px" }}
+            style={{
+              padding: sidebarCollapsed ? "16px 8px" : "24px 16px 16px 16px",
+              borderTop: "1px solid var(--border)",
+              marginTop: "auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <div
-              style={{
-                fontSize: "var(--font-size-sm)",
-                fontWeight: 700,
-                color: "var(--text-muted)",
-                letterSpacing: "1px",
-                textTransform: "uppercase",
-                marginBottom: "12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
-            >
-              Platform Filter (Multi-Select)
-              <span
-                title="Toggling platforms dynamically filters the active view, recalculating total solved stats, leaderboard rankings, and visible friend accounts."
+            {!sidebarCollapsed && (
+              <div
                 style={{
-                  cursor: "help",
-                  opacity: 0.8,
-                  fontSize: "var(--font-size-base)",
-                  textTransform: "none",
+                  fontSize: "var(--font-size-sm)",
+                  fontWeight: 700,
+                  color: "var(--text-muted)",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  marginBottom: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  width: "100%",
                 }}
               >
-                ⓘ
-              </span>
-            </div>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
+                Platform Filter (Multi-Select)
+                <span
+                  title="Toggling platforms dynamically filters the active view, recalculating total solved stats, leaderboard rankings, and visible friend accounts."
+                  style={{
+                    cursor: "help",
+                    opacity: 0.8,
+                    fontSize: "var(--font-size-base)",
+                    textTransform: "none",
+                  }}
+                >
+                  ⓘ
+                </span>
+              </div>
+            )}
+            <div
+              className="global-filter-buttons"
+              style={{
+                display: "flex",
+                gap: "8px",
+                alignItems: "center",
+                flexWrap: "wrap",
+                flexDirection: sidebarCollapsed ? "column" : "row",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
               {(activeTab === "sheets" 
                 ? [
                     { id: "leetcode", name: "LeetCode", activeBg: "#ffa116" },
                     { id: "codeforces", name: "Codeforces", activeBg: "#3b82f6" },
                     { id: "codechef", name: "CodeChef", activeBg: "#5B4638" },
-                    { id: "cses", name: "CSES", activeBg: "#000000" },
+                    { id: "cses", name: "CSES", activeBg: "#333333" },
                     { id: "gfg", name: "GeeksforGeeks", activeBg: "#2f8d46" },
                   ]
                 : [
@@ -466,8 +562,9 @@ export const DashboardApp: React.FC = () => {
                     }}
                     title={`${p.name} (${active ? "Active" : "Inactive"}) - Click to toggle inclusion in dashboard calculations and lists.`}
                     style={{
-                      flex: activeTab === "sheets" ? "1 1 calc(33.33% - 8px)" : 1,
+                      flex: sidebarCollapsed ? "none" : (activeTab === "sheets" ? "1 1 calc(33.33% - 8px)" : 1),
                       height: "42px",
+                      width: sidebarCollapsed ? "42px" : "auto",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -497,16 +594,19 @@ export const DashboardApp: React.FC = () => {
                 );
               })}
             </div>
-            <div
-              style={{
-                fontSize: "var(--font-size-sm)",
-                color: "var(--text-muted)",
-                marginTop: "8px",
-                fontStyle: "italic",
-              }}
-            >
-              Click to toggle platforms on/off
-            </div>
+            {!sidebarCollapsed && (
+              <div
+                style={{
+                  fontSize: "var(--font-size-sm)",
+                  color: "var(--text-muted)",
+                  marginTop: "8px",
+                  fontStyle: "italic",
+                  width: "100%",
+                }}
+              >
+                Click to toggle platforms on/off
+              </div>
+            )}
           </div>
         </div>
         <div className="main-content">
@@ -543,6 +643,8 @@ export const DashboardApp: React.FC = () => {
               profiles={profiles}
               allSubmissions={allSubmissions}
               selectedGlobalPlatforms={selectedGlobalPlatforms}
+              selectedSheetId={selectedSheetId}
+              setSelectedSheetId={setSelectedSheetId}
             />
           )}
           {activeTab === "ide" && (

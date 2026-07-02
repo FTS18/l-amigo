@@ -416,101 +416,140 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  }
  };
 
- const handleOAuthLogin = async () => {
- setSyncError('');
- setIsLoggingIn(true);
+  const runDeviceFlowPolling = async (state: any) => {
+    try {
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+      
+      const accessToken = await GitHubSyncService.pollForToken(
+        state.device_code,
+        state.interval,
+        controller.signal
+      );
+      
+      await GitHubSyncService.saveConfig({ token: accessToken });
+      await chrome.storage.local.remove('github_device_flow');
+      setIsTokenSet(true);
+      setToken('');
+      const msg = 'Authentication successful! Now enter a repository name.';
+      onToast ? onToast(msg, 'success') : alert(msg);
+      handleHealthCheck();
+      setDeviceFlowState(null);
+    } catch (err: any) {
+      if (err.message !== 'Device authorization cancelled.') {
+        setSyncError(err.message || 'Authentication failed.');
+        onToast?.(err.message || 'Authentication failed.', 'error');
+      }
+      await chrome.storage.local.remove('github_device_flow');
+      setDeviceFlowState(null);
+    }
+  };
 
- const requestGitHubOAuthPermissions = (): Promise<boolean> => {
- return new Promise((resolve) => {
- if (!chrome?.permissions?.request) {
- resolve(true);
- return;
- }
- chrome.permissions.request({
- permissions: ['identity'],
- origins: ['https://api.github.com/*', 'https://github.com/*']
- }, (granted) => {
- resolve(granted);
- });
- });
- };
+  const handleOAuthLogin = async () => {
+    setSyncError('');
+    setIsLoggingIn(true);
 
- const granted = await requestGitHubOAuthPermissions();
- if (!granted) {
- const msg = 'GitHub permissions are required to enable automatic syncing.';
- setSyncError(msg);
- onToast?.(msg, 'error');
- setIsLoggingIn(false);
- return;
- }
+    const requestGitHubOAuthPermissions = (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        if (!chrome?.permissions?.request) {
+          resolve(true);
+          return;
+        }
+        chrome.permissions.request({
+          permissions: ['identity'],
+          origins: ['https://api.github.com/*', 'https://github.com/*']
+        }, (granted) => {
+          resolve(granted);
+        });
+      });
+    };
 
- try {
- const state = await GitHubSyncService.requestDeviceCode();
- setDeviceFlowState(state);
- 
- chrome.tabs.create({ url: state.verification_uri });
+    const granted = await requestGitHubOAuthPermissions();
+    if (!granted) {
+      const msg = 'GitHub permissions are required to enable automatic syncing.';
+      setSyncError(msg);
+      onToast?.(msg, 'error');
+      setIsLoggingIn(false);
+      return;
+    }
 
- const controller = new AbortController();
- abortControllerRef.current = controller;
+    try {
+      const state = await GitHubSyncService.requestDeviceCode();
+      await chrome.storage.local.set({
+        github_device_flow: { state, startTime: Date.now() }
+      });
+      setDeviceFlowState(state);
+      // Auto-copy code to clipboard
+      try {
+        await navigator.clipboard.writeText(state.user_code);
+        onToast?.('Verification code copied to clipboard! Opening GitHub...', 'info');
+      } catch {}
 
- const accessToken = await GitHubSyncService.pollForToken(
- state.device_code,
- state.interval,
- controller.signal
- );
+      chrome.tabs.create({ url: state.verification_uri, active: false });
+      
+      await runDeviceFlowPolling(state);
+    } catch (err: any) {
+      if (err.message && err.message.includes('device_flow_disabled')) {
+        console.log("Device flow disabled. Falling back to standard OAuth.");
+        chrome.runtime.sendMessage({ action: 'githubOAuthLogin' }, async (res) => {
+          if (res && res.success) {
+            await GitHubSyncService.saveConfig({ token: res.token });
+            setIsTokenSet(true);
+            setToken('');
+            const msg = 'Authentication successful! Now enter a repository name.';
+            onToast ? onToast(msg, 'success') : alert(msg);
+            handleHealthCheck();
+          } else {
+            setSyncError(res?.error || 'OAuth authentication failed.');
+            onToast?.(res?.error || 'OAuth authentication failed.', 'error');
+          }
+          setDeviceFlowState(null);
+          setIsLoggingIn(false);
+        });
+        return;
+      } else {
+        if (err.message !== 'Device authorization cancelled.') {
+          setSyncError(err.message || 'Authentication failed.');
+          onToast?.(err.message || 'Authentication failed.', 'error');
+        }
+        await chrome.storage.local.remove('github_device_flow');
+        setDeviceFlowState(null);
+      }
+    }
+    setIsLoggingIn(false);
+  };
 
- await GitHubSyncService.saveConfig({ token: accessToken });
- setIsTokenSet(true);
- setToken('');
- const msg = 'Authentication successful! Now enter a repository name.';
- onToast ? onToast(msg, 'success') : alert(msg);
- handleHealthCheck();
- setDeviceFlowState(null);
- } catch (err: any) {
- if (err.message && err.message.includes('device_flow_disabled')) {
- console.log("Device flow disabled. Falling back to standard OAuth.");
- chrome.runtime.sendMessage({ action: 'githubOAuthLogin' }, async (res) => {
- if (res && res.success) {
- await GitHubSyncService.saveConfig({ token: res.token });
- setIsTokenSet(true);
- setToken('');
- const msg = 'Authentication successful! Now enter a repository name.';
- onToast ? onToast(msg, 'success') : alert(msg);
- handleHealthCheck();
- } else {
- setSyncError(res?.error || 'OAuth authentication failed.');
- onToast?.(res?.error || 'OAuth authentication failed.', 'error');
- }
- setDeviceFlowState(null);
- setIsLoggingIn(false);
- });
- return;
- } else {
- if (err.message !== 'Device authorization cancelled.') {
- setSyncError(err.message || 'Authentication failed.');
- onToast?.(err.message || 'Authentication failed.', 'error');
- }
- setDeviceFlowState(null);
- }
- }
- setIsLoggingIn(false);
- };
+  const cancelDeviceFlow = async () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    await chrome.storage.local.remove('github_device_flow');
+    setDeviceFlowState(null);
+  };
 
- const cancelDeviceFlow = () => {
- if (abortControllerRef.current) {
- abortControllerRef.current.abort();
- abortControllerRef.current = null;
- }
- setDeviceFlowState(null);
- };
+  useEffect(() => {
+    chrome.storage.local.get(['github_device_flow'], (res) => {
+      if (res.github_device_flow) {
+        const { state, startTime } = res.github_device_flow;
+        const elapsed = (Date.now() - startTime) / 1000;
+        if (elapsed < state.expires_in) {
+          setDeviceFlowState(state);
+          runDeviceFlowPolling(state);
+        } else {
+          chrome.storage.local.remove('github_device_flow');
+        }
+      }
+    });
+  }, []);
 
- useEffect(() => {
- return () => {
- if (abortControllerRef.current) {
- abortControllerRef.current.abort();
- }
- };
- }, []);
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
  const handleHealthCheck = async () => {
  setHealthStatus({ status: 'checking', message: 'Checking connection...' });

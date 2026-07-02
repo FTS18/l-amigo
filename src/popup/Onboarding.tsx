@@ -211,88 +211,126 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
  e.target.value = '';
  };
 
- const startDeviceFlow = async () => {
- setError('');
- setIsLoggingIn(true);
+  const runDeviceFlowPolling = async (state: any) => {
+    try {
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
 
- const requestGitHubOAuthPermissions = (): Promise<boolean> => {
- return new Promise((resolve) => {
- if (!chrome?.permissions?.request) {
- resolve(true);
- return;
- }
- chrome.permissions.request({
- permissions: ['identity'],
- origins: ['https://api.github.com/*', 'https://github.com/*']
- }, (granted) => {
- resolve(granted);
- });
- });
- };
+      const token = await GitHubSyncService.pollForToken(
+        state.device_code,
+        state.interval,
+        controller.signal
+      );
 
- const granted = await requestGitHubOAuthPermissions();
- if (!granted) {
- setError('GitHub permissions are required to enable automatic syncing.');
- setIsLoggingIn(false);
- return;
- }
+      setGhToken(token);
+      await chrome.storage.local.remove('github_device_flow');
+      setDeviceFlowState(null);
+    } catch (err: any) {
+      if (err.message !== 'Device authorization cancelled.') {
+        setError(err.message || 'Device authentication failed.');
+      }
+      await chrome.storage.local.remove('github_device_flow');
+      setDeviceFlowState(null);
+    }
+  };
 
- try {
- const state = await GitHubSyncService.requestDeviceCode();
- setDeviceFlowState(state);
+  const startDeviceFlow = async () => {
+    setError('');
+    setIsLoggingIn(true);
 
- chrome.tabs.create({ url: state.verification_uri });
+    const requestGitHubOAuthPermissions = (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        if (!chrome?.permissions?.request) {
+          resolve(true);
+          return;
+        }
+        chrome.permissions.request({
+          permissions: ['identity'],
+          origins: ['https://api.github.com/*', 'https://github.com/*']
+        }, (granted) => {
+          resolve(granted);
+        });
+      });
+    };
 
- const controller = new AbortController();
- abortControllerRef.current = controller;
+    const granted = await requestGitHubOAuthPermissions();
+    if (!granted) {
+      setError('GitHub permissions are required to enable automatic syncing.');
+      setIsLoggingIn(false);
+      return;
+    }
 
- const token = await GitHubSyncService.pollForToken(
- state.device_code,
- state.interval,
- controller.signal
- );
+    try {
+      const state = await GitHubSyncService.requestDeviceCode();
+      await chrome.storage.local.set({
+        github_device_flow: { state, startTime: Date.now() }
+      });
+      setDeviceFlowState(state);
 
- setGhToken(token);
- setDeviceFlowState(null);
- } catch (err: any) {
- if (err.message && err.message.includes('device_flow_disabled')) {
- console.log("Device flow disabled. Falling back to standard OAuth.");
- chrome.runtime.sendMessage({ action: 'githubOAuthLogin' }, (res) => {
- if (res && res.success) {
- setGhToken(res.token);
- } else {
- setError(res?.error || 'OAuth authentication failed.');
- }
- setDeviceFlowState(null);
- setIsLoggingIn(false);
- });
- return;
- } else {
- if (err.message !== 'Device authorization cancelled.') {
- setError(err.message || 'Device authentication failed.');
- }
- setDeviceFlowState(null);
- }
- }
- setIsLoggingIn(false);
- };
+      // Auto-copy code to clipboard
+      try {
+        await navigator.clipboard.writeText(state.user_code);
+      } catch {}
 
- const cancelDeviceFlow = () => {
- if (abortControllerRef.current) {
- abortControllerRef.current.abort();
- abortControllerRef.current = null;
- }
- setDeviceFlowState(null);
- setIsLoggingIn(false);
- };
+      chrome.tabs.create({ url: state.verification_uri, active: false });
 
- useEffect(() => {
- return () => {
- if (abortControllerRef.current) {
- abortControllerRef.current.abort();
- }
- };
- }, []);
+      await runDeviceFlowPolling(state);
+    } catch (err: any) {
+      if (err.message && err.message.includes('device_flow_disabled')) {
+        console.log("Device flow disabled. Falling back to standard OAuth.");
+        chrome.runtime.sendMessage({ action: 'githubOAuthLogin' }, (res) => {
+          if (res && res.success) {
+            setGhToken(res.token);
+          } else {
+            setError(res?.error || 'OAuth authentication failed.');
+          }
+          setDeviceFlowState(null);
+          setIsLoggingIn(false);
+        });
+        return;
+      } else {
+        if (err.message !== 'Device authorization cancelled.') {
+          setError(err.message || 'Device authentication failed.');
+        }
+        await chrome.storage.local.remove('github_device_flow');
+        setDeviceFlowState(null);
+      }
+    }
+    setIsLoggingIn(false);
+  };
+
+  const cancelDeviceFlow = async () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    await chrome.storage.local.remove('github_device_flow');
+    setDeviceFlowState(null);
+    setIsLoggingIn(false);
+  };
+
+  useEffect(() => {
+    chrome.storage.local.get(['github_device_flow'], (res) => {
+      if (res.github_device_flow) {
+        const { state, startTime } = res.github_device_flow;
+        const elapsed = (Date.now() - startTime) / 1000;
+        if (elapsed < state.expires_in) {
+          setDeviceFlowState(state);
+          runDeviceFlowPolling(state);
+        } else {
+          chrome.storage.local.remove('github_device_flow');
+        }
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
  const renderVerificationBadge = (status: 'idle' | 'verifying' | 'valid' | 'invalid') => {
  if (status === 'idle') return null;

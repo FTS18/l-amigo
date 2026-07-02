@@ -590,9 +590,20 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       cfDivCounts['Div 4'] = cf.codeforcesStats.divisionCounts.div4 || 0;
     }
 
+    const processedCfProblems = new Set<string>();
+
     const processCfProblem = (sub: any) => {
-      if (sub?.rating) {
-        const r = sub.rating;
+      if (!sub || typeof sub === 'string') return;
+
+      const slug = sub.titleSlug || (sub.problem ? `${sub.problem.contestId}/${sub.problem.index}` : "");
+      const title = sub.title || sub.name || (sub.problem && sub.problem.name) || "";
+      const key = (slug || title).replace('/', '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+      
+      if (!key || processedCfProblems.has(key)) return;
+      processedCfProblems.add(key);
+
+      const r = sub.rating || (sub.problem && sub.problem.rating);
+      if (r) {
         if (r <= 800) cfRatingCounts['800'] = (cfRatingCounts['800'] || 0) + 1;
         else if (r <= 900) cfRatingCounts['900'] = (cfRatingCounts['900'] || 0) + 1;
         else if (r <= 1000) cfRatingCounts['1000'] = (cfRatingCounts['1000'] || 0) + 1;
@@ -602,13 +613,17 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         else if (r <= 1400) cfRatingCounts['1400'] = (cfRatingCounts['1400'] || 0) + 1;
         else cfRatingCounts['1500+'] = (cfRatingCounts['1500+'] || 0) + 1;
       }
-      if (sub?.title || sub?.contestName) {
-        const t = (sub?.title || sub?.contestName || "").toLowerCase();
-        if (t.includes('div. 1') || t.includes('div 1')) cfDivCounts['Div 1'] = (cfDivCounts['Div 1'] || 0) + 1;
-        else if (t.includes('div. 2') || t.includes('div 2')) cfDivCounts['Div 2'] = (cfDivCounts['Div 2'] || 0) + 1;
-        else if (t.includes('div. 3') || t.includes('div 3')) cfDivCounts['Div 3'] = (cfDivCounts['Div 3'] || 0) + 1;
-        else if (t.includes('div. 4') || t.includes('div 4')) cfDivCounts['Div 4'] = (cfDivCounts['Div 4'] || 0) + 1;
-      }
+
+      const t = (sub.title || sub.contestName || (sub.problem && sub.problem.name) || "").toLowerCase();
+      // Only increment division count if it wasn't already set from codeforcesStats.divisionCounts
+      // to avoid double counting division wins from recent submissions.
+      // But wait! divisionCounts is already populated with the correct total values from API.
+      // Modifying it further based on submissions is redundant or a duplicate increment.
+      // However, we preserve the original logic (adding to cfDivCounts) but with deduplication applied.
+      if (t.includes('div. 1') || t.includes('div 1')) cfDivCounts['Div 1'] = (cfDivCounts['Div 1'] || 0) + 1;
+      else if (t.includes('div. 2') || t.includes('div 2')) cfDivCounts['Div 2'] = (cfDivCounts['Div 2'] || 0) + 1;
+      else if (t.includes('div. 3') || t.includes('div 3')) cfDivCounts['Div 3'] = (cfDivCounts['Div 3'] || 0) + 1;
+      else if (t.includes('div. 4') || t.includes('div 4')) cfDivCounts['Div 4'] = (cfDivCounts['Div 4'] || 0) + 1;
     };
 
     cf?.recentSubmissions?.forEach((s: any) => { if (s.statusDisplay === 'Accepted') processCfProblem(s); });
@@ -749,7 +764,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'stretch' }}>
             {/* LeetCode Box */}
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -798,16 +813,16 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <span style={{ color: 'var(--color-medium)' }}>{personalStats.lc.med} Med</span>
                   <span style={{ color: 'var(--color-hard)' }}>{personalStats.lc.hard} Hard</span>
                 </div>
-                <div style={{ display: 'flex', height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
-                  <div style={{ width: `${personalStats.lc.total ? (personalStats.lc.easy / personalStats.lc.total) * 100 : 33}%`, background: 'var(--color-easy)' }} />
-                  <div style={{ width: `${personalStats.lc.total ? (personalStats.lc.med / personalStats.lc.total) * 100 : 34}%`, background: 'var(--color-medium)' }} />
-                  <div style={{ width: `${personalStats.lc.total ? (personalStats.lc.hard / personalStats.lc.total) * 100 : 33}%`, background: 'var(--color-hard)' }} />
+                <div className="dashboard-progress-bar" style={{ display: 'flex', height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
+                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.lc.total ? (personalStats.lc.easy / personalStats.lc.total) * 100 : 33}%`, background: 'var(--color-easy)' }} />
+                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.lc.total ? (personalStats.lc.med / personalStats.lc.total) * 100 : 34}%`, background: 'var(--color-medium)' }} />
+                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.lc.total ? (personalStats.lc.hard / personalStats.lc.total) * 100 : 33}%`, background: 'var(--color-hard)' }} />
                 </div>
               </div>
             </div>
 
             {/* Codeforces Box */}
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -868,7 +883,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
             </div>
 
             {/* CodeChef Box */}
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -912,14 +927,14 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <span>Next Tier ({personalStats.cc.nextStar})</span>
                   <span style={{ color: '#c084fc' }}>{personalStats.cc.rating} / {personalStats.cc.nextTierRating}</span>
                 </div>
-                <div style={{ height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
-                  <div style={{ width: `${personalStats.cc.progressPercent}%`, background: '#c084fc', height: '100%' }} />
+                <div className="dashboard-progress-bar" style={{ height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
+                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.cc.progressPercent}%`, background: '#c084fc' }} />
                 </div>
               </div>
             </div>
 
             {/* CSES Box */}
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -961,8 +976,8 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <span>Overall Progress</span>
                   <span style={{ color: '#00C853' }}>{Math.round((personalStats.cses.total / 300) * 100)}%</span>
                 </div>
-                <div style={{ height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
-                  <div style={{ width: `${(personalStats.cses.total / 300) * 100}%`, background: '#00C853', height: '100%' }} />
+                <div className="dashboard-progress-bar" style={{ height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
+                  <div className="dashboard-progress-fill" style={{ width: `${(personalStats.cses.total / 300) * 100}%`, background: '#00C853' }} />
                 </div>
               </div>
             </div>
@@ -973,7 +988,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       {/* Top Row: Next 3 Contests & Active Sheet Info */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px', marginBottom: '32px' }}>
         {/* Widget 1: Next 3 Contests */}
-        <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', display: 'flex', flexDirection: 'column' }}>
+        <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
               <Calendar size={20} color="#3b82f6" />
@@ -1031,7 +1046,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         </div>
 
         {/* Widget 2: Active Sheet Info */}
-        <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', display: 'flex', flexDirection: 'column' }}>
+        <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
               <FileSpreadsheet size={20} color="#ffa116" />
@@ -1067,8 +1082,8 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <span style={{ color: 'var(--text-secondary)' }}>Progress</span>
                   <span style={{ fontFamily: 'monospace', color: '#ffa116', fontSize: 'calc(1.1 * var(--font-size-base))' }}>{sheetProgress.solved} / {sheetProgress.total} ({sheetProgress.percent}%)</span>
                 </div>
-                <div style={{ height: '10px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', borderRadius: '0px', overflow: 'hidden', marginBottom: '28px' }}>
-                  <div style={{ height: '100%', width: `${sheetProgress.percent}%`, background: '#ffa116', transition: 'width 0.4s ease' }}></div>
+                <div className="dashboard-progress-bar" style={{ height: '10px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', borderRadius: '0px', overflow: 'hidden', marginBottom: '28px' }}>
+                  <div className="dashboard-progress-fill" style={{ height: '100%', width: `${sheetProgress.percent}%`, background: '#ffa116' }}></div>
                 </div>
               </div>
 
@@ -1087,7 +1102,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       </div>
 
       {/* Middle Section: Recent Friend Activity */}
-      <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', marginBottom: '32px' }}>
+      <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', marginBottom: '32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
             <Flame size={20} color="#00C853" />

@@ -29,6 +29,8 @@ interface Props {
   profiles: Record<string, FriendProfile>;
   allSubmissions: any[];
   selectedGlobalPlatforms?: string[];
+  selectedSheetId?: string;
+  setSelectedSheetId?: (id: string) => void;
 }
 
 // Memory cache so we don't re-fetch unnecessarily
@@ -39,6 +41,8 @@ export const SheetsTracker: React.FC<Props> = ({
   profiles,
   allSubmissions,
   selectedGlobalPlatforms = ["leetcode", "codeforces", "codechef"],
+  selectedSheetId: propsSelectedSheetId,
+  setSelectedSheetId: propsSetSelectedSheetId,
 }) => {
   // ── Local-persistent state (survives refresh & syncs across tabs) ───────────────────────────
   const ss = <T,>(key: string, fallback: T): T => {
@@ -52,8 +56,18 @@ export const SheetsTracker: React.FC<Props> = ({
     try { localStorage.setItem(`st_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
   };
 
-  const [selectedSheetId, _setSelectedSheetId] = useState<string>(() => ss("sheetId", ""));
-  const setSelectedSheetId = (id: string) => { setSS("sheetId", id); _setSelectedSheetId(id); };
+  const [localSheetId, _setLocalSheetId] = useState<string>(() => ss("sheetId", ""));
+  
+  const selectedSheetId = propsSelectedSheetId !== undefined ? propsSelectedSheetId : localSheetId;
+  const setSelectedSheetId = (id: string) => {
+    setSS("sheetId", id);
+    if (propsSetSelectedSheetId) {
+      propsSetSelectedSheetId(id);
+    } else {
+      _setLocalSheetId(id);
+    }
+  };
+
   const activeSheet = SHEET_METADATA.find((s) => s.id === selectedSheetId);
 
   const [sheetData, setSheetData] = useState<SheetProblem[] | null>(null);
@@ -80,7 +94,13 @@ export const SheetsTracker: React.FC<Props> = ({
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'st_sheetId' && e.newValue) {
-        try { _setSelectedSheetId(JSON.parse(e.newValue)); } catch {}
+        try {
+          const val = JSON.parse(e.newValue);
+          _setLocalSheetId(val);
+          if (propsSetSelectedSheetId) {
+            propsSetSelectedSheetId(val);
+          }
+        } catch {}
       } else if (e.key === 'st_catFilter' && e.newValue) {
         try { _setCategoryFilter(JSON.parse(e.newValue)); } catch {}
       } else if (e.key === 'st_diffFilter' && e.newValue) {
@@ -804,6 +824,29 @@ export const SheetsTracker: React.FC<Props> = ({
         <div>
           <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             {activeSheet ? activeSheet.name : "Sheets Tracker"}
+            {activeSheet && (
+              <button
+                title={followedSheets.includes(activeSheet.id) ? "Unfollow sheet" : "Follow sheet (pin to top)"}
+                onClick={(e) => toggleFollowSheet(activeSheet.id, e)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "18px",
+                  padding: "4px",
+                  color: followedSheets.includes(activeSheet.id) ? "#ffa116" : "var(--text-secondary)",
+                  opacity: followedSheets.includes(activeSheet.id) ? 1 : 0.4,
+                  transition: "opacity 0.2s ease, color 0.2s ease",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
+                onMouseOut={(e) => (e.currentTarget.style.opacity = followedSheets.includes(activeSheet.id) ? "1" : "0.4")}
+              >
+                {followedSheets.includes(activeSheet.id) ? "★" : "☆"}
+              </button>
+            )}
             <span
               title={activeSheet 
                 ? `Track your problem-solving roadmap for ${activeSheet.name}. Problems are automatically marked green when a matching accepted submission is found in your synced platform history.`
@@ -1236,16 +1279,19 @@ export const SheetsTracker: React.FC<Props> = ({
                             background: "transparent",
                             border: "none",
                             cursor: "pointer",
-                            fontSize: "var(--font-size-lg)",
+                            fontSize: "18px",
                             padding: "4px",
                             color: followedSheets.includes(s.id) ? "#ffa116" : "var(--text-secondary)",
                             opacity: followedSheets.includes(s.id) ? 1 : 0.25,
                             transition: "opacity 0.2s ease, color 0.2s ease",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center"
                           }}
                           onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
                           onMouseOut={(e) => (e.currentTarget.style.opacity = followedSheets.includes(s.id) ? "1" : "0.25")}
                         >
-                          {followedSheets.includes(s.id) ? "" : ""}
+                          {followedSheets.includes(s.id) ? "★" : "☆"}
                         </button>
                       </div>
                     </button>
@@ -1260,6 +1306,7 @@ export const SheetsTracker: React.FC<Props> = ({
           {/* Global Progress Bar */}
           {sheetData && sheetData.length > 0 && (
             <div
+              className="dashboard-card"
               style={{
                 marginBottom: "32px",
                 padding: "24px",
@@ -1307,6 +1354,7 @@ export const SheetsTracker: React.FC<Props> = ({
                 </span>
               </div>
               <div
+                className="dashboard-progress-bar"
                 style={{
                   width: "100%",
                   height: "8px",
@@ -1317,11 +1365,11 @@ export const SheetsTracker: React.FC<Props> = ({
                 }}
               >
                 <div
+                  className="dashboard-progress-fill"
                   style={{
                     width: `${sheetProgress.percent}%`,
                     height: "100%",
                     background: "#ffa116",
-                    transition: "width 0.3s ease",
                   }}
                 ></div>
               </div>

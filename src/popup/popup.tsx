@@ -208,11 +208,27 @@ if (typeof chrome === 'undefined' || !chrome.storage) {
   (window as any).chrome = chromeMock;
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </React.StrictMode>
-);
+async function mountApp() {
+  // In dev mode, if the SW just reloaded, give it time to boot before mounting
+  if (typeof chrome !== 'undefined' && chrome.storage?.session) {
+    try {
+      const res = await chrome.storage.session.get('sw_reloading');
+      if (res.sw_reloading) {
+        await chrome.storage.session.remove('sw_reloading');
+        // Wait for SW to finish registering its message listeners
+        await new Promise(r => setTimeout(r, 800));
+      }
+    } catch {}
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root')!);
+  root.render(
+    <React.StrictMode>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </React.StrictMode>
+  );
+}
+
+mountApp();

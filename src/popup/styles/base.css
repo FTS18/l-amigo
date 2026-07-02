@@ -1,5 +1,5 @@
 /* ─── Base Reset & Global ─────────────────────────────────────────── */
-* { box-sizing: border-box; font-family: 'Bricolage Grotesque', sans-serif !important; }
+* { box-sizing: border-box; }
 
 button, input, select, textarea { font-family: 'Bricolage Grotesque', sans-serif !important; }
 
@@ -60,49 +60,23 @@ a[style*="display:flex"]:hover {
 }
 
 /* ─── Scrollbars ──────────────────────────────────────────────────── */
-.app::-webkit-scrollbar,
-.content-area::-webkit-scrollbar,
-.compare-tab::-webkit-scrollbar,
-.sync-tab::-webkit-scrollbar,
-.friends-container::-webkit-scrollbar,
-.settings-tab::-webkit-scrollbar,
-.recommendations-list::-webkit-scrollbar {
-  width: 6px;
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.app::-webkit-scrollbar-track,
-.content-area::-webkit-scrollbar-track,
-.compare-tab::-webkit-scrollbar-track,
-.sync-tab::-webkit-scrollbar-track,
-.friends-container::-webkit-scrollbar-track,
-.recommendations-list::-webkit-scrollbar-track {
-  background: transparent;
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
 }
 
-.app::-webkit-scrollbar-thumb,
-.compare-tab::-webkit-scrollbar-thumb,
-.sync-tab::-webkit-scrollbar-thumb,
-.friends-container::-webkit-scrollbar-thumb,
-.recommendations-list::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: var(--border-strong);
-  border-radius: 0;
+  border-radius: 0px;
 }
 
-.app::-webkit-scrollbar-thumb:hover,
-.compare-tab::-webkit-scrollbar-thumb:hover,
-.sync-tab::-webkit-scrollbar-thumb:hover,
-.friends-container::-webkit-scrollbar-thumb:hover,
-.recommendations-list::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
-
-.settings-tab::-webkit-scrollbar-track { background: var(--bg-tertiary); }
-.settings-tab::-webkit-scrollbar-thumb { background: var(--border-strong); }
-.settings-tab::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-.compare-table-wrapper::-webkit-scrollbar { height: 6px; }
-.compare-table-wrapper::-webkit-scrollbar-track { background: var(--bg-secondary); }
-.compare-table-wrapper::-webkit-scrollbar-thumb { background: var(--border-strong); }
 
 /* ─── Animations ──────────────────────────────────────────────────── */
 @keyframes spin {

@@ -45,3 +45,17 @@ global.chrome = {
 beforeEach(() => {
   jest.clearAllMocks();
 });
+
+// Mock Web Locks API for jsdom/Node environment
+const mockLocks = {
+  request: jest.fn((name: string, options: any, callback?: any) => {
+    const cb = typeof options === 'function' ? options : callback;
+    return Promise.resolve(cb());
+  }),
+};
+
+Object.defineProperty(global.navigator, 'locks', {
+  value: mockLocks,
+  configurable: true,
+  writable: true,
+});

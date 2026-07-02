@@ -11,7 +11,7 @@ describe('CircuitBreaker', () => {
 
   describe('execute', () => {
     it('should execute function when circuit is closed', async () => {
-      const breaker = new CircuitBreaker({ failureThreshold: 3 });
+      const breaker = new CircuitBreaker('test', { failureThreshold: 3 });
       const fn = jest.fn().mockResolvedValue('success');
 
       const result = await breaker.execute(fn);
@@ -21,7 +21,7 @@ describe('CircuitBreaker', () => {
     });
 
     it('should transition to OPEN after threshold failures', async () => {
-      const breaker = new CircuitBreaker({ failureThreshold: 3 });
+      const breaker = new CircuitBreaker('test', { failureThreshold: 3 });
       const fn = jest.fn().mockRejectedValue(new Error('fail'));
 
       for (let i = 0; i < 3; i++) {
@@ -31,12 +31,12 @@ describe('CircuitBreaker', () => {
       expect(breaker.getState()).toBe('OPEN');
 
       await expect(breaker.execute(fn)).rejects.toThrow(
-        'Circuit breaker is OPEN - service unavailable'
+        'is OPEN - service unavailable'
       );
     });
 
     it('should transition to HALF_OPEN after reset timeout', async () => {
-      const breaker = new CircuitBreaker({
+      const breaker = new CircuitBreaker('test', {
         failureThreshold: 2,
         resetTimeout: 5000,
       });
@@ -56,7 +56,7 @@ describe('CircuitBreaker', () => {
     });
 
     it('should transition to CLOSED after successful attempts in HALF_OPEN', async () => {
-      const breaker = new CircuitBreaker({
+      const breaker = new CircuitBreaker('test', {
         failureThreshold: 2,
         resetTimeout: 5000,
       });
@@ -77,7 +77,7 @@ describe('CircuitBreaker', () => {
     });
 
     it('should reset failure count on success in CLOSED state', async () => {
-      const breaker = new CircuitBreaker({ failureThreshold: 3 });
+      const breaker = new CircuitBreaker('test', { failureThreshold: 3 });
       const failFn = jest.fn().mockRejectedValue(new Error('fail'));
       const successFn = jest.fn().mockResolvedValue('success');
 
@@ -95,7 +95,7 @@ describe('CircuitBreaker', () => {
 
   describe('reset', () => {
     it('should reset circuit to CLOSED state', async () => {
-      const breaker = new CircuitBreaker({ failureThreshold: 2 });
+      const breaker = new CircuitBreaker('test', { failureThreshold: 2 });
       const fn = jest.fn().mockRejectedValue(new Error('fail'));
 
       await expect(breaker.execute(fn)).rejects.toThrow();
@@ -114,7 +114,7 @@ describe('CircuitBreaker', () => {
 
   describe('getState', () => {
     it('should return current state', async () => {
-      const breaker = new CircuitBreaker({ failureThreshold: 2 });
+      const breaker = new CircuitBreaker('test', { failureThreshold: 2 });
 
       expect(breaker.getState()).toBe('CLOSED');
 

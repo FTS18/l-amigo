@@ -284,3 +284,695 @@
 .ide-input:focus {
   border-color: #3b82f6;
 }
+
+/* Auto-Fetch Testcases Feature Styles */
+.ide-btn-fetch {
+  background-color: #6366f1; /* Indigo 500 */
+}
+
+.ide-btn-fetch:hover:not(:disabled) {
+  background-color: #4f46e5; /* Indigo 600 */
+}
+
+.ide-tc-pills {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.ide-tc-pill {
+  background-color: var(--bg-primary, #121212);
+  border: 1px solid var(--border-color, #333);
+  color: var(--text-muted, #888);
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ide-tc-pill:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary, #fff);
+  border-color: var(--border-color, #444);
+}
+
+.ide-tc-pill.active {
+  background-color: #6366f1;
+  color: #fff;
+  border-color: #6366f1;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+
+.ide-expected-badge {
+  font-size: 10px;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ide-output-split {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ide-output-split > textarea {
+  flex: 1;
+  height: 100%;
+}
+
+.ide-expected-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(16, 185, 129, 0.02);
+  border-left: 1px solid var(--border-color, #333);
+  height: 100%;
+}
+
+.ide-expected-header {
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #10b981;
+  background-color: rgba(16, 185, 129, 0.05);
+  border-bottom: 1px solid var(--border-color, #333);
+  letter-spacing: 0.05em;
+}
+
+.ide-expected-textarea {
+  color: #10b981 !important;
+  background-color: transparent !important;
+}
+
+/* Tab Selector Popover Styles */
+.ide-tab-selector-popover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  width: 320px;
+  background-color: var(--bg-secondary, #1e1e1e);
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 1010;
+  display: flex;
+  flex-direction: column;
+}
+
+.ide-tab-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color, #333);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  background-color: var(--bg-tertiary, #252525);
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.ide-tab-selector-body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ide-tab-option {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 12px;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.ide-tab-option:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-color, #444);
+}
+
+.ide-tab-option-title {
+  font-size: 12px;
+  color: var(--text-primary, #fff);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Code Templates Modal Styles */
+.ide-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.ide-modal {
+  width: 580px;
+  max-width: 90vw;
+  background-color: var(--bg-secondary, #1e1e1e);
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.ide-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color, #333);
+  background-color: var(--bg-tertiary, #252525);
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.ide-modal-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+}
+
+.ide-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ide-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color, #333);
+  background-color: var(--bg-tertiary, #252525);
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.ide-template-textarea {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-primary, #121212);
+  border: 1px solid var(--border-color, #444);
+  color: var(--text-primary, #e5e5e5);
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  font-size: 13px;
+  padding: 12px;
+  resize: none;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.ide-template-textarea:focus {
+  border-color: #6366f1;
+  background-color: rgba(255,255,255,0.01);
+}
+
+.ide-modal-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ide-modal-btn-cancel {
+  background-color: transparent;
+  color: var(--text-muted, #888);
+  border: 1px solid var(--border-color, #333);
+}
+
+.ide-modal-btn-cancel:hover {
+  background-color: rgba(255,255,255,0.05);
+  color: var(--text-primary, #fff);
+}
+
+.ide-modal-btn-save {
+  background-color: #6366f1; /* Indigo 500 */
+  color: #fff;
+}
+
+.ide-modal-btn-save:hover {
+  background-color: #4f46e5; /* Indigo 600 */
+}
+
+.ide-modal-btn-reset {
+  background-color: transparent;
+  color: #ef4444; /* Red 500 */
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.ide-modal-btn-reset:hover {
+  background-color: rgba(239, 68, 68, 0.05);
+  border-color: #ef4444;
+}
+
+/* Testcase Editor Styles */
+.ide-problem-name-input {
+  background-color: var(--bg-primary, #121212);
+  border: 1px solid var(--border-strong, #333);
+  color: var(--text-primary, #fff);
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  width: 140px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ide-problem-name-input:focus {
+  border-color: #6366f1;
+}
+
+.ide-tc-pill-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ide-tc-delete-btn {
+  position: absolute;
+  right: 5px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #555);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 2px;
+  width: 12px;
+  height: 12px;
+  transition: all 0.2s;
+}
+
+.ide-tc-delete-btn:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.ide-tc-add-btn {
+  background-color: transparent;
+  border: 1px dashed var(--border-color, #444);
+  color: var(--text-muted, #888);
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ide-tc-add-btn:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+/* Lined Diff Styling */
+.ide-diff-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary, #121212);
+  border: 1px solid var(--border-color, #333);
+}
+
+.ide-diff-line {
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  box-sizing: border-box;
+}
+
+.ide-diff-match {
+  opacity: 0.85;
+}
+
+.ide-diff-mismatch-act {
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  color: #f87171 !important;
+  border-left: 2px solid #ef4444;
+}
+
+.ide-diff-mismatch-exp {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  color: #34d399 !important;
+  border-left: 2px solid #10b981;
+}
+
+/* Problem Statement Panel Styles */
+.ide-problem-panel {
+  width: 380px;
+  min-width: 300px;
+  max-width: 50vw;
+  background-color: var(--bg-secondary, #1e1e1e);
+  border-right: 1px solid var(--border-color, #333);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.ide-problem-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color, #333);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  background-color: var(--bg-tertiary, #252525);
+}
+
+.ide-problem-panel-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary, #ccc);
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Hide duplicate sample tests in description */
+.ide-problem-panel-body .sample-tests,
+.ide-problem-panel-body .sample-test {
+  display: none !important;
+}
+
+/* Format Codeforces native sections */
+.ide-problem-panel-body .header {
+  text-align: center;
+  border-bottom: 1px dashed var(--border-color, #333);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.ide-problem-panel-body .header .title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary, #fff);
+  margin-bottom: 6px;
+}
+
+.ide-problem-panel-body .header .time-limit,
+.ide-problem-panel-body .header .memory-limit,
+.ide-problem-panel-body .header .input-file,
+.ide-problem-panel-body .header .output-file {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  margin: 2px 0;
+}
+
+.ide-problem-panel-body .section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  margin-top: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ide-problem-panel-body p {
+  margin: 0 0 12px 0;
+}
+
+.ide-problem-panel-body ul {
+  margin: 0 0 12px 0;
+  padding-left: 20px;
+}
+
+.ide-problem-panel-body li {
+  margin-bottom: 6px;
+}
+
+.ide-problem-panel-body .tex-graphics {
+  max-width: 100%;
+  margin: 12px 0;
+  border: 1px solid var(--border-color, #444);
+  border-radius: 4px;
+}
+
+.ide-problem-panel-body .tex-span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: #ffa116;
+}
+
+/* Draggable Resizer & Bottom Console Styles */
+.ide-resizer-horizontal:hover,
+.ide-resizer-horizontal:active {
+  background-color: #ffa116 !important;
+  box-shadow: 0 0 8px rgba(255, 161, 22, 0.5);
+}
+
+.ide-resizer-vertical:hover,
+.ide-resizer-vertical:active {
+  background-color: #ffa116 !important;
+  box-shadow: 0 0 8px rgba(255, 161, 22, 0.5);
+}
+
+.ide-console-tab-btn {
+  position: relative;
+  outline: none;
+}
+
+.ide-console-tab-btn:hover {
+  opacity: 1 !important;
+  color: var(--text-primary, #fff) !important;
+}
+
+.ide-console-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--text-muted, #777) !important;
+}
+
+.ide-footer-console-bar .ide-btn-run {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ide-footer-console-bar .ide-btn-run:hover {
+  background-color: #059669 !important; /* Slightly darker emerald */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.ide-footer-console-bar .ide-btn-run:active {
+  transform: translateY(0);
+}
+
+.ide-console-drawer textarea.ide-io-textarea {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+/* Force Monaco Editor to always use Consolas despite global overrides */
+.monaco-editor, 
+.monaco-editor .view-line, 
+.monaco-editor .view-lines,
+.monaco-editor * {
+  font-family: Consolas, "Courier New", monospace !important;
+}
+
+/* ─── Problem Description Panel ───────────────────────────── */
+.ide-problem-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary, #121212);
+  border-right: 1px solid var(--border-color, #333);
+}
+
+.ide-problem-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--bg-secondary, #1e1e1e);
+  border-bottom: 1px solid var(--border-color, #333);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary, #fff);
+}
+
+.ide-problem-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary, #ccc);
+}
+
+/* Codeforces Problem Statement Styles Override */
+.ide-problem-panel-body .problem-statement {
+  margin: 0;
+}
+
+.ide-problem-panel-body .problem-statement .header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color, #333);
+}
+
+.ide-problem-panel-body .problem-statement .header .title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  margin-bottom: 16px;
+}
+
+.ide-problem-panel-body .problem-statement .header .property-title {
+  display: none;
+}
+
+/* Better table/property layout for constraints */
+.ide-problem-panel-body .problem-statement .header > div:not(.title) {
+  display: inline-block;
+  margin: 4px 8px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #333);
+  color: var(--text-primary, #fff);
+}
+
+.ide-problem-panel-body .problem-statement .header > div:not(.title) .property-title {
+  display: inline;
+  color: var(--color-easy, #4caf50);
+  margin-right: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.ide-problem-panel-body .problem-statement .section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  margin: 32px 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ide-problem-panel-body .problem-statement p {
+  margin-bottom: 16px;
+}
+
+/* Math / Variable formatting */
+.ide-problem-panel-body .problem-statement .math,
+.ide-problem-panel-body .problem-statement .tex-span {
+  font-family: Consolas, "Courier New", monospace;
+  color: var(--color-medium, #ffb300);
+  background: rgba(255, 179, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.ide-problem-panel-body .problem-statement ul, 
+.ide-problem-panel-body .problem-statement ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.ide-problem-panel-body .problem-statement li {
+  margin-bottom: 8px;
+}
+
+/* Testcases override in problem description */
+.ide-problem-panel-body .problem-statement .sample-tests {
+  margin-top: 32px;
+}
+
+.ide-problem-panel-body .problem-statement .sample-test {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ide-problem-panel-body .problem-statement .sample-test .input,
+.ide-problem-panel-body .problem-statement .sample-test .output {
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ide-problem-panel-body .problem-statement .sample-test .title {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted, #777);
+  border-bottom: 1px solid var(--border-color, #333);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ide-problem-panel-body .problem-statement .sample-test pre {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg-primary, #121212);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+  color: var(--text-primary, #fff);
+  white-space: pre-wrap;
+  line-height: 1.5;
+}

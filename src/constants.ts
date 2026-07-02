@@ -97,6 +97,8 @@ export const STORAGE_KEYS = {
   COMMIT_FREQUENCY:      'commit_frequency',
   SMART_BG_REFRESH:      'smart_bg_refresh',
   LAST_OPENED_TS:        'last_opened_timestamp',
+  IDE_TEMPLATES:         'ide_templates',
+  IDE_SETTINGS:          'ide_settings',
 
   // ── session storage keys (chrome.storage.session) ───────────────────
   SESSION_SYNC_IN_PROGRESS: 'sync_in_progress',

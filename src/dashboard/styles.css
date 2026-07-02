@@ -1,3 +1,22 @@
+/* ─── Global Scrollbars ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
 .app.dashboard-app {
   max-height: none !important;
   height: 100%;
@@ -23,6 +42,8 @@
   flex-direction: column;
   padding: 24px 0;
   flex-shrink: 0;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .sidebar-header {
@@ -52,7 +73,7 @@
   font-weight: 600;
   font-size: var(--font-size-title);
   color: var(--text-secondary, #999999);
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -63,6 +84,7 @@
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
   color: var(--text-primary, #e0e0e0);
   border-left: 4px solid rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
 }
 
 .nav-item.active {
@@ -205,4 +227,62 @@
   min-height: 100vh;
   height: auto !important;
   overflow-y: auto;
+}
+
+/* Micro-Animations & transitions */
+.dashboard-card {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 161, 22, 0.3) !important; /* Soft gold glow */
+  box-shadow: 0 8px 24px rgba(255, 161, 22, 0.08), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-progress-bar {
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+}
+
+.dashboard-progress-fill {
+  transition: width 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+}
+
+/* Collapsed Sidebar Styles */
+.sidebar.collapsed {
+  width: 76px;
+}
+
+.sidebar.collapsed .sidebar-header {
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.sidebar.collapsed .nav-item span {
+  display: none;
+}
+
+.sidebar.collapsed .nav-menu {
+  padding: 0 8px;
+}
+
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+  padding: 12px 0;
+  border-left: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.sidebar.collapsed .nav-item.active {
+  border-bottom-color: #ffa116;
+  background: rgba(255, 161, 22, 0.08);
 }
