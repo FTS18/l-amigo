@@ -2,10 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { FriendProfile } from '../types';
 
-interface GlobalActivityFeedProps {
-  profiles: Record<string, FriendProfile>;
-  ownUsername?: string;
-}
+import { useAppStore } from '../store/useAppStore';
+
+interface GlobalActivityFeedProps {}
 
 // Normalize to milliseconds — CF gives seconds, LC gives ms
 const toMs = (ts: number) => ts < 1_000_000_000_000 ? ts * 1000 : ts;
@@ -18,7 +17,9 @@ const formatRelTime = (ts: number) => {
   return `${Math.floor(diff / 86400000)}d`;
 };
 
-export const GlobalActivityFeed: React.FC<GlobalActivityFeedProps> = ({ profiles, ownUsername }) => {
+export const GlobalActivityFeed: React.FC<GlobalActivityFeedProps> = () => {
+  const profiles = useAppStore(state => state.profiles);
+  const ownUsername = useAppStore(state => state.ownUsername);
   const [expanded, setExpanded] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 

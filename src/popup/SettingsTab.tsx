@@ -8,62 +8,44 @@ import { sendMessageWithRetry } from '../utils/messaging';
 import { SyncEntry } from '../utils/import-restore';
 import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon, CsesIcon } from '../utils/PlatformIcons';
 
+import { useAppStore } from '../store/useAppStore';
+
 interface SettingsTabProps {
- onSync: () => void;
- isDarkMode: boolean;
- onToggleDarkMode: () => void;
- ownUsername: string;
- onUsernameChange: (username: string) => void;
- ownCodeforcesHandle?: string;
- onCodeforcesHandleChange?: (handle: string) => void;
- ownCodechefHandle?: string;
- onCodechefHandleChange?: (handle: string) => void;
- ownCsesHandle?: string;
- onCsesHandleChange?: (handle: string) => void;
  onToast?: (message: string, type: 'success' | 'error' | 'info') => void;
  onConfirmAction?: (action: () => void, title: string, message: string) => void;
  onOpenImportExport?: () => void;
 }
 
 export const SettingsTab: React.FC<SettingsTabProps> = ({ 
- onSync, 
- isDarkMode, 
- onToggleDarkMode,
- ownUsername,
- onUsernameChange,
- ownCodeforcesHandle = '',
- onCodeforcesHandleChange,
- ownCodechefHandle = '',
- onCodechefHandleChange,
- ownCsesHandle = '',
- onCsesHandleChange,
  onToast,
  onConfirmAction,
  onOpenImportExport
 }) => {
- const ss = <T,>(key: string, fallback: T): T => {
- try {
- const v = localStorage.getItem(`set_${key}`);
- if (v !== null) return JSON.parse(v) as T;
- } catch { /* ignore */ }
- return fallback;
- };
- const setSS = <T,>(key: string, value: T) => {
- try { localStorage.setItem(`set_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
+ const isDarkMode = useAppStore(state => state.isDarkMode);
+ const ownUsername = useAppStore(state => state.ownUsername);
+ const ownCodeforcesHandle = useAppStore(state => state.ownCodeforcesHandle);
+ const ownCodechefHandle = useAppStore(state => state.ownCodechefHandle);
+ const ownCsesHandle = useAppStore(state => state.ownCsesHandle);
+ const setPartial = useAppStore(state => state.setPartial);
+ const loadData = useAppStore(state => state.loadData);
+
+ const onToggleDarkMode = async () => {
+   const newMode = !isDarkMode;
+   setPartial({ isDarkMode: newMode });
+   await chrome.storage.local.set({ darkMode: newMode, theme_preference: newMode ? "dark" : "light" });
  };
 
- const [activeSection, _setActiveSection] = useState<string>(() => ss('activeSection', 'profile'));
- const setActiveSection = (v: string) => { setSS('activeSection', v); _setActiveSection(v); };
+ const onSync = () => loadData();
+ const onUsernameChange = (val: string) => { setPartial({ ownUsername: val }); chrome.storage.local.set({ own_username: val }); };
+ const onCodeforcesHandleChange = (val: string) => { setPartial({ ownCodeforcesHandle: val }); chrome.storage.local.set({ own_codeforces_handle: val }); };
+ const onCodechefHandleChange = (val: string) => { setPartial({ ownCodechefHandle: val }); chrome.storage.local.set({ own_codechef_handle: val }); };
+ const onCsesHandleChange = (val: string) => { setPartial({ ownCsesHandle: val }); chrome.storage.local.set({ own_cses_handle: val }); };
 
- useEffect(() => {
- const handleStorageChange = (e: StorageEvent) => {
- if (e.key === 'set_activeSection' && e.newValue) {
- try { _setActiveSection(JSON.parse(e.newValue)); } catch {}
- }
- };
- window.addEventListener('storage', handleStorageChange);
- return () => window.removeEventListener('storage', handleStorageChange);
- }, []);
+ const activeSection = useAppStore(state => state.ui_setActiveSection);
+ const setActiveSection = (v: string) => setPartial({ ui_setActiveSection: v });
+
+ // Settings Layout Component
+
  const [repoName, setRepoName] = useState('');
  const [token, setToken] = useState('');
  const [isTokenSet, setIsTokenSet] = useState(false);
@@ -89,7 +71,6 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  const [githubError, setGithubError] = useState<string | null>(null);
  const abortControllerRef = useRef<AbortController | null>(null);
  const [isLoggingIn, setIsLoggingIn] = useState(false);
- const [lastBackupTime, setLastBackupTime] = useState<number | null>(null);
  const [isBackingUp, setIsBackingUp] = useState(false);
  const [isHistoryOnly, setIsHistoryOnly] = useState(false);
  const [syncHistory, setSyncHistory] = useState<SyncEntry[]>([]);
@@ -116,122 +97,119 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  setExpanded(prev => ({ ...prev, [sec]: !prev[sec] }));
  };
 
- // General Settings
+ // ── Local-only ephemeral UI state ───────────────────────────────────────
  const [newUsername, setNewUsername] = useState('');
  const [newCFHandle, setNewCFHandle] = useState('');
  const [newCCHandle, setNewCCHandle] = useState('');
  const [newCsesHandle, setNewCsesHandle] = useState('');
- const [notificationsEnabled, setNotificationsEnabled] = useState(true);
- const [autoRefresh, setAutoRefresh] = useState(true);
- const [refreshInterval, setRefreshInterval] = useState(60);
  const [healthStatus, setHealthStatus] = useState<{ status: 'idle' | 'checking' | 'ok' | 'error'; message: string }>({ status: 'idle', message: '' });
- const [dailyGoal, setDailyGoal] = useState(3);
- const [cfDarkMode, setCfDarkMode] = useState(false);
- const [fontSizeScale, setFontSizeScale] = useState(100);
- const [displayZoomScale, setDisplayZoomScale] = useState(100);
  const [showSyncInfo, setShowSyncInfo] = useState(false);
 
- // New Personalization Settings
- const [syncStrictness, setSyncStrictness] = useState(true);
- const [commitFrequency, setCommitFrequency] = useState<'immediate' | 'batch'>('immediate');
- const [smartBgRefresh, setSmartBgRefresh] = useState(true);
- const [blindMode, setBlindMode] = useState(false);
- const [disabledPlatforms, setDisabledPlatforms] = useState<string[]>([]);
- const [defaultTab, setDefaultTab] = useState<string>('friends');
- const [compactView, setCompactView] = useState(false);
+ // ── Read directly from Zustand (single source of truth) ─────────────────
+ const notificationsEnabled = useAppStore(state => state.notificationsEnabled);
+ const autoRefresh = useAppStore(state => state.autoRefresh);
+ const refreshInterval = useAppStore(state => state.refreshInterval || REFRESH_CONSTANTS.INTERVAL_MINUTES);
+ const dailyGoal = useAppStore(state => state.dailyGoal);
+ const cfDarkMode = useAppStore(state => state.cfDarkMode);
+ const fontSizeScale = useAppStore(state => state.fontSizeScale);
+ const displayZoomScale = useAppStore(state => state.displayZoomScale);
+ const syncStrictness = useAppStore(state => state.syncStrictness);
+ const commitFrequency = useAppStore(state => state.commitFrequency) as 'immediate' | 'batch';
+ const smartBgRefresh = useAppStore(state => state.smartBgRefresh);
+ const blindMode = useAppStore(state => state.blindMode);
+ const disabledPlatforms = useAppStore(state => state.disabledPlatforms);
+ const defaultTab = useAppStore(state => state.defaultStartupTab || 'friends');
+ const compactView = useAppStore(state => state.compactView);
+ const lastBackupTime = useAppStore(state => state.lastBackupTime);
+
+ // ── Setters that update both store and chrome.storage ───────────────────
+ const setNotificationsEnabled = (v: boolean) => setPartial({ notificationsEnabled: v });
+ const setAutoRefresh = (v: boolean) => setPartial({ autoRefresh: v });
+ const setRefreshInterval = (v: number) => setPartial({ refreshInterval: v });
+ const setDailyGoal = (v: number) => setPartial({ dailyGoal: v });
+ const setCfDarkMode = (v: boolean) => setPartial({ cfDarkMode: v });
+ const setFontSizeScale = (v: number) => setPartial({ fontSizeScale: v });
+ const setDisplayZoomScale = (v: number) => setPartial({ displayZoomScale: v });
+ const setSyncStrictness = (v: boolean) => setPartial({ syncStrictness: v });
+ const setCommitFrequency = (v: 'immediate' | 'batch') => setPartial({ commitFrequency: v });
+ const setSmartBgRefresh = (v: boolean) => setPartial({ smartBgRefresh: v });
+ const setBlindMode = (v: boolean) => setPartial({ blindMode: v });
+ const setDisabledPlatforms = (v: string[]) => setPartial({ disabledPlatforms: v });
+ const setDefaultTab = (v: string) => setPartial({ defaultStartupTab: v });
+ const setCompactView = (v: boolean) => setPartial({ compactView: v });
 
  const handleFontSizeChange = (val: number) => {
- setFontSizeScale(val);
- chrome.storage.local.set({ font_size_scale: val });
+  setFontSizeScale(val);
+  chrome.storage.local.set({ font_size_scale: val });
  };
 
  const handleDisplayZoomChange = (val: number) => {
- setDisplayZoomScale(val);
- chrome.storage.local.set({ display_zoom_scale: val });
+  setDisplayZoomScale(val);
+  chrome.storage.local.set({ display_zoom_scale: val });
  };
 
  const handleResetAccessibility = () => {
- setFontSizeScale(100);
- setDisplayZoomScale(100);
- chrome.storage.local.set({ font_size_scale: 100, display_zoom_scale: 100 });
- if (onToast) onToast('Accessibility reset to default (100%)', 'success');
+  setFontSizeScale(100);
+  setDisplayZoomScale(100);
+  chrome.storage.local.set({ font_size_scale: 100, display_zoom_scale: 100 });
+  if (onToast) onToast('Accessibility reset to default (100%)', 'success');
  };
 
  // Poll sync status from storage while sync is running
  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
  const syncButtonLabel = useMemo(() => {
- if (syncPhase === 'fetching') {
- return `Fetching… ${syncFetched > 0 ? `(${syncFetched})` : ''}`;
- }
- if (syncPhase === 'syncing') {
- return `Syncing (${syncDone}/${syncTotal})`;
- }
- if (syncPhase === 'error') {
- return 'Sync Failed - Retry';
- }
- return isHistoryOnly ? 'Fast Sync (History)' : 'Sync to GitHub';
+  if (syncPhase === 'fetching') {
+  return `Fetching… ${syncFetched > 0 ? `(${syncFetched})` : ''}`;
+  }
+  if (syncPhase === 'syncing') {
+  return `Syncing (${syncDone}/${syncTotal})`;
+  }
+  if (syncPhase === 'error') {
+  return 'Sync Failed - Retry';
+  }
+  return isHistoryOnly ? 'Fast Sync (History)' : 'Sync to GitHub';
  }, [syncPhase, syncFetched, syncDone, syncTotal, isHistoryOnly]);
 
  const isSyncingNow = syncPhase === 'fetching' || syncPhase === 'syncing';
 
- useEffect(() => {
- loadAllSettings();
- // Check if a sync was already running (e.g. popup was closed/reopened)
- checkOngoingSync();
 
- const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
- if (areaName !== 'local') return;
- 
- // Live backup time update
- if (changes.last_backup_time) {
- setLastBackupTime(changes.last_backup_time.newValue || null);
- }
- if (changes.notifications_enabled) setNotificationsEnabled(!!changes.notifications_enabled.newValue);
- if (changes.auto_refresh) setAutoRefresh(!!changes.auto_refresh.newValue);
- if (changes.refresh_interval) setRefreshInterval(changes.refresh_interval.newValue || REFRESH_CONSTANTS.INTERVAL_MINUTES);
- if (changes.sync_strictness) setSyncStrictness(!!changes.sync_strictness.newValue);
- if (changes.commit_frequency) setCommitFrequency(changes.commit_frequency.newValue || 'immediate');
- if (changes.smart_bg_refresh) setSmartBgRefresh(!!changes.smart_bg_refresh.newValue);
- if (changes.blind_mode) setBlindMode(!!changes.blind_mode.newValue);
- if (changes.disabled_platforms) setDisabledPlatforms(changes.disabled_platforms.newValue || []);
- if (changes.default_startup_tab) setDefaultTab(changes.default_startup_tab.newValue || 'friends');
- if (changes.compact_view) setCompactView(!!changes.compact_view.newValue);
- if (changes.cf_dark_mode) setCfDarkMode(!!changes.cf_dark_mode.newValue);
- 
- // Live sync_status reconnect: if bg sync transitions to fetching/syncing, immediately start polling
- if (changes.sync_status) {
- const newStatus = changes.sync_status.newValue;
- if (newStatus === 'fetching' || newStatus === 'syncing') {
- if (newStatus === 'fetching') setSyncFailed(0);
- setSyncPhase(newStatus);
- startProgressPoll();
- } else if (newStatus === 'idle') {
- setSyncPhase('idle');
- setSyncProgress('');
- setSyncPct(0);
- if (pollRef.current) clearInterval(pollRef.current);
- // Refresh sync history and failed count
- chrome.storage.local.get(['sync_history', 'sync_progress_failed']).then(r => {
- if (r.sync_history) setSyncHistory(r.sync_history);
- if (r.sync_progress_failed) setSyncFailed(r.sync_progress_failed);
- });
- } else if (newStatus === 'error') {
- setSyncPhase('error');
- chrome.storage.local.get('sync_error').then(r => {
- setSyncError(r.sync_error || 'Unknown error');
- });
- if (pollRef.current) clearInterval(pollRef.current);
- }
- }
- };
- chrome.storage.onChanged.addListener(handleStorageChange);
+  // Read sync status fields directly from store
+  const storeSyncStatus = useAppStore(state => state.syncStatus);
+  const storeSyncHistory = useAppStore(state => state.syncHistory);
+  const storeSyncProgressFailed = useAppStore(state => state.syncProgressFailed);
+  const storeSyncError = useAppStore(state => state.syncError);
 
- return () => {
- if (pollRef.current) clearInterval(pollRef.current);
- chrome.storage.onChanged.removeListener(handleStorageChange);
- };
- }, []);
+  useEffect(() => {
+    const newStatus = storeSyncStatus;
+    if (newStatus === 'fetching' || newStatus === 'syncing') {
+      if (newStatus === 'fetching') setSyncFailed(0);
+      setSyncPhase(newStatus);
+      startProgressPoll();
+    } else if (newStatus === 'idle') {
+      setSyncPhase('idle');
+      setSyncProgress('');
+      setSyncPct(0);
+      if (pollRef.current) clearInterval(pollRef.current);
+      setSyncHistory(storeSyncHistory);
+      setSyncFailed(storeSyncProgressFailed);
+    } else if (newStatus === 'error') {
+      setSyncPhase('error');
+      setSyncError(storeSyncError);
+      if (pollRef.current) clearInterval(pollRef.current);
+    }
+  }, [storeSyncStatus, storeSyncHistory, storeSyncProgressFailed, storeSyncError]);
+
+
+  useEffect(() => {
+    loadAllSettings();
+    // Check if a sync was already running (e.g. popup was closed/reopened)
+    checkOngoingSync();
+
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
+  }, []);
 
  /** If the background is mid-sync, pick up where we left off visually */
  const checkOngoingSync = async () => {
@@ -268,54 +246,23 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  setIsTokenSet(!!config?.token);
  setIsConfigured(!!(config?.token && config?.repoName));
  if (config?.token) {
- setRepoName(config.repoName || '');
- setLastSyncTime(config.lastSync || null);
+  setRepoName(config.repoName || '');
+  setLastSyncTime(config.lastSync || null);
  }
 
+ // Only load values NOT already managed by Zustand (GitHub sync-specific + handle form defaults)
  const settings = await chrome.storage.local.get([
- 'notifications_enabled',
- 'auto_refresh',
- 'refresh_interval',
- 'own_username',
- 'own_codeforces_handle',
- 'own_codechef_handle',
- 'own_cses_handle',
- 'sync_history',
- 'cf_dark_mode',
- 'last_backup_time',
- 'daily_goal',
- 'font_size_scale',
- 'display_zoom_scale',
- 'sync_strictness',
- 'commit_frequency',
- 'smart_bg_refresh',
- 'blind_mode',
- 'disabled_platforms',
- 'default_startup_tab',
- 'compact_view'
+  'own_username',
+  'own_codeforces_handle',
+  'own_codechef_handle',
+  'own_cses_handle',
+  'sync_history',
  ]);
- 
- setNotificationsEnabled(settings.notifications_enabled ?? true);
- setAutoRefresh(settings.auto_refresh ?? true);
- setRefreshInterval(settings.refresh_interval ?? REFRESH_CONSTANTS.INTERVAL_MINUTES);
- 
- setSyncStrictness(settings.sync_strictness ?? true);
- setCommitFrequency(settings.commit_frequency ?? 'immediate');
- setSmartBgRefresh(settings.smart_bg_refresh ?? true);
- setBlindMode(settings.blind_mode ?? false);
- setDisabledPlatforms(settings.disabled_platforms ?? []);
- setDefaultTab(settings.default_startup_tab ?? 'friends');
- setCompactView(settings.compact_view ?? false);
  setNewUsername(settings.own_username || '');
  setNewCFHandle(settings.own_codeforces_handle || '');
  setNewCCHandle(settings.own_codechef_handle || '');
  setNewCsesHandle(settings.own_cses_handle || '');
  setSyncHistory(settings.sync_history || []);
- setCfDarkMode(settings.cf_dark_mode || false);
- setDailyGoal(settings.daily_goal || 3);
- setLastBackupTime(settings.last_backup_time || null);
- setFontSizeScale(settings.font_size_scale ?? 100);
- setDisplayZoomScale(settings.display_zoom_scale ?? 100);
  };
 
  // Start polling sync progress from chrome.storage.local
@@ -706,7 +653,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  await GitHubSyncService.backupState();
  const settings = await chrome.storage.local.get('last_backup_time');
  if (settings.last_backup_time) {
- setLastBackupTime(settings.last_backup_time);
+  setPartial({ lastBackupTime: settings.last_backup_time });
  onToast?.('Settings backed up successfully!', 'success');
  } else {
  onToast?.('Backup completed but failed to verify timestamp', 'error');
@@ -844,18 +791,43 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  };
 
  const handleClearData = async () => {
- if (!onConfirmAction) return;
- 
- onConfirmAction(async () => {
- try {
- await chrome.storage.local.clear();
- onToast?.('All data cleared. Please reload the extension.', 'info');
- setTimeout(() => window.location.reload(), 1500);
- } catch (error) {
- onToast?.('Failed to clear data', 'error');
- }
- }, 'Clear All Data', 'Clear all extension data? This will remove all friends and profiles. This action cannot be undone.');
- };
+  if (!onConfirmAction) return;
+  
+  onConfirmAction(async () => {
+  try {
+  await chrome.storage.local.clear();
+  onToast?.('All data cleared. Please reload the extension.', 'info');
+  setTimeout(() => window.location.reload(), 1500);
+  } catch (error) {
+  onToast?.('Failed to clear data', 'error');
+  }
+  }, 'Clear All Data', 'Clear all extension data? This will remove all friends and profiles. This action cannot be undone.');
+  };
+
+  const handleClearCache = async () => {
+  if (!onConfirmAction) return;
+  
+  onConfirmAction(async () => {
+  try {
+  const keysToRemove = [
+  'profile_index_v2',
+  'all_accepted_submissions',
+  'sync_history'
+  ];
+  const allKeys = await chrome.storage.local.get(null);
+  for (const key of Object.keys(allKeys)) {
+  if (key.startsWith('profile:v2:')) {
+  keysToRemove.push(key);
+  }
+  }
+  await chrome.storage.local.remove(keysToRemove);
+  onToast?.('Cache cleared. Reloading...', 'info');
+  setTimeout(() => window.location.reload(), 1500);
+  } catch (error) {
+  onToast?.('Failed to clear cache', 'error');
+  }
+  }, 'Clear Cache', 'Clear all downloaded profiles and submissions? Your friends and settings will be preserved, but data will need to be re-fetched.');
+  };
 
  const handleForceFullSync = () => {
  if (!onConfirmAction) return;
@@ -1861,6 +1833,22 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  Open Import / Export
  </button>
  </div>
+ </div>
+
+ <hr className="settings-subsection-divider" />
+
+ <div className="settings-item">
+ <label className="settings-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+ <span>Clear Cache</span>
+ <span title="Removes downloaded profiles and submissions without deleting your friends or settings." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal', textTransform: 'none' }}>(i)</span>
+ </label>
+ <p className="settings-hint">Clear downloaded profiles and submissions data</p>
+ <button 
+ onClick={handleClearCache}
+ className="settings-btn settings-btn-primary"
+ >
+ Clear Cache
+ </button>
  </div>
 
  <hr className="settings-subsection-divider" />

@@ -13,9 +13,12 @@
   border-radius: 0;
   padding: 12px 16px;
   margin-bottom: 8px;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease-in-out;
 }
-.friend-card:hover { border-color: var(--text-muted); }
+.friend-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-tertiary);
+}
 .loading-card { opacity: 0.6; }
 
 /* ─── Compact Premium Card ────────────────────────────────────────── */
@@ -25,16 +28,20 @@
 .compact-premium *::after { border-radius: 0 !important; }
 
 .compact-premium {
-  padding: 10px 14px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   position: relative;
   overflow: hidden;
+  transition: all 0.2s ease-in-out;
 }
-.compact-premium:hover { border-color: var(--text-muted); }
+.compact-premium:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-tertiary);
+}
 
 .clickable-card { cursor: pointer; }
 
@@ -54,14 +61,14 @@
 }
 
 .avatar-mini {
-  width: 32px; height: 32px;
+  width: 28px; height: 28px;
   border-radius: 0;
   object-fit: cover;
   border: 1px solid var(--border);
 }
 
 .avatar-placeholder {
-  width: 32px; height: 32px;
+  width: 28px; height: 28px;
   border-radius: 0;
   background: var(--btn-bg);
   color: var(--btn-text);
@@ -69,7 +76,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-base);
 }
 
 .user-identity-box { display: flex; flex-direction: column; }
@@ -101,17 +108,17 @@
 /* ─── Platform Tags ───────────────────────────────────────────────── */
 .platform-tags-row {
   display: flex;
-  gap: 4px;
-  margin-top: 2px;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 .platform-tag-pill {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: 0;
-  font-size: var(--font-size-xs);
+  font-size: calc(0.9 * var(--font-size-xs));
   font-weight: 800;
   color: #fff;
   cursor: pointer;
@@ -203,7 +210,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px 2px;
+  padding: 6px 4px;
   background: var(--bg-secondary);
   border-radius: 0;
   transition: filter 0.2s, transform 0.2s;
@@ -211,7 +218,7 @@
 .stats-item[onClick] { cursor: pointer; user-select: none; }
 
 .stats-val {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-base);
   font-weight: 800;
   line-height: 1;
   color: var(--text-primary);

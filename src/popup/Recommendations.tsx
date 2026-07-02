@@ -4,15 +4,16 @@ import { ProblemRecommendation, RecommendationService } from '../services/recomm
 import { FriendProfile } from '../types';
 import { SkeletonRecItem } from './Skeleton';
 
-interface RecommendationsProps {
-  profiles: Record<string, FriendProfile>;
-  ownUsername?: string;
-}
+import { useAppStore } from '../store/useAppStore';
+
+interface RecommendationsProps {}
 
 type DiffFilter = 'All' | 'Easy' | 'Medium' | 'Hard';
 type PlatformFilter = 'lc' | 'cf';
 
-export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownUsername }) => {
+export const Recommendations: React.FC<RecommendationsProps> = () => {
+  const profiles = useAppStore(state => state.profiles);
+  const ownUsername = useAppStore(state => state.ownUsername);
   const [recommendations, setRecommendations] = useState<ProblemRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const ss = <T,>(key: string, fallback: T): T => {
@@ -98,17 +99,11 @@ export const Recommendations: React.FC<RecommendationsProps> = ({ profiles, ownU
     }
   };
 
+  const allSubmissions = useAppStore(state => state.allSubmissions);
+
   useEffect(() => {
     if (expanded) loadRecommendations();
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes.all_accepted_submissions && expanded) {
-        loadRecommendations();
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, [expanded, profiles, ownUsername]);
+  }, [expanded, profiles, ownUsername, allSubmissions]);
 
   if (Object.keys(profiles).length === 0) return null;
 

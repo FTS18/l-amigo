@@ -24,11 +24,12 @@ export interface SheetProblem {
   url?: string;
 }
 
+import { useAppStore } from '../../store/useAppStore';
+import { SheetsFilterBar } from './components/SheetsTracker/SheetsFilterBar';
+import { SheetsProblemTable } from './components/SheetsTracker/SheetsProblemTable';
+
+
 interface Props {
-  friends: Friend[];
-  profiles: Record<string, FriendProfile>;
-  allSubmissions: any[];
-  selectedGlobalPlatforms?: string[];
   selectedSheetId?: string;
   setSelectedSheetId?: (id: string) => void;
 }
@@ -37,34 +38,22 @@ interface Props {
 const sheetCache: Record<string, SheetProblem[]> = {};
 
 export const SheetsTracker: React.FC<Props> = ({
-  friends,
-  profiles,
-  allSubmissions,
-  selectedGlobalPlatforms = ["leetcode", "codeforces", "codechef"],
   selectedSheetId: propsSelectedSheetId,
   setSelectedSheetId: propsSetSelectedSheetId,
 }) => {
-  // ── Local-persistent state (survives refresh & syncs across tabs) ───────────────────────────
-  const ss = <T,>(key: string, fallback: T): T => {
-    try {
-      const v = localStorage.getItem(`st_${key}`);
-      if (v !== null) return JSON.parse(v) as T;
-    } catch { /* ignore */ }
-    return fallback;
-  };
-  const setSS = <T,>(key: string, value: T) => {
-    try { localStorage.setItem(`st_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
-  };
-
-  const [localSheetId, _setLocalSheetId] = useState<string>(() => ss("sheetId", ""));
+  const friends = useAppStore(state => state.friends);
+  const profiles = useAppStore(state => state.profiles);
+  const allSubmissions = useAppStore(state => state.allSubmissions);
+  const selectedGlobalPlatforms = useAppStore(state => state.selectedGlobalPlatforms);
+  const setPartial = useAppStore(state => state.setPartial);
+  
+  const localSheetId = useAppStore(state => state.ui_stSheetId);
   
   const selectedSheetId = propsSelectedSheetId !== undefined ? propsSelectedSheetId : localSheetId;
   const setSelectedSheetId = (id: string) => {
-    setSS("sheetId", id);
+    setPartial({ ui_stSheetId: id });
     if (propsSetSelectedSheetId) {
       propsSetSelectedSheetId(id);
-    } else {
-      _setLocalSheetId(id);
     }
   };
 
@@ -73,59 +62,34 @@ export const SheetsTracker: React.FC<Props> = ({
   const [sheetData, setSheetData] = useState<SheetProblem[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [categoryFilter, _setCategoryFilter] = useState<string>(() => ss("catFilter", "All"));
-  const setCategoryFilter = (v: string) => { setSS("catFilter", v); _setCategoryFilter(v); };
+  const categoryFilter = useAppStore(state => state.ui_stCatFilter);
+  const setCategoryFilter = (v: string) => setPartial({ ui_stCatFilter: v });
 
-  const [difficultyFilter, _setDifficultyFilter] = useState<string>(() => ss("diffFilter", "All"));
-  const setDifficultyFilter = (v: string) => { setSS("diffFilter", v); _setDifficultyFilter(v); };
+  const difficultyFilter = useAppStore(state => state.ui_stDiffFilter);
+  const setDifficultyFilter = (v: string) => setPartial({ ui_stDiffFilter: v });
 
-  const [statusFilter, _setStatusFilter] = useState<string>(() => ss("statusFilter", "All"));
-  const setStatusFilter = (v: string) => { setSS("statusFilter", v); _setStatusFilter(v); };
+  const statusFilter = useAppStore(state => state.ui_stStatusFilter);
+  const setStatusFilter = (v: string) => setPartial({ ui_stStatusFilter: v });
 
-  const [platformFilter, _setPlatformFilter] = useState<string>(() => ss("platFilter", "All"));
-  const setPlatformFilter = (v: string) => { setSS("platFilter", v); _setPlatformFilter(v); };
+  const platformFilter = useAppStore(state => state.ui_stPlatFilter);
+  const setPlatformFilter = (v: string) => setPartial({ ui_stPlatFilter: v });
 
-  const [videoFilter, _setVideoFilter] = useState<string>(() => ss("videoFilter", "All"));
-  const setVideoFilter = (v: string) => { setSS("videoFilter", v); _setVideoFilter(v); };
+  const videoFilter = useAppStore(state => state.ui_stVideoFilter);
+  const setVideoFilter = (v: string) => setPartial({ ui_stVideoFilter: v });
 
-  const [searchQuery, _setSearchQuery] = useState<string>(() => ss("searchQuery", ""));
-  const setSearchQuery = (v: string) => { setSS("searchQuery", v); _setSearchQuery(v); };
-
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'st_sheetId' && e.newValue) {
-        try {
-          const val = JSON.parse(e.newValue);
-          _setLocalSheetId(val);
-          if (propsSetSelectedSheetId) {
-            propsSetSelectedSheetId(val);
-          }
-        } catch {}
-      } else if (e.key === 'st_catFilter' && e.newValue) {
-        try { _setCategoryFilter(JSON.parse(e.newValue)); } catch {}
-      } else if (e.key === 'st_diffFilter' && e.newValue) {
-        try { _setDifficultyFilter(JSON.parse(e.newValue)); } catch {}
-      } else if (e.key === 'st_statusFilter' && e.newValue) {
-        try { _setStatusFilter(JSON.parse(e.newValue)); } catch {}
-      } else if (e.key === 'st_platFilter' && e.newValue) {
-        try { _setPlatformFilter(JSON.parse(e.newValue)); } catch {}
-      } else if (e.key === 'st_videoFilter' && e.newValue) {
-        try { _setVideoFilter(JSON.parse(e.newValue)); } catch {}
-      } else if (e.key === 'st_searchQuery' && e.newValue) {
-        try { _setSearchQuery(JSON.parse(e.newValue)); } catch {}
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  const searchQuery = useAppStore(state => state.ui_stSearchQuery);
+  const setSearchQuery = (v: string) => setPartial({ ui_stSearchQuery: v });
 
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(),
   );
-  const [revisionStars, setRevisionStars] = useState<Set<string>>(new Set());
-  const [followedSheets, setFollowedSheets] = useState<string[]>([]);
-  const [dismissedNotice, setDismissedNotice] = useState(false);
-  const [blindMode, setBlindMode] = useState(false);
+  
+  const followedSheets = useAppStore(state => state.followedSheets);
+  const revisionStarsArray = useAppStore(state => state.revisionStars);
+  const revisionStars = useMemo(() => new Set(revisionStarsArray), [revisionStarsArray]);
+  
+  const dismissedNotice = useAppStore(state => state.dismissedSheetstrackerInfo);
+  const blindMode = useAppStore(state => state.blindMode);
 
   // ── Global search ────────────────────────────────────────────────────────
   const [globalSearch, setGlobalSearch] = useState("");
@@ -376,56 +340,22 @@ export const SheetsTracker: React.FC<Props> = ({
   // Reset active index when suggestions change
   useEffect(() => { setActiveSuggIdx(-1); }, [globalSuggestions.length]);
 
-  useEffect(() => {
-    chrome.storage.local.get(
-      ["revision_stars", "dismissed_sheetstracker_info", "followed_sheets"],
-      (res) => {
-        if (res.revision_stars) {
-          setRevisionStars(new Set(res.revision_stars));
-        }
-        if (res.dismissed_sheetstracker_info) {
-          setDismissedNotice(true);
-        }
-        if (res.followed_sheets && Array.isArray(res.followed_sheets)) {
-          setFollowedSheets(res.followed_sheets);
-        }
-      },
-    );
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local') {
-        if (changes.revision_stars) {
-          setRevisionStars(new Set(changes.revision_stars.newValue || []));
-        }
-        if (changes.dismissed_sheetstracker_info) {
-          setDismissedNotice(!!changes.dismissed_sheetstracker_info.newValue);
-        }
-        if (changes.followed_sheets) {
-          setFollowedSheets(changes.followed_sheets.newValue || []);
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
+  // Use effect block removed since useStorageSync handles this automatically through Zustand
 
   const toggleFollowSheet = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setFollowedSheets((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      chrome.storage.local.set({ followed_sheets: next });
-      return next;
-    });
+    const next = followedSheets.includes(id) ? followedSheets.filter((x) => x !== id) : [...followedSheets, id];
+    setPartial({ followedSheets: next });
+    chrome.storage.local.set({ followed_sheets: next });
   };
 
   const toggleRevisionStar = (titleSlug: string) => {
-    setRevisionStars((prev) => {
-      const next = new Set(prev);
-      if (next.has(titleSlug)) next.delete(titleSlug);
-      else next.add(titleSlug);
-      chrome.storage.local.set({ revision_stars: Array.from(next) });
-      return next;
-    });
+    const next = new Set(revisionStars);
+    if (next.has(titleSlug)) next.delete(titleSlug);
+    else next.add(titleSlug);
+    const arr = Array.from(next);
+    setPartial({ revisionStars: arr });
+    chrome.storage.local.set({ revision_stars: arr });
   };
 
   useEffect(() => {
@@ -531,33 +461,7 @@ export const SheetsTracker: React.FC<Props> = ({
   const trackerFriends = friends.filter((f) => f.id === "own-user");
   const allOtherFriends = friends.filter((f) => f.id !== "own-user");
 
-  const [manuallySolved, setManuallySolved] = useState<
-    Record<string, { solved: boolean; platform: string; title: string }>
-  >({});
-
-  useEffect(() => {
-    chrome.storage.local.get(["manually_solved_problems", "blind_mode"], (res) => {
-      if (res.manually_solved_problems) {
-        setManuallySolved(res.manually_solved_problems);
-      }
-      if (res.blind_mode !== undefined) {
-        setBlindMode(res.blind_mode);
-      }
-    });
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local') {
-        if (changes.blind_mode) {
-          setBlindMode(!!changes.blind_mode.newValue);
-        }
-        if (changes.manually_solved_problems) {
-          setManuallySolved(changes.manually_solved_problems.newValue || {});
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
+  const manuallySolved = useAppStore(state => state.manuallySolvedProblems) as Record<string, { solved: boolean; platform: string; title: string }>;
 
   const toggleManualSolve = (titleSlug: string, title: string, platform: string) => {
     const current = manuallySolved[titleSlug]?.solved || false;
@@ -565,7 +469,7 @@ export const SheetsTracker: React.FC<Props> = ({
       ...manuallySolved,
       [titleSlug]: { solved: !current, platform, title },
     };
-    setManuallySolved(updated);
+    useAppStore.getState().setPartial({ manuallySolvedProblems: updated as any });
     chrome.storage.local.set({ manually_solved_problems: updated });
   };
 
@@ -1399,7 +1303,6 @@ export const SheetsTracker: React.FC<Props> = ({
                 <strong>ⓘ How Checkmarks Work</strong>
                 <button
                   onClick={() => {
-                    setDismissedNotice(true);
                     chrome.storage.local.set({
                       dismissed_sheetstracker_info: true,
                     });
@@ -1447,806 +1350,33 @@ export const SheetsTracker: React.FC<Props> = ({
             </div>
           )}
 
-          {/* Custom Filter Pills */}
-          <div
-            style={{
-              display: "flex",
-              gap: "8px",
-              flexWrap: "wrap",
-              alignItems: "center",
-              marginBottom: "16px",
-            }}
-          >
-            {[
-              "All",
-              "Solved",
-              "Unsolved",
-              " For Revision",
-              "Attempted/Wrong Answer",
-            ].map((status) => (
-              <button
-                key={status}
-                onClick={() => setStatusFilter(status)}
-                style={{
-                  padding: "6px 16px",
-                  background:
-                    statusFilter === status ? "#ffa116" : "var(--bg-secondary)",
-                  color:
-                    statusFilter === status ? "#000" : "var(--text-primary)",
-                  border: `1px solid ${statusFilter === status ? "#ffa116" : "var(--border-strong)"}`,
-                  borderRadius: "0px",
-                  fontSize: "var(--font-size-md)",
-                  fontWeight: statusFilter === status ? 700 : 500,
-                  cursor: "pointer",
-                  transition: "all 0.15s ease",
-                }}
-              >
-                {status}
-              </button>
-            ))}
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              gap: "12px",
-              marginBottom: "16px",
-              flexWrap: "wrap",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Search problems..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ ...filterStyle, minWidth: "200px", cursor: "text" }}
-              disabled={isLoading}
-            />
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              style={filterStyle}
-              disabled={isLoading}
-            >
-              <option value="All">All Topics</option>
-              {uniqueCategories.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-            {!blindMode && (
-              <select
-                value={difficultyFilter}
-                onChange={(e) => setDifficultyFilter(e.target.value)}
-                style={filterStyle}
-                disabled={isLoading}
-              >
-                <option value="All">All Difficulties</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-              </select>
-            )}
-            {hasVideoSolutions && (
-              <select
-                value={videoFilter}
-                onChange={(e) => setVideoFilter(e.target.value)}
-                style={filterStyle}
-                disabled={isLoading}
-              >
-                <option value="All">All Videos</option>
-                <option value="Has Video">Has Video</option>
-                <option value="No Video">No Video</option>
-              </select>
-            )}
-            {hasMultiplePlatforms && (
-              <select
-                value={platformFilter}
-                onChange={(e) => setPlatformFilter(e.target.value)}
-                style={filterStyle}
-                disabled={isLoading}
-              >
-                <option value="All">All Platforms</option>
-                {availablePlatforms.map((platform) => {
-                  let label = platform;
-                  if (platform === "leetcode") label = "LeetCode";
-                  else if (platform === "gfg") label = "GeeksforGeeks";
-                  else if (platform === "codeforces") label = "Codeforces";
-                  else if (platform === "cses") label = "CSES";
-                  else if (platform === "codechef") label = "CodeChef";
-                  else if (platform === "tuf" || platform === "other")
-                    label = "TakeUForward";
-                  return (
-                    <option key={platform} value={platform}>
-                      {label}
-                    </option>
-                  );
-                })}
-              </select>
-            )}
-          </div>
-          <div className="card" style={{ padding: "0", overflowX: "auto" }}>
-            {isLoading ? (
-              <div
-                style={{
-                  padding: "40px",
-                  textAlign: "center",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                Loading sheet...
-              </div>
-            ) : (
-              <table className="sheets-table">
-                <thead>
-                  <tr>
-                    <th style={{ width: "40%" }}>Problem</th>
-                    {!blindMode && <th style={{ width: "10%" }}>Difficulty</th>}
-                    <th style={{ width: "20%", fontSize: "var(--font-size-xs)", color: "var(--text-muted)", fontWeight: 600 }}>Also In</th>
-                    {trackerFriends.map((f) => (
-                      <th
-                        key={f.id || f.username}
-                        style={{ textAlign: "center" }}
-                      >
-                        {f.displayName || f.username}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {(!sheetData || Object.keys(groupedData).length === 0) && (
-                    <tr>
-                      <td
-                        colSpan={10}
-                        style={{ textAlign: "center", padding: "24px" }}
-                      >
-                        No problems match filters or sheet is empty.
-                      </td>
-                    </tr>
-                  )}
-                  {Object.entries(groupedData).map(([category, problems]) => (
-                    <React.Fragment key={category}>
-                      <tr
-                        className="category-header-row"
-                        onClick={() => toggleCategory(category)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <td
-                          colSpan={10}
-                          style={{
-                            background: "var(--bg-secondary)",
-                            padding: "16px 16px",
-                            borderBottom: "1px solid var(--border-strong)",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "10px",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <svg
-                                  viewBox="0 0 24 24"
-                                  width="18"
-                                  height="18"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  fill="none"
-                                  style={{
-                                    transform: expandedCategories.has(category)
-                                      ? "rotate(0deg)"
-                                      : "rotate(-90deg)",
-                                    transition: "transform 0.2s",
-                                  }}
-                                >
-                                  <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontWeight: "bold",
-                                      fontSize:
-                                        "calc(1.333 * var(--font-size-base))",
-                                      color: "var(--text-primary)",
-                                    }}
-                                  >
-                                    {category}
-                                  </span>
-                                </div>
-                              </div>
-                              {(() => {
-                                const solvedCat = problems.filter((p) =>
-                                  ownSolvedSet.has(p.titleSlug),
-                                ).length;
-                                const totalCat = problems.length;
-                                const catPct =
-                                  totalCat > 0
-                                    ? Math.round((solvedCat / totalCat) * 100)
-                                    : 0;
-                                return (
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "12px",
-                                    }}
-                                  >
-                                    <span
-                                      style={{
-                                        fontSize: "var(--font-size-md)",
-                                        fontWeight: 600,
-                                        color: "var(--text-secondary)",
-                                      }}
-                                    >
-                                      {solvedCat} / {totalCat} Solved
-                                    </span>
-                                    <span
-                                      style={{
-                                        fontSize: "var(--font-size-md)",
-                                        fontWeight: 700,
-                                        color:
-                                          catPct === 100
-                                            ? "var(--color-easy)"
-                                            : "#ffa116",
-                                        background: "var(--bg-primary)",
-                                        padding: "2px 8px",
-                                        borderRadius: "0px",
-                                        border: "1px solid var(--border-color)",
-                                      }}
-                                    >
-                                      {catPct}%
-                                    </span>
-                                  </div>
-                                );
-                              })()}
-                            </div>
-                            {(() => {
-                              const solvedCat = problems.filter((p) =>
-                                ownSolvedSet.has(p.titleSlug),
-                              ).length;
-                              const totalCat = problems.length;
-                              const catPct =
-                                totalCat > 0
-                                  ? Math.round((solvedCat / totalCat) * 100)
-                                  : 0;
-                              return (
-                                <div
-                                  style={{
-                                    width: "100%",
-                                    height: "6px",
-                                    background: "var(--bg-primary)",
-                                    borderRadius: "0px",
-                                    overflow: "hidden",
-                                    border: "1px solid var(--border-color)",
-                                  }}
-                                >
-                                  <div
-                                    style={{
-                                      width: `${catPct}%`,
-                                      height: "100%",
-                                      background:
-                                        catPct === 100
-                                          ? "var(--color-easy)"
-                                          : "#ffa116",
-                                      transition: "width 0.3s ease",
-                                    }}
-                                  ></div>
-                                </div>
-                              );
-                            })()}
-                          </div>
-                        </td>
-                      </tr>
-                      {expandedCategories.has(category) &&
-                        problems.map((prob) => {
-                          const isCf = prob.platform === "codeforces";
-                          const isCses = prob.platform === "cses";
-                          const isGfg = prob.platform === "gfg";
-                          const isCc = prob.platform === "codechef";
-                          const isTuf =
-                            prob.platform === "tuf" ||
-                            prob.platform === "other";
-
-                          const match = isCf
-                            ? prob.titleSlug.match(/^(\d+)([A-Z]\d*)$/i)
-                            : null;
-
-                          let link = prob.url;
-                          if (!link) {
-                            link = `https://leetcode.com/problems/${prob.titleSlug}/`;
-                            if (isCses)
-                              link = `https://cses.fi/problemset/task/${prob.titleSlug}`;
-                            else if (isCf && match)
-                              link = `https://codeforces.com/contest/${match[1]}/problem/${match[2]}`;
-                            else if (isCf)
-                              link = `https://codeforces.com/problemset/problem/${prob.titleSlug}`;
-                            else if (isGfg)
-                              link = `https://www.geeksforgeeks.org/problems/${prob.titleSlug}/1`;
-                            else if (isCc)
-                              link = `https://www.codechef.com/problems/${prob.titleSlug}`;
-                          }
-
-                          let solLink = `https://leetcode.com/problems/${prob.titleSlug}/solutions/`;
-                          if (isCses)
-                            solLink = `https://cses.fi/problemset/stats/${prob.titleSlug}/`;
-                          else if (isCf && match)
-                            solLink = `https://codeforces.com/contest/${match[1]}/status/${match[2]}`;
-                          else if (isCf)
-                            solLink = `https://codeforces.com/problemset/status/${prob.titleSlug}`;
-                          else if (isGfg)
-                            solLink = `https://www.geeksforgeeks.org/problems/${prob.titleSlug}/1?tab=editorial`;
-                          else if (isCc)
-                            solLink = `https://www.codechef.com/problems/${prob.titleSlug}/solutions`;
-                          else if (isTuf && prob.url) solLink = prob.url;
-
-                          return (
-                            <tr key={prob.titleSlug}>
-                              <td>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                  }}
-                                >
-                                  <button
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      toggleRevisionStar(prob.titleSlug);
-                                    }}
-                                    title={
-                                      revisionStars.has(prob.titleSlug)
-                                        ? "Marked for Revision (Click to unmark)"
-                                        : "Click to mark for revision"
-                                    }
-                                    style={{
-                                      background: "none",
-                                      border: "none",
-                                      padding: "4px",
-                                      cursor: "pointer",
-                                      color: revisionStars.has(prob.titleSlug)
-                                        ? "#ffa116"
-                                        : "var(--text-muted)",
-                                      fontSize:
-                                        "calc(1.333 * var(--font-size-base))",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      transition: "transform 0.15s ease",
-                                    }}
-                                    onMouseOver={(e) => {
-                                      e.currentTarget.style.transform =
-                                        "scale(1.2)";
-                                    }}
-                                    onMouseOut={(e) => {
-                                      e.currentTarget.style.transform =
-                                        "scale(1)";
-                                    }}
-                                  >
-                                    {revisionStars.has(prob.titleSlug)
-                                      ? ""
-                                      : ""}
-                                  </button>
-                                  <a
-                                    href={link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="problem-title"
-                                    style={{
-                                      textDecoration: "none",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "6px",
-                                    }}
-                                  >
-                                    {isGfg && (
-                                      <span
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          padding: "0 4px",
-                                          height: "20px",
-                                          background: "rgba(47, 141, 70, 0.2)",
-                                          border: "1px solid #2f8d46",
-                                          color: "#2f8d46",
-                                          borderRadius: "0px",
-                                          fontSize: "var(--font-size-xs)",
-                                          fontWeight: 700,
-                                          fontFamily: "monospace",
-                                          letterSpacing: "0.5px",
-                                        }}
-                                        title="GeeksforGeeks"
-                                      >
-                                        GFG
-                                      </span>
-                                    )}
-                                    {isTuf && (
-                                      <span
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          padding: "0 4px",
-                                          height: "20px",
-                                          background: "rgba(217, 70, 70, 0.2)",
-                                          border: "1px solid #d94646",
-                                          color: "#d94646",
-                                          borderRadius: "0px",
-                                          fontSize: "var(--font-size-xs)",
-                                          fontWeight: 700,
-                                          fontFamily: "monospace",
-                                          letterSpacing: "0.5px",
-                                        }}
-                                        title="TakeUForward"
-                                      >
-                                        TUF
-                                      </span>
-                                    )}
-                                    {isCc && (
-                                      <span
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          width: "20px",
-                                          height: "20px",
-                                          background: "rgba(139, 87, 42, 0.15)",
-                                          borderRadius: "0px",
-                                        }}
-                                        title="CodeChef"
-                                      >
-                                        <CodeChefIcon size={14} />
-                                      </span>
-                                    )}
-                                    {!isGfg &&
-                                      !isCf &&
-                                      !isCses &&
-                                      !isCc &&
-                                      !isTuf && (
-                                        <span
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            width: "20px",
-                                            height: "20px",
-                                            background:
-                                              "rgba(255, 161, 22, 0.15)",
-                                            borderRadius: "0px",
-                                          }}
-                                          title="LeetCode"
-                                        >
-                                          <LeetCodeIcon size={14} />
-                                        </span>
-                                      )}
-                                    {isCf && (
-                                      <span
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          width: "20px",
-                                          height: "20px",
-                                          background:
-                                            "rgba(59, 130, 246, 0.15)",
-                                          borderRadius: "0px",
-                                        }}
-                                        title="Codeforces"
-                                      >
-                                        <CodeforcesIcon size={14} />
-                                      </span>
-                                    )}
-                                    {isCses && (
-                                      <span
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          padding: "0 4px",
-                                          height: "20px",
-                                          background:
-                                            "rgba(156, 163, 175, 0.2)",
-                                          border: "1px solid #9ca3af",
-                                          color: "#9ca3af",
-                                          borderRadius: "0px",
-                                          fontSize: "var(--font-size-xs)",
-                                          fontWeight: 700,
-                                          fontFamily: "monospace",
-                                          letterSpacing: "0.5px",
-                                        }}
-                                        title="CSES"
-                                      >
-                                        CSES
-                                      </span>
-                                    )}
-                                    {prob.title}
-                                  </a>
-                                  {prob.youtubeLink && (
-                                    <a
-                                      href={prob.youtubeLink}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      title="Video Solution"
-                                      className="yt-link-icon"
-                                    >
-                                      <svg
-                                        viewBox="0 0 24 24"
-                                        width="18"
-                                        height="18"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      >
-                                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-                                      </svg>
-                                    </a>
-                                  )}
-                                  {!isCf && (
-                                    <a
-                                      href={solLink}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      title="Solutions / Editorials"
-                                      style={{
-                                        padding: "2px 6px",
-                                        background: "var(--bg-primary)",
-                                        border:
-                                          "1px solid var(--border-strong)",
-                                        color: "var(--text-secondary)",
-                                        fontSize: "var(--font-size-sm)",
-                                        fontWeight: 700,
-                                        textDecoration: "none",
-                                        borderRadius: "0px",
-                                      }}
-                                      onMouseOver={(e) => {
-                                        e.currentTarget.style.background =
-                                          "#ffa116";
-                                        e.currentTarget.style.color = "#000";
-                                      }}
-                                      onMouseOut={(e) => {
-                                        e.currentTarget.style.background =
-                                          "var(--bg-primary)";
-                                        e.currentTarget.style.color =
-                                          "var(--text-secondary)";
-                                      }}
-                                    >
-                                      SOL
-                                    </a>
-                                  )}
-                                  {/* Friend Avatars Cluster */}
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "4px",
-                                      marginLeft: "12px",
-                                    }}
-                                  >
-                                    {allFriendsSolvedSets
-                                      .filter((fs) =>
-                                        fs.solvedSet.has(prob.titleSlug),
-                                      )
-                                      .map(({ friend }) => {
-                                        const name =
-                                          friend.displayName ||
-                                          friend.username ||
-                                          "F";
-                                        const initial = name
-                                          .charAt(0)
-                                          .toUpperCase();
-                                        let profileHref = `https://leetcode.com/${friend.username}`;
-                                        if (isCf) {
-                                          const acc = friend.accounts?.find(
-                                            (a) => a.platform === "codeforces",
-                                          );
-                                          profileHref = `https://codeforces.com/profile/${acc ? acc.handle : friend.username}`;
-                                        } else if (isCc) {
-                                          const acc = friend.accounts?.find(
-                                            (a) => a.platform === "codechef",
-                                          );
-                                          profileHref = `https://www.codechef.com/users/${acc ? acc.handle : friend.username}`;
-                                        } else {
-                                          const acc = friend.accounts?.find(
-                                            (a) => a.platform === "leetcode",
-                                          );
-                                          if (acc)
-                                            profileHref = `https://leetcode.com/${acc.handle}`;
-                                        }
-                                        return (
-                                          <a
-                                            key={friend.id || friend.username}
-                                            href={profileHref}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            title={`${name} has solved this problem! (Click to view profile)`}
-                                            style={{
-                                              display: "inline-flex",
-                                              alignItems: "center",
-                                              justifyContent: "center",
-                                              width: "20px",
-                                              height: "20px",
-                                              borderRadius: "0px",
-                                              background: "var(--color-easy)",
-                                              color: "#000",
-                                              fontSize: "var(--font-size-xs)",
-                                              fontWeight: "bold",
-                                              border: "1px solid #000",
-                                              cursor: "pointer",
-                                              textDecoration: "none",
-                                              boxShadow: "none",
-                                            }}
-                                          >
-                                            {initial}
-                                          </a>
-                                        );
-                                      })}
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                {!blindMode && (
-                                  <span
-                                    className={`diff-badge diff-${prob.difficulty?.toLowerCase()}`}
-                                  >
-                                    {prob.difficulty}
-                                  </span>
-                                )}
-                              </td>
-                              {/* Also In column */}
-                              <td style={{ verticalAlign: "middle", padding: "6px 10px" }}>
-                                {(() => {
-                                  const alsoIn = crossSheetIndex[prob.titleSlug] || [];
-                                  if (alsoIn.length === 0) return <span style={{ color: "var(--text-muted)", fontSize: "10px", opacity: 0.5 }}>—</span>;
-                                  return (
-                                    <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-                                      {alsoIn.slice(0, 4).map((sid) => (
-                                        <button
-                                          key={sid}
-                                          onClick={() => setSelectedSheetId(sid)}
-                                          title={`Open ${getSheetName(sid)}`}
-                                          style={{
-                                            padding: "2px 7px",
-                                            fontSize: "10px",
-                                            background: "var(--bg-primary)",
-                                            border: "1px solid var(--border-strong)",
-                                            color: "var(--text-secondary)",
-                                            borderRadius: "3px",
-                                            cursor: "pointer",
-                                            whiteSpace: "nowrap",
-                                            maxWidth: "110px",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            transition: "all 0.1s",
-                                          }}
-                                          onMouseEnter={e => { e.currentTarget.style.background = "#ffa116"; e.currentTarget.style.color = "#000"; e.currentTarget.style.borderColor = "#ffa116"; }}
-                                          onMouseLeave={e => { e.currentTarget.style.background = "var(--bg-primary)"; e.currentTarget.style.color = "var(--text-secondary)"; e.currentTarget.style.borderColor = "var(--border-strong)"; }}
-                                        >
-                                          {getSheetName(sid)}
-                                        </button>
-                                      ))}
-                                      {alsoIn.length > 4 && (
-                                        <span style={{ fontSize: "10px", color: "var(--text-muted)", alignSelf: "center" }}>+{alsoIn.length - 4} more</span>
-                                      )}
-                                    </div>
-                                  );
-                                })()}
-                              </td>
-                              {trackerFriends.map((friend) => {
-                                const isSolved = ownSolvedSet.has(
-                                  prob.titleSlug,
-                                );
-                                const isManualAllowed = isGfg || isTuf;
-                                return (
-                                  <td
-                                    key={friend.id || friend.username}
-                                    className="status-cell"
-                                  >
-                                    <div
-                                      className={`status-icon ${isSolved ? "solved" : ""}`}
-                                      title={
-                                        isManualAllowed
-                                          ? isSolved
-                                            ? "Solved (Click to unmark)"
-                                            : "Not Solved (Click to mark as solved)"
-                                          : isSolved
-                                            ? "Solved"
-                                            : "Not Solved"
-                                      }
-                                      style={{
-                                        cursor: isManualAllowed ? "pointer" : "default",
-                                        transition: "transform 0.15s ease",
-                                      }}
-                                      onClick={() => {
-                                        if (isManualAllowed) {
-                                          toggleManualSolve(
-                                            prob.titleSlug,
-                                            prob.title,
-                                            prob.platform || "other",
-                                          );
-                                        }
-                                      }}
-                                      onMouseOver={(e) => {
-                                        if (isManualAllowed)
-                                          e.currentTarget.style.transform = "scale(1.2)";
-                                      }}
-                                      onMouseOut={(e) => {
-                                        if (isManualAllowed)
-                                          e.currentTarget.style.transform = "scale(1)";
-                                      }}
-                                    >
-                                      {isSolved ? (
-                                        <svg
-                                          viewBox="0 0 24 24"
-                                          width="14"
-                                          height="14"
-                                          stroke="currentColor"
-                                          strokeWidth="3"
-                                          fill="none"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        >
-                                          <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                      ) : (
-                                        <svg
-                                          viewBox="0 0 24 24"
-                                          width="14"
-                                          height="14"
-                                          stroke="currentColor"
-                                          strokeWidth="2"
-                                          fill="none"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          style={{ opacity: 0.5 }}
-                                        >
-                                          <line
-                                            x1="5"
-                                            y1="12"
-                                            x2="19"
-                                            y2="12"
-                                          ></line>
-                                        </svg>
-                                      )}
-                                    </div>
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          );
-                        })}
-                    </React.Fragment>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+          
+          <SheetsFilterBar
+            isLoading={isLoading}
+            uniqueCategories={uniqueCategories}
+            hasVideoSolutions={hasVideoSolutions}
+            hasMultiplePlatforms={hasMultiplePlatforms}
+            availablePlatforms={availablePlatforms}
+            blindMode={blindMode}
+          />
+          
+          <SheetsProblemTable
+            isLoading={isLoading}
+            sheetData={sheetData}
+            groupedData={groupedData}
+            blindMode={blindMode}
+            trackerFriends={trackerFriends}
+            expandedCategories={expandedCategories}
+            toggleCategory={toggleCategory}
+            ownSolvedSet={ownSolvedSet}
+            revisionStars={revisionStars}
+            toggleRevisionStar={toggleRevisionStar}
+            allFriendsSolvedSets={allFriendsSolvedSets}
+            crossSheetIndex={crossSheetIndex}
+            setSelectedSheetId={setSelectedSheetId}
+            getSheetName={getSheetName}
+            toggleManualSolve={toggleManualSolve}
+          />
         </>
       )}
     </div>

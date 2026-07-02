@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useSWRChromeStorage } from '../hooks/useSWRChromeStorage';
 import { Friend, FriendProfile, RecentSubmission, Platform } from '../types';
 import { X, ChevronLeft } from 'lucide-react';
 import { StreakCalculator } from '../services/streak';
@@ -9,12 +10,14 @@ import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Radar, Rad
 import { getPlatformRankColor, getPlatformRankLabel, getProfileQualityColor, getProfileQualityBorderColor, getProfileQualityTextColor } from './FriendCard';
 import { SkeletonList, SkeletonRecItem } from './Skeleton';
 import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon, PlatformIcon } from '../utils/PlatformIcons';
+import { useAppStore } from '../store/useAppStore';
 
 interface FriendProfileViewProps {
   friend: Friend;
   leetcodeProfile?: FriendProfile;
   codeforcesProfile?: FriendProfile;
   codechefProfile?: FriendProfile;
+  /** @deprecated Read from Zustand store internally now. Kept for backward compat. */
   isDarkMode?: boolean;
   onBack: () => void;
   initialFilter?: 'all' | 'Easy' | 'Medium' | 'Hard';
@@ -135,20 +138,20 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
   leetcodeProfile,
   codeforcesProfile,
   codechefProfile,
-  isDarkMode = true,
+  isDarkMode: _isDarkModeProp, // kept for API compat but ignored — read from store
   onBack,
   initialFilter = 'all',
   initialPlatform,
   isExpanded = false,
   preloadedSubmissions
 }) => {
+  const isDarkMode = useAppStore(state => state.isDarkMode);
   const [activeTab, setActiveTab] = useState<'overview' | 'submissions'>('overview');
   const [activePlatform, setActivePlatform] = useState<Platform>(
     initialPlatform || (leetcodeProfile ? 'leetcode' : codeforcesProfile ? 'codeforces' : 'codechef')
   );
   const [filterLevel, setFilterLevel] = useState<'all' | 'Easy' | 'Medium' | 'Hard'>(initialFilter);
-  const [submissions, setSubmissions] = useState<RecentSubmission[]>(preloadedSubmissions || []);
-  const [loadingSubmissions, setLoadingSubmissions] = useState(false);
+  // Submissions state managed by SWR
   const [submissionLimit, setSubmissionLimit] = useState(isExpanded ? 150 : 30);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -177,60 +180,34 @@ export const FriendProfileView: React.FC<FriendProfileViewProps> = ({
     }
   }, [initialPlatform, leetcodeProfile, codeforcesProfile, codechefProfile]);
 
-  useEffect(() => {
-    if (preloadedSubmissions && preloadedSubmissions.length > 0) {
-      setSubmissions(preloadedSubmissions);
-      return;
+  const cacheKey = `lamigo:subcache:${leetcodeProfile?.username || ''}:${codeforcesProfile?.username || ''}:${codechefProfile?.username || ''}`;
+
+  const fetchSubmissions = useCallback(async () => {
+    const promises: Promise<RecentSubmission[]>[] = [];
+    if (leetcodeProfile?.username) {
+      promises.push(LeetCodeService.getRecentSubmissions(leetcodeProfile.username, submissionLimit));
     }
+    if (codeforcesProfile?.username) {
+      promises.push(CodeforcesService.getRecentSubmissions(codeforcesProfile.username, Math.floor(submissionLimit * (isExpanded ? 3 : 1.5))));
+    }
+    // codechef doesn't currently support getRecentSubmissions
+    const results = await Promise.all(promises);
+    return results.flat().sort((a, b) => b.timestamp - a.timestamp);
+  }, [leetcodeProfile?.username, codeforcesProfile?.username, submissionLimit, isExpanded]);
 
-    const fetchSubmissions = async () => {
-      const cacheKey = `lamigo:subcache:${leetcodeProfile?.username || ''}:${codeforcesProfile?.username || ''}:${codechefProfile?.username || ''}`;
-      
-      if (submissionLimit <= 150) {
-        chrome.storage.local.get([cacheKey], (res) => {
-          if (res[cacheKey]) {
-            setSubmissions(res[cacheKey]);
-          }
-        });
-      }
+  const { data: fetchedSubmissions, loading: loadingSubmissions } = useSWRChromeStorage<RecentSubmission[]>(
+    cacheKey,
+    fetchSubmissions,
+    [fetchSubmissions],
+    {
+      throttleMs: 300000,
+      skip: !!(preloadedSubmissions && preloadedSubmissions.length > 0)
+    }
+  );
 
-      setLoadingSubmissions(true);
-      try {
-        const promises: Promise<RecentSubmission[]>[] = [];
-        if (leetcodeProfile?.username) {
-          promises.push(LeetCodeService.getRecentSubmissions(leetcodeProfile.username, submissionLimit));
-        }
-        if (codeforcesProfile?.username) {
-          promises.push(CodeforcesService.getRecentSubmissions(codeforcesProfile.username, Math.floor(submissionLimit * (isExpanded ? 3 : 1.5))));
-        }
-        // codechef doesn't currently support getRecentSubmissions
-        const results = await Promise.all(promises);
-        const combined = results.flat().sort((a, b) => b.timestamp - a.timestamp);
-        
-        setSubmissions(combined);
-        if (submissionLimit <= 150) {
-          chrome.storage.local.set({ [cacheKey]: combined });
-        }
-      } catch (err) {
-        console.error('Failed to fetch profile submissions:', err);
-      } finally {
-        setLoadingSubmissions(false);
-      }
-    };
-
-    fetchSubmissions();
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local') {
-        const cacheKey = `lamigo:subcache:${leetcodeProfile?.username || ''}:${codeforcesProfile?.username || ''}:${codechefProfile?.username || ''}`;
-        if (changes[cacheKey] && changes[cacheKey].newValue) {
-          setSubmissions(changes[cacheKey].newValue);
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, [leetcodeProfile, codeforcesProfile, codechefProfile, submissionLimit, preloadedSubmissions, isExpanded]);
+  const submissions = (preloadedSubmissions && preloadedSubmissions.length > 0) 
+    ? preloadedSubmissions 
+    : (fetchedSubmissions || []);
 
   const activeChartProfile = activePlatform === 'leetcode' ? leetcodeProfile : activePlatform === 'codechef' ? codechefProfile : codeforcesProfile;
   const platformSubmissions = submissions.filter(sub => sub.platform === activePlatform);

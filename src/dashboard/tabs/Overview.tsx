@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useSWRChromeStorage } from '../../hooks/useSWRChromeStorage';
 import { FriendProfile, Friend } from '../../types';
 import { SHEET_METADATA } from '../data/sheetsMetadata';
 import { LeetCodeService } from '../../services/leetcode';
@@ -10,65 +11,36 @@ import { PlatformIcon } from '../../utils/PlatformIcons';
 import { Calendar, FileSpreadsheet, Users, Zap, ExternalLink, Trophy, Flame, Play, Clock } from 'lucide-react';
 import { FriendProfileView } from '../../popup/FriendProfileView';
 
+import { ContestsWidget } from './components/Overview/ContestsWidget';
+import { MiniSheetWidget } from './components/Overview/MiniSheetWidget';
+import { FriendsProgressWidget } from './components/Overview/FriendsProgressWidget';
+import { RecentSubmissionsWidget } from './components/Overview/RecentSubmissionsWidget';
+
+
+import { useAppStore } from '../../store/useAppStore';
+
 interface Props {
-  friends: Friend[];
-  profiles: Record<string, FriendProfile>;
-  isDarkMode?: boolean;
-  selectedGlobalPlatforms?: string[];
-  allSubmissions?: any[];
   onNavigate?: (tab: string) => void;
 }
 
-export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true, selectedGlobalPlatforms = ['leetcode', 'codeforces', 'codechef'], allSubmissions = [], onNavigate }) => {
-  const [selectedFriend, _setSelectedFriend] = React.useState<Friend | null>(() => {
-    try {
-      const v = localStorage.getItem('ov_selectedFriend');
-      if (v !== null) return JSON.parse(v);
-    } catch {}
-    return null;
-  });
-  const setSelectedFriend = (v: Friend | null) => {
-    try {
-      localStorage.setItem('ov_selectedFriend', JSON.stringify(v));
-    } catch {}
-    _setSelectedFriend(v);
-  };
+export const Overview: React.FC<Props> = ({ onNavigate }) => {
+  const friends = useAppStore(state => state.friends);
+  const profiles = useAppStore(state => state.profiles);
+  const isDarkMode = useAppStore(state => state.isDarkMode);
+  const selectedGlobalPlatforms = useAppStore(state => state.selectedGlobalPlatforms);
+  const allSubmissions = useAppStore(state => state.allSubmissions);
+  const followedSheets = useAppStore(state => state.followedSheets);
+  const selectedFriend = useAppStore(state => state.ui_ovSelectedFriend);
+  const setPartial = useAppStore(state => state.setPartial);
+  const setSelectedFriend = (v: Friend | null) => setPartial({ ui_ovSelectedFriend: v });
 
-  const [selectedPlatform, _setSelectedPlatform] = React.useState<string>(() => {
-    try { return localStorage.getItem('ov_selectedPlatform') || ''; } catch { return ''; }
-  });
-  const setSelectedPlatform = (v: string) => {
-    try { localStorage.setItem('ov_selectedPlatform', v); } catch {}
-    _setSelectedPlatform(v);
-  };
+  const selectedPlatform = useAppStore(state => state.ui_ovSelectedPlatform);
+  const setSelectedPlatform = (v: string) => setPartial({ ui_ovSelectedPlatform: v });
 
-  const [selectedFilter, _setSelectedFilter] = React.useState<'all' | 'Easy' | 'Medium' | 'Hard'>(() => {
-    try { return (localStorage.getItem('ov_selectedFilter') as any) || 'all'; } catch { return 'all'; }
-  });
-  const setSelectedFilter = (v: 'all' | 'Easy' | 'Medium' | 'Hard') => {
-    try { localStorage.setItem('ov_selectedFilter', v); } catch {}
-    _setSelectedFilter(v);
-  };
-
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'ov_selectedFriend') {
-        try {
-          _setSelectedFriend(e.newValue ? JSON.parse(e.newValue) : null);
-        } catch {}
-      } else if (e.key === 'ov_selectedPlatform') {
-        _setSelectedPlatform(e.newValue || '');
-      } else if (e.key === 'ov_selectedFilter') {
-        _setSelectedFilter((e.newValue as any) || 'all');
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  const selectedFilter = useAppStore(state => state.ui_ovSelectedFilter) as 'all' | 'Easy' | 'Medium' | 'Hard';
+  const setSelectedFilter = (v: 'all' | 'Easy' | 'Medium' | 'Hard') => setPartial({ ui_ovSelectedFilter: v });
 
   // ── Contests State ──
-  const [contests, setContests] = useState<any[]>([]);
-  const [loadingContests, setLoadingContests] = useState(true);
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   useEffect(() => {
@@ -76,76 +48,42 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    let active = true;
-    const fetchContests = async () => {
-      const cacheKey = STORAGE_KEYS.UPCOMING_CONTESTS_CACHE;
-      const cached = await new Promise<any>(resolve => {
-        chrome.storage.local.get([cacheKey], res => resolve(res[cacheKey]));
-      });
+  const fetchContests = useCallback(async () => {
+    const promises = [];
+    if (selectedGlobalPlatforms.includes('leetcode')) {
+      promises.push(LeetCodeService.getUpcomingContests());
+    } else {
+      promises.push(Promise.resolve([]));
+    }
 
-      if (cached && cached.timestamp > Date.now() - 1000 * 60 * 60) {
-        if (active) {
-          setContests(cached.data);
-          setLoadingContests(false);
-        }
-        return;
-      }
+    if (selectedGlobalPlatforms.includes('codeforces')) {
+      promises.push(CodeforcesService.getUpcomingContests());
+    } else {
+      promises.push(Promise.resolve([]));
+    }
 
-      try {
-        const promises = [];
-        if (selectedGlobalPlatforms.includes('leetcode')) {
-          promises.push(LeetCodeService.getUpcomingContests());
-        } else {
-          promises.push(Promise.resolve([]));
-        }
+    if (selectedGlobalPlatforms.includes('codechef')) {
+      promises.push(CodeChefService.getUpcomingContests());
+    } else {
+      promises.push(Promise.resolve([]));
+    }
 
-        if (selectedGlobalPlatforms.includes('codeforces')) {
-          promises.push(CodeforcesService.getUpcomingContests());
-        } else {
-          promises.push(Promise.resolve([]));
-        }
+    const [lcData, cfData, ccData] = await Promise.all(promises);
 
-        if (selectedGlobalPlatforms.includes('codechef')) {
-          promises.push(CodeChefService.getUpcomingContests());
-        } else {
-          promises.push(Promise.resolve([]));
-        }
+    return [
+      ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, 4),
+      ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, 6),
+      ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, 4),
+    ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
+  }, [selectedGlobalPlatforms]);
 
-        const [lcData, cfData, ccData] = await Promise.all(promises);
-
-        const mergedData = [
-          ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, 4),
-          ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, 6),
-          ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, 4),
-        ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
-
-        if (active) setContests(mergedData);
-        chrome.storage.local.set({
-          [cacheKey]: {
-            data: mergedData,
-            timestamp: Date.now()
-          }
-        });
-      } catch (err) {
-        console.error(err);
-      } finally {
-        if (active) setLoadingContests(false);
-      }
-    };
-    fetchContests();
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE]) {
-        const cached = changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE].newValue;
-        if (cached && cached.data) {
-          setContests(cached.data);
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
+  const { data: contestsData, loading: loadingContests } = useSWRChromeStorage<any[]>(
+    STORAGE_KEYS.UPCOMING_CONTESTS_CACHE,
+    fetchContests,
+    [fetchContests]
+  );
+  
+  const contests = contestsData || [];
 
   const upcomingContests = useMemo(() => {
     return contests
@@ -159,56 +97,22 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
   }, [contests, selectedGlobalPlatforms]);
 
   // ── Active Sheet State ──
-  const [activeSheetId, setActiveSheetId] = useState<string>("");
+  const activeSheetId = useAppStore(state => state.ui_stSheetId);
+  const setActiveSheetId = (v: string) => setPartial({ ui_stSheetId: v });
+
   const [sheetProblems, setSheetProblems] = useState<any[]>([]);
   const [loadingSheet, setLoadingSheet] = useState(true);
 
   useEffect(() => {
-    let sid = "";
-    try {
-      const v = localStorage.getItem("st_sheetId");
-      if (v !== null) sid = JSON.parse(v);
-    } catch {}
-
+    const sid = activeSheetId;
     if (sid) {
       setActiveSheetId(sid);
+    } else if (followedSheets && followedSheets.length > 0) {
+      setActiveSheetId(followedSheets[0]);
     } else {
-      chrome.storage.local.get(["followed_sheets"], (res) => {
-        if (res.followed_sheets && Array.isArray(res.followed_sheets) && res.followed_sheets.length > 0) {
-          setActiveSheetId(res.followed_sheets[0]);
-        } else {
-          setActiveSheetId("striversA2Z");
-        }
-      });
+      setActiveSheetId("striversA2Z");
     }
-  }, []);
-
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'st_sheetId' && e.newValue) {
-        try { setActiveSheetId(JSON.parse(e.newValue)); } catch {}
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-
-    const handleChromeStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName !== 'local') return;
-      if (changes.followed_sheets) {
-        const sid = localStorage.getItem("st_sheetId");
-        if (!sid) {
-            const arr = changes.followed_sheets.newValue;
-            if (arr && Array.isArray(arr) && arr.length > 0) setActiveSheetId(arr[0]);
-            else setActiveSheetId("striversA2Z");
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleChromeStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      chrome.storage.onChanged.removeListener(handleChromeStorageChange);
-    };
-  }, []);
+  }, [followedSheets, activeSheetId]);
 
   useEffect(() => {
     if (!activeSheetId) return;
@@ -244,25 +148,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
     return () => { active = false; };
   }, [activeSheetId]);
 
-  const [manuallySolved, setManuallySolved] = useState<
-    Record<string, { solved: boolean; platform: string; title: string }>
-  >({});
-
-  useEffect(() => {
-    chrome.storage.local.get(["manually_solved_problems"], (res) => {
-      if (res.manually_solved_problems) {
-        setManuallySolved(res.manually_solved_problems);
-      }
-    });
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes.manually_solved_problems) {
-        setManuallySolved(changes.manually_solved_problems.newValue || {});
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
+  const manuallySolved = useAppStore(state => state.manuallySolvedProblems) as Record<string, { solved: boolean; platform: string; title: string }>;
 
   const getProfile = (
     f: Friend,
@@ -416,20 +302,22 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
     return Array.from(subMap.values()).sort((a, b) => b.timestamp - a.timestamp).slice(0, 15);
   }, [friends, profiles, selectedGlobalPlatforms, ownSolvedSet]);
 
-  // ── Personal Consistency & Daily Streak (Last 30 Days) ──
+  // ── Personal Consistency & Daily Streak (Last 365 Days) ──
   const activityData = useMemo(() => {
     const today = new Date();
-    const daysMap = new Map<string, { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean; uniqueSlugs: Set<string> }>();
-    const daysList: { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean; uniqueSlugs: Set<string> }[] = [];
+    const daysMap = new Map<string, { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean; uniqueSlugs: Set<string>; monthName: string; monthIndex: number; platformCounts: Record<string, number> }>();
+    const daysList: { date: string; count: number; platforms: Set<string>; label: string; isToday: boolean; uniqueSlugs: Set<string>; monthName: string; monthIndex: number; platformCounts: Record<string, number> }[] = [];
 
-    for (let idx = 29; idx >= 0; idx--) {
+    for (let idx = 364; idx >= 0; idx--) {
       const d = new Date(today.getTime() - idx * 24 * 60 * 60 * 1000);
       const year = d.getFullYear();
       const month = String(d.getMonth() + 1).padStart(2, '0');
       const day = String(d.getDate()).padStart(2, '0');
       const key = `${year}-${month}-${day}`;
       const label = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-      const obj = { date: key, count: 0, platforms: new Set<string>(), label, isToday: idx === 0, uniqueSlugs: new Set<string>() };
+      const monthName = d.toLocaleDateString(undefined, { month: 'short' });
+      const monthIndex = d.getMonth();
+      const obj = { date: key, count: 0, platforms: new Set<string>(), label, isToday: idx === 0, uniqueSlugs: new Set<string>(), monthName, monthIndex, platformCounts: {} as Record<string, number> };
       daysMap.set(key, obj);
       daysList.push(obj);
     }
@@ -447,6 +335,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         if (!entry.uniqueSlugs.has(slug)) {
           entry.uniqueSlugs.add(slug);
           entry.count++;
+          entry.platformCounts[platform] = (entry.platformCounts[platform] || 0) + 1;
         }
         entry.platforms.add(platform);
       }
@@ -473,20 +362,83 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
       }
     });
 
+    if (ownFriend && selectedGlobalPlatforms.includes("leetcode")) {
+      // Clear LeetCode data from recent/allSubmissions to prevent double counting
+      daysList.forEach(entry => {
+        const currentLcCount = entry.platformCounts["leetcode"] || 0;
+        entry.count -= currentLcCount;
+        entry.platformCounts["leetcode"] = 0;
+        // (We leave uniqueSlugs for LC so tooltips still show the problems solved if they were fetched locally)
+      });
+
+      const lcProfile = getProfile(ownFriend, "leetcode");
+      if (lcProfile?.submissionCalendar) {
+        Object.entries(lcProfile.submissionCalendar).forEach(([ts, count]) => {
+          const d = new Date(parseInt(ts, 10) * 1000);
+          const year = d.getFullYear();
+          const month = String(d.getMonth() + 1).padStart(2, '0');
+          const day = String(d.getDate()).padStart(2, '0');
+          const key = `${year}-${month}-${day}`;
+          if (daysMap.has(key)) {
+            const entry = daysMap.get(key)!;
+            const calendarCount = count as number;
+            if (calendarCount > 0) {
+               entry.count += calendarCount;
+               entry.platformCounts["leetcode"] = calendarCount;
+               entry.platforms.add("leetcode");
+            }
+          }
+        });
+      }
+    }
+
+    let maxStreak = 0;
+    let currentStreak = 0;
+    let activeDays = 0;
+    for (let i = 0; i < daysList.length; i++) {
+      if (daysList[i].count > 0) {
+        activeDays++;
+        currentStreak++;
+        if (currentStreak > maxStreak) maxStreak = currentStreak;
+      } else {
+        currentStreak = 0;
+      }
+    }
+
     let streak = 0;
     for (let idx = daysList.length - 1; idx >= 0; idx--) {
       if (daysList[idx].count > 0) {
         streak++;
       } else if (idx === daysList.length - 1) {
-        continue;
+        continue; // ignore if today is 0 so far
       } else {
         break;
       }
     }
 
-    const totalSolves30Days = daysList.reduce((acc, curr) => acc + curr.count, 0);
+    const totalSolvesYear = daysList.reduce((acc, curr) => acc + curr.count, 0);
 
-    return { daysList, streak, totalSolves30Days };
+    const startDate = new Date(today.getTime() - 364 * 24 * 60 * 60 * 1000);
+    const startDayOfWeek = startDate.getDay();
+    const emptyCells = Array.from({ length: startDayOfWeek }).map((_, i) => i);
+
+    const monthLabels: { label: string; colIndex: number }[] = [];
+    let currentMonth = -1;
+    const allCells = [...emptyCells.map(() => null), ...daysList];
+    for (let i = 0; i < allCells.length; i += 7) {
+      const cellInCol = allCells.slice(i, i + 7).find(c => c !== null);
+      if (cellInCol) {
+        if (cellInCol.monthIndex !== currentMonth) {
+          // Avoid pushing a label if it's too close to the end (prevents cutoff)
+          if (i / 7 < (allCells.length / 7) - 2) {
+            monthLabels.push({ label: cellInCol.monthName, colIndex: i / 7 });
+          }
+          currentMonth = cellInCol.monthIndex;
+        }
+      }
+    }
+
+    return { daysList, emptyCells, monthLabels, streak, maxStreak, activeDays, totalSolvesYear, totalCols: Math.ceil(allCells.length / 7) };
   }, [friends, profiles, allSubmissions, selectedGlobalPlatforms]);
 
   // ── Personal Stats Showcase (LeetCode, Codeforces, CodeChef, CSES) ──
@@ -651,7 +603,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
     const ccAccount = selectedFriend.accounts?.find(a => a.platform === 'codechef')?.handle || (profiles[selectedFriend.username.toLowerCase()]?.platform === 'codechef' ? selectedFriend.username : undefined);
 
     return (
-      <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px' }}>
+      <div style={{ background: 'var(--bg-secondary)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px', borderRadius: '0px' }}>
         <FriendProfileView 
           friend={selectedFriend}
           leetcodeProfile={lcAccount ? (profiles[`leetcode:${lcAccount.toLowerCase()}`] || profiles[lcAccount.toLowerCase()]) : undefined}
@@ -679,79 +631,96 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         <p>Track your daily progress, ratings, practice sheets, and friend activity.</p>
       </div>
 
-      {/* Consistency & Daily Streak Full-Width Banner */}
-      <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', marginBottom: '32px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px', flexWrap: 'wrap', gap: '12px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
-            <Zap size={20} color="#00C853" />
-            <span>Daily Solves & Streak (Last 30 Days)</span>
+      {/* Top Section: Heatmap & Sheet Widget */}
+      <div style={{ display: 'flex', flexWrap: 'nowrap', gap: '16px', alignItems: 'stretch', marginBottom: '32px' }}>
+        <div style={{ flex: 2, minWidth: '0', overflow: 'hidden', background: 'var(--bg-secondary)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        
+        {/* LeetCode Style Header */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+            <span style={{ fontSize: '20px', fontWeight: 600, color: 'var(--text-primary)' }}>{activityData.totalSolvesYear}</span>
+            <span style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>submissions in the past one year</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: 'var(--font-size-base)' }}>
-              <Flame size={16} color="#ffa116" />
-              <span>{activityData.streak} Day Streak</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '13px' }}>
+            <div>
+              <span style={{ color: 'var(--text-secondary)' }}>Total active days: </span>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{activityData.activeDays}</span>
             </div>
-            <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: 'var(--font-size-base)', color: '#00C853' }}>
-              <span>{activityData.totalSolves30Days} Solves (30d)</span>
+            <div>
+              <span style={{ color: 'var(--text-secondary)' }}>Max streak: </span>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{activityData.maxStreak}</span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(36px, 1fr))', gap: '8px', justifyContent: 'center' }}>
-          {activityData.daysList.map(({ date, count, platforms, label, isToday }) => {
-            const hasSolved = count > 0;
-            let bg = 'var(--bg-primary)';
-            let borderColor = 'var(--border-strong)';
-            let color = 'var(--text-secondary)';
+        <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            
+            {/* The grid */}
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateRows: 'repeat(7, 1fr)', 
+              gridAutoFlow: 'column', 
+              gap: '3px', 
+              justifyContent: 'start',
+              minWidth: 'max-content',
+              marginBottom: '8px'
+            }}>
+              {activityData.emptyCells.map(i => (
+                <div key={`empty-${i}`} style={{ width: '12px', height: '12px', borderRadius: '2px', background: 'rgba(255, 255, 255, 0.04)' }} />
+              ))}
+              {activityData.daysList.map(({ date, count, platforms, label, isToday }) => {
+                const hasSolved = count > 0;
+                let bg = 'rgba(255, 255, 255, 0.04)';
+                let borderColor = 'var(--border-strong)';
 
-            if (hasSolved) {
-              if (count >= 4) { bg = '#00C853'; borderColor = '#00E676'; color = '#000'; }
-              else if (count >= 2) { bg = '#00E676'; borderColor = '#B9F6CA'; color = '#000'; }
-              else { bg = '#1b5e20'; borderColor = '#4caf50'; color = '#fff'; }
-            }
+                if (hasSolved) {
+                  if (count >= 4) { bg = '#00C853'; borderColor = '#00E676'; }
+                  else if (count >= 2) { bg = '#00E676'; borderColor = '#B9F6CA'; }
+                  else { bg = '#1b5e20'; borderColor = '#4caf50'; }
+                }
 
-            return (
-              <div
-                key={date}
-                title={`${label}${isToday ? ' (Today)' : ''}: ${count} solves${hasSolved ? ` (${Array.from(platforms).join(', ')})` : ''}`}
-                style={{
-                  height: '42px',
-                  background: bg,
-                  border: `1px solid ${isToday ? '#ffa116' : borderColor}`,
-                  borderRadius: '0px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: 'var(--font-size-xs)',
-                  color: color,
-                  position: 'relative',
-                  cursor: 'pointer',
-                  transition: 'transform 0.2s ease',
-                  boxShadow: isToday ? '0 0 8px rgba(255,161,22,0.4)' : 'none'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              >
-                {count > 0 ? count : '-'}
-                {isToday && (
-                  <div style={{ position: 'absolute', bottom: '1px', right: '1px', width: '6px', height: '6px', background: '#ffa116', borderRadius: '50%' }} />
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '14px', fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)' }}>
-          <span>&larr; 30 Days Ago</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span>Less</span>
-            <div style={{ width: '12px', height: '12px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)' }} />
-            <div style={{ width: '12px', height: '12px', background: '#1b5e20', border: '1px solid #4caf50' }} />
-            <div style={{ width: '12px', height: '12px', background: '#00E676', border: '1px solid #B9F6CA' }} />
-            <div style={{ width: '12px', height: '12px', background: '#00C853', border: '1px solid #00E676' }} />
-            <span>More</span>
+                return (
+                  <div
+                    key={date}
+                    title={`${label}${isToday ? ' (Today)' : ''}: ${count} solves${hasSolved ? ` (${Array.from(platforms).join(', ')})` : ''}`}
+                    style={{
+                      width: '12px',
+                      height: '12px',
+                      background: bg,
+                      borderRadius: '2px',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease',
+                      boxShadow: isToday ? '0 0 8px rgba(255,161,22,0.4)' : 'none'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                );
+              })}
+            </div>
+
+            {/* X-axis (Months at the bottom) */}
+            <div style={{ position: 'relative', height: '16px', minWidth: `${activityData.totalCols * 15}px` }}>
+              {activityData.monthLabels.map((m, i) => (
+                <div key={`${m.label}-${i}`} style={{ position: 'absolute', left: `${m.colIndex * 15}px`, fontSize: '11px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
+                  {m.label}
+                </div>
+              ))}
+            </div>
+            </div>
           </div>
-          <span>Today &rarr;</span>
+        </div>
+
+        {/* Right Side Widget: Active Sheet */}
+        <div style={{ flex: 1, minWidth: '250px' }}>
+          <MiniSheetWidget 
+            loadingSheet={loadingSheet} 
+            sheetMeta={sheetMeta} 
+            sheetProgress={sheetProgress} 
+            onNavigate={onNavigate} 
+          />
         </div>
       </div>
 
@@ -764,7 +733,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'stretch' }}>
             {/* LeetCode Box */}
-            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -782,7 +751,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   </div>
                   <div>
                     <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '4px', textAlign: 'right' }}>Best Global Rank</div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: 'var(--text-primary)', fontFamily: 'monospace' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: 'var(--text-primary)', fontFamily: 'monospace' }}>
                       {personalStats.lc.bestRank}
                     </div>
                   </div>
@@ -791,15 +760,15 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                 <div>
                   <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '6px' }}>Performance Overview</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 4px', textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '6px 4px', textAlign: 'center' }}>
                       <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>Acceptance</div>
                       <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-xs)', fontWeight: 800, color: '#00C853' }}>{personalStats.lc.acceptanceRate}%</div>
                     </div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 4px', textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '6px 4px', textAlign: 'center' }}>
                       <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>Total Subs</div>
                       <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-xs)', fontWeight: 800, color: 'var(--text-primary)' }}>{personalStats.lc.totalSubs}</div>
                     </div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 4px', textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '6px 4px', textAlign: 'center' }}>
                       <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>Contests</div>
                       <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-xs)', fontWeight: 800, color: '#ffa116' }}>{personalStats.lc.contestCount}</div>
                     </div>
@@ -808,21 +777,29 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
               </div>
 
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-xs)', fontWeight: 700, marginBottom: '6px' }}>
-                  <span style={{ color: 'var(--color-easy)' }}>{personalStats.lc.easy} Easy</span>
-                  <span style={{ color: 'var(--color-medium)' }}>{personalStats.lc.med} Med</span>
-                  <span style={{ color: 'var(--color-hard)' }}>{personalStats.lc.hard} Hard</span>
-                </div>
-                <div className="dashboard-progress-bar" style={{ display: 'flex', height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
-                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.lc.total ? (personalStats.lc.easy / personalStats.lc.total) * 100 : 33}%`, background: 'var(--color-easy)' }} />
-                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.lc.total ? (personalStats.lc.med / personalStats.lc.total) * 100 : 34}%`, background: 'var(--color-medium)' }} />
-                  <div className="dashboard-progress-fill" style={{ width: `${personalStats.lc.total ? (personalStats.lc.hard / personalStats.lc.total) * 100 : 33}%`, background: 'var(--color-hard)' }} />
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px' }}>
+                  <div style={{ background: 'rgba(255, 161, 22, 0.15)', padding: '8px 4px', textAlign: 'center', borderRadius: '0px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#ffa116' }}>{personalStats.lc.total}</div>
+                    <div style={{ fontSize: '9px', textTransform: 'uppercase', color: 'rgba(255, 161, 22, 0.8)', fontWeight: 700, marginTop: '2px' }}>Total</div>
+                  </div>
+                  <div style={{ background: 'rgba(0, 200, 83, 0.15)', padding: '8px 4px', textAlign: 'center', borderRadius: '0px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#00C853' }}>{personalStats.lc.easy}</div>
+                    <div style={{ fontSize: '9px', textTransform: 'uppercase', color: 'rgba(0, 200, 83, 0.8)', fontWeight: 700, marginTop: '2px' }}>Easy</div>
+                  </div>
+                  <div style={{ background: 'rgba(255, 161, 22, 0.15)', padding: '8px 4px', textAlign: 'center', borderRadius: '0px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#ffa116' }}>{personalStats.lc.med}</div>
+                    <div style={{ fontSize: '9px', textTransform: 'uppercase', color: 'rgba(255, 161, 22, 0.8)', fontWeight: 700, marginTop: '2px' }}>Med</div>
+                  </div>
+                  <div style={{ background: 'rgba(211, 47, 47, 0.15)', padding: '8px 4px', textAlign: 'center', borderRadius: '0px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 800, color: '#D32F2F' }}>{personalStats.lc.hard}</div>
+                    <div style={{ fontSize: '9px', textTransform: 'uppercase', color: 'rgba(211, 47, 47, 0.8)', fontWeight: 700, marginTop: '2px' }}>Hard</div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Codeforces Box */}
-            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -840,7 +817,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   </div>
                   <div>
                     <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '4px', textAlign: 'right' }}>Official Rank</div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: 'var(--text-primary)' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: 'var(--text-primary)' }}>
                       {personalStats.cf.rank}
                     </div>
                   </div>
@@ -851,7 +828,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '6px' }}>Division Breakdown</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px' }}>
                     {Object.entries(personalStats.cf.divCounts).map(([div, count]) => (
-                      <div key={div} style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 4px', textAlign: 'center' }}>
+                      <div key={div} style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '6px 4px', textAlign: 'center' }}>
                         <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>{div}</div>
                         <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-xs)', fontWeight: 800, color: count > 0 ? '#3b82f6' : 'var(--text-secondary)' }}>{count}</div>
                       </div>
@@ -872,7 +849,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                     else if (rNum >= 1000) rateColor = '#00C853';
 
                     return (
-                      <div key={rate} style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 4px', textAlign: 'center' }}>
+                      <div key={rate} style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '6px 4px', textAlign: 'center' }}>
                         <div style={{ fontSize: '10px', color: rateColor, fontWeight: 700, marginBottom: '2px' }}>{rate}</div>
                         <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-xs)', fontWeight: 800, color: count > 0 ? '#3b82f6' : 'var(--text-secondary)' }}>{count}</div>
                       </div>
@@ -883,7 +860,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
             </div>
 
             {/* CodeChef Box */}
-            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -901,7 +878,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   </div>
                   <div>
                     <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '4px', textAlign: 'right' }}>Star Tier</div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: '#ffa116' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: '#ffa116' }}>
                       {personalStats.cc.stars}
                     </div>
                   </div>
@@ -910,11 +887,11 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                 <div>
                   <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '6px' }}>Competition Stats</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '4px' }}>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '10px 8px', textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '10px 8px', textAlign: 'center' }}>
                       <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>Highest Rating</div>
                       <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-base)', fontWeight: 800, color: personalStats.cc.maxRating > 0 ? '#8a4af3' : 'var(--text-secondary)' }}>{personalStats.cc.maxRating > 0 ? personalStats.cc.maxRating : 'N/A'}</div>
                     </div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '10px 8px', textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '10px 8px', textAlign: 'center' }}>
                       <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>Contests Participated</div>
                       <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-base)', fontWeight: 800, color: personalStats.cc.contests > 0 ? '#ffa116' : 'var(--text-secondary)' }}>{personalStats.cc.contests}</div>
                     </div>
@@ -927,14 +904,14 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <span>Next Tier ({personalStats.cc.nextStar})</span>
                   <span style={{ color: '#c084fc' }}>{personalStats.cc.rating} / {personalStats.cc.nextTierRating}</span>
                 </div>
-                <div className="dashboard-progress-bar" style={{ height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
+                <div className="dashboard-progress-bar" style={{ height: '6px', background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', width: '100%' }}>
                   <div className="dashboard-progress-fill" style={{ width: `${personalStats.cc.progressPercent}%`, background: '#c084fc' }} />
                 </div>
               </div>
             </div>
 
             {/* CSES Box */}
-            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+            <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '16px', borderRadius: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-strong)', paddingBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -952,7 +929,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   </div>
                   <div>
                     <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '4px', textAlign: 'right' }}>Status</div>
-                    <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: personalStats.cses.total > 0 ? '#00C853' : 'var(--text-secondary)' }}>
+                    <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '4px 10px', fontWeight: 800, fontSize: 'var(--font-size-xs)', color: personalStats.cses.total > 0 ? '#00C853' : 'var(--text-secondary)' }}>
                       {personalStats.cses.total > 0 ? 'Active' : 'Pending'}
                     </div>
                   </div>
@@ -962,7 +939,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '6px' }}>Category Breakdown</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '4px' }}>
                     {Object.entries(personalStats.cses.categories).map(([cat, count]) => (
-                      <div key={cat} style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '6px 8px', textAlign: 'center' }}>
+                      <div key={cat} style={{ background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', padding: '6px 8px', textAlign: 'center' }}>
                         <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={cat}>{cat}</div>
                         <div style={{ fontFamily: 'monospace', fontSize: 'var(--font-size-xs)', fontWeight: 800, color: count > 0 ? '#00C853' : 'var(--text-secondary)' }}>{count}</div>
                       </div>
@@ -976,7 +953,7 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
                   <span>Overall Progress</span>
                   <span style={{ color: '#00C853' }}>{Math.round((personalStats.cses.total / 300) * 100)}%</span>
                 </div>
-                <div className="dashboard-progress-bar" style={{ height: '6px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', width: '100%' }}>
+                <div className="dashboard-progress-bar" style={{ height: '6px', background: 'rgba(255, 255, 255, 0.04)', border: 'none', borderRadius: '0px', width: '100%' }}>
                   <div className="dashboard-progress-fill" style={{ width: `${(personalStats.cses.total / 300) * 100}%`, background: '#00C853' }} />
                 </div>
               </div>
@@ -985,260 +962,27 @@ export const Overview: React.FC<Props> = ({ friends, profiles, isDarkMode = true
         </div>
       )}
 
-      {/* Top Row: Next 3 Contests & Active Sheet Info */}
+      {/* Bottom Section: Upcoming Contests */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px', marginBottom: '32px' }}>
-        {/* Widget 1: Next 3 Contests */}
-        <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
-              <Calendar size={20} color="#3b82f6" />
-              <span>Upcoming Contests</span>
-            </div>
-            <button 
-              onClick={() => onNavigate?.('contests')} 
-              style={{ background: 'transparent', border: 'none', color: '#3b82f6', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--font-size-sm)' }}
-              onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'}
-              onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}
-            >
-              All Contests &rarr;
-            </button>
-          </div>
-
-          {loadingContests ? (
-            <div style={{ padding: '20px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading contests...</div>
-          ) : upcomingContests.length === 0 ? (
-            <div style={{ padding: '20px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>No upcoming contests found for active platforms.</div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flexGrow: 1 }}>
-              {upcomingContests.map(c => {
-                const isLC = c.platform === 'leetcode';
-                const isCC = c.platform === 'codechef';
-                const href = isLC ? `https://leetcode.com/contest/${c.id}` : isCC ? `https://www.codechef.com/${c.id}` : `https://codeforces.com/contests/${c.id}`;
-                const diff = c.startTimeSeconds * 1000 - currentTime;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-                return (
-                  <div key={`${c.platform}-${c.id}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--bg-primary)', padding: '12px 16px', border: '1px solid var(--border-strong)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)' }}>
-                        <PlatformIcon platform={c.platform} size={16} />
-                      </span>
-                      <div>
-                        <a href={href} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 700, color: 'var(--text-primary)', textDecoration: 'none', display: 'block', marginBottom: '2px', fontSize: 'var(--font-size-base)' }} onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}>
-                          {c.name}
-                        </a>
-                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)' }}>
-                          {new Date(c.startTimeSeconds * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} @ {new Date(c.startTimeSeconds * 1000).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
-                        </div>
-                      </div>
-                    </div>
-                    <div style={{ fontFamily: 'monospace', fontWeight: 800, fontSize: 'var(--font-size-base)', color: diff > 0 ? 'var(--color-easy)' : 'var(--text-secondary)' }}>
-                      {diff > 0 ? `${days}d ${hours}h ${mins}m ${secs}s` : '● LIVE'}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Widget 2: Active Sheet Info */}
-        <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
-              <FileSpreadsheet size={20} color="#ffa116" />
-              <span>Active Practice Sheet</span>
-            </div>
-            <button 
-              onClick={() => onNavigate?.('sheets')} 
-              style={{ background: 'transparent', border: 'none', color: '#ffa116', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--font-size-sm)' }}
-              onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'}
-              onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}
-            >
-              Open Tracker &rarr;
-            </button>
-          </div>
-
-          {loadingSheet ? (
-            <div style={{ padding: '20px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading sheet data...</div>
-          ) : !sheetMeta ? (
-            <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-              <div>No active sheet tracked right now. Choose a curated roadmap from the Sheets Tracker!</div>
-              <button onClick={() => onNavigate?.('sheets')} style={{ background: '#ffa116', color: '#000', border: 'none', padding: '8px 16px', fontWeight: 700, cursor: 'pointer' }}>Choose Sheet</button>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1 }}>
-              <div>
-                <div style={{ fontSize: 'calc(1.4 * var(--font-size-base))', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '6px' }}>{sheetMeta.name}</div>
-                <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-secondary)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ background: 'var(--border-strong)', padding: '2px 8px', borderRadius: '0px', color: 'var(--text-primary)', fontWeight: 600 }}>{sheetMeta.group}</span>
-                  <span>Curated Practice Roadmap</span>
-                </div>
-
-                <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 'var(--font-size-base)', fontWeight: 700 }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Progress</span>
-                  <span style={{ fontFamily: 'monospace', color: '#ffa116', fontSize: 'calc(1.1 * var(--font-size-base))' }}>{sheetProgress.solved} / {sheetProgress.total} ({sheetProgress.percent}%)</span>
-                </div>
-                <div className="dashboard-progress-bar" style={{ height: '10px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', borderRadius: '0px', overflow: 'hidden', marginBottom: '28px' }}>
-                  <div className="dashboard-progress-fill" style={{ height: '100%', width: `${sheetProgress.percent}%`, background: '#ffa116' }}></div>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => onNavigate?.('sheets')} 
-                style={{ width: '100%', padding: '14px', background: '#ffa116', color: '#000', border: 'none', borderRadius: '0px', fontWeight: 800, fontSize: 'var(--font-size-base)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'opacity 0.2s ease' }}
-                onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
-                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-              >
-                <Play size={18} fill="#000" />
-                <span>Resume Practice</span>
-              </button>
-            </div>
-          )}
-        </div>
+        <ContestsWidget 
+          loadingContests={loadingContests} 
+          upcomingContests={upcomingContests} 
+          currentTime={currentTime} 
+          onNavigate={onNavigate} 
+        />
       </div>
 
-      {/* Middle Section: Recent Friend Activity */}
-      <div className="dashboard-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px', marginBottom: '32px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
-            <Flame size={20} color="#00C853" />
-            <span>Recent Friend Activity</span>
-          </div>
-          <button 
-            onClick={() => onNavigate?.('friends')} 
-            style={{ background: 'transparent', border: 'none', color: '#00C853', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--font-size-sm)' }}
-            onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'}
-            onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}
-          >
-            All Friends &rarr;
-          </button>
-        </div>
+      <FriendsProgressWidget 
+        recentFriends={recentFriends} 
+        setSelectedFriend={setSelectedFriend} 
+        setSelectedPlatform={setSelectedPlatform} 
+        setSelectedFilter={setSelectedFilter} 
+        onNavigate={onNavigate} 
+      />
 
-        {recentFriends.length === 0 ? (
-          <div style={{ padding: '20px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>No recent friend problem solving activity found.</div>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-            {recentFriends.map(({ friend, latestTime, latestProb, platform, avatar }) => (
-              <div 
-                key={friend.id || friend.username} 
-                onClick={() => {
-                  setSelectedFriend(friend);
-                  setSelectedPlatform(platform);
-                  setSelectedFilter('all');
-                }}
-                style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '20px', borderRadius: '0px', cursor: 'pointer', transition: 'border-color 0.2s ease, transform 0.2s ease', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-                onMouseOver={(e) => { e.currentTarget.style.borderColor = '#00C853'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                onMouseOut={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '0px', background: 'var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 'var(--font-size-title)', color: 'var(--text-primary)', border: '1px solid #00C853', position: 'relative', flexShrink: 0, overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute' }}>{(friend.displayName || friend.username).charAt(0).toUpperCase()}</div>
-                    {avatar && (
-                      <img
-                        src={avatar}
-                        alt={friend.displayName || friend.username}
-                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }}
-                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: 'var(--font-size-base)', color: 'var(--text-primary)', marginBottom: '2px' }}>{friend.displayName || friend.username}</div>
-                    <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Clock size={12} />
-                      <span>{new Date(latestTime).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} {new Date(latestTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ background: 'var(--bg-secondary)', padding: '10px 12px', border: '1px solid var(--border-strong)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <PlatformIcon platform={platform} size={16} />
-                  <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 700, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={latestProb}>
-                    {latestProb}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Bottom Section: Recent Problems Solved by Friends (Unsolved by You) */}
-      <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', padding: '24px', borderRadius: '0px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', borderBottom: '1px solid var(--border-strong)', paddingBottom: '12px', fontSize: 'var(--font-size-title)', fontWeight: 700, color: 'var(--text-primary)' }}>
-          <Trophy size={20} color="#ffa116" />
-          <span>Recent Problems Solved by Friends (Unsolved by You)</span>
-        </div>
-
-        {unsolvedFriendsProblems.length === 0 ? (
-          <div style={{ padding: '40px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>You are completely caught up! You have solved all recent problems attempted by your friends.</div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table className="head-to-head-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--border-strong)', background: 'var(--bg-primary)' }}>
-                  <th style={{ padding: '14px 16px', fontSize: 'var(--font-size-xs)', textTransform: 'uppercase', color: 'var(--text-secondary)', width: '60px', textAlign: 'center' }}>Platform</th>
-                  <th style={{ padding: '14px 16px', fontSize: 'var(--font-size-xs)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Problem Name</th>
-                  <th style={{ padding: '14px 16px', fontSize: 'var(--font-size-xs)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Solved By</th>
-                  <th style={{ padding: '14px 16px', fontSize: 'var(--font-size-xs)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Latest Activity</th>
-                  <th style={{ padding: '14px 16px', fontSize: 'var(--font-size-xs)', textTransform: 'uppercase', color: 'var(--text-secondary)', textAlign: 'center', width: '120px' }}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {unsolvedFriendsProblems.map((prob) => (
-                  <tr key={`${prob.platform}-${prob.titleSlug}`} style={{ borderBottom: '1px solid var(--border-strong)', transition: 'background 0.2s ease' }} onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-primary)'} onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}>
-                    <td style={{ padding: '14px 16px', textAlign: 'center' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'var(--bg-primary)', border: '1px solid var(--border-strong)' }}>
-                        <PlatformIcon platform={prob.platform} size={16} />
-                      </div>
-                    </td>
-                    <td style={{ padding: '14px 16px', fontWeight: 800, fontSize: 'var(--font-size-base)', color: 'var(--text-primary)' }}>
-                      {prob.url ? (
-                        <a href={prob.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'}>
-                          {prob.title}
-                        </a>
-                      ) : (
-                        prob.title
-                      )}
-                    </td>
-                    <td style={{ padding: '14px 16px' }}>
-                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                        {prob.solvedBy.map(name => (
-                          <span key={name} style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-strong)', padding: '2px 8px', fontSize: 'var(--font-size-xs)', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                            {name}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td style={{ padding: '14px 16px', fontSize: 'var(--font-size-sm)', color: 'var(--text-secondary)', fontWeight: 600 }}>
-                      {new Date(prob.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} {new Date(prob.timestamp).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
-                    </td>
-                    <td style={{ padding: '14px 16px', textAlign: 'center' }}>
-                      {prob.url && (
-                        <a 
-                          href={prob.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 14px', background: '#ffa116', color: '#000', fontWeight: 800, fontSize: 'var(--font-size-xs)', textDecoration: 'none', transition: 'opacity 0.2s ease' }}
-                          onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
-                          onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-                        >
-                          <span>Solve</span>
-                          <ExternalLink size={12} />
-                        </a>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+      <RecentSubmissionsWidget 
+        unsolvedFriendsProblems={unsolvedFriendsProblems} 
+      />
     </div>
   );
 };

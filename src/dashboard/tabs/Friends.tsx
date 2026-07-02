@@ -1,63 +1,31 @@
 import React from 'react';
+import { Users, Activity, Trophy } from 'lucide-react';
 import { FriendProfile, Friend } from '../../types';
 import { FriendCard } from '../../popup/FriendCard';
 import { FriendProfileView } from '../../popup/FriendProfileView';
 
+import { useAppStore } from '../../store/useAppStore';
+
 interface Props {
-  friends: Friend[];
-  profiles: Record<string, FriendProfile>;
-  isDarkMode?: boolean;
-  selectedGlobalPlatforms?: string[];
-  allSubmissions?: any[];
   onNavigate?: (tab: string) => void;
+  onToast?: (message: string, type: 'success' | 'error' | 'info') => void;
 }
 
-export const Friends: React.FC<Props> = ({ friends, profiles, isDarkMode = true, selectedGlobalPlatforms = ['leetcode', 'codeforces', 'codechef'], allSubmissions = [] }) => {
-  const [selectedFriend, _setSelectedFriend] = React.useState<Friend | null>(() => {
-    try {
-      const v = localStorage.getItem('fr_selectedFriend');
-      if (v !== null) return JSON.parse(v);
-    } catch {}
-    return null;
-  });
-  const setSelectedFriend = (v: Friend | null) => {
-    try {
-      localStorage.setItem('fr_selectedFriend', JSON.stringify(v));
-    } catch {}
-    _setSelectedFriend(v);
-  };
+export const Friends: React.FC<Props> = ({ onNavigate, onToast }) => {
+  const friends = useAppStore(state => state.friends);
+  const profiles = useAppStore(state => state.profiles);
+  const isDarkMode = useAppStore(state => state.isDarkMode);
+  const selectedGlobalPlatforms = useAppStore(state => state.selectedGlobalPlatforms);
+  const allSubmissions = useAppStore(state => state.allSubmissions);
+  const selectedFriend = useAppStore(state => state.ui_frSelectedFriend);
+  const setPartial = useAppStore(state => state.setPartial);
+  const setSelectedFriend = (v: Friend | null) => setPartial({ ui_frSelectedFriend: v });
 
-  const [selectedPlatform, _setSelectedPlatform] = React.useState<string>(() => {
-    try { return localStorage.getItem('fr_selectedPlatform') || ''; } catch { return ''; }
-  });
-  const setSelectedPlatform = (v: string) => {
-    try { localStorage.setItem('fr_selectedPlatform', v); } catch {}
-    _setSelectedPlatform(v);
-  };
+  const selectedPlatform = useAppStore(state => state.ui_frSelectedPlatform);
+  const setSelectedPlatform = (v: string) => setPartial({ ui_frSelectedPlatform: v });
 
-  const [selectedFilter, _setSelectedFilter] = React.useState<'all' | 'Easy' | 'Medium' | 'Hard'>(() => {
-    try { return (localStorage.getItem('fr_selectedFilter') as any) || 'all'; } catch { return 'all'; }
-  });
-  const setSelectedFilter = (v: 'all' | 'Easy' | 'Medium' | 'Hard') => {
-    try { localStorage.setItem('fr_selectedFilter', v); } catch {}
-    _setSelectedFilter(v);
-  };
-
-  React.useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'fr_selectedFriend') {
-        try {
-          _setSelectedFriend(e.newValue ? JSON.parse(e.newValue) : null);
-        } catch {}
-      } else if (e.key === 'fr_selectedPlatform') {
-        _setSelectedPlatform(e.newValue || '');
-      } else if (e.key === 'fr_selectedFilter') {
-        _setSelectedFilter((e.newValue as any) || 'all');
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  const selectedFilter = useAppStore(state => state.ui_frSelectedFilter) as 'all' | 'Easy' | 'Medium' | 'Hard';
+  const setSelectedFilter = (v: 'all' | 'Easy' | 'Medium' | 'Hard') => setPartial({ ui_frSelectedFilter: v });
 
   if (selectedFriend) {
     const isOwn = selectedFriend.id === 'own-user';
@@ -81,7 +49,6 @@ export const Friends: React.FC<Props> = ({ friends, profiles, isDarkMode = true,
           }}
           isDarkMode={isDarkMode}
           isExpanded={true}
-          preloadedSubmissions={isOwn ? allSubmissions : undefined}
         />
       </div>
     );
@@ -118,30 +85,33 @@ export const Friends: React.FC<Props> = ({ friends, profiles, isDarkMode = true,
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '40px' }}>
-        <div style={{ background: 'var(--bg-secondary)', padding: '24px', border: '1px solid var(--border-strong)', borderRadius: '0px' }}>
-          <div style={{ fontSize: 'var(--font-size-title)', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ background: 'var(--bg-secondary)', padding: '24px', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '0px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '130px' }}>
+          <Trophy size={90} style={{ position: 'absolute', bottom: '-15px', right: '-15px', opacity: 0.04, color: '#ffa116' }} />
+          <div style={{ fontSize: 'var(--font-size-title)', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px', position: 'relative', zIndex: 1 }}>
             Total Group Solves
             <span title="Aggregate count of all problems solved by tracked friends across the currently active platform filters." style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
           </div>
-          <div style={{ fontSize: 'calc(3 * var(--font-size-base))', fontWeight: 900, color: 'var(--text-primary)' }}>{totalSolved.toLocaleString()}</div>
+          <div style={{ fontSize: 'calc(3.5 * var(--font-size-base))', fontWeight: 900, color: '#ffa116', position: 'relative', zIndex: 1 }}>{totalSolved.toLocaleString()}</div>
         </div>
-        <div style={{ background: 'var(--bg-secondary)', padding: '24px', border: '1px solid var(--border-strong)', borderRadius: '0px' }}>
-          <div style={{ fontSize: 'var(--font-size-title)', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ background: 'var(--bg-secondary)', padding: '24px', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '0px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '130px' }}>
+          <Users size={90} style={{ position: 'absolute', bottom: '-15px', right: '-15px', opacity: 0.04, color: '#00C853' }} />
+          <div style={{ fontSize: 'var(--font-size-title)', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px', position: 'relative', zIndex: 1 }}>
             Tracked Friends
             <span title="Count of friends who have accounts linked to the active platform filters." style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
           </div>
-          <div style={{ fontSize: 'calc(3 * var(--font-size-base))', fontWeight: 900, color: 'var(--text-primary)' }}>{filteredFriends.length}</div>
+          <div style={{ fontSize: 'calc(3.5 * var(--font-size-base))', fontWeight: 900, color: '#00C853', position: 'relative', zIndex: 1 }}>{filteredFriends.length}</div>
         </div>
-        <div style={{ background: 'var(--bg-secondary)', padding: '24px', border: '1px solid var(--border-strong)', borderRadius: '0px' }}>
-          <div style={{ fontSize: 'var(--font-size-title)', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div style={{ background: 'var(--bg-secondary)', padding: '24px', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '0px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '130px' }}>
+          <Activity size={90} style={{ position: 'absolute', bottom: '-15px', right: '-15px', opacity: 0.04, color: '#00B0FF' }} />
+          <div style={{ fontSize: 'var(--font-size-title)', color: 'var(--text-secondary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px', position: 'relative', zIndex: 1 }}>
             Active Users (Recent)
             <span title="Friends with verified submission activity within the recent activity threshold across selected platforms." style={{ cursor: 'help', opacity: 0.7 }}>ⓘ</span>
           </div>
-          <div style={{ fontSize: 'calc(3 * var(--font-size-base))', fontWeight: 900, color: 'var(--text-primary)' }}>{activeUsers}</div>
+          <div style={{ fontSize: 'calc(3.5 * var(--font-size-base))', fontWeight: 900, color: '#00B0FF', position: 'relative', zIndex: 1 }}>{activeUsers}</div>
         </div>
       </div>
 
-      <div className="tab-header">
+      <div className="tab-header" style={{ marginTop: '56px' }}>
         <h2 style={{ fontSize: 'calc(2 * var(--font-size-xs))', display: 'flex', alignItems: 'center', gap: '8px' }}>
           Friend Roster
           <span title="Individual friend cards displaying active streak, daily solve goal progress, rating badges, and platform handles." style={{ fontSize: 'var(--font-size-title)', cursor: 'help', opacity: 0.7, fontWeight: 'normal' }}>ⓘ</span>
@@ -169,14 +139,13 @@ export const Friends: React.FC<Props> = ({ friends, profiles, isDarkMode = true,
               codeforcesProfile={cfProfile}
               codechefProfile={ccProfile}
               isOwn={isOwn}
-              isDarkMode={isDarkMode}
-              platformFilters={selectedGlobalPlatforms as any}
               onViewProfile={(platform, filter = 'all') => {
                 setSelectedFriend(friend);
                 setSelectedPlatform(platform);
                 setSelectedFilter(filter);
               }}
               onRemove={() => {}}
+              onToast={onToast}
             />
           );
         })}

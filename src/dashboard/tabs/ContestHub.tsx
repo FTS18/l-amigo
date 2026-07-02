@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useSWRChromeStorage } from '../../hooks/useSWRChromeStorage';
 import { Friend, FriendProfile, RatingHistoryEntry } from '../../types';
 import { LeetCodeService } from '../../services/leetcode';
 import { CodeforcesService } from '../../services/codeforces';
@@ -9,69 +10,23 @@ import { PlatformIcon, LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../../
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Calendar, Bell, BellRing, ExternalLink, TrendingUp, TrendingDown, Award } from 'lucide-react';
 import { STORAGE_KEYS } from '../../constants';
+import { useAppStore } from '../../store/useAppStore';
 
-interface ContestHubProps {
-  friends: Friend[];
-  profiles: Record<string, FriendProfile>;
-  isDarkMode: boolean;
-  selectedGlobalPlatforms: string[];
-  ownUsername?: string;
-  ownCodeforcesHandle?: string;
-  ownCodechefHandle?: string;
-}
-
-export const ContestHub: React.FC<ContestHubProps> = ({
-  friends,
-  profiles,
-  isDarkMode,
-  selectedGlobalPlatforms,
-  ownUsername,
-  ownCodeforcesHandle,
-  ownCodechefHandle
-}) => {
-  const [contests, setContests] = useState<any[]>([]);
-  const [loadingContests, setLoadingContests] = useState(true);
+export const ContestHub: React.FC = () => {
+  const friends = useAppStore(state => state.friends);
+  const profiles = useAppStore(state => state.profiles);
+  const isDarkMode = useAppStore(state => state.isDarkMode);
+  const selectedGlobalPlatforms = useAppStore(state => state.selectedGlobalPlatforms);
+  const ownUsername = useAppStore(state => state.ownUsername);
+  const ownCodeforcesHandle = useAppStore(state => state.ownCodeforcesHandle);
+  const ownCodechefHandle = useAppStore(state => state.ownCodechefHandle);
+  // Removed local contests state, handled by SWR
   const [reminders, setReminders] = useState<Record<string, any>>({});
   const [currentTime, setCurrentTime] = useState(Date.now());
-  const ss = <T,>(key: string, fallback: T): T => {
-    try {
-      const v = localStorage.getItem(`st_st_${key}`) || localStorage.getItem(`ch_${key}`);
-      if (v !== null) return JSON.parse(v) as T;
-    } catch { /* ignore */ }
-    return fallback;
-  };
-  const setSS = <T,>(key: string, value: T) => {
-    try { localStorage.setItem(`ch_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
-  };
-
-  const [activeUser, _setActiveUser] = useState<string>(() => ss('activeUser', 'own-user'));
-  const setActiveUser = (v: string) => { setSS('activeUser', v); _setActiveUser(v); };
-
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'ch_activeUser' && e.newValue) {
-        try { _setActiveUser(JSON.parse(e.newValue)); } catch {}
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-  const [dismissedNotice, setDismissedNotice] = useState(false);
-
-  useEffect(() => {
-    chrome.storage.local.get(['dismissed_contesthub_info'], (res) => {
-      if (res.dismissed_contesthub_info) setDismissedNotice(true);
-    });
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes.dismissed_contesthub_info) {
-        setDismissedNotice(!!changes.dismissed_contesthub_info.newValue);
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
-
+  const activeUser = useAppStore(state => state.ui_chActiveUser);
+  const setPartial = useAppStore(state => state.setPartial);
+  const setActiveUser = (v: string) => setPartial({ ui_chActiveUser: v });
+  const dismissedNotice = useAppStore(state => state.dismissedContesthubInfo);
   // Live timer for countdowns
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(Date.now()), 1000);
@@ -109,77 +64,46 @@ export const ContestHub: React.FC<ContestHubProps> = ({
     }
   };
 
-  useEffect(() => {
-    const fetchContests = async () => {
-      const cacheKey = STORAGE_KEYS.UPCOMING_CONTESTS_CACHE;
-      const cached = await new Promise<any>(resolve => {
-        chrome.storage.local.get([cacheKey], res => resolve(res[cacheKey]));
-      });
+  const fetchContests = useCallback(async () => {
+    const promises = [];
+    if (selectedGlobalPlatforms.includes('leetcode')) {
+      promises.push(LeetCodeService.getUpcomingContests());
+    } else {
+      promises.push(Promise.resolve([]));
+    }
 
-      if (cached && cached.timestamp > Date.now() - 1000 * 60 * 60) {
-        setContests(cached.data);
-        setLoadingContests(false);
-        return;
-      }
+    if (selectedGlobalPlatforms.includes('codeforces')) {
+      promises.push(CodeforcesService.getUpcomingContests());
+    } else {
+      promises.push(Promise.resolve([]));
+    }
 
-      try {
-        const promises = [];
-        if (selectedGlobalPlatforms.includes('leetcode')) {
-          promises.push(LeetCodeService.getUpcomingContests());
-        } else {
-          promises.push(Promise.resolve([]));
-        }
+    if (selectedGlobalPlatforms.includes('codechef')) {
+      promises.push(CodeChefService.getUpcomingContests());
+    } else {
+      promises.push(Promise.resolve([]));
+    }
 
-        if (selectedGlobalPlatforms.includes('codeforces')) {
-          promises.push(CodeforcesService.getUpcomingContests());
-        } else {
-          promises.push(Promise.resolve([]));
-        }
+    const [lcData, cfData, ccData] = await Promise.all(promises);
+    
+    const LC_MAX = 4;
+    const CF_MAX = 6;
+    const CC_MAX = 4;
 
-        if (selectedGlobalPlatforms.includes('codechef')) {
-          promises.push(CodeChefService.getUpcomingContests());
-        } else {
-          promises.push(Promise.resolve([]));
-        }
+    return [
+      ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, LC_MAX),
+      ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, CF_MAX),
+      ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, CC_MAX),
+    ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
+  }, [selectedGlobalPlatforms]);
 
-        const [lcData, cfData, ccData] = await Promise.all(promises);
-        
-        const LC_MAX = 4;
-        const CF_MAX = 6;
-        const CC_MAX = 4;
-
-        const mergedData = [
-          ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, LC_MAX),
-          ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, CF_MAX),
-          ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, CC_MAX),
-        ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
-
-        setContests(mergedData);
-        chrome.storage.local.set({
-          [cacheKey]: {
-            data: mergedData,
-            timestamp: Date.now()
-          }
-        });
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoadingContests(false);
-      }
-    };
-    fetchContests();
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE]) {
-        const cached = changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE].newValue;
-        if (cached && cached.data) {
-          setContests(cached.data);
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
+  const { data: contestsData, loading: loadingContests } = useSWRChromeStorage<any[]>(
+    STORAGE_KEYS.UPCOMING_CONTESTS_CACHE,
+    fetchContests,
+    [fetchContests]
+  );
+  
+  const contests = contestsData || [];
 
   const upcomingContests = useMemo(() => {
     return contests
@@ -550,7 +474,7 @@ export const ContestHub: React.FC<ContestHubProps> = ({
           <div style={{ marginBottom: '20px', padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
               <strong>ⓘ Rating Update Delays</strong>
-              <button onClick={() => { setDismissedNotice(true); chrome.storage.local.set({ dismissed_contesthub_info: true }); }} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
+              <button onClick={() => { chrome.storage.local.set({ dismissed_contesthub_info: true }); }} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
             </div>
             Rating graphs reflect official, finalized contest deltas. Please note that while Codeforces and CodeChef update ratings shortly after a contest, LeetCode's official contest rating calculations typically take 24 to 48 hours to finalize post-contest.
           </div>

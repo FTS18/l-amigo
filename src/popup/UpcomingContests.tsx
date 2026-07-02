@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useSWRChromeStorage } from '../hooks/useSWRChromeStorage';
 import { ChevronDown, ChevronRight, Bell, BellRing } from 'lucide-react';
 import { AlarmsService } from '../services/alarms';
 import { CodeforcesService } from '../services/codeforces';
@@ -8,8 +9,6 @@ import { STORAGE_KEYS } from '../constants';
 import { PlatformIcon } from '../utils/PlatformIcons';
 
 export const UpcomingContests: React.FC = () => {
-  const [contests, setContests] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [expanded, setExpanded] = useState(false); // Default to collapsed
   const [reminders, setReminders] = useState<Record<string, any>>({});
@@ -54,64 +53,37 @@ export const UpcomingContests: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchContests = async () => {
-      const cacheKey = STORAGE_KEYS.UPCOMING_CONTESTS_CACHE;
-      const cached = await new Promise<any>(resolve => {
-        chrome.storage.local.get([cacheKey], res => resolve(res[cacheKey]));
-      });
+  const fetchContests = useCallback(async () => {
+    try {
+      const [lcData, cfData, ccData] = await Promise.all([
+        LeetCodeService.getUpcomingContests(),
+        CodeforcesService.getUpcomingContests(),
+        CodeChefService.getUpcomingContests()
+      ]);
+      
+      const LC_MAX = 4;
+      const CF_MAX = 6;
+      const CC_MAX = 4;
 
-      if (cached && cached.timestamp > Date.now() - 1000 * 60 * 60) {
-        // Cache for 1 hour
-        setContests(cached.data);
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const [lcData, cfData, ccData] = await Promise.all([
-          LeetCodeService.getUpcomingContests(),
-          CodeforcesService.getUpcomingContests(),
-          CodeChefService.getUpcomingContests()
-        ]);
-        
-        const LC_MAX = 4;
-        const CF_MAX = 6;
-        const CC_MAX = 4;
-
-        const mergedData = [
-          ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, LC_MAX),
-          ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, CF_MAX),
-          ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, CC_MAX),
-        ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
-
-        setContests(mergedData);
-        chrome.storage.local.set({
-          [cacheKey]: {
-            data: mergedData,
-            timestamp: Date.now()
-          }
-        });
-      } catch (err) {
-        console.error(err);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchContests();
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE]) {
-        const cached = changes[STORAGE_KEYS.UPCOMING_CONTESTS_CACHE].newValue;
-        if (cached && cached.data) {
-          setContests(cached.data);
-        }
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
+      return [
+        ...lcData.map(c => ({ ...c, platform: c.platform || 'leetcode' })).slice(0, LC_MAX),
+        ...cfData.map(c => ({ ...c, platform: c.platform || 'codeforces' })).slice(0, CF_MAX),
+        ...ccData.map(c => ({ ...c, platform: c.platform || 'codechef' })).slice(0, CC_MAX),
+      ].sort((a, b) => a.startTimeSeconds - b.startTimeSeconds);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      throw err;
+    }
   }, []);
+
+  const { data: contestsData, loading } = useSWRChromeStorage<any[]>(
+    STORAGE_KEYS.UPCOMING_CONTESTS_CACHE,
+    fetchContests,
+    [fetchContests]
+  );
+  
+  const contests = contestsData || [];
 
   // Filter out contests that have already finished or are more than 30 days away
   const upcomingContests = contests.filter(c => {

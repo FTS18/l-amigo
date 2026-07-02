@@ -2,6 +2,7 @@ import { FriendProfile, RecentSubmission } from "../types";
 import { API_CONSTANTS, DATA_LIMITS } from "../constants";
 import { CircuitBreaker } from "../utils/circuit-breaker";
 import { fetchWithTimeout } from "../utils/network";
+import { fetchWithRetry } from "../utils/api-utils";
 
 /**
  * Represents a single accepted submission fetched from LeetCode's GraphQL API.
@@ -131,61 +132,52 @@ export class LeetCodeService {
       const csrf = await this.getCsrfToken();
       const headers = this.buildHeaders(csrf);
 
-      for (let attempt = 0; attempt <= retries; attempt++) {
-        try {
-          const res = await fetchWithTimeout(this.GQL, {
-            method: "POST",
-            headers,
-            credentials: "include",
-            body: bodyStr,
-            timeout: API_CONSTANTS.REQUEST_TIMEOUT,
-          });
+      try {
+        const res = await fetchWithRetry(this.GQL, {
+          method: "POST",
+          headers,
+          credentials: "include",
+          body: bodyStr,
+          timeout: API_CONSTANTS.REQUEST_TIMEOUT,
+        }, {
+          maxRetries: retries,
+          initialDelayMs: API_CONSTANTS.RETRY_DELAY_BASE,
+          backoffFactor: 2,
+          jitter: true
+        });
 
-          if (res.status === 429 || res.status === 403) {
-            const duration = res.status === 429 ? 60000 : 30000;
-            const cooldownTime = Date.now() + duration;
-            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-              await chrome.storage.local.set({ leetcode_cooldown: cooldownTime });
-            }
-            if (attempt < retries) {
-              const wait = API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt);
-              console.warn(
-                `[LC] ${res.status} – retry in ${wait}ms (${attempt + 1}/${retries})`,
-              );
-              await this.sleep(wait);
-              continue;
-            }
-            throw new Error(
-              `LeetCode ${res.status} after ${retries + 1} attempts`,
-            );
+        if (res.status === 429 || res.status === 403) {
+          const duration = res.status === 429 ? 60000 : 30000;
+          const cooldownTime = Date.now() + duration;
+          if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            await chrome.storage.local.set({ leetcode_cooldown: cooldownTime });
           }
-
-          if (!res.ok) throw new Error(`LeetCode HTTP ${res.status}`);
-          
-          const resClone = res.clone();
-          const json = await res.json();
-          if (json.errors?.length) {
-            console.warn("[LC] GraphQL errors:", json.errors);
-          }
-          
-          if (cache && !json.errors?.length) {
-            const syntheticRes = new Response(resClone.body, {
-               status: 200,
-               headers: new Headers({ 
-                 "Content-Type": "application/json",
-                 "X-Cache-Timestamp": Date.now().toString()
-               })
-            });
-            cache.put(syntheticReq, syntheticRes).catch(console.error);
-          }
-          
-          return json.data as T;
-        } catch (err) {
-          if (attempt === retries) throw err;
-          await this.sleep(API_CONSTANTS.RETRY_DELAY_BASE * Math.pow(2, attempt));
         }
+
+        if (!res.ok) throw new Error(`LeetCode HTTP ${res.status}`);
+        
+        const resClone = res.clone();
+        const json = await res.json();
+        if (json.errors?.length) {
+          console.warn("[LC] GraphQL errors:", json.errors);
+        }
+        
+        if (cache && !json.errors?.length) {
+          const syntheticRes = new Response(resClone.body, {
+             status: 200,
+             headers: new Headers({ 
+               "Content-Type": "application/json",
+               "X-Cache-Timestamp": Date.now().toString()
+             })
+          });
+          cache.put(syntheticReq, syntheticRes).catch(console.error);
+        }
+        
+        return json.data as T;
+      } catch (err: any) {
+        console.warn(`[LC] API failed:`, err);
+        throw err;
       }
-      throw new Error("Max retries exceeded");
     })();
 
     if (cache) {

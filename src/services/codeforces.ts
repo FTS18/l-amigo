@@ -1,7 +1,8 @@
 import { API_CONSTANTS, DATA_LIMITS } from "../constants";
 import { FriendProfile, RecentSubmission, TopicStat, LanguageStat } from "../types";
 import { CircuitBreaker } from "../utils/circuit-breaker";
-import { fetchWithTimeout } from '../utils/network';
+import { fetchWithTimeout } from "../utils/network";
+import { fetchWithRetry } from "../utils/api-utils";
 import { friendAddRateLimiter } from "../utils/rate-limiter";
 
 interface CodeforcesApiResponse<T> {
@@ -153,36 +154,36 @@ export class CodeforcesService {
     return this.circuitBreaker.execute(async () => {
       const url = `${this.API}/${endpoint}`;
       
-      for (let attempt = 1; attempt <= retries + 1; attempt++) {
-        try {
-          const res = await fetchWithTimeout(url, {
-            timeout: 45000,
-          });
-          if (res.status === 429 || res.status === 403) {
-            const cooldownTime = Date.now() + (res.status === 429 ? 60000 : 30000);
-            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-              await chrome.storage.local.set({ codeforces_cooldown: cooldownTime });
-            }
-          }
-          if (!res.ok) {
-            throw new Error(`Codeforces HTTP ${res.status}`);
-          }
+      try {
+        const res = await fetchWithRetry(url, {
+          timeout: 45000,
+        }, {
+          maxRetries: retries,
+          initialDelayMs: 2000,
+          backoffFactor: 2,
+          jitter: true
+        });
 
-          const body = (await res.json()) as CodeforcesApiResponse<T>;
-          if (body.status !== "OK" || body.result === undefined) {
-            throw new Error(body.comment || "Codeforces API error");
+        if (res.status === 429 || res.status === 403) {
+          const cooldownTime = Date.now() + (res.status === 429 ? 60000 : 30000);
+          if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            await chrome.storage.local.set({ codeforces_cooldown: cooldownTime });
           }
-          return body.result;
-        } catch (err: any) {
-          if (attempt <= retries) {
-            console.warn(`CF API attempt ${attempt} failed for ${endpoint}, retrying...`, err);
-            await new Promise(r => setTimeout(r, 2000 * attempt));
-            continue;
-          }
-          throw err;
         }
+        
+        if (!res.ok) {
+          throw new Error(`Codeforces HTTP ${res.status}`);
+        }
+
+        const body = (await res.json()) as CodeforcesApiResponse<T>;
+        if (body.status !== "OK" || body.result === undefined) {
+          throw new Error(body.comment || "Codeforces API error");
+        }
+        return body.result;
+      } catch (err: any) {
+        console.warn(`CF API failed for ${endpoint}:`, err);
+        throw err;
       }
-      throw new Error("Codeforces API failed after retries");
     });
   }
 

@@ -23,6 +23,8 @@ import { UpcomingContests } from './UpcomingContests';
 import { ImportExportModal } from './ImportExportModal';
 import { Sun, Moon, Database, UserPlus, LayoutDashboard, RefreshCw, WifiOff, Code2 } from 'lucide-react';
 import { StreakCalculator } from '../services/streak';
+import { useAppStore } from '../store/useAppStore';
+import { useStorageSync } from '../hooks/useStorageSync';
 import './App.css';
 
 const formatTimestamp = (timestamp: number): string => {
@@ -34,95 +36,39 @@ const formatTimestamp = (timestamp: number): string => {
 };
 
 export const App: React.FC = () => {
- const [friends, setFriends] = useState<Friend[]>([]);
- const [profiles, setProfiles] = useState<Record<string, FriendProfile>>({});
- const [loading, setLoading] = useState(true);
+ useStorageSync();
+ const friends = useAppStore(state => state.friends);
+ const profiles = useAppStore(state => state.profiles);
+ const loading = useAppStore(state => state.loading);
+ const isDarkMode = useAppStore(state => state.isDarkMode);
+ const ownUsername = useAppStore(state => state.ownUsername);
+ const ownCodeforcesHandle = useAppStore(state => state.ownCodeforcesHandle);
+ const ownCodechefHandle = useAppStore(state => state.ownCodechefHandle);
+ const ownCsesHandle = useAppStore(state => state.ownCsesHandle);
+ const setPartial = useAppStore(state => state.setPartial);
+ const fontSizeScale = useAppStore(state => state.fontSizeScale);
+ const displayZoomScale = useAppStore(state => state.displayZoomScale);
+
  const [refreshing, setRefreshing] = useState(false);
  const [refreshingFriend, setRefreshingFriend] = useState<string | null>(null);
  const [isOffline, setIsOffline] = useState(!navigator.onLine);
- const [addingFriend, setAddingFriend] = useState(false);
- const [showImportExport, setShowImportExport] = useState(false);
- const ss = <T,>(key: string, fallback: T): T => {
- try {
- const v = sessionStorage.getItem(`app_${key}`);
- if (v !== null) return JSON.parse(v) as T;
- } catch { /* ignore */ }
- return fallback;
- };
- const setSS = <T,>(key: string, value: T) => {
- try { sessionStorage.setItem(`app_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
- };
+ const showImportExport = useAppStore(state => state.showImportExport);
 
- const [sortBy, _setSortBy] = useState<'name' | 'problems' | 'recent' | 'streak'>(() => ss('sortBy', 'recent'));
- const setSortBy = (v: 'name' | 'problems' | 'recent' | 'streak') => { setSS('sortBy', v); _setSortBy(v); };
-
- const [platformFilters, _setPlatformFilters] = useState<Platform[]>(() => ss('platFilters', ['leetcode', 'codeforces', 'codechef']));
- const setPlatformFilters = (v: Platform[] | ((prev: Platform[]) => Platform[])) => {
- _setPlatformFilters(prev => {
- const next = typeof v === 'function' ? v(prev) : v;
- setSS('platFilters', next);
- return next;
- });
- };
-
- const [isDarkMode, setIsDarkMode] = useState(true);
- const [fontSizeScale, setFontSizeScale] = useState(100);
- const [displayZoomScale, setDisplayZoomScale] = useState(100);
- const [disabledPlatforms, setDisabledPlatforms] = useState<string[]>([]);
- // Incrementing this key forces <UpcomingContests /> to remount and re-fetch fresh data
- const [refreshContestsKey, setRefreshContestsKey] = useState(0);
-
-
- const [activeTab, _setActiveTab] = useState<'friends' | 'compare' | 'settings'>(() => ss('activeTab', 'friends'));
- const setActiveTab = (v: 'friends' | 'compare' | 'settings') => { setSS('activeTab', v); _setActiveTab(v); };
+ const sortBy = useAppStore(state => state.sortBy) as 'name' | 'problems' | 'recent' | 'streak';
+ const platformFilters = useAppStore(state => state.platformFilters) as Platform[];
+ const activeTab = useAppStore(state => state.activeTab);
+ const selectedFriendIndex = useAppStore(state => state.selectedFriendIndex);
+ const selectedFriend = useAppStore(state => state.selectedFriend);
+ const selectedPlatform = useAppStore(state => state.selectedPlatform);
+ const selectedFilter = useAppStore(state => state.selectedFilter);
 
  const [showOnboarding, setShowOnboarding] = useState(false);
- const [ownUsername, setOwnUsername] = useState<string>('');
- const [ownCodeforcesHandle, setOwnCodeforcesHandle] = useState<string>('');
- const [ownCodechefHandle, setOwnCodechefHandle] = useState<string>('');
- const [ownCsesHandle, setOwnCsesHandle] = useState<string>('');
-
- const [selectedFriendIndex, _setSelectedFriendIndex] = useState<number>(() => ss('selectedFriendIndex', 0));
- const setSelectedFriendIndex = (v: number | ((prev: number) => number)) => {
- _setSelectedFriendIndex(prev => {
- const next = typeof v === 'function' ? v(prev) : v;
- setSS('selectedFriendIndex', next);
- return next;
- });
- };
-
- const [selectedFriend, _setSelectedFriend] = useState<Friend | null>(() => ss('selectedFriend', null));
- const setSelectedFriend = (v: Friend | null | ((prev: Friend | null) => Friend | null)) => {
- _setSelectedFriend(prev => {
- const next = typeof v === 'function' ? v(prev) : v;
- setSS('selectedFriend', next);
- return next;
- });
- };
-
- const [selectedPlatform, _setSelectedPlatform] = useState<string>(() => ss('selectedPlatform', ''));
- const setSelectedPlatform = (v: string | ((prev: string) => string)) => {
- _setSelectedPlatform(prev => {
- const next = typeof v === 'function' ? v(prev) : v;
- setSS('selectedPlatform', next);
- return next;
- });
- };
-
- const [selectedFilter, _setSelectedFilter] = useState<string>(() => ss('selectedFilter', 'all'));
- const setSelectedFilter = (v: string | ((prev: string) => string)) => {
- _setSelectedFilter(prev => {
- const next = typeof v === 'function' ? v(prev) : v;
- setSS('selectedFilter', next);
- return next;
- });
- };
 
  const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info'; action?: { label: string; onClick: () => void }; duration?: number } | null>(null);
  const [pendingDeletions, setPendingDeletions] = useState<Set<string>>(new Set());
- const [pinnedFriends, setPinnedFriends] = useState<string[]>([]);
- const [dailyGoal, setDailyGoal] = useState(3);
+ const dailyGoal = useAppStore(state => state.dailyGoal);
+ const pinnedFriends = useAppStore(state => state.pinnedFriends);
  const [searchQuery, setSearchQuery] = useState('');
  const [modal, setModal] = useState<{ isOpen: boolean; title: string; message: string; type: 'info' | 'error' | 'success' }>({
  isOpen: false,
@@ -131,45 +77,11 @@ export const App: React.FC = () => {
  type: 'info'
  });
  const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
- const [showAddModal, setShowAddModal] = useState(false);
- const [editingFriend, setEditingFriend] = useState<Friend | null>(null);
+ const showAddModal = useAppStore(state => state.showAddModal);
+ const editingFriend = useAppStore(state => state.editingFriend);
 
  useEffect(() => {
  checkOnboarding();
- loadTheme();
-
- const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
- if (areaName !== 'local') return;
- if (changes[STORAGE_KEYS.FONT_SIZE_SCALE]) setFontSizeScale(changes[STORAGE_KEYS.FONT_SIZE_SCALE].newValue ?? 100);
- if (changes[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]) setDisplayZoomScale(changes[STORAGE_KEYS.DISPLAY_ZOOM_SCALE].newValue ?? 100);
- if (changes[STORAGE_KEYS.DARK_MODE]) setIsDarkMode(changes[STORAGE_KEYS.DARK_MODE].newValue);
- if (changes[STORAGE_KEYS.DISABLED_PLATFORMS]) {
- const disabled = changes[STORAGE_KEYS.DISABLED_PLATFORMS].newValue || [];
- setDisabledPlatforms(disabled);
- setPlatformFilters(prev => prev.filter(p => !disabled.includes(p)));
- }
- if (changes[STORAGE_KEYS.COMPACT_VIEW]) {
- if (changes[STORAGE_KEYS.COMPACT_VIEW].newValue) {
- document.body.classList.add('compact-view-enabled');
- } else {
- document.body.classList.remove('compact-view-enabled');
- }
- }
- if (changes.daily_goal) setDailyGoal(changes.daily_goal.newValue ?? 3);
- if (changes.pinned_friends) setPinnedFriends(changes.pinned_friends.newValue || []);
-
- let requiresReload = false;
- for (const key of Object.keys(changes)) {
- if (key.startsWith('lamigo_profile:') || key === 'lamigo_identities' || key === 'lamigo_friends' || key === 'ui_last_updated') {
- requiresReload = true;
- break;
- }
- }
- if (requiresReload) {
- verifyAndReconcileState();
- }
- };
- chrome.storage.onChanged.addListener(handleStorageChange);
 
  // Track network connectivity for offline banner
  const goOffline = () => setIsOffline(true);
@@ -178,96 +90,57 @@ export const App: React.FC = () => {
  window.addEventListener('online', goOnline);
 
  return () => {
- chrome.storage.onChanged.removeListener(handleStorageChange);
  window.removeEventListener('offline', goOffline);
  window.removeEventListener('online', goOnline);
  };
  }, []);
 
-
+ const compactView = useAppStore(state => state.compactView);
+ useEffect(() => {
+   if (compactView) {
+     document.body.classList.add('compact-view-enabled');
+   } else {
+     document.body.classList.remove('compact-view-enabled');
+   }
+ }, [compactView]);
 
  const checkOnboarding = async () => {
- // Save last opened timestamp for smart background refresh
- chrome.storage.local.set({ [STORAGE_KEYS.LAST_OPENED_TS]: Date.now() });
+  // Save last opened timestamp for smart background refresh
+  chrome.storage.local.set({ [STORAGE_KEYS.LAST_OPENED_TS]: Date.now() });
 
- // Single storage read — all keys merged into one call
- const result = await chrome.storage.local.get([
- STORAGE_KEYS.ONBOARDING_COMPLETE,
- STORAGE_KEYS.OWN_USERNAME,
- STORAGE_KEYS.OWN_CF_HANDLE,
- STORAGE_KEYS.OWN_CC_HANDLE,
- STORAGE_KEYS.OWN_CSES_HANDLE,
- STORAGE_KEYS.SORT_BY,
- STORAGE_KEYS.PLATFORM_FILTERS,
- STORAGE_KEYS.ACTIVE_TAB,
- STORAGE_KEYS.LAST_UPDATED,
- STORAGE_KEYS.REFRESH_IN_PROGRESS,
- STORAGE_KEYS.FONT_SIZE_SCALE,
- STORAGE_KEYS.DISPLAY_ZOOM_SCALE,
- STORAGE_KEYS.DARK_MODE,
- STORAGE_KEYS.DEFAULT_STARTUP_TAB,
- STORAGE_KEYS.DISABLED_PLATFORMS,
- STORAGE_KEYS.COMPACT_VIEW,
- 'daily_goal',
- 'pinned_friends'
- ]);
- if (!result[STORAGE_KEYS.ONBOARDING_COMPLETE]) {
- setShowOnboarding(true);
- setLoading(false);
- } else {
- const username = result[STORAGE_KEYS.OWN_USERNAME] || '';
- setOwnUsername(username);
- setOwnCodeforcesHandle(result[STORAGE_KEYS.OWN_CF_HANDLE] || '');
- setOwnCodechefHandle(result[STORAGE_KEYS.OWN_CC_HANDLE] || '');
- setOwnCsesHandle(result[STORAGE_KEYS.OWN_CSES_HANDLE] || '');
- // Restore persisted UI state
- if (result[STORAGE_KEYS.SORT_BY]) setSortBy(result[STORAGE_KEYS.SORT_BY]);
- 
- const disabled = result[STORAGE_KEYS.DISABLED_PLATFORMS] || [];
- setDisabledPlatforms(disabled);
- if (result[STORAGE_KEYS.PLATFORM_FILTERS]) {
- // Automatically remove disabled platforms from filters
- const activeFilters = result[STORAGE_KEYS.PLATFORM_FILTERS].filter((p: string) => !disabled.includes(p));
- setPlatformFilters(activeFilters);
- }
+  const result = await chrome.storage.local.get([
+  STORAGE_KEYS.ONBOARDING_COMPLETE,
+  STORAGE_KEYS.LAST_UPDATED,
+  STORAGE_KEYS.REFRESH_IN_PROGRESS,
+  STORAGE_KEYS.DEFAULT_STARTUP_TAB,
+  STORAGE_KEYS.OWN_USERNAME
+  ]);
 
- // Feature 7: Default Startup Tab
- if (result[STORAGE_KEYS.DEFAULT_STARTUP_TAB]) {
- const startupTab = result[STORAGE_KEYS.DEFAULT_STARTUP_TAB];
- if (startupTab.startsWith('dash_')) {
- const dashTab = startupTab.replace('dash_', '');
- chrome.tabs.create({ url: `dashboard.html#${dashTab}` });
- setActiveTab('friends');
- } else {
- setActiveTab(startupTab);
- }
- } else if (result[STORAGE_KEYS.ACTIVE_TAB]) {
- setActiveTab(result[STORAGE_KEYS.ACTIVE_TAB]);
- }
+  if (!result[STORAGE_KEYS.ONBOARDING_COMPLETE]) {
+  setShowOnboarding(true);
+  setPartial({ loading: false });
+  } else {
+  // Feature 7: Default Startup Tab (Routing logic)
+  if (result[STORAGE_KEYS.DEFAULT_STARTUP_TAB]) {
+  const startupTab = result[STORAGE_KEYS.DEFAULT_STARTUP_TAB];
+  if (startupTab.startsWith('dash_')) {
+  const dashTab = startupTab.replace('dash_', '');
+  chrome.tabs.create({ url: `dashboard.html#${dashTab}` });
+  // Fallback to friends if opened despite dashboard route
+  setPartial({ activeTab: 'friends' });
+  }
+  }
 
- if (result[STORAGE_KEYS.LAST_UPDATED]) setLastUpdated(result[STORAGE_KEYS.LAST_UPDATED]);
- // Also restore theme from the same single read (avoids a separate loadTheme() call)
- if (result[STORAGE_KEYS.DARK_MODE] !== undefined) setIsDarkMode(result[STORAGE_KEYS.DARK_MODE]);
- if (result[STORAGE_KEYS.FONT_SIZE_SCALE]) setFontSizeScale(result[STORAGE_KEYS.FONT_SIZE_SCALE]);
- if (result[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]) setDisplayZoomScale(result[STORAGE_KEYS.DISPLAY_ZOOM_SCALE]);
- if (result.daily_goal !== undefined) setDailyGoal(result.daily_goal);
- if (result.pinned_friends) setPinnedFriends(result.pinned_friends);
- 
- // Feature 8: Compact View
- if (result[STORAGE_KEYS.COMPACT_VIEW]) {
- document.body.classList.add('compact-view-enabled');
- } else {
- document.body.classList.remove('compact-view-enabled');
- }
+  if (result[STORAGE_KEYS.LAST_UPDATED]) setLastUpdated(result[STORAGE_KEYS.LAST_UPDATED]);
 
- // If a refresh was running when popup was last closed, re-start it after load
- loadData(username).then(() => {
- if (result[STORAGE_KEYS.REFRESH_IN_PROGRESS]) {
- handleRefresh();
- }
- });
- }
- };
+  // If a refresh was running when popup was last closed, re-start it after load
+  loadData(result[STORAGE_KEYS.OWN_USERNAME] || '').then(() => {
+  if (result[STORAGE_KEYS.REFRESH_IN_PROGRESS]) {
+  handleRefresh();
+  }
+  });
+  }
+  };
 
  const handleOnboardingComplete = async (_passedUsername: string) => {
  setShowOnboarding(false);
@@ -278,9 +151,9 @@ export const App: React.FC = () => {
  const ownCF = result.own_codeforces_handle || '';
  const ownCC = result.own_codechef_handle || '';
 
- setOwnUsername(ownLC);
- setOwnCodeforcesHandle(ownCF);
- setOwnCodechefHandle(ownCC);
+ setPartial({ ownUsername: ownLC });
+ setPartial({ ownCodeforcesHandle: ownCF });
+ setPartial({ ownCodechefHandle: ownCC });
 
  // Fetch and save own LeetCode profile if provided
  if (ownLC) {
@@ -316,20 +189,21 @@ export const App: React.FC = () => {
  };
 
  const loadTheme = async () => {
+ // Theme is loaded as part of the store's loadData — this is a fast fallback
+ // for the very first paint before loadData completes.
  const result = await chrome.storage.local.get(['darkMode', 'font_size_scale', 'display_zoom_scale']);
  if (result.darkMode !== undefined) {
- setIsDarkMode(result.darkMode);
+ setPartial({ isDarkMode: result.darkMode });
  } else {
- setIsDarkMode(true);
- await chrome.storage.local.set({ darkMode: true });
+ setPartial({ isDarkMode: true });
  }
- if (result.font_size_scale) setFontSizeScale(result.font_size_scale);
- if (result.display_zoom_scale) setDisplayZoomScale(result.display_zoom_scale);
+ if (result.font_size_scale) setPartial({ fontSizeScale: result.font_size_scale });
+ if (result.display_zoom_scale) setPartial({ displayZoomScale: result.display_zoom_scale });
  };
 
  const toggleDarkMode = async () => {
  const newMode = !isDarkMode;
- setIsDarkMode(newMode);
+ setPartial({ isDarkMode: newMode });
  await chrome.storage.local.set({ darkMode: newMode });
  // Toggle body class for full background
  if (newMode) {
@@ -361,8 +235,7 @@ export const App: React.FC = () => {
  if (friendsToCompare.length !== storageFriends.length || 
  Object.keys(profilesToCompare).length !== Object.keys(storageProfiles).length) {
  console.warn("[App] Desynchronization detected (length mismatch).");
- setFriends(storageFriends);
- setProfiles(storageProfiles);
+ setPartial({ friends: storageFriends, profiles: storageProfiles });
  setLastUpdated(Date.now());
  return false;
  }
@@ -373,8 +246,7 @@ export const App: React.FC = () => {
  
  if (memoryIds !== storageIds) {
  console.warn("[App] Desynchronization detected (ID mismatch).");
- setFriends(storageFriends);
- setProfiles(storageProfiles);
+ setPartial({ friends: storageFriends, profiles: storageProfiles });
  setLastUpdated(Date.now());
  chrome.storage.local.set({ ui_last_updated: Date.now() });
  return false;
@@ -393,8 +265,7 @@ export const App: React.FC = () => {
  // 1. Load from cache instantly — popup appears immediately
  const friendsList = await StorageService.getFriends();
  const profilesData = await StorageService.getProfiles();
- setFriends(friendsList);
- setProfiles(profilesData);
+ setPartial({ friends: friendsList, profiles: profilesData });
  // Don't update lastUpdated here — we're just reading from cache.
  // lastUpdated is only updated after actual network refreshes (handleRefresh / background stale fetch).
 
@@ -407,8 +278,9 @@ export const App: React.FC = () => {
  const ownUser = ownHandles[STORAGE_KEYS.OWN_USERNAME];
  const ownCF = ownHandles[STORAGE_KEYS.OWN_CF_HANDLE];
  const ownCC = ownHandles[STORAGE_KEYS.OWN_CC_HANDLE];
- setOwnCodeforcesHandle(ownCF || '');
- setOwnCodechefHandle(ownCC || '');
+ setPartial({ ownUsername: ownUser || '' });
+ setPartial({ ownCodeforcesHandle: ownCF || '' });
+ setPartial({ ownCodechefHandle: ownCC || '' });
 
  const username = currentUsername || ownUser || ownUsername;
 
@@ -460,10 +332,10 @@ export const App: React.FC = () => {
  );
  // Update UI incrementally after each batch
  const intermediateProfiles = await StorageService.getProfiles();
- setProfiles(intermediateProfiles);
+ setPartial({ profiles: intermediateProfiles });
  }
  const freshProfiles = await StorageService.getProfiles();
- setProfiles(freshProfiles);
+ setPartial({ profiles: freshProfiles });
  const refreshedAt = Date.now();
  setLastUpdated(refreshedAt);
  chrome.storage.local.set({ ui_last_updated: refreshedAt });
@@ -480,7 +352,7 @@ export const App: React.FC = () => {
  console.error('Error loading data:', error);
  return { friends: [], profiles: {} };
  } finally {
- setLoading(false);
+ setPartial({ loading: false });
  }
  };
 
@@ -609,8 +481,8 @@ export const App: React.FC = () => {
 
  // 4. Clear upcoming contests cache so it re-fetches on refresh
  await chrome.storage.local.remove('lamigo:upcomingContests:v6');
- setRefreshContestsKey(k => k + 1);
-
+ setPartial({ refreshing: false, refreshingFriend: null });
+ 
  await loadData();
  if (failed > 0) {
  setToast({ message: `Refreshed! (${failed} failed)`, type: 'info' });
@@ -620,14 +492,14 @@ export const App: React.FC = () => {
  } catch (error) {
  setToast({ message: 'Failed to refresh friends', type: 'error' });
  } finally {
- setRefreshing(false);
+ setPartial({ refreshing: false });
  // Clear the in-progress flag regardless of success or failure
  chrome.storage.local.remove('ui_refresh_in_progress');
  }
  };
 
  const handleRefreshFriend = async (username: string) => {
- setRefreshingFriend(username);
+ setPartial({ refreshingFriend: username });
  try {
  const targetFriend = friends.find(f => f.username.toLowerCase() === username.toLowerCase());
  setToast({ message: `Refreshing ${targetFriend?.displayName || username}...`, type: 'info' });
@@ -655,45 +527,50 @@ export const App: React.FC = () => {
  } catch (error) {
  setToast({ message: `Failed to refresh ${username}`, type: 'error' });
  } finally {
- setRefreshingFriend(null);
+ setPartial({ refreshingFriend: null });
  }
  };
 
- const handleRefreshOwn = async () => {
- setRefreshingFriend('You');
- setToast({ message: 'Refreshing your profiles...', type: 'info' });
- try {
- const tasks = [];
- if (ownUsername) {
- tasks.push(PlatformService.fetchProfile('leetcode', ownUsername).then(p => StorageService.saveProfile(p)));
- }
- if (ownCodeforcesHandle) {
- tasks.push(PlatformService.fetchProfile('codeforces', ownCodeforcesHandle).then(p => StorageService.saveProfile(p)));
- }
- if (ownCodechefHandle) {
- tasks.push(PlatformService.fetchProfile('codechef', ownCodechefHandle).then(p => StorageService.saveProfile(p)));
- }
- await Promise.allSettled(tasks);
- await loadData();
- const t = Date.now();
- setLastUpdated(t);
- chrome.storage.local.set({ ui_last_updated: t });
- setToast({ message: 'Your profiles refreshed!', type: 'success' });
- } catch (error) {
- setToast({ message: 'Failed to refresh your profiles', type: 'error' });
- } finally {
- setRefreshingFriend(null);
- }
- };
+  const handleRefreshOwn = async () => {
+    setPartial({ refreshingFriend: 'You' });
+    setToast({ message: 'Refreshing your profiles...', type: 'info' });
+    try {
+      const tasks = [];
+      const { own_username, own_codeforces_handle, own_codechef_handle } = await chrome.storage.local.get(['own_username', 'own_codeforces_handle', 'own_codechef_handle']);
+      const activeOwnUsername = ownUsername || own_username;
+      const activeOwnCF = ownCodeforcesHandle || own_codeforces_handle;
+      const activeOwnCC = ownCodechefHandle || own_codechef_handle;
+
+      if (activeOwnUsername) {
+        tasks.push(PlatformService.fetchProfile('leetcode', activeOwnUsername).then(p => StorageService.saveProfile(p)));
+      }
+      if (activeOwnCF) {
+        tasks.push(PlatformService.fetchProfile('codeforces', activeOwnCF).then(p => StorageService.saveProfile(p)));
+      }
+      if (activeOwnCC) {
+        tasks.push(PlatformService.fetchProfile('codechef', activeOwnCC).then(p => StorageService.saveProfile(p)));
+      }
+      await Promise.allSettled(tasks);
+      await loadData();
+      const t = Date.now();
+      setLastUpdated(t);
+      chrome.storage.local.set({ ui_last_updated: t });
+      setToast({ message: 'Your profiles refreshed!', type: 'success' });
+    } catch (error) {
+      setToast({ message: 'Failed to refresh your profiles', type: 'error' });
+    } finally {
+      setPartial({ refreshingFriend: null });
+    }
+  };
 
  const handleTabChange = (tab: 'friends' | 'compare' | 'settings') => {
- setActiveTab(tab);
+ setPartial({ activeTab: tab });
+ // Persist active tab for session restore
  chrome.storage.local.set({ ui_active_tab: tab });
  };
 
  const handleSortChange = (sort: 'name' | 'problems' | 'recent') => {
- setSortBy(sort);
- chrome.storage.local.set({ ui_sort_by: sort });
+ setPartial({ sortBy: sort });
  };
 
  const dailySolvesCount = useMemo(() => {
@@ -718,9 +595,73 @@ export const App: React.FC = () => {
  const nextPinned = pinnedFriends.includes(friendId)
  ? pinnedFriends.filter(id => id !== friendId)
  : [...pinnedFriends, friendId];
- setPinnedFriends(nextPinned);
+ setPartial({ pinnedFriends: nextPinned });
  await chrome.storage.local.set({ pinned_friends: nextPinned });
  };
+
+  const renderBottomBar = () => {
+    return (
+      <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px', borderTop: '1px solid var(--border-color, #222)' }}>
+        <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+          <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
+        </a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button 
+            className="icon-btn-bottom" 
+            onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') })}
+            title="Open Full Dashboard"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', background: 'linear-gradient(45deg, #ff375f, #ffa116)', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+          >
+            <LayoutDashboard size={18} />
+          </button>
+          <button 
+            className="icon-btn-bottom" 
+            onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html#ide') })}
+            title="Open Code Editor"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+          >
+            <Code2 size={18} />
+          </button>
+          <button 
+            className="icon-btn-bottom" 
+            title="Add friend"
+            aria-label="Add friend"
+            onClick={() => { setPartial({ editingFriend: null, showAddModal: true }); }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+          >
+            <UserPlus size={18} />
+          </button>
+          <button
+            className="icon-btn-bottom"
+            onClick={handleRefresh}
+            disabled={refreshing}
+            title={refreshing ? 'Refreshing...' : 'Refresh all data'}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: refreshing ? 'not-allowed' : 'pointer', borderRadius: '0px', padding: 0, opacity: refreshing ? 0.6 : 1 }}
+          >
+            <RefreshCw size={18} style={{ transform: refreshing ? 'rotate(180deg)' : 'none', transition: 'transform 1s ease' }} />
+          </button>
+          <button
+            className="icon-btn-bottom"
+            id="import-export-btn-main"
+            title="Import / Export friends and data"
+            aria-label="Import or export friends and data"
+            onClick={() => setPartial({ showImportExport: true })}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+          >
+            <Database size={18} />
+          </button>
+          <button 
+            className="icon-btn-bottom" 
+            onClick={toggleDarkMode}
+            title="Toggle dark mode"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
+          >
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        </div>
+      </header>
+    );
+  };
 
  const sortedFriends = useMemo(() => {
  const filteredFriends = [...friends].filter(f => {
@@ -840,7 +781,7 @@ export const App: React.FC = () => {
  key: 'j',
  handler: () => {
  if (activeTab === 'friends' && friends.length > 0) {
- setSelectedFriendIndex(prev => Math.min(prev + 1, friends.length - 1));
+ setPartial({ selectedFriendIndex: Math.min(selectedFriendIndex + 1, friends.length - 1) });
  }
  },
  description: 'Navigate down',
@@ -849,7 +790,7 @@ export const App: React.FC = () => {
  key: 'k',
  handler: () => {
  if (activeTab === 'friends') {
- setSelectedFriendIndex(prev => Math.max(prev - 1, 0));
+ setPartial({ selectedFriendIndex: Math.max(selectedFriendIndex - 1, 0) });
  }
  },
  description: 'Navigate up',
@@ -887,11 +828,9 @@ export const App: React.FC = () => {
  return (
  <div className={`app ${isDarkMode ? 'dark' : ''}`}>
  <TabNav
- activeTab={activeTab}
+ activeTab={activeTab as any}
  onTabChange={(tab) => {
- setSelectedFriend(null);
- setSelectedPlatform('');
- setSelectedFilter('all');
+ setPartial({ selectedFriend: null, selectedPlatform: '', selectedFilter: 'all' });
  handleTabChange(tab);
  }}
  friendCount={friends.length}
@@ -909,71 +848,15 @@ export const App: React.FC = () => {
  initialPlatform={(selectedPlatform as 'leetcode' | 'codeforces' | 'codechef') || undefined}
  initialFilter={selectedFilter as 'all' | 'Easy' | 'Medium' | 'Hard'}
  onBack={() => {
- setSelectedFriend(null);
- setSelectedPlatform('');
- setSelectedFilter('all');
+ setPartial({ selectedFriend: null, selectedPlatform: '', selectedFilter: 'all' });
  }}
  isDarkMode={isDarkMode}
  />
  </React.Suspense>
  </div>
 
- <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px', borderTop: '1px solid var(--border-color, #222)' }}>
- <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
- <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
- </a>
- <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
- <button
- className="icon-btn-bottom"
- id="import-export-btn-profile"
- title="Import / Export friends and data"
- aria-label="Import or export friends and data"
- onClick={() => setShowImportExport(true)}
- style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
- >
- <Database size={18} />
- </button>
- <button
- className="icon-btn-bottom"
- title="Add friend"
- aria-label="Add friend"
- onClick={() => { setEditingFriend(null); setShowAddModal(true); }}
- style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
- >
- <UserPlus size={18} />
- </button>
- <button 
- className="icon-btn-bottom" 
- onClick={toggleDarkMode} 
- title="Toggle dark mode"
- aria-label="Toggle dark mode"
- style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
- >
- {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
- </button>
- </div>
- </header>
+  {renderBottomBar()}
 
- <AddEditFriendModal
- isOpen={showAddModal}
- onClose={() => setShowAddModal(false)}
- onSuccess={async () => {
- setToast({ message: editingFriend ? 'Friend updated!' : 'Friend added!', type: 'success' });
- const loaded = await loadData(ownUsername);
- if (loaded) await verifyAndReconcileState(loaded.friends, loaded.profiles);
- }}
- friend={editingFriend as any}
- />
-
- {toast && (
- <Toast 
- message={toast.message} 
- type={toast.type} 
- action={toast.action}
- duration={toast.duration}
- onClose={() => setToast(null)} 
- />
- )}
  </div>
  );
  }
@@ -998,8 +881,8 @@ export const App: React.FC = () => {
  return (
  <div className={`app ${isDarkMode ? 'dark' : ''}`} style={customStyles}>
  <TabNav 
- activeTab={activeTab} 
- onTabChange={setActiveTab}
+ activeTab={activeTab as any} 
+ onTabChange={(tab) => setPartial({ activeTab: tab })}
  friendCount={0}
  dailyGoal={dailyGoal}
  dailySolves={dailySolvesCount}
@@ -1012,9 +895,9 @@ export const App: React.FC = () => {
  return (
  <div className={`app ${isDarkMode ? 'dark' : ''}`} style={customStyles}>
  <TabNav 
- activeTab={activeTab} 
+ activeTab={activeTab as any} 
  onTabChange={(tab) => {
- setActiveTab(tab);
+ setPartial({ activeTab: tab });
  chrome.storage.local.set({ ui_active_tab: tab });
  }}
  friendCount={friends.length}
@@ -1030,7 +913,7 @@ export const App: React.FC = () => {
  Sort by:
  <select value={sortBy} onChange={(e) => {
  const val = e.target.value as 'name' | 'problems' | 'recent' | 'streak';
- setSortBy(val);
+ setPartial({ sortBy: val });
  chrome.storage.local.set({ ui_sort_by: val });
  }}>
  <option value="name">Name</option>
@@ -1041,7 +924,7 @@ export const App: React.FC = () => {
  </label>
  <div className="platform-filters" style={{ display: 'flex', gap: '4px' }}>
  {(['leetcode', 'codeforces', 'codechef'] as Platform[])
- .filter(plat => !disabledPlatforms.includes(plat))
+ .filter(plat => !useAppStore.getState().disabledPlatforms.includes(plat))
  .map(plat => {
  const isActive = platformFilters.includes(plat);
  const initials = plat === 'leetcode' ? 'LC' : plat === 'codeforces' ? 'CF' : 'CC';
@@ -1051,7 +934,7 @@ export const App: React.FC = () => {
  onClick={() => {
  if (isActive && platformFilters.length === 1) return;
  const newFilters = isActive ? platformFilters.filter(p => p !== plat) : [...platformFilters, plat];
- setPlatformFilters(newFilters);
+ setPartial({ platformFilters: newFilters });
  chrome.storage.local.set({ ui_platform_filters: newFilters });
  }}
  style={{
@@ -1094,9 +977,9 @@ export const App: React.FC = () => {
  <React.Suspense fallback={<Skeleton />}>
  {activeTab === 'friends' ? (
  <>
- <GlobalActivityFeed profiles={profiles} ownUsername={ownUsername} />
- <Recommendations profiles={profiles} ownUsername={ownUsername} />
- <UpcomingContests key={refreshContestsKey} />
+ <GlobalActivityFeed />
+ <Recommendations />
+ <UpcomingContests />
 
  {(friends.length === 0 && !ownUsername && !ownCodeforcesHandle && !ownCodechefHandle) ? (
  <div className="empty-state">
@@ -1108,7 +991,7 @@ export const App: React.FC = () => {
  <small>Examples: "john_doe" or "tourist"</small>
  </div>
  <button
- onClick={() => { setEditingFriend(null); setShowAddModal(true); }}
+ onClick={() => { setPartial({ editingFriend: null, showAddModal: true }); }}
  style={{ marginTop: '16px', padding: '8px 16px', background: 'var(--rank-leetcode-knight, #2b7af7)', color: '#fff', border: 'none', borderRadius: '4px', fontSize: 'var(--font-size-base)', fontWeight: 'bold', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
  >
  Add your first friend 
@@ -1145,16 +1028,12 @@ export const App: React.FC = () => {
  return handleRefreshFriend(friend.username);
  }
  }}
- onEdit={(f) => { if (!isOwn) { setEditingFriend(f); setShowAddModal(true); } }}
+ onEdit={(f) => { if (!isOwn) { setPartial({ editingFriend: f as any, showAddModal: true }); } }}
  onViewProfile={(platform, filter) => {
- setSelectedFriend(friend);
- setSelectedPlatform(platform);
- setSelectedFilter(filter || 'all');
+ setPartial({ selectedFriend: friend, selectedPlatform: platform, selectedFilter: filter || 'all' });
  }}
  refreshing={refreshingFriend === friend.username}
- isDarkMode={isDarkMode}
  isOwn={isOwn}
- platformFilters={platformFilters}
  />
  );
  })}
@@ -1162,101 +1041,19 @@ export const App: React.FC = () => {
  )}
  </>
  ) : activeTab === 'compare' ? (
- <CompareTab 
- friends={friends} 
- profiles={profiles} 
- isDarkMode={isDarkMode} 
- ownUsername={ownUsername} 
- ownCodeforcesHandle={ownCodeforcesHandle}
- ownCodechefHandle={ownCodechefHandle}
- />
+ <CompareTab />
  ) : (
  <SettingsTab 
- onSync={loadData} 
- isDarkMode={isDarkMode}
- onToggleDarkMode={toggleDarkMode}
- ownUsername={ownUsername}
- onUsernameChange={setOwnUsername}
- ownCodeforcesHandle={ownCodeforcesHandle}
- onCodeforcesHandleChange={setOwnCodeforcesHandle}
- ownCodechefHandle={ownCodechefHandle}
- onCodechefHandleChange={setOwnCodechefHandle}
- ownCsesHandle={ownCsesHandle}
- onCsesHandleChange={setOwnCsesHandle}
  onToast={(message, type) => setToast({ message, type })}
  onConfirmAction={requestConfirm}
- onOpenImportExport={() => setShowImportExport(true)}
+ onOpenImportExport={() => setPartial({ showImportExport: true })}
  />
  )}
  </React.Suspense>
  </div>
  </div>
 
- <header className="header header-bottom" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 16px', borderTop: '1px solid var(--border-color, #222)' }}>
- <a href="https://lamigo.netlify.app" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
- <img src="android-chrome-192x192.png" alt="L'Amigo" className="header-logo" style={{ width: '24px', height: '24px' }} />
- </a>
- <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <button 
-          className="icon-btn-bottom" 
-          onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') })}
-          title="Open Full Dashboard"
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', background: 'linear-gradient(45deg, #ff375f, #ffa116)', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
-        >
-          <LayoutDashboard size={18} />
-        </button>
-        <button 
-          className="icon-btn-bottom" 
-          onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html#ide') })}
-          title="Open Code Editor"
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
-        >
-          <Code2 size={18} />
-        </button>
-        <button 
-          className={`icon-btn-bottom ${addingFriend ? 'disabled' : ''}`}
-          title="Add friend"
-          aria-label="Add friend"
-          disabled={addingFriend}
-          onClick={() => {
-            if (!addingFriend) {
-              setEditingFriend(null);
-              setShowAddModal(true);
-            }
-          }}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: addingFriend ? 'not-allowed' : 'pointer', borderRadius: '0px', padding: 0, opacity: addingFriend ? 0.7 : 1 }}
-        >
-          <UserPlus size={18} />
-        </button>
-        <button
-          className="icon-btn-bottom"
-          onClick={handleRefresh}
-          disabled={refreshing}
-          title={refreshing ? 'Refreshing...' : 'Refresh all data'}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: refreshing ? 'not-allowed' : 'pointer', borderRadius: '0px', padding: 0, opacity: refreshing ? 0.6 : 1 }}
-        >
-          <RefreshCw size={18} style={{ transform: refreshing ? 'rotate(180deg)' : 'none', transition: 'transform 1s ease' }} />
-        </button>
-        <button
-          className="icon-btn-bottom"
-          id="import-export-btn-main"
-          title="Import / Export friends and data"
-          aria-label="Import or export friends and data"
-          onClick={() => setShowImportExport(true)}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
-        >
-          <Database size={18} />
-        </button>
-        <button 
-          className="icon-btn-bottom" 
-          onClick={toggleDarkMode}
-          title="Toggle dark mode"
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', border: '1px solid var(--border-primary, #333)', backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '0px', padding: 0 }}
-        >
-          {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
- </div>
- </header>
+ {renderBottomBar()}
 
  <Modal
  isOpen={modal.isOpen}
@@ -1277,7 +1074,7 @@ export const App: React.FC = () => {
  <React.Suspense fallback={null}>
  <AddEditFriendModal 
  isOpen={showAddModal} 
- onClose={() => setShowAddModal(false)} 
+ onClose={() => setPartial({ showAddModal: false })} 
  onSuccess={async () => {
  setToast({ message: editingFriend ? 'Friend updated!' : 'Friend added!', type: 'success' });
  const loaded = await loadData(ownUsername);
@@ -1289,7 +1086,7 @@ export const App: React.FC = () => {
  />
  <ImportExportModal
  isOpen={showImportExport}
- onClose={() => setShowImportExport(false)}
+ onClose={() => setPartial({ showImportExport: false })}
  friends={friends}
  profiles={profiles}
  onFriendsImported={async () => {

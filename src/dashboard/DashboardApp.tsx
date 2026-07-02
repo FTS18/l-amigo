@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {
   LayoutDashboard,
   Trophy,
@@ -13,13 +13,16 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Friend, FriendProfile } from "../types";
-import { Overview } from "./tabs/Overview";
-import { Friends } from "./tabs/Friends";
-import { Leaderboard } from "./tabs/Leaderboard";
-import { SheetsTracker } from "./tabs/SheetsTracker";
-import { ContestHub } from "./tabs/ContestHub";
+
+const Overview = React.lazy(() => import('./tabs/Overview').then(m => ({ default: m.Overview })));
+const Friends = React.lazy(() => import('./tabs/Friends').then(m => ({ default: m.Friends })));
+const Leaderboard = React.lazy(() => import('./tabs/Leaderboard').then(m => ({ default: m.Leaderboard })));
+const SheetsTracker = React.lazy(() => import('./tabs/SheetsTracker').then(m => ({ default: m.SheetsTracker })));
+const ContestHub = React.lazy(() => import('./tabs/ContestHub').then(m => ({ default: m.ContestHub })));
 const IdeTab = React.lazy(() => import('./tabs/IdeTab').then(m => ({ default: m.IdeTab })));
-import { StorageService } from "../services/storage";
+import { ErrorBoundary } from '../popup/ErrorBoundary';
+import { useAppStore } from '../store/useAppStore';
+import { useStorageSync } from '../hooks/useStorageSync';
 import { PlatformIcon } from "../utils/PlatformIcons";
 import { SettingsTab } from "../popup/SettingsTab";
 import { CompareTab } from "../popup/CompareTab";
@@ -55,30 +58,20 @@ export const DashboardApp: React.FC = () => {
     }
     return "overview";
   });
-  const [friends, setFriends] = useState<Friend[]>([]);
-  const [profiles, setProfiles] = useState<Record<string, FriendProfile>>({});
-  const [loading, setLoading] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [selectedGlobalPlatforms, setSelectedGlobalPlatforms] = useState<
-    string[]
-  >(["leetcode", "codeforces", "codechef"]);
-  const [fontSizeScale, setFontSizeScale] = useState(100);
-  const [displayZoomScale, setDisplayZoomScale] = useState(100);
-  const [disabledPlatforms, setDisabledPlatforms] = useState<string[]>([]);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem("sidebar_collapsed") === "true";
-    } catch {
-      return false;
-    }
-  });
+  
+  useStorageSync();
+  const loading = useAppStore(state => state.loading);
+  const isDarkMode = useAppStore(state => state.isDarkMode);
+  const selectedGlobalPlatforms = useAppStore(state => state.selectedGlobalPlatforms);
+  const disabledPlatforms = useAppStore(state => state.disabledPlatforms);
+  const setPartial = useAppStore(state => state.setPartial);
+  const fontSizeScale = useAppStore(state => state.fontSizeScale);
+  const displayZoomScale = useAppStore(state => state.displayZoomScale);
+  
+  const sidebarCollapsed = useAppStore(state => state.ui_sidebarCollapsed);
 
   const toggleSidebar = () => {
-    const newVal = !sidebarCollapsed;
-    setSidebarCollapsed(newVal);
-    try {
-      localStorage.setItem("sidebar_collapsed", String(newVal));
-    } catch {}
+    setPartial({ ui_sidebarCollapsed: !sidebarCollapsed });
   };
 
   const [allSubmissions, setAllSubmissions] = useState<any[]>([]);
@@ -94,10 +87,10 @@ export const DashboardApp: React.FC = () => {
   }, [fontSizeScale, displayZoomScale]);
 
   // Settings & Sync State
-  const [ownUsername, setOwnUsername] = useState<string>("");
-  const [ownCodeforcesHandle, setOwnCodeforcesHandle] = useState<string>("");
-  const [ownCodechefHandle, setOwnCodechefHandle] = useState<string>("");
-  const [ownCsesHandle, setOwnCsesHandle] = useState<string>("");
+  const ownUsername = useAppStore(state => state.ownUsername);
+  const ownCodeforcesHandle = useAppStore(state => state.ownCodeforcesHandle);
+  const ownCodechefHandle = useAppStore(state => state.ownCodechefHandle);
+  const ownCsesHandle = useAppStore(state => state.ownCsesHandle);
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error" | "info";
@@ -117,189 +110,18 @@ export const DashboardApp: React.FC = () => {
   });
   const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
 
-  const [selectedSheetId, _setSelectedSheetId] = useState<string>(() => {
-    try {
-      const v = localStorage.getItem("st_sheetId");
-      if (v !== null) return JSON.parse(v);
-    } catch {}
-    return "";
-  });
+  const selectedSheetId = useAppStore(state => state.ui_stSheetId);
   const setSelectedSheetId = (id: string) => {
-    try {
-      localStorage.setItem("st_sheetId", JSON.stringify(id));
-    } catch {}
-    _setSelectedSheetId(id);
+    setPartial({ ui_stSheetId: id });
   };
-
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "st_sheetId" && e.newValue) {
-        try {
-          _setSelectedSheetId(JSON.parse(e.newValue));
-        } catch {}
-      }
-    };
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
 
   useEffect(() => {
     window.location.hash = activeTab;
   }, [activeTab]);
 
-  const loadData = async () => {
-    const [res, loadedFriends, loadedProfiles] = await Promise.all([
-      chrome.storage.local.get([
-        "own_username",
-        "own_codeforces_handle",
-        "own_codechef_handle",
-        "own_cses_handle",
-        "all_accepted_submissions",
-        "theme_preference",
-        "darkMode",
-        "font_size_scale",
-        "display_zoom_scale",
-        "selected_global_platforms",
-        "disabled_platforms"
-      ]),
-      StorageService.getFriends(),
-      StorageService.getProfiles(),
-    ]);
-
-    const isDark =
-      res.darkMode !== undefined
-        ? res.darkMode
-        : res.theme_preference !== "light";
-    setIsDarkMode(isDark);
-    setOwnUsername(res.own_username || "");
-    setOwnCodeforcesHandle(res.own_codeforces_handle || "");
-    setOwnCodechefHandle(res.own_codechef_handle || "");
-    setOwnCsesHandle(res.own_cses_handle || "");
-    setFontSizeScale(res.font_size_scale ?? 100);
-    setDisplayZoomScale(res.display_zoom_scale ?? 100);
-
-    if (res.selected_global_platforms && Array.isArray(res.selected_global_platforms) && res.selected_global_platforms.length > 0) {
-      setSelectedGlobalPlatforms(res.selected_global_platforms);
-    }
-
-    const submissions = res.all_accepted_submissions || [];
-    setAllSubmissions(submissions);
-
-    // Construct the 'own-user' friend object just like the popup does
-    const hasOwn =
-      res.own_username ||
-      res.own_codeforces_handle ||
-      res.own_codechef_handle ||
-      res.own_cses_handle;
-    let finalFriends = loadedFriends;
-    if (hasOwn) {
-      const ownAccounts = [];
-      if (res.own_username)
-        ownAccounts.push({
-          platform: "leetcode",
-          handle: res.own_username,
-          status: "active",
-        });
-      if (res.own_codeforces_handle)
-        ownAccounts.push({
-          platform: "codeforces",
-          handle: res.own_codeforces_handle,
-          status: "active",
-        });
-      if (res.own_codechef_handle)
-        ownAccounts.push({
-          platform: "codechef",
-          handle: res.own_codechef_handle,
-          status: "active",
-        });
-      if (res.own_cses_handle)
-        ownAccounts.push({
-          platform: "cses",
-          handle: res.own_cses_handle,
-          status: "active",
-        });
-
-      const ownFriend: Friend = {
-        id: "own-user",
-        displayName: "You",
-        username:
-          res.own_username ||
-          res.own_codeforces_handle ||
-          res.own_codechef_handle,
-        accounts: ownAccounts as any,
-        addedAt: Date.now(),
-      };
-
-      // Filter out any friend that explicitly matches our own handles to prevent duplication
-      finalFriends = finalFriends.filter((f) => {
-        const hasSameLC =
-          res.own_username &&
-          f.accounts?.some(
-            (a) =>
-              a.platform === "leetcode" &&
-              a.handle.toLowerCase() === res.own_username.toLowerCase(),
-          );
-        const hasSameCF =
-          res.own_codeforces_handle &&
-          f.accounts?.some(
-            (a) =>
-              a.platform === "codeforces" &&
-              a.handle.toLowerCase() ===
-                res.own_codeforces_handle.toLowerCase(),
-          );
-        const hasSameCC =
-          res.own_codechef_handle &&
-          f.accounts?.some(
-            (a) =>
-              a.platform === "codechef" &&
-              a.handle.toLowerCase() === res.own_codechef_handle.toLowerCase(),
-          );
-        return !(hasSameLC || hasSameCF || hasSameCC);
-      });
-
-      finalFriends = [ownFriend, ...finalFriends];
-    }
-
-    setFriends(finalFriends);
-    setProfiles(loadedProfiles);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadData();
-    const handleStorageChange = (
-      changes: Record<string, chrome.storage.StorageChange>,
-      areaName: string,
-    ) => {
-      if (areaName !== "local") return;
-      if (changes.font_size_scale)
-        setFontSizeScale(changes.font_size_scale.newValue ?? 100);
-      if (changes.display_zoom_scale)
-        setDisplayZoomScale(changes.display_zoom_scale.newValue ?? 100);
-      if (changes.darkMode) setIsDarkMode(changes.darkMode.newValue);
-
-      const reloadKeys = [
-        "own_username",
-        "own_codeforces_handle",
-        "own_codechef_handle",
-        "own_cses_handle",
-        "all_accepted_submissions",
-        "friends",
-        "friends_list",
-        "friend_profiles",
-        "profiles"
-      ];
-      if (Object.keys(changes).some(k => reloadKeys.includes(k) || k.startsWith('lamigo_profile:') || k === 'lamigo_identities')) {
-        loadData();
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
-
   const toggleDarkMode = async () => {
     const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
+    setPartial({ isDarkMode: newMode });
     await chrome.storage.local.set({
       darkMode: newMode,
       theme_preference: newMode ? "dark" : "light",
@@ -547,18 +369,17 @@ export const DashboardApp: React.FC = () => {
                   <button
                     key={p.id}
                     onClick={() => {
-                      setSelectedGlobalPlatforms((prev) => {
-                        if (prev.includes(p.id)) {
-                          const next = prev.filter((x) => x !== p.id);
-                          const updated = next.length > 0 ? next : [p.id];
-                          chrome.storage.local.set({ selected_global_platforms: updated });
-                          return updated;
-                        } else {
-                          const updated = [...prev, p.id];
-                          chrome.storage.local.set({ selected_global_platforms: updated });
-                          return updated;
-                        }
-                      });
+                      const prev = useAppStore.getState().selectedGlobalPlatforms;
+                      if (prev.includes(p.id)) {
+                        const next = prev.filter((x) => x !== p.id);
+                        const updated = next.length > 0 ? next : [p.id];
+                        chrome.storage.local.set({ selected_global_platforms: updated });
+                        setPartial({ selectedGlobalPlatforms: updated });
+                      } else {
+                        const updated = [...prev, p.id];
+                        chrome.storage.local.set({ selected_global_platforms: updated });
+                        setPartial({ selectedGlobalPlatforms: updated });
+                      }
                     }}
                     title={`${p.name} (${active ? "Active" : "Inactive"}) - Click to toggle inclusion in dashboard calculations and lists.`}
                     style={{
@@ -610,81 +431,51 @@ export const DashboardApp: React.FC = () => {
           </div>
         </div>
         <div className="main-content">
-          {activeTab === "overview" && (
-            <Overview
-              friends={friends}
-              profiles={profiles}
-              isDarkMode={isDarkMode}
-              selectedGlobalPlatforms={selectedGlobalPlatforms}
-              allSubmissions={allSubmissions}
-              onNavigate={(tab) => setActiveTab(tab as any)}
-            />
-          )}
-          {activeTab === "friends" && (
-            <Friends
-              friends={friends}
-              profiles={profiles}
-              isDarkMode={isDarkMode}
-              selectedGlobalPlatforms={selectedGlobalPlatforms}
-              allSubmissions={allSubmissions}
-              onNavigate={(tab) => setActiveTab(tab as any)}
-            />
-          )}
-          {activeTab === "leaderboard" && (
-            <Leaderboard
-              friends={friends}
-              profiles={profiles}
-              selectedGlobalPlatforms={selectedGlobalPlatforms}
-            />
-          )}
-          {activeTab === "sheets" && (
-            <SheetsTracker
-              friends={friends}
-              profiles={profiles}
-              allSubmissions={allSubmissions}
-              selectedGlobalPlatforms={selectedGlobalPlatforms}
-              selectedSheetId={selectedSheetId}
-              setSelectedSheetId={setSelectedSheetId}
-            />
-          )}
-          {activeTab === "ide" && (
+          <ErrorBoundary>
             <React.Suspense fallback={<div className="flex h-full items-center justify-center text-gray-400"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
-              <IdeTab />
+              {activeTab === "overview" && (
+                <Overview onNavigate={(tab) => setActiveTab(tab as any)} />
+              )}
+              {activeTab === 'friends' && (
+                <React.Suspense fallback={<div className="loading-state">Loading Friends...</div>}>
+                  <Friends 
+                    onNavigate={(tab) => setActiveTab(tab as any)} 
+                    onToast={(message, type) => setToast({ message, type })}
+                  />
+                </React.Suspense>
+              )}
+              {activeTab === "leaderboard" && (
+                <Leaderboard />
+              )}
+              {activeTab === "sheets" && (
+                <SheetsTracker
+                  selectedSheetId={selectedSheetId}
+                  setSelectedSheetId={setSelectedSheetId}
+                />
+              )}
+              {activeTab === "ide" && (
+                <IdeTab />
+              )}
+              {activeTab === "head-to-head" && (
+                <div
+                  className="compare-container-dashboard"
+                  style={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}
+                >
+                  <div className="tab-header" style={{ marginBottom: "24px" }}>
+                    <h2>Head-to-Head Arena (Compare)</h2>
+                    <p>
+                      Select friends to compare their problem solving stats, topic
+                      breakdowns, and contest ratings side-by-side.
+                    </p>
+                  </div>
+                  <CompareTab />
+                </div>
+              )}
+              {activeTab === "contests" && (
+                <ContestHub />
+              )}
             </React.Suspense>
-          )}
-          {activeTab === "head-to-head" && (
-            <div
-              className="compare-container-dashboard"
-              style={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}
-            >
-              <div className="tab-header" style={{ marginBottom: "24px" }}>
-                <h2>Head-to-Head Arena (Compare)</h2>
-                <p>
-                  Select friends to compare their problem solving stats, topic
-                  breakdowns, and contest ratings side-by-side.
-                </p>
-              </div>
-              <CompareTab
-                friends={friends}
-                profiles={profiles}
-                isDarkMode={isDarkMode}
-                ownUsername={ownUsername}
-                ownCodeforcesHandle={ownCodeforcesHandle}
-                ownCodechefHandle={ownCodechefHandle}
-              />
-            </div>
-          )}
-          {activeTab === "contests" && (
-            <ContestHub
-              friends={friends}
-              profiles={profiles}
-              isDarkMode={isDarkMode}
-              selectedGlobalPlatforms={selectedGlobalPlatforms}
-              ownUsername={ownUsername}
-              ownCodeforcesHandle={ownCodeforcesHandle}
-              ownCodechefHandle={ownCodechefHandle}
-            />
-          )}
+          </ErrorBoundary>
           {activeTab === "settings" && (
             <div
               className="settings-container-dashboard"
@@ -695,29 +486,6 @@ export const DashboardApp: React.FC = () => {
                 <p>Fully synchronized with your L'Amigo extension popup.</p>
               </div>
               <SettingsTab
-                onSync={loadData}
-                isDarkMode={isDarkMode}
-                onToggleDarkMode={toggleDarkMode}
-                ownUsername={ownUsername}
-                onUsernameChange={(val) => {
-                  setOwnUsername(val);
-                  chrome.storage.local.set({ own_username: val });
-                }}
-                ownCodeforcesHandle={ownCodeforcesHandle}
-                onCodeforcesHandleChange={(val) => {
-                  setOwnCodeforcesHandle(val);
-                  chrome.storage.local.set({ own_codeforces_handle: val });
-                }}
-                ownCodechefHandle={ownCodechefHandle}
-                onCodechefHandleChange={(val) => {
-                  setOwnCodechefHandle(val);
-                  chrome.storage.local.set({ own_codechef_handle: val });
-                }}
-                ownCsesHandle={ownCsesHandle}
-                onCsesHandleChange={(val) => {
-                  setOwnCsesHandle(val);
-                  chrome.storage.local.set({ own_cses_handle: val });
-                }}
                 onToast={(message, type) => setToast({ message, type })}
                 onConfirmAction={requestConfirm}
                 onOpenImportExport={() => setShowImportExport(true)}
@@ -752,9 +520,9 @@ export const DashboardApp: React.FC = () => {
         <ImportExportModal
           isOpen={showImportExport}
           onClose={() => setShowImportExport(false)}
-          friends={friends}
-          profiles={profiles}
-          onFriendsImported={loadData}
+          friends={useAppStore.getState().friends}
+          profiles={useAppStore.getState().profiles}
+          onFriendsImported={useAppStore.getState().loadData}
           onToast={(message, type) => setToast({ message, type })}
         />
       )}

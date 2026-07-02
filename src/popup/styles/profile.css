@@ -507,10 +507,14 @@
   font-size: var(--font-size-xs);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.12s;
+  transition: all 0.2s ease-in-out;
   letter-spacing: 0.3px;
 }
-.filter-btn:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border-strong); }
+.filter-btn:hover { 
+  background: var(--bg-tertiary); 
+  color: var(--text-primary); 
+  border-color: var(--border-strong); 
+}
 .filter-btn.active { background: var(--text-primary); color: var(--bg-primary); border-color: var(--text-primary); }
 .filter-btn.easy.active   { background: var(--color-easy);   border-color: var(--color-easy);   }
 .filter-btn.medium.active { background: var(--color-medium); border-color: var(--color-medium); }

@@ -4,6 +4,7 @@ import { Friend, FriendProfile, Platform, RecentSubmission } from '../types';
 import { StreakCalculator } from '../services/streak';
 import { SkeletonList } from './Skeleton';
 import { PlatformIcon } from '../utils/PlatformIcons';
+import { useAppStore } from '../store/useAppStore';
 
 const getProfileQualityHue = (p: FriendProfile) => {
   const { easy, medium, hard, total } = p.problemsSolved;
@@ -110,11 +111,10 @@ interface FriendCardProps {
   onRefresh?: (friend: Friend) => Promise<void>;
   onViewProfile?: (platform: Platform, filter?: 'all' | 'Easy' | 'Medium' | 'Hard') => void;
   refreshing?: boolean;
-  isDarkMode?: boolean;
   isOwn?: boolean;
-  platformFilters?: Platform[];
   isPinned?: boolean;
   onTogglePin?: (friend: Friend) => void;
+  onToast?: (msg: string, type: 'success' | 'error' | 'info') => void;
 }
 
 export const FriendCard: React.FC<FriendCardProps> = ({ 
@@ -128,14 +128,15 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   onRefresh, 
   onViewProfile,
   refreshing, 
-  isDarkMode, 
   isOwn,
-  platformFilters,
   isPinned,
-  onTogglePin
+  onTogglePin,
+  onToast
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const isDarkMode = useAppStore(state => state.isDarkMode);
+  const platformFilters = useAppStore(state => state.platformFilters) as Platform[];
 
   if (!profile) {
     return (
@@ -320,6 +321,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               className="mini-action-btn"
               onClick={(e) => {
                 e.stopPropagation();
+                onToast?.(isPinned ? friend.username + ' unpinned' : friend.username + ' pinned', 'success');
                 onTogglePin(friend);
               }}
               title={isPinned ? "Unpin friend" : "Pin friend to top"}
@@ -333,6 +335,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               className="mini-action-btn" 
               onClick={(e) => {
                 e.stopPropagation();
+                onToast?.('Refreshing data for ' + friend.username + '...', 'info');
                 onRefresh(friend);
               }}
               disabled={refreshing}
@@ -341,7 +344,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               {refreshing ? <RefreshCw size={14} className="spin" /> : <RefreshCw size={14} />}
             </button>
           )}
-          {!isOwn && (
+          {!isOwn && onEdit && (
             <div className="friend-menu-wrap">
             <button
               className="mini-action-btn"
@@ -439,13 +442,18 @@ export const FriendCard: React.FC<FriendCardProps> = ({
               setExpanded(!expanded);
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span>Recent Solves</span>
-              <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontWeight: 'normal' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: 0, paddingRight: '12px' }}>
+              <span style={{ flexShrink: 0 }}>Recent Solves</span>
+              <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontWeight: 'normal', flexShrink: 0 }}>
                 ({lastSolvedText.replace('solved ', '')})
               </span>
+              {!expanded && sortedSubmissions.length > 0 && (
+                 <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginLeft: 'auto', textAlign: 'right' }}>
+                    {sortedSubmissions[0].title}
+                 </span>
+              )}
             </div>
-            <span className="toggle-arrow">{expanded ? <ChevronUp size={12} /> : ''}</span>
+            <span className="toggle-arrow" style={{ flexShrink: 0 }}>{expanded ? <ChevronUp size={12} /> : ''}</span>
           </button>
           {expanded && (
             <ul className="submissions-list">

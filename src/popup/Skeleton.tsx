@@ -1,10 +1,10 @@
 import React from 'react';
 
 const pulse: React.CSSProperties = {
-  background: 'linear-gradient(90deg, var(--bg-tertiary) 25%, var(--border) 50%, var(--bg-tertiary) 75%)',
+  background: 'linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%)',
   backgroundSize: '200% 100%',
   animation: 'shimmer 1.5s infinite',
-  borderRadius: '2px',
+  borderRadius: '0px',
 };
 
 const line = (w: string, h = '10px', extra: React.CSSProperties = {}): React.CSSProperties => ({

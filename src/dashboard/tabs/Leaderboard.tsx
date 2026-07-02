@@ -2,51 +2,17 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { FriendProfile, Friend } from '../../types';
 import { LeetCodeIcon, CodeforcesIcon, CodeChefIcon } from '../../utils/PlatformIcons';
 
-interface Props {
-  friends: Friend[];
-  profiles: Record<string, FriendProfile>;
-  selectedGlobalPlatforms?: string[];
-}
+import { useAppStore } from '../../store/useAppStore';
 
-export const Leaderboard: React.FC<Props> = ({ friends, profiles, selectedGlobalPlatforms = ['leetcode', 'codeforces', 'codechef'] }) => {
-  const ss = <T,>(key: string, fallback: T): T => {
-    try {
-      const v = localStorage.getItem(`lb_${key}`);
-      if (v !== null) return JSON.parse(v) as T;
-    } catch { /* ignore */ }
-    return fallback;
-  };
-  const setSS = <T,>(key: string, value: T) => {
-    try { localStorage.setItem(`lb_${key}`, JSON.stringify(value)); } catch { /* ignore */ }
-  };
-
-  const [rankingMode, _setRankingMode] = useState<'power' | 'mastery' | 'solves'>(() => ss('rankingMode', 'power'));
-  const setRankingMode = (v: 'power' | 'mastery' | 'solves') => { setSS('rankingMode', v); _setRankingMode(v); };
-
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'lb_rankingMode' && e.newValue) {
-        try { _setRankingMode(JSON.parse(e.newValue)); } catch {}
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-  const [dismissedNotice, setDismissedNotice] = useState(false);
-
-  useEffect(() => {
-    chrome.storage.local.get(['dismissed_leaderboard_info'], (res) => {
-      if (res.dismissed_leaderboard_info) setDismissedNotice(true);
-    });
-
-    const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-      if (areaName === 'local' && changes.dismissed_leaderboard_info) {
-        setDismissedNotice(!!changes.dismissed_leaderboard_info.newValue);
-      }
-    };
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, []);
+export const Leaderboard: React.FC = () => {
+  const friends = useAppStore(state => state.friends);
+  const profiles = useAppStore(state => state.profiles);
+  const selectedGlobalPlatforms = useAppStore(state => state.selectedGlobalPlatforms);
+  const rankingMode = useAppStore(state => state.ui_lbRankingMode) as 'power' | 'mastery' | 'solves';
+  const setPartial = useAppStore(state => state.setPartial);
+  const setRankingMode = (v: 'power' | 'mastery' | 'solves') => setPartial({ ui_lbRankingMode: v });
+  
+  const dismissedNotice = useAppStore(state => state.dismissedLeaderboardInfo);
 
   const getProfile = (f: Friend, platform: 'leetcode'|'codeforces'|'codechef') => {
     const handle = f.accounts?.find(acc => acc.platform === platform)?.handle || (profiles[f.username.toLowerCase()]?.platform === platform ? f.username : undefined);
@@ -128,7 +94,7 @@ export const Leaderboard: React.FC<Props> = ({ friends, profiles, selectedGlobal
         <div style={{ marginBottom: '24px', padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '0px', fontSize: 'var(--font-size-base)', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
             <strong>ⓘ Cross-Platform Normalization & Power Score</strong>
-            <button onClick={() => { setDismissedNotice(true); chrome.storage.local.set({ dismissed_leaderboard_info: true }); }} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
+            <button onClick={() => { chrome.storage.local.set({ dismissed_leaderboard_info: true }); }} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 'bold', fontSize: 'var(--font-size-base)' }}>×</button>
           </div>
           Because Codeforces ratings are structurally deflated compared to LeetCode, L'Amigo applies a <code>1.25x</code> normalization multiplier to Codeforces ratings for fair side-by-side comparison. The <strong>Power Score</strong> is a custom metric combining your total problems solved across all platforms with your highest normalized contest rating.
         </div>
