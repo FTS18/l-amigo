@@ -4,6 +4,7 @@ import { CodeforcesService } from "../services/codeforces";
 import { CodeChefService } from "../services/codechef";
 import { OtherPlatformsService } from "../services/other-platforms";
 import { STORAGE_KEYS } from "../constants";
+import { BadgeService } from "../services/badge";
 
 // ── Shared types ─────────────────────────────────────────────────────
 
@@ -21,6 +22,16 @@ interface SyncPipelineResult {
 }
 
 export class SyncManager {
+  private static async _checkOnline(): Promise<boolean> {
+    if (typeof navigator !== 'undefined' && navigator.onLine) return true;
+    try {
+      await fetch("https://www.google.com/generate_204", { method: "HEAD", cache: "no-store", mode: "no-cors" });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   // ── Shared pipeline ─────────────────────────────────────────────────
   // Both handleFullSync and handleIncrementalSync flow through here.
   // Any change to push logic, progress reporting, or storage keys only needs to happen once.
@@ -88,6 +99,7 @@ export class SyncManager {
 
     if (count > 0) {
       await this._notifyUser(count, syncedSubmissions);
+      await BadgeService.updateBadge();
     }
 
     return { count, merged };
@@ -95,10 +107,24 @@ export class SyncManager {
 
   private static async _notifyUser(
     count: number,
-    syncedSubmissions: Array<{ title: string; lang: string }>,
+    syncedSubmissions: Array<{ title: string; lang: string; filePath?: string }>,
   ): Promise<void> {
     // Send toast to active LeetCode/CF tab
     try {
+      const config = await GitHubSyncService.getConfig();
+      let fileUrl: string | undefined;
+      let repoUrl: string | undefined;
+
+      if (config?.token && config?.repoName) {
+        try {
+          const ghUser = await GitHubSyncService.getGitHubUsername(config.token);
+          repoUrl = `https://github.com/${ghUser}/${config.repoName}`;
+          if (syncedSubmissions.length === 1 && syncedSubmissions[0].filePath) {
+            fileUrl = `${repoUrl}/blob/main/${syncedSubmissions[0].filePath}`;
+          }
+        } catch { /* ignore */ }
+      }
+
       const langCounts: Record<string, number> = {};
       syncedSubmissions.forEach((s) => {
         const lang = s.lang || "Unknown";
@@ -109,13 +135,21 @@ export class SyncManager {
         .join(", ");
       const message = `Synced ${details} solution${count > 1 ? "s" : ""} to GitHub!`;
 
+      const targetUrl = fileUrl || repoUrl;
+      const linkText = fileUrl ? "View File ↗" : "View Repo ↗";
+
       const tabs = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
       if (tabs[0]?.id) {
         chrome.tabs
-          .sendMessage(tabs[0].id, { type: "showSyncToast", message })
+          .sendMessage(tabs[0].id, {
+            type: "showSyncToast",
+            message,
+            url: targetUrl,
+            linkText,
+          })
           .catch(() => {});
       }
     } catch {
@@ -138,7 +172,7 @@ export class SyncManager {
     forceCfOnly?: boolean,
     historyOnly?: boolean
   ) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+    if (!(await this._checkOnline())) {
       await chrome.storage.local.set({
         [STORAGE_KEYS.SYNC_STATUS]: "error",
         [STORAGE_KEYS.SYNC_ERROR]: "Offline: Sync will resume when internet connectivity is restored.",
@@ -337,7 +371,7 @@ export class SyncManager {
   }
 
   static async handleIncrementalSync() {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+    if (!(await this._checkOnline())) {
       await chrome.storage.local.set({
         [STORAGE_KEYS.SYNC_STATUS]: "error",
         [STORAGE_KEYS.SYNC_ERROR]: "Offline: Sync will resume when internet connectivity is restored.",

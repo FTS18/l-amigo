@@ -77,8 +77,29 @@ export const SheetsTracker: React.FC<Props> = ({
   const videoFilter = useAppStore(state => state.ui_stVideoFilter);
   const setVideoFilter = (v: string) => setPartial({ ui_stVideoFilter: v });
 
+  const companyFilter = useAppStore(state => state.ui_stCompanyFilter);
+  const setCompanyFilter = (v: string) => setPartial({ ui_stCompanyFilter: v });
+
   const searchQuery = useAppStore(state => state.ui_stSearchQuery);
   const setSearchQuery = (v: string) => setPartial({ ui_stSearchQuery: v });
+
+  const [companyTags, setCompanyTags] = useState<{
+    problems: Record<string, string[]>;
+    companies: { name: string; count: number }[];
+  } | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetch(chrome.runtime.getURL("data/company_tags.json"))
+      .then((res) => res.json())
+      .then((data) => {
+        if (active) setCompanyTags(data);
+      })
+      .catch((err) => console.warn("[SheetsTracker] Failed to load company tags:", err));
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(),
@@ -443,9 +464,42 @@ export const SheetsTracker: React.FC<Props> = ({
       hasMultiplePlatforms: platforms.size > 1,
       availablePlatforms: Array.from(platforms).sort(),
       hasVideoSolutions: hasVid,
-      uniqueCategories: Array.from(cats).sort(),
+      uniqueCategories: Array.from(cats).sort((a, b) => {
+        const matchA = a.match(/\d+/);
+        const matchB = b.match(/\d+/);
+        if (matchA && matchB) {
+          const numA = parseInt(matchA[0], 10);
+          const numB = parseInt(matchB[0], 10);
+          if (numA !== numB) return numA - numB;
+        }
+        return a.localeCompare(b);
+      }),
     };
   }, [sheetData]);
+
+  const availableCompanies = useMemo(() => {
+    if (!companyTags) return [];
+    if (!sheetData) return companyTags.companies.map((c) => c.name);
+
+    const compSet = new Set<string>();
+    sheetData.forEach((p) => {
+      const list = companyTags.problems[p.titleSlug];
+      if (list) {
+        list.forEach((c) => compSet.add(c));
+      }
+      if (selectedSheetId === "companyWise" && p.category) {
+        compSet.add(p.category);
+      }
+    });
+
+    if (compSet.size === 0) {
+      return companyTags.companies.map((c) => c.name);
+    }
+
+    return companyTags.companies
+      .map((c) => c.name)
+      .filter((name) => compSet.has(name));
+  }, [companyTags, sheetData, selectedSheetId]);
 
   // Reset filters and collapsed state when changing sheets
   useEffect(() => {
@@ -454,9 +508,28 @@ export const SheetsTracker: React.FC<Props> = ({
     setStatusFilter("All");
     setPlatformFilter("All");
     setVideoFilter("All");
+    setCompanyFilter("All");
     setSearchQuery("");
     setExpandedCategories(new Set());
   }, [selectedSheetId]);
+
+  // Auto-expand matching categories when company filter is active
+  useEffect(() => {
+    if (companyFilter !== "All" && sheetData) {
+      if (selectedSheetId === "companyWise") {
+        setExpandedCategories(new Set([companyFilter]));
+      } else {
+        const catsToExpand = new Set<string>();
+        sheetData.forEach((p) => {
+          const comps = companyTags?.problems[p.titleSlug] || [];
+          if (comps.includes(companyFilter)) {
+            catsToExpand.add(p.category);
+          }
+        });
+        setExpandedCategories((prev) => new Set([...Array.from(prev), ...Array.from(catsToExpand)]));
+      }
+    }
+  }, [companyFilter, sheetData, companyTags, selectedSheetId]);
 
   const trackerFriends = friends.filter((f) => f.id === "own-user");
   const allOtherFriends = friends.filter((f) => f.id !== "own-user");
@@ -589,6 +662,18 @@ export const SheetsTracker: React.FC<Props> = ({
         const query = searchQuery.toLowerCase();
         if (!p.title.toLowerCase().includes(query)) return false;
       }
+      // 7. Company filter
+      if (companyFilter !== "All") {
+        if (selectedSheetId === "companyWise") {
+          // On company-wise sheet, category IS the company name!
+          // Selecting Samsung must strictly show only the Samsung section.
+          if (p.category !== companyFilter) return false;
+        } else {
+          // On other sheets (e.g. Striver, NeetCode), filter questions asked by this company
+          const comps = companyTags?.problems[p.titleSlug] || [];
+          if (!comps.includes(companyFilter)) return false;
+        }
+      }
       return true;
     });
 
@@ -598,7 +683,24 @@ export const SheetsTracker: React.FC<Props> = ({
       if (!map[p.category]) map[p.category] = [];
       map[p.category].push(p);
     });
-    return map;
+
+    const sortedMap: Record<string, SheetProblem[]> = {};
+    Object.keys(map)
+      .sort((a, b) => {
+        const matchA = a.match(/\d+/);
+        const matchB = b.match(/\d+/);
+        if (matchA && matchB) {
+          const numA = parseInt(matchA[0], 10);
+          const numB = parseInt(matchB[0], 10);
+          if (numA !== numB) return numA - numB;
+        }
+        return 0;
+      })
+      .forEach((cat) => {
+        sortedMap[cat] = map[cat];
+      });
+
+    return sortedMap;
   }, [
     sheetData,
     categoryFilter,
@@ -612,6 +714,8 @@ export const SheetsTracker: React.FC<Props> = ({
     revisionStars,
     selectedGlobalPlatforms,
     followedSheets,
+    companyFilter,
+    companyTags,
   ]);
 
   // Group metadata for the select dropdown
@@ -671,16 +775,21 @@ export const SheetsTracker: React.FC<Props> = ({
 
   const sheetProgress = useMemo(() => {
     if (!sheetData) return { total: 0, solved: 0, percent: 0 };
+    const relevantProblems =
+      selectedSheetId === "companyWise" && companyFilter !== "All"
+        ? sheetData.filter((p) => p.category === companyFilter)
+        : sheetData;
+
     let solvedCount = 0;
-    sheetData.forEach((p) => {
+    relevantProblems.forEach((p) => {
       if (ownSolvedSet.has(p.titleSlug)) solvedCount++;
     });
     const percent =
-      sheetData.length > 0
-        ? Math.round((solvedCount / sheetData.length) * 100)
+      relevantProblems.length > 0
+        ? Math.round((solvedCount / relevantProblems.length) * 100)
         : 0;
-    return { total: sheetData.length, solved: solvedCount, percent };
-  }, [sheetData, ownSolvedSet]);
+    return { total: relevantProblems.length, solved: solvedCount, percent };
+  }, [sheetData, ownSolvedSet, selectedSheetId, companyFilter]);
 
   // ── Cross-sheet index: slug → list of sheet IDs that contain it ───────────
   // Built lazily from sheetCache (already-visited sheets)
@@ -722,67 +831,21 @@ export const SheetsTracker: React.FC<Props> = ({
           justifyContent: "space-between",
           alignItems: "flex-start",
           flexWrap: "wrap",
-          gap: "12px",
+          gap: "16px",
         }}
       >
-        <div>
-          <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {activeSheet ? activeSheet.name : "Sheets Tracker"}
-            {activeSheet && (
-              <button
-                title={followedSheets.includes(activeSheet.id) ? "Unfollow sheet" : "Follow sheet (pin to top)"}
-                onClick={(e) => toggleFollowSheet(activeSheet.id, e)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "18px",
-                  padding: "4px",
-                  color: followedSheets.includes(activeSheet.id) ? "#ffa116" : "var(--text-secondary)",
-                  opacity: followedSheets.includes(activeSheet.id) ? 1 : 0.4,
-                  transition: "opacity 0.2s ease, color 0.2s ease",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
-                onMouseOut={(e) => (e.currentTarget.style.opacity = followedSheets.includes(activeSheet.id) ? "1" : "0.4")}
-              >
-                {followedSheets.includes(activeSheet.id) ? "★" : "☆"}
-              </button>
-            )}
-            <span
-              title={activeSheet 
-                ? `Track your problem-solving roadmap for ${activeSheet.name}. Problems are automatically marked green when a matching accepted submission is found in your synced platform history.`
-                : "Track your problem-solving roadmap. Problems are automatically marked green when a matching accepted submission is found in your synced platform history."}
-              style={{
-                fontSize: "var(--font-size-title)",
-                cursor: "help",
-                opacity: 0.7,
-                fontWeight: "normal",
-              }}
-            >
-              (i)
-            </span>
-          </h2>
-          <p>
-            {activeSheet 
-              ? `${activeSheet.group} Series — ${activeSheet.questions} curated questions.`
-              : "Track your completion across popular lists."}
-          </p>
-        </div>
-        {selectedSheetId && (
-          <div>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+          {selectedSheetId && (
             <button
               onClick={() => setSelectedSheetId("")}
               style={{
-                padding: "10px 20px",
+                padding: "8px 16px",
                 background: "var(--bg-secondary)",
                 color: "var(--text-primary)",
                 border: "1px solid var(--border-strong)",
                 borderRadius: "0px",
                 cursor: "pointer",
-                display: "flex",
+                display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
                 fontWeight: 600,
@@ -801,8 +864,8 @@ export const SheetsTracker: React.FC<Props> = ({
             >
               <svg
                 viewBox="0 0 24 24"
-                width="20"
-                height="20"
+                width="18"
+                height="18"
                 stroke="currentColor"
                 strokeWidth="2"
                 fill="none"
@@ -819,8 +882,54 @@ export const SheetsTracker: React.FC<Props> = ({
                 Back
               </span>
             </button>
+          )}
+          <div>
+            <h2 style={{ display: "flex", alignItems: "center", gap: "8px", margin: 0 }}>
+              {activeSheet ? activeSheet.name : "Sheets Tracker"}
+              {activeSheet && (
+                <button
+                  title={followedSheets.includes(activeSheet.id) ? "Unfollow sheet" : "Follow sheet (pin to top)"}
+                  onClick={(e) => toggleFollowSheet(activeSheet.id, e)}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "18px",
+                    padding: "4px",
+                    color: followedSheets.includes(activeSheet.id) ? "#ffa116" : "var(--text-secondary)",
+                    opacity: followedSheets.includes(activeSheet.id) ? 1 : 0.4,
+                    transition: "opacity 0.2s ease, color 0.2s ease",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                  onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
+                  onMouseOut={(e) => (e.currentTarget.style.opacity = followedSheets.includes(activeSheet.id) ? "1" : "0.4")}
+                >
+                  {followedSheets.includes(activeSheet.id) ? "★" : "☆"}
+                </button>
+              )}
+              <span
+                title={activeSheet 
+                  ? `Track your problem-solving roadmap for ${activeSheet.name}. Problems are automatically marked green when a matching accepted submission is found in your synced platform history.`
+                  : "Track your problem-solving roadmap. Problems are automatically marked green when a matching accepted submission is found in your synced platform history."}
+                style={{
+                  fontSize: "var(--font-size-title)",
+                  cursor: "help",
+                  opacity: 0.7,
+                  fontWeight: "normal",
+                }}
+              >
+                (i)
+              </span>
+            </h2>
+            <p style={{ margin: "4px 0 0 0" }}>
+              {activeSheet 
+                ? `${activeSheet.group} Series — ${activeSheet.questions} curated questions.`
+                : "Track your completion across popular lists."}
+            </p>
           </div>
-        )}
+        </div>
       </div>
 
       {/* ── Global Search Bar ──────────────────────────────────────────────── */}
@@ -1358,6 +1467,8 @@ export const SheetsTracker: React.FC<Props> = ({
             hasMultiplePlatforms={hasMultiplePlatforms}
             availablePlatforms={availablePlatforms}
             blindMode={blindMode}
+            availableCompanies={availableCompanies}
+            isCompanyWiseSheet={selectedSheetId === "companyWise"}
           />
           
           <SheetsProblemTable
@@ -1376,6 +1487,7 @@ export const SheetsTracker: React.FC<Props> = ({
             setSelectedSheetId={setSelectedSheetId}
             getSheetName={getSheetName}
             toggleManualSolve={toggleManualSolve}
+            companyTags={companyTags?.problems}
           />
         </>
       )}

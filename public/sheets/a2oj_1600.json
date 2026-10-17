@@ -4,699 +4,799 @@
     "titleSlug": "1B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1/problem/B"
   },
   {
     "title": "7B - Memory Manager",
     "titleSlug": "7B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/7/problem/B"
   },
   {
     "title": "11B - Jumping Jack",
     "titleSlug": "11B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/11/problem/B"
   },
   {
     "title": "23B - Party",
     "titleSlug": "23B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/23/problem/B"
   },
   {
     "title": "28B - pSort",
     "titleSlug": "28B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/28/problem/B"
   },
   {
     "title": "28A - Bender Problem",
     "titleSlug": "28A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/28/problem/A"
   },
   {
     "title": "32D - Constellation",
     "titleSlug": "32D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/32/problem/D"
   },
   {
     "title": "34D - Road Map",
     "titleSlug": "34D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/34/problem/D"
   },
   {
     "title": "36B - Fractal",
     "titleSlug": "36B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/36/problem/B"
   },
   {
     "title": "40B - Repaintings",
     "titleSlug": "40B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/40/problem/B"
   },
   {
     "title": "46C - Hamsters and Tigers",
     "titleSlug": "46C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/46/problem/C"
   },
   {
     "title": "52B - Right Triangles",
     "titleSlug": "52B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/52/problem/B"
   },
   {
     "title": "55B - Smallest number",
     "titleSlug": "55B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/55/problem/B"
   },
   {
     "title": "57B - Martian Architecture",
     "titleSlug": "57B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/57/problem/B"
   },
   {
     "title": "59C - Title",
     "titleSlug": "59C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/59/problem/C"
   },
   {
     "title": "64C - Table",
     "titleSlug": "64C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/64/problem/C"
   },
   {
     "title": "68B - Energy exchange",
     "titleSlug": "68B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/68/problem/B"
   },
   {
     "title": "70B - Text Messaging",
     "titleSlug": "70B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/70/problem/B"
   },
   {
     "title": "71C - Round Table Knights",
     "titleSlug": "71C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/71/problem/C"
   },
   {
     "title": "72H - Reverse It!",
     "titleSlug": "72H",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/72/problem/H"
   },
   {
     "title": "73A - The Elder Trolls IV: Oblivon",
     "titleSlug": "73A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/73/problem/A"
   },
   {
     "title": "75C - Modified GCD",
     "titleSlug": "75C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/75/problem/C"
   },
   {
     "title": "86A - Reflection",
     "titleSlug": "86A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/86/problem/A"
   },
   {
     "title": "95A - Hockey",
     "titleSlug": "95A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/95/problem/A"
   },
   {
     "title": "100E - Lamps in a Line",
     "titleSlug": "100E",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/100/problem/E"
   },
   {
     "title": "107B - Basketball Team",
     "titleSlug": "107B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/107/problem/B"
   },
   {
     "title": "113A - Grammar Lessons",
     "titleSlug": "113A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/113/problem/A"
   },
   {
     "title": "125C - Hobbits' Party",
     "titleSlug": "125C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/125/problem/C"
   },
   {
     "title": "130H - Balanced brackets",
     "titleSlug": "130H",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/130/problem/H"
   },
   {
     "title": "130F - Prime factorization",
     "titleSlug": "130F",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/130/problem/F"
   },
   {
     "title": "130E - Tribonacci numbers",
     "titleSlug": "130E",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/130/problem/E"
   },
   {
     "title": "131D - Subway",
     "titleSlug": "131D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/131/problem/D"
   },
   {
     "title": "135B - Rectangle and Square",
     "titleSlug": "135B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/135/problem/B"
   },
   {
     "title": "138A - Literature Lesson",
     "titleSlug": "138A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/138/problem/A"
   },
   {
     "title": "139B - Wallpaper",
     "titleSlug": "139B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/139/problem/B"
   },
   {
     "title": "142A - Help Farmer",
     "titleSlug": "142A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/142/problem/A"
   },
   {
     "title": "149B - Martian Clock",
     "titleSlug": "149B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/149/problem/B"
   },
   {
     "title": "150B - Quantity of Strings",
     "titleSlug": "150B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/150/problem/B"
   },
   {
     "title": "153A - A + B",
     "titleSlug": "153A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/153/problem/A"
   },
   {
     "title": "154B - Colliders",
     "titleSlug": "154B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/154/problem/B"
   },
   {
     "title": "154A - Hometask",
     "titleSlug": "154A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/154/problem/A"
   },
   {
     "title": "156B - Suspects",
     "titleSlug": "156B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/156/problem/B"
   },
   {
     "title": "165C - Another Problem on Strings",
     "titleSlug": "165C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/165/problem/C"
   },
   {
     "title": "167A - Wizards and Trolleybuses",
     "titleSlug": "167A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/167/problem/A"
   },
   {
     "title": "171G - Mysterious numbers - 2",
     "titleSlug": "171G",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/171/problem/G"
   },
   {
     "title": "171F - ucyhf",
     "titleSlug": "171F",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/171/problem/F"
   },
   {
     "title": "175C - Geometry Horse",
     "titleSlug": "175C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/175/problem/C"
   },
   {
     "title": "178C1 - Smart Beaver and Resolving Collisions",
     "titleSlug": "178C1",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/178/problem/C1"
   },
   {
     "title": "178B2 - Greedy Merchants",
     "titleSlug": "178B2",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/178/problem/B2"
   },
   {
     "title": "178B1 - Greedy Merchants",
     "titleSlug": "178B1",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/178/problem/B1"
   },
   {
     "title": "188G - Array Sorting",
     "titleSlug": "188G",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/188/problem/G"
   },
   {
     "title": "197A - Plate Game",
     "titleSlug": "197A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/197/problem/A"
   },
   {
     "title": "207D7 - The Beaver's Problem - 3",
     "titleSlug": "207D7",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/207/problem/D7"
   },
   {
     "title": "207D5 - The Beaver's Problem - 3",
     "titleSlug": "207D5",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/207/problem/D5"
   },
   {
     "title": "207B1 - Military Trainings",
     "titleSlug": "207B1",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/207/problem/B1"
   },
   {
     "title": "207A1 - Beaver's Calculator 1.0",
     "titleSlug": "207A1",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/207/problem/A1"
   },
   {
     "title": "209A - Multicolored Marbles",
     "titleSlug": "209A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/209/problem/A"
   },
   {
     "title": "214B - Hometask",
     "titleSlug": "214B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/214/problem/B"
   },
   {
     "title": "219C - Color Stripe",
     "titleSlug": "219C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/219/problem/C"
   },
   {
     "title": "225B - Well-known Numbers",
     "titleSlug": "225B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/225/problem/B"
   },
   {
     "title": "231D - Magic Box",
     "titleSlug": "231D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/231/problem/D"
   },
   {
     "title": "231C - To Add or Not to Add",
     "titleSlug": "231C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/231/problem/C"
   },
   {
     "title": "232A - Cycles",
     "titleSlug": "232A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/232/problem/A"
   },
   {
     "title": "234G - Practice",
     "titleSlug": "234G",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/234/problem/G"
   },
   {
     "title": "234E - Champions' League",
     "titleSlug": "234E",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/234/problem/E"
   },
   {
     "title": "234D - Cinema",
     "titleSlug": "234D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/234/problem/D"
   },
   {
     "title": "235A - LCM Challenge",
     "titleSlug": "235A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/235/problem/A"
   },
   {
     "title": "237C - Primes on Interval",
     "titleSlug": "237C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/237/problem/C"
   },
   {
     "title": "243A - The Brand New Function",
     "titleSlug": "243A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/243/problem/A"
   },
   {
     "title": "244B - Undoubtedly Lucky Numbers",
     "titleSlug": "244B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/244/problem/B"
   },
   {
     "title": "246D - Colorful Graph",
     "titleSlug": "246D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/246/problem/D"
   },
   {
     "title": "246C - Beauty Pageant",
     "titleSlug": "246C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/246/problem/C"
   },
   {
     "title": "250C - Movie Critics",
     "titleSlug": "250C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/250/problem/C"
   },
   {
     "title": "253C - Text Editor",
     "titleSlug": "253C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/253/problem/C"
   },
   {
     "title": "260B - Ancient Prophesy",
     "titleSlug": "260B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/260/problem/B"
   },
   {
     "title": "269A - Magical Boxes",
     "titleSlug": "269A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/269/problem/A"
   },
   {
     "title": "272D - Dima and Two Sequences",
     "titleSlug": "272D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/272/problem/D"
   },
   {
     "title": "283A - Cows and Sequence",
     "titleSlug": "283A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/283/problem/A"
   },
   {
     "title": "291D - Parallel Programming",
     "titleSlug": "291D",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/291/problem/D"
   },
   {
     "title": "291C - Network Mask",
     "titleSlug": "291C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/291/problem/C"
   },
   {
     "title": "297B - Fish Weight",
     "titleSlug": "297B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/297/problem/B"
   },
   {
     "title": "305C - Ivan and Powers of Two",
     "titleSlug": "305C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/305/problem/C"
   },
   {
     "title": "305A - Strange Addition",
     "titleSlug": "305A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/305/problem/A"
   },
   {
     "title": "314A - Sereja and Contest",
     "titleSlug": "314A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/314/problem/A"
   },
   {
     "title": "316B2 - EKG",
     "titleSlug": "316B2",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/316/problem/B2"
   },
   {
     "title": "317A - Perfect Pair",
     "titleSlug": "317A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/317/problem/A"
   },
   {
     "title": "319A - Malek Dance Club",
     "titleSlug": "319A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/319/problem/A"
   },
   {
     "title": "322B - Ciel and Flowers",
     "titleSlug": "322B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/322/problem/B"
   },
   {
     "title": "323A - Black-and-White Cube",
     "titleSlug": "323A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/323/problem/A"
   },
   {
     "title": "333A - Secrets",
     "titleSlug": "333A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/333/problem/A"
   },
   {
     "title": "337C - Quiz",
     "titleSlug": "337C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/337/problem/C"
   },
   {
     "title": "340C - Tourist Problem",
     "titleSlug": "340C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/340/problem/C"
   },
   {
     "title": "343B - Alternating Current",
     "titleSlug": "343B",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/343/problem/B"
   },
   {
     "title": "343A - Rational Resistance",
     "titleSlug": "343A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/343/problem/A"
   },
   {
     "title": "346A - Alice and Bob",
     "titleSlug": "346A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/346/problem/A"
   },
   {
     "title": "348A - Mafia",
     "titleSlug": "348A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/348/problem/A"
   },
   {
     "title": "350C - Bombs",
     "titleSlug": "350C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/350/problem/C"
   },
   {
     "title": "353C - Find Maximum",
     "titleSlug": "353C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/353/problem/C"
   },
   {
     "title": "364A - Matrix",
     "titleSlug": "364A",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/364/problem/A"
   },
   {
     "title": "369C - Valera and Elections",
     "titleSlug": "369C",
     "difficulty": "Medium",
     "category": "1600 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/369/problem/C"
   }
 ]

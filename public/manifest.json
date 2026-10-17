@@ -71,5 +71,17 @@
     "128": "android-chrome-192x192.png",
     "192": "android-chrome-192x192.png",
     "512": "android-chrome-512x512.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "data/company_tags.json",
+        "android-chrome-192x192.png"
+      ],
+      "matches": [
+        "https://leetcode.com/*",
+        "https://codeforces.com/*"
+      ]
+    }
+  ]
 }

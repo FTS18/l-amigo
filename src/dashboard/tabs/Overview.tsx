@@ -96,31 +96,28 @@ export const Overview: React.FC<Props> = ({ onNavigate }) => {
       .slice(0, 3);
   }, [contests, selectedGlobalPlatforms]);
 
-  // ── Active Sheet State ──
-  const activeSheetId = useAppStore(state => state.ui_stSheetId);
-  const setActiveSheetId = (v: string) => setPartial({ ui_stSheetId: v });
+  // ── Active Sheet State for Overview Widget ──
+  const [overviewSheetId, setOverviewSheetId] = useState<string>(() => {
+    if (followedSheets && followedSheets.length > 0) return followedSheets[0];
+    return "striversA2Z";
+  });
 
   const [sheetProblems, setSheetProblems] = useState<any[]>([]);
   const [loadingSheet, setLoadingSheet] = useState(true);
 
   useEffect(() => {
-    const sid = activeSheetId;
-    if (sid) {
-      setActiveSheetId(sid);
-    } else if (followedSheets && followedSheets.length > 0) {
-      setActiveSheetId(followedSheets[0]);
-    } else {
-      setActiveSheetId("striversA2Z");
+    if (followedSheets && followedSheets.length > 0 && !followedSheets.includes(overviewSheetId)) {
+      setOverviewSheetId(followedSheets[0]);
     }
-  }, [followedSheets, activeSheetId]);
+  }, [followedSheets, overviewSheetId]);
 
   useEffect(() => {
-    if (!activeSheetId) return;
+    if (!overviewSheetId) return;
     setLoadingSheet(true);
     let active = true;
     const fetchSheetData = async () => {
       try {
-        const meta = (SHEET_METADATA as any[]).find((s) => s.id === activeSheetId);
+        const meta = (SHEET_METADATA as any[]).find((s) => s.id === overviewSheetId);
         if (meta && meta.subSheets) {
           let combined: any[] = [];
           for (const subId of meta.subSheets) {
@@ -133,7 +130,7 @@ export const Overview: React.FC<Props> = ({ onNavigate }) => {
           }
           if (active) setSheetProblems(combined);
         } else {
-          const url = chrome.runtime.getURL(`sheets/${activeSheetId}.json`);
+          const url = chrome.runtime.getURL(`sheets/${overviewSheetId}.json`);
           const res = await fetch(url);
           const data = await res.json();
           if (active) setSheetProblems(data);
@@ -146,7 +143,7 @@ export const Overview: React.FC<Props> = ({ onNavigate }) => {
     };
     fetchSheetData();
     return () => { active = false; };
-  }, [activeSheetId]);
+  }, [overviewSheetId]);
 
   const manuallySolved = useAppStore(state => state.manuallySolvedProblems) as Record<string, { solved: boolean; platform: string; title: string }>;
 
@@ -202,8 +199,8 @@ export const Overview: React.FC<Props> = ({ onNavigate }) => {
   }, [friends, profiles, allSubmissions, manuallySolved]);
 
   const sheetMeta = useMemo(() => {
-    return (SHEET_METADATA as any[]).find(s => s.id === activeSheetId);
-  }, [activeSheetId]);
+    return (SHEET_METADATA as any[]).find(s => s.id === overviewSheetId);
+  }, [overviewSheetId]);
 
   const sheetProgress = useMemo(() => {
     if (!sheetProblems || sheetProblems.length === 0) return { total: sheetMeta?.questions || 0, solved: 0, percent: 0 };
@@ -719,7 +716,12 @@ export const Overview: React.FC<Props> = ({ onNavigate }) => {
             loadingSheet={loadingSheet} 
             sheetMeta={sheetMeta} 
             sheetProgress={sheetProgress} 
-            onNavigate={onNavigate} 
+            onNavigate={(tab) => {
+              if (overviewSheetId) {
+                setPartial({ ui_stSheetId: overviewSheetId });
+              }
+              onNavigate?.(tab);
+            }} 
           />
         </div>
       </div>

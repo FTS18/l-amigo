@@ -4,7 +4,7 @@
     "titleSlug": "linear-search",
     "difficulty": "Easy",
     "category": "Binary Search Mastery",
-    "platform": "leetcode",
+    "platform": "tuf",
     "url": "https://takeuforward.org/plus/dsa/problems/linear-search"
   },
   {
@@ -12,69 +12,79 @@
     "titleSlug": "maximum-product-subarray",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-product-subarray/"
   },
   {
     "title": "Binary Search to find X in sorted array",
     "titleSlug": "binary-search",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/binary-search/"
   },
   {
     "title": "Search Insert Position",
     "titleSlug": "search-insert-position",
     "difficulty": "Easy",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/search-insert-position/"
   },
   {
     "title": "Find the first or last occurrence of a given number in a sorted array",
     "titleSlug": "find-first-and-last-position-of-element-in-sorted-array",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"
   },
   {
     "title": "Search in Rotated Sorted Array I",
     "titleSlug": "search-in-rotated-sorted-array",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
   },
   {
     "title": "Search in Rotated Sorted Array II",
     "titleSlug": "search-in-rotated-sorted-array-ii",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/"
   },
   {
     "title": "Find minimum in Rotated Sorted Array",
     "titleSlug": "find-minimum-in-rotated-sorted-array",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
   },
   {
     "title": "Single element in a Sorted Array",
     "titleSlug": "single-element-in-a-sorted-array",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/"
   },
   {
     "title": "Find peak element",
     "titleSlug": "find-peak-element",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-peak-element/"
   },
   {
     "title": "Koko Eating Bananas",
     "titleSlug": "koko-eating-bananas",
     "difficulty": "Medium",
     "category": "Binary Search Mastery",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/koko-eating-bananas/"
   }
 ]

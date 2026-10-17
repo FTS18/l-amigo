@@ -8,6 +8,8 @@ interface SheetsFilterBarProps {
   hasMultiplePlatforms: boolean;
   availablePlatforms: string[];
   blindMode: boolean;
+  availableCompanies?: string[];
+  isCompanyWiseSheet?: boolean;
 }
 
 export const SheetsFilterBar: React.FC<SheetsFilterBarProps> = ({
@@ -17,6 +19,8 @@ export const SheetsFilterBar: React.FC<SheetsFilterBarProps> = ({
   hasMultiplePlatforms,
   availablePlatforms,
   blindMode,
+  availableCompanies = [],
+  isCompanyWiseSheet = false,
 }) => {
   const setPartial = useAppStore(state => state.setPartial);
   const categoryFilter = useAppStore(state => state.ui_stCatFilter);
@@ -24,6 +28,7 @@ export const SheetsFilterBar: React.FC<SheetsFilterBarProps> = ({
   const statusFilter = useAppStore(state => state.ui_stStatusFilter);
   const platformFilter = useAppStore(state => state.ui_stPlatFilter);
   const videoFilter = useAppStore(state => state.ui_stVideoFilter);
+  const companyFilter = useAppStore(state => state.ui_stCompanyFilter);
   const searchQuery = useAppStore(state => state.ui_stSearchQuery);
 
   const setCategoryFilter = (v: string) => setPartial({ ui_stCatFilter: v });
@@ -31,6 +36,7 @@ export const SheetsFilterBar: React.FC<SheetsFilterBarProps> = ({
   const setStatusFilter = (v: string) => setPartial({ ui_stStatusFilter: v });
   const setPlatformFilter = (v: string) => setPartial({ ui_stPlatFilter: v });
   const setVideoFilter = (v: string) => setPartial({ ui_stVideoFilter: v });
+  const setCompanyFilter = (v: string) => setPartial({ ui_stCompanyFilter: v });
   const setSearchQuery = (v: string) => setPartial({ ui_stSearchQuery: v });
 
   const filterStyle: React.CSSProperties = {
@@ -99,19 +105,37 @@ export const SheetsFilterBar: React.FC<SheetsFilterBarProps> = ({
           style={{ ...filterStyle, minWidth: "200px", cursor: "text" }}
           disabled={isLoading}
         />
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-          style={filterStyle}
-          disabled={isLoading}
-        >
-          <option value="All">All Topics</option>
-          {uniqueCategories.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
+        {!isCompanyWiseSheet && (
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            style={filterStyle}
+            disabled={isLoading}
+          >
+            <option value="All">All Topics</option>
+            {uniqueCategories.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        )}
+        {availableCompanies && availableCompanies.length > 0 && (
+          <select
+            value={companyFilter}
+            onChange={(e) => setCompanyFilter(e.target.value)}
+            style={filterStyle}
+            disabled={isLoading}
+            aria-label="Filter problems by company"
+          >
+            <option value="All">All Companies</option>
+            {availableCompanies.map((comp) => (
+              <option key={comp} value={comp}>
+                {comp}
+              </option>
+            ))}
+          </select>
+        )}
         {!blindMode && (
           <select
             value={difficultyFilter}

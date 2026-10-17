@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Check, AlertTriangle, Keyboard, Lightbulb, ChevronDown, ChevronUp, MoreVertical } from 'lucide-react';
 import { GitHubSyncService } from '../services/github';
+import { LeetCodeService } from '../services/leetcode';
 import { ExportService } from '../services/export';
 import { REFRESH_CONSTANTS } from '../constants';
 import { validateGitHubToken, validateRepositoryName } from '../utils/sanitize';
@@ -104,6 +105,81 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  const [newCsesHandle, setNewCsesHandle] = useState('');
  const [healthStatus, setHealthStatus] = useState<{ status: 'idle' | 'checking' | 'ok' | 'error'; message: string }>({ status: 'idle', message: '' });
  const [showSyncInfo, setShowSyncInfo] = useState(false);
+ const [lcAuthStatus, setLcAuthStatus] = useState<{ checked: boolean; isSignedIn: boolean; username?: string }>({
+   checked: false,
+   isSignedIn: true,
+ });
+
+ const checkLcAuth = async () => {
+   try {
+     const res = await LeetCodeService.checkAuthStatus();
+     setLcAuthStatus({ checked: true, isSignedIn: res.isSignedIn, username: res.username });
+   } catch {
+     setLcAuthStatus({ checked: true, isSignedIn: false });
+   }
+ };
+
+ const renderLeetCodeAuthBanner = () => {
+   if (!lcAuthStatus.checked) return null;
+   if (lcAuthStatus.isSignedIn) {
+     return (
+       <div style={{
+         display: 'flex',
+         alignItems: 'center',
+         gap: '8px',
+         padding: '6px 10px',
+         marginBottom: '10px',
+         backgroundColor: 'rgba(46, 160, 67, 0.08)',
+         border: '1px solid rgba(46, 160, 67, 0.25)',
+         borderRadius: '0px',
+         fontSize: 'var(--font-size-xs)',
+         color: 'var(--text-secondary)'
+       }}>
+         <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#2da44e', flexShrink: 0 }} />
+         <span>LeetCode Session: <strong style={{ color: '#2da44e' }}>Logged in</strong>{lcAuthStatus.username ? ` (${lcAuthStatus.username})` : ''}</span>
+       </div>
+     );
+   }
+   return (
+     <div style={{
+       display: 'flex',
+       alignItems: 'center',
+       justifyContent: 'space-between',
+       gap: '10px',
+       padding: '8px 12px',
+       marginBottom: '12px',
+       backgroundColor: 'rgba(255, 152, 0, 0.1)',
+       border: '1px solid #ff9800',
+       borderRadius: '0px',
+       fontSize: 'var(--font-size-xs)'
+     }}>
+       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+         <AlertTriangle size={15} color="#ff9800" style={{ flexShrink: 0 }} />
+         <span style={{ color: 'var(--text-primary)', lineHeight: '1.4' }}>
+           <strong>Not logged into LeetCode.</strong> Please log into leetcode.com so solutions can be fetched and pushed.
+         </span>
+       </div>
+       <a
+         href="https://leetcode.com/accounts/login/"
+         target="_blank"
+         rel="noopener noreferrer"
+         className="settings-btn"
+         style={{
+           padding: '3px 8px',
+           fontSize: 'var(--font-size-xs)',
+           textDecoration: 'none',
+           whiteSpace: 'nowrap',
+           backgroundColor: '#ff9800',
+           color: '#000',
+           fontWeight: 600,
+           borderRadius: '0px'
+         }}
+       >
+         Log In ↗
+       </a>
+     </div>
+   );
+ };
 
  // ── Read directly from Zustand (single source of truth) ─────────────────
  const notificationsEnabled = useAppStore(state => state.notificationsEnabled);
@@ -203,6 +279,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
 
   useEffect(() => {
     loadAllSettings();
+    checkLcAuth();
     // Check if a sync was already running (e.g. popup was closed/reopened)
     checkOngoingSync();
 
@@ -574,6 +651,25 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  return;
  }
 
+ if (!isForceCf) {
+   try {
+     const freshAuth = await LeetCodeService.checkAuthStatus();
+     setLcAuthStatus({ checked: true, isSignedIn: freshAuth.isSignedIn, username: freshAuth.username });
+     if (!freshAuth.isSignedIn) {
+       onToast?.('Warning: Not logged into LeetCode. Solution code may fail to sync. Log in at leetcode.com', 'error');
+     }
+   } catch { /* ignore */ }
+ }
+
+ await chrome.storage.local.set({
+ sync_status: 'fetching',
+ sync_error: '',
+ sync_progress_failed: 0,
+ sync_progress_fetch: 0,
+ sync_progress_done: 0,
+ sync_progress_total: 0,
+ });
+
  setSyncPhase('fetching');
  setSyncProgress('');
  setSyncFetched(0);
@@ -581,6 +677,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  setSyncTotal(0);
  setSyncPct(0);
  setSyncError('');
+ setSyncFailed(0);
  startProgressPoll();
 
  try {
@@ -608,15 +705,18 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  } finally {
  setSyncProgress('');
  if (pollRef.current) clearInterval(pollRef.current);
- const s = await chrome.storage.local.get(['sync_status', 'sync_history']);
+ const s = await chrome.storage.local.get(['sync_status', 'sync_history', 'sync_error']);
  if (s.sync_status === 'idle') {
  setSyncPhase('idle');
+ setSyncError('');
  if (s.sync_history) setSyncHistory(s.sync_history);
  } else if (s.sync_status === 'error') {
  setSyncPhase('error');
+ setSyncError(s.sync_error || '');
  } else {
- await chrome.storage.local.set({ sync_status: 'idle' });
+ await chrome.storage.local.set({ sync_status: 'idle', sync_error: '' });
  setSyncPhase('idle');
+ setSyncError('');
  if (s.sync_history) setSyncHistory(s.sync_history);
  }
  }
@@ -1516,6 +1616,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  <option value="batch">Batch (Background Alarm)</option>
  </select>
  </div>
+ {renderLeetCodeAuthBanner()}
  <div className="settings-actions">
  {isSyncingNow ? (
  <button 
@@ -1597,13 +1698,38 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  <p className="sync-progress-text sync-error-text">[!] {syncError}</p>
  )}
  {!isSyncingNow && syncFailed > 0 && (
- <div className="sync-progress-container" style={{ backgroundColor: 'rgba(255, 152, 0, 0.1)', border: '1px solid #ff9800', padding: '10px', borderRadius: '8px', marginTop: '12px' }}>
+ <div className="sync-progress-container" style={{ backgroundColor: 'rgba(255, 152, 0, 0.1)', border: '1px solid #ff9800', padding: '10px', borderRadius: '0px', marginTop: '12px' }}>
  <p className="sync-progress-text" style={{ color: '#ff9800', margin: 0, fontWeight: 'bold', fontSize: '13px' }}>
- [!] {syncFailed} submissions skipped due to rate limits/Cloudflare protection.
+ {lcAuthStatus.checked && !lcAuthStatus.isSignedIn
+   ? `[!] ${syncFailed} submissions skipped — Not logged into LeetCode.`
+   : `[!] ${syncFailed} submissions skipped due to rate limits/Cloudflare protection.`}
  </p>
  <p className="sync-progress-text" style={{ color: 'var(--text-secondary)', margin: '4px 0 0 0', fontSize: '12px' }}>
- Please wait a few minutes and click "Force Full Sync" or "Sync" to retry and successfully push the remaining {syncFailed} submissions.
+ {lcAuthStatus.checked && !lcAuthStatus.isSignedIn
+   ? 'Please open leetcode.com, log into your account, and retry syncing to push your solution code.'
+   : `Please wait a few minutes and click "Force Full Sync" or "Sync" to retry and successfully push the remaining ${syncFailed} submissions.`}
  </p>
+ {lcAuthStatus.checked && !lcAuthStatus.isSignedIn && (
+   <a
+     href="https://leetcode.com/accounts/login/"
+     target="_blank"
+     rel="noopener noreferrer"
+     className="settings-btn"
+     style={{
+       display: 'inline-block',
+       marginTop: '8px',
+       padding: '4px 12px',
+       fontSize: '12px',
+       textDecoration: 'none',
+       backgroundColor: '#ff9800',
+       color: '#000',
+       fontWeight: 600,
+       borderRadius: '0px'
+     }}
+   >
+     Open LeetCode Login ↗
+   </a>
+ )}
  </div>
  )}
 
@@ -1665,6 +1791,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  <span title="Sync only the green checkmarks and stats without downloading the actual code files. Recommended if you have thousands of submissions." style={{ cursor: 'help', opacity: 0.7, fontSize: 'var(--font-size-base)', fontWeight: 'normal' }}>(i)</span>
  </label>
  </div>
+ {renderLeetCodeAuthBanner()}
  <div className="settings-actions">
  {isSyncingNow ? (
  <button 
@@ -1752,13 +1879,38 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
  <p className="sync-progress-text sync-error-text">[!] {syncError}</p>
  )}
  {!isSyncingNow && syncFailed > 0 && (
- <div className="sync-progress-container" style={{ backgroundColor: 'rgba(255, 152, 0, 0.1)', border: '1px solid #ff9800', padding: '10px', borderRadius: '8px', marginTop: '12px' }}>
+ <div className="sync-progress-container" style={{ backgroundColor: 'rgba(255, 152, 0, 0.1)', border: '1px solid #ff9800', padding: '10px', borderRadius: '0px', marginTop: '12px' }}>
  <p className="sync-progress-text" style={{ color: '#ff9800', margin: 0, fontWeight: 'bold', fontSize: '13px' }}>
- [!] {syncFailed} submissions skipped due to rate limits/Cloudflare protection.
+ {lcAuthStatus.checked && !lcAuthStatus.isSignedIn
+   ? `[!] ${syncFailed} submissions skipped — Not logged into LeetCode.`
+   : `[!] ${syncFailed} submissions skipped due to rate limits/Cloudflare protection.`}
  </p>
  <p className="sync-progress-text" style={{ color: 'var(--text-secondary)', margin: '4px 0 0 0', fontSize: '12px' }}>
- Please wait a few minutes and click "Force Full Sync" or "Sync" to retry and successfully push the remaining {syncFailed} submissions.
+ {lcAuthStatus.checked && !lcAuthStatus.isSignedIn
+   ? 'Please open leetcode.com, log into your account, and retry syncing to push your solution code.'
+   : `Please wait a few minutes and click "Force Full Sync" or "Sync" to retry and successfully push the remaining ${syncFailed} submissions.`}
  </p>
+ {lcAuthStatus.checked && !lcAuthStatus.isSignedIn && (
+   <a
+     href="https://leetcode.com/accounts/login/"
+     target="_blank"
+     rel="noopener noreferrer"
+     className="settings-btn"
+     style={{
+       display: 'inline-block',
+       marginTop: '8px',
+       padding: '4px 12px',
+       fontSize: '12px',
+       textDecoration: 'none',
+       backgroundColor: '#ff9800',
+       color: '#000',
+       fontWeight: 600,
+       borderRadius: '0px'
+     }}
+   >
+     Open LeetCode Login ↗
+   </a>
+ )}
  </div>
  )}
  {debugInfo && (

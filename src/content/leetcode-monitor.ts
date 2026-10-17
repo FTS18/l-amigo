@@ -39,6 +39,7 @@ class LeetCodeMonitor {
       this.setupUrlChangeDetection();
       this.injectDailyProgress();
       this.injectSolvedByFriends();
+      this.injectCompanyTags();
     } catch {}
   }
 
@@ -55,6 +56,13 @@ class LeetCodeMonitor {
     new MutationObserver(() => {
       const currentUrl = window.location.href;
       if (currentUrl !== lastUrl) {
+        if (currentUrl.includes("/problems/")) {
+          setTimeout(() => {
+            document.querySelector(".lamigo-company-tags-container")?.remove();
+            this.injectCompanyTags();
+            this.injectSolvedByFriends();
+          }, 1200);
+        }
         if (
           this.urlBeforeSubmit &&
           currentUrl.includes("/submissions/") &&
@@ -207,6 +215,83 @@ class LeetCodeMonitor {
     return `(${Math.floor(diff / 86400)}d ago)`;
   }
 
+  private static companyTagsCache: Record<string, string[]> | null = null;
+
+  private async findProblemTitleElement(): Promise<Element | null> {
+    const candidateSelectors = [
+      LeetCodeMonitor.SELECTORS.problemTitle,
+      'div.text-title-large',
+      '[data-track-load="description_content"] div.text-title-large',
+      '[data-track-load="description_content"] div.flex',
+      '[data-track-load="description_content"] h4',
+      'div[class*="text-title"]',
+      LeetCodeMonitor.SELECTORS.problemTitleFallback,
+    ];
+    for (const sel of candidateSelectors) {
+      const el = document.querySelector(sel);
+      if (el) return el;
+    }
+    try {
+      return await this.waitForElement(
+        LeetCodeMonitor.SELECTORS.problemTitle,
+        'div.text-title-large',
+        4000
+      );
+    } catch {
+      return null;
+    }
+  }
+
+  private async injectCompanyTags() {
+    try {
+      const match = window.location.pathname.match(/\/problems\/([a-z0-9\-]+)/i);
+      const titleSlug = match?.[1]?.toLowerCase();
+      if (!titleSlug) return;
+
+      const titleEl = await this.findProblemTitleElement();
+      if (!titleEl) return;
+
+      if (document.querySelector(".lamigo-company-tags-container")) return;
+
+      if (!LeetCodeMonitor.companyTagsCache) {
+        try {
+          const url = chrome.runtime.getURL("data/company_tags.json");
+          const res = await fetch(url);
+          if (res.ok) {
+            const data = await res.json();
+            LeetCodeMonitor.companyTagsCache = data.problems || {};
+          }
+        } catch (e) {
+          console.warn("[L'Amigo] Failed to load company tags dataset:", e);
+        }
+      }
+
+      const companies = LeetCodeMonitor.companyTagsCache?.[titleSlug] || [];
+      if (companies.length === 0) return;
+
+      const container = document.createElement("div");
+      container.className = "lamigo-company-tags-container";
+
+      const label = document.createElement("span");
+      label.className = "lamigo-company-label";
+      label.textContent = "🏢 Asked in:";
+      container.appendChild(label);
+
+      companies.forEach((comp) => {
+        const badge = document.createElement("span");
+        badge.className = "lamigo-company-badge";
+        badge.textContent = comp;
+        container.appendChild(badge);
+      });
+
+      titleEl.parentElement?.appendChild(container);
+    } catch (err) {
+      if (__DEV__) {
+        console.warn("[L'Amigo] Failed to inject company tags:", err);
+      }
+    }
+  }
+
   private async handleAccepted() {
     this.injectSyncBadge(); // Show sync badge on acceptance
     const now = Date.now();
@@ -324,11 +409,22 @@ chrome.runtime.onMessage.addListener((message) => {
     
     toast.appendChild(icon);
     toast.appendChild(text);
+
+    if (message.url) {
+      const link = document.createElement("a");
+      link.href = message.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.className = "lamigo-toast-link";
+      link.textContent = message.linkText || "View on GitHub ↗";
+      toast.appendChild(link);
+    }
+
     document.body.appendChild(toast);
     
     setTimeout(() => {
       toast.remove();
-    }, 5000);
+    }, 6500);
   }
 });
 

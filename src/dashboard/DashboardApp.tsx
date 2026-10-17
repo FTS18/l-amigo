@@ -254,11 +254,8 @@ export const DashboardApp: React.FC = () => {
             <div
               className={`nav-item ${activeTab === "sheets" ? "active" : ""}`}
               onClick={() => {
-                if (activeTab === "sheets") {
-                  setSelectedSheetId("");
-                } else {
-                  setActiveTab("sheets");
-                }
+                setSelectedSheetId("");
+                setActiveTab("sheets");
               }}
             >
               <FileSpreadsheet size={20} />

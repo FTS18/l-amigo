@@ -5,7 +5,8 @@
     "difficulty": "Easy",
     "category": "Arrays",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/majority-element.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/majority-element.md",
+    "url": "https://leetcode.com/problems/majority-element/"
   },
   {
     "title": "Product of Array Except Self",
@@ -13,7 +14,8 @@
     "difficulty": "Medium",
     "category": "Arrays",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/product-of-array-except-self.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/product-of-array-except-self.md",
+    "url": "https://leetcode.com/problems/product-of-array-except-self/"
   },
   {
     "title": "First Missing Positive",
@@ -21,7 +23,8 @@
     "difficulty": "Hard",
     "category": "Arrays",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/first-missing-positive.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/first-missing-positive.md",
+    "url": "https://leetcode.com/problems/first-missing-positive/"
   },
   {
     "title": "Is Subsequence",
@@ -29,7 +32,8 @@
     "difficulty": "Easy",
     "category": "Strings",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/is-subsequence.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/is-subsequence.md",
+    "url": "https://leetcode.com/problems/is-subsequence/"
   },
   {
     "title": "Reverse Words in a String",
@@ -37,7 +41,8 @@
     "difficulty": "Medium",
     "category": "Strings",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/reverse-words-in-a-string.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/reverse-words-in-a-string.md",
+    "url": "https://leetcode.com/problems/reverse-words-in-a-string/"
   },
   {
     "title": "Counting Bits",
@@ -45,7 +50,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/counting-bits.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/counting-bits.md",
+    "url": "https://leetcode.com/problems/counting-bits/"
   },
   {
     "title": "Single Number III",
@@ -53,7 +59,8 @@
     "difficulty": "Medium",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/single-number-iii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/single-number-iii.md",
+    "url": "https://leetcode.com/problems/single-number-iii/"
   },
   {
     "title": "Group Anagrams",
@@ -61,7 +68,8 @@
     "difficulty": "Medium",
     "category": "Hash Tables",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/group-anagrams.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/group-anagrams.md",
+    "url": "https://leetcode.com/problems/group-anagrams/"
   },
   {
     "title": "Longest Consecutive Sequence",
@@ -69,7 +77,8 @@
     "difficulty": "Medium",
     "category": "Hash Tables",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-consecutive-sequence.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-consecutive-sequence.md",
+    "url": "https://leetcode.com/problems/longest-consecutive-sequence/"
   },
   {
     "title": "Container With Most Water",
@@ -77,7 +86,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/container-with-most-water.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/container-with-most-water.md",
+    "url": "https://leetcode.com/problems/container-with-most-water/"
   },
   {
     "title": "3Sum",
@@ -85,7 +95,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/3sum.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/3sum.md",
+    "url": "https://leetcode.com/problems/3sum/"
   },
   {
     "title": "Trapping Rain Water",
@@ -93,7 +104,8 @@
     "difficulty": "Hard",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/trapping-rain-water.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/trapping-rain-water.md",
+    "url": "https://leetcode.com/problems/trapping-rain-water/"
   },
   {
     "title": "Subarray Sum Equals K",
@@ -101,7 +113,8 @@
     "difficulty": "Medium",
     "category": "Prefix Sum",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/subarray-sum-equals-k.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/subarray-sum-equals-k.md",
+    "url": "https://leetcode.com/problems/subarray-sum-equals-k/"
   },
   {
     "title": "Find All Anagrams in a String",
@@ -109,7 +122,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window - Fixed Size",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/find-all-anagrams-in-a-string.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/find-all-anagrams-in-a-string.md",
+    "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/"
   },
   {
     "title": "Permutation in String",
@@ -117,7 +131,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window - Fixed Size",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/permutation-in-string.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/permutation-in-string.md",
+    "url": "https://leetcode.com/problems/permutation-in-string/"
   },
   {
     "title": "Longest Substring Without Repeating Characters",
@@ -125,7 +140,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window - Dynamic Size",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-substring-without-repeating-characters.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-substring-without-repeating-characters.md",
+    "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
   },
   {
     "title": "Minimum Window Substring",
@@ -133,7 +149,8 @@
     "difficulty": "Hard",
     "category": "Sliding Window - Dynamic Size",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/minimum-window-substring.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/minimum-window-substring.md",
+    "url": "https://leetcode.com/problems/minimum-window-substring/"
   },
   {
     "title": "Maximum Subarray",
@@ -141,7 +158,8 @@
     "difficulty": "Medium",
     "category": "Kadane's Algorithm",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/maximum-subarray.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/maximum-subarray.md",
+    "url": "https://leetcode.com/problems/maximum-subarray/"
   },
   {
     "title": "Spiral Matrix",
@@ -149,7 +167,8 @@
     "difficulty": "Medium",
     "category": "Matrix (2D Array)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/spiral-matrix.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/spiral-matrix.md",
+    "url": "https://leetcode.com/problems/spiral-matrix/"
   },
   {
     "title": "Rotate Image",
@@ -157,7 +176,8 @@
     "difficulty": "Medium",
     "category": "Matrix (2D Array)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/rotate-image.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/rotate-image.md",
+    "url": "https://leetcode.com/problems/rotate-image/"
   },
   {
     "title": "Remove Nth Node From End of List",
@@ -165,7 +185,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/remove-nth-node-from-end-of-list.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/remove-nth-node-from-end-of-list.md",
+    "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
   },
   {
     "title": "Swap Nodes in Pairs",
@@ -173,7 +194,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/swap-nodes-in-pairs.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/swap-nodes-in-pairs.md",
+    "url": "https://leetcode.com/problems/swap-nodes-in-pairs/"
   },
   {
     "title": "Add Two Numbers",
@@ -181,7 +203,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/add-two-numbers.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/add-two-numbers.md",
+    "url": "https://leetcode.com/problems/add-two-numbers/"
   },
   {
     "title": "Reverse Nodes in k-Group",
@@ -189,7 +212,8 @@
     "difficulty": "Hard",
     "category": "LinkedList In-place Reversal",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/reverse-nodes-in-k-group.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/reverse-nodes-in-k-group.md",
+    "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/"
   },
   {
     "title": "Linked List Cycle II",
@@ -197,7 +221,8 @@
     "difficulty": "Medium",
     "category": "Fast and Slow Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/linked-list-cycle-ii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/linked-list-cycle-ii.md",
+    "url": "https://leetcode.com/problems/linked-list-cycle-ii/"
   },
   {
     "title": "Valid Parentheses",
@@ -205,7 +230,8 @@
     "difficulty": "Easy",
     "category": "Stacks",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/valid-parentheses.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/valid-parentheses.md",
+    "url": "https://leetcode.com/problems/valid-parentheses/"
   },
   {
     "title": "Min Stack",
@@ -213,7 +239,8 @@
     "difficulty": "Medium",
     "category": "Stacks",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/min-stack.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/min-stack.md",
+    "url": "https://leetcode.com/problems/min-stack/"
   },
   {
     "title": "Largest Rectangle in Histogram",
@@ -221,7 +248,8 @@
     "difficulty": "Hard",
     "category": "Monotonic Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/largest-rectangle-in-histogram.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/largest-rectangle-in-histogram.md",
+    "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
   },
   {
     "title": "Sliding Window Maximum",
@@ -229,7 +257,8 @@
     "difficulty": "Hard",
     "category": "Monotonic Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/sliding-window-maximum.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/sliding-window-maximum.md",
+    "url": "https://leetcode.com/problems/sliding-window-maximum/"
   },
   {
     "title": "Sort Colors",
@@ -237,7 +266,8 @@
     "difficulty": "Medium",
     "category": "QuickSort / QuickSelect",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/sort-colors.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/sort-colors.md",
+    "url": "https://leetcode.com/problems/sort-colors/"
   },
   {
     "title": "Find First and Last Position of Element in Sorted Array",
@@ -245,7 +275,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/find-first-and-last-position-of-element-in-sorted-array.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/find-first-and-last-position-of-element-in-sorted-array.md",
+    "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"
   },
   {
     "title": "Search in Rotated Sorted Array",
@@ -253,7 +284,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/search-in-rotated-sorted-array.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/search-in-rotated-sorted-array.md",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
   },
   {
     "title": "Median of Two Sorted Arrays",
@@ -261,7 +293,8 @@
     "difficulty": "Hard",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/median-of-two-sorted-arrays.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/median-of-two-sorted-arrays.md",
+    "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/"
   },
   {
     "title": "Permutations",
@@ -269,7 +302,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/permutations.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/permutations.md",
+    "url": "https://leetcode.com/problems/permutations/"
   },
   {
     "title": "Subsets",
@@ -277,7 +311,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/subsets.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/subsets.md",
+    "url": "https://leetcode.com/problems/subsets/"
   },
   {
     "title": "Binary Tree Level Order Traversal",
@@ -285,7 +320,8 @@
     "difficulty": "Medium",
     "category": "Tree Traversal - Level Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-level-order-traversal.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-level-order-traversal.md",
+    "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
   },
   {
     "title": "Binary Tree Right Side View",
@@ -293,7 +329,8 @@
     "difficulty": "Medium",
     "category": "Tree Traversal - Level Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-right-side-view.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-right-side-view.md",
+    "url": "https://leetcode.com/problems/binary-tree-right-side-view/"
   },
   {
     "title": "Binary Tree Preorder Traversal",
@@ -301,7 +338,8 @@
     "difficulty": "Easy",
     "category": "Tree Traversal - Pre Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-preorder-traversal.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-preorder-traversal.md",
+    "url": "https://leetcode.com/problems/binary-tree-preorder-traversal/"
   },
   {
     "title": "Path Sum III",
@@ -309,7 +347,8 @@
     "difficulty": "Medium",
     "category": "Tree Traversal - Pre Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/path-sum-iii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/path-sum-iii.md",
+    "url": "https://leetcode.com/problems/path-sum-iii/"
   },
   {
     "title": "Serialize and Deserialize Binary Tree",
@@ -317,7 +356,8 @@
     "difficulty": "Hard",
     "category": "Tree Traversal - Pre Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/serialize-and-deserialize-binary-tree.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/serialize-and-deserialize-binary-tree.md",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
   },
   {
     "title": "Binary Tree Inorder Traversal",
@@ -325,7 +365,8 @@
     "difficulty": "Easy",
     "category": "Tree Traversal - In Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-inorder-traversal.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-inorder-traversal.md",
+    "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/"
   },
   {
     "title": "Validate Binary Search Tree",
@@ -333,7 +374,8 @@
     "difficulty": "Medium",
     "category": "Tree Traversal - In Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/validate-binary-search-tree.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/validate-binary-search-tree.md",
+    "url": "https://leetcode.com/problems/validate-binary-search-tree/"
   },
   {
     "title": "Kth Smallest Element in a BST",
@@ -341,7 +383,8 @@
     "difficulty": "Medium",
     "category": "Tree Traversal - In Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/kth-smallest-element-in-a-bst.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/kth-smallest-element-in-a-bst.md",
+    "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"
   },
   {
     "title": "Binary Tree Postorder Traversal",
@@ -349,7 +392,8 @@
     "difficulty": "Easy",
     "category": "Tree Traversal - Post-Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-postorder-traversal.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-postorder-traversal.md",
+    "url": "https://leetcode.com/problems/binary-tree-postorder-traversal/"
   },
   {
     "title": "Lowest Common Ancestor of a Binary Tree",
@@ -357,7 +401,8 @@
     "difficulty": "Medium",
     "category": "Tree Traversal - Post-Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/lowest-common-ancestor-of-a-binary-tree.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/lowest-common-ancestor-of-a-binary-tree.md",
+    "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/"
   },
   {
     "title": "Binary Tree Maximum Path Sum",
@@ -365,7 +410,8 @@
     "difficulty": "Hard",
     "category": "Tree Traversal - Post-Order",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-maximum-path-sum.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/binary-tree-maximum-path-sum.md",
+    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
   },
   {
     "title": "My Calendar I",
@@ -373,7 +419,8 @@
     "difficulty": "Medium",
     "category": "BST / Ordered Set",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/my-calendar-i.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/my-calendar-i.md",
+    "url": "https://leetcode.com/problems/my-calendar-i/"
   },
   {
     "title": "Implement Trie (Prefix Tree)",
@@ -381,7 +428,8 @@
     "difficulty": "Medium",
     "category": "Tries",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/implement-trie-prefix-tree.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/implement-trie-prefix-tree.md",
+    "url": "https://leetcode.com/problems/implement-trie-prefix-tree/"
   },
   {
     "title": "Word Search II",
@@ -389,7 +437,8 @@
     "difficulty": "Hard",
     "category": "Tries",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/word-search-ii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/word-search-ii.md",
+    "url": "https://leetcode.com/problems/word-search-ii/"
   },
   {
     "title": "Find Median from Data Stream",
@@ -397,7 +446,8 @@
     "difficulty": "Hard",
     "category": "Two Heaps",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/find-median-from-data-stream.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/find-median-from-data-stream.md",
+    "url": "https://leetcode.com/problems/find-median-from-data-stream/"
   },
   {
     "title": "Top K Frequent Elements",
@@ -405,7 +455,8 @@
     "difficulty": "Medium",
     "category": "Top K Elements",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/top-k-frequent-elements.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/top-k-frequent-elements.md",
+    "url": "https://leetcode.com/problems/top-k-frequent-elements/"
   },
   {
     "title": "Merge Intervals",
@@ -413,7 +464,8 @@
     "difficulty": "Medium",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/merge-intervals.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/merge-intervals.md",
+    "url": "https://leetcode.com/problems/merge-intervals/"
   },
   {
     "title": "Non-overlapping Intervals",
@@ -421,7 +473,8 @@
     "difficulty": "Medium",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/non-overlapping-intervals.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/non-overlapping-intervals.md",
+    "url": "https://leetcode.com/problems/non-overlapping-intervals/"
   },
   {
     "title": "Merge k Sorted Lists",
@@ -429,7 +482,8 @@
     "difficulty": "Hard",
     "category": "K-Way Merge",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/merge-k-sorted-lists.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/merge-k-sorted-lists.md",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists/"
   },
   {
     "title": "LRU Cache",
@@ -437,7 +491,8 @@
     "difficulty": "Medium",
     "category": "Data Structure Design",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/lru-cache.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/lru-cache.md",
+    "url": "https://leetcode.com/problems/lru-cache/"
   },
   {
     "title": "Jump Game II",
@@ -445,7 +500,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/jump-game-ii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/jump-game-ii.md",
+    "url": "https://leetcode.com/problems/jump-game-ii/"
   },
   {
     "title": "Number of Islands",
@@ -453,7 +509,8 @@
     "difficulty": "Medium",
     "category": "Depth First Search (DFS)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/number-of-islands.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/number-of-islands.md",
+    "url": "https://leetcode.com/problems/number-of-islands/"
   },
   {
     "title": "Clone Graph",
@@ -461,7 +518,8 @@
     "difficulty": "Medium",
     "category": "Depth First Search (DFS)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/clone-graph.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/clone-graph.md",
+    "url": "https://leetcode.com/problems/clone-graph/"
   },
   {
     "title": "Is Graph Bipartite?",
@@ -469,7 +527,8 @@
     "difficulty": "Medium",
     "category": "Depth First Search (DFS)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/is-graph-bipartite.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/is-graph-bipartite.md",
+    "url": "https://leetcode.com/problems/is-graph-bipartite/"
   },
   {
     "title": "Rotting Oranges",
@@ -477,7 +536,8 @@
     "difficulty": "Medium",
     "category": "Breadth First Search (BFS)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/rotting-oranges.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/rotting-oranges.md",
+    "url": "https://leetcode.com/problems/rotting-oranges/"
   },
   {
     "title": "Word Ladder",
@@ -485,7 +545,8 @@
     "difficulty": "Hard",
     "category": "Breadth First Search (BFS)",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/word-ladder.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/word-ladder.md",
+    "url": "https://leetcode.com/problems/word-ladder/"
   },
   {
     "title": "Course Schedule II",
@@ -493,7 +554,8 @@
     "difficulty": "Medium",
     "category": "Topological Sort",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/course-schedule-ii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/course-schedule-ii.md",
+    "url": "https://leetcode.com/problems/course-schedule-ii/"
   },
   {
     "title": "Number of Provinces",
@@ -501,7 +563,8 @@
     "difficulty": "Medium",
     "category": "Union Find",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/number-of-provinces.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/number-of-provinces.md",
+    "url": "https://leetcode.com/problems/number-of-provinces/"
   },
   {
     "title": "Min Cost to Connect All Points",
@@ -509,7 +572,8 @@
     "difficulty": "Medium",
     "category": "Minimum Spanning Tree",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/min-cost-to-connect-all-points.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/min-cost-to-connect-all-points.md",
+    "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/"
   },
   {
     "title": "Cheapest Flights Within K Stops",
@@ -517,7 +581,8 @@
     "difficulty": "Medium",
     "category": "Shortest Path",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/cheapest-flights-within-k-stops.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/cheapest-flights-within-k-stops.md",
+    "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/"
   },
   {
     "title": "House Robber II",
@@ -525,7 +590,8 @@
     "difficulty": "Medium",
     "category": "1-D DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/house-robber-ii.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/house-robber-ii.md",
+    "url": "https://leetcode.com/problems/house-robber-ii/"
   },
   {
     "title": "Partition Equal Subset Sum",
@@ -533,7 +599,8 @@
     "difficulty": "Medium",
     "category": "Knapsack DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/partition-equal-subset-sum.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/partition-equal-subset-sum.md",
+    "url": "https://leetcode.com/problems/partition-equal-subset-sum/"
   },
   {
     "title": "Coin Change",
@@ -541,7 +608,8 @@
     "difficulty": "Medium",
     "category": "Unbounded Knapsack DP ",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/coin-change.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/coin-change.md",
+    "url": "https://leetcode.com/problems/coin-change/"
   },
   {
     "title": "Longest Increasing Subsequence",
@@ -549,7 +617,8 @@
     "difficulty": "Medium",
     "category": "Longest Increasing Subsequence DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-increasing-subsequence.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-increasing-subsequence.md",
+    "url": "https://leetcode.com/problems/longest-increasing-subsequence/"
   },
   {
     "title": "Minimum Path Sum",
@@ -557,7 +626,8 @@
     "difficulty": "Medium",
     "category": "2D (Grid) DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/minimum-path-sum.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/minimum-path-sum.md",
+    "url": "https://leetcode.com/problems/minimum-path-sum/"
   },
   {
     "title": "Longest Increasing Path in a Matrix",
@@ -565,7 +635,8 @@
     "difficulty": "Hard",
     "category": "2D (Grid) DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-increasing-path-in-a-matrix.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-increasing-path-in-a-matrix.md",
+    "url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/"
   },
   {
     "title": "Longest Common Subsequence",
@@ -573,7 +644,8 @@
     "difficulty": "Medium",
     "category": "String DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-common-subsequence.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/longest-common-subsequence.md",
+    "url": "https://leetcode.com/problems/longest-common-subsequence/"
   },
   {
     "title": "Word Break",
@@ -581,7 +653,8 @@
     "difficulty": "Medium",
     "category": "String DP",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/word-break.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/word-break.md",
+    "url": "https://leetcode.com/problems/word-break/"
   },
   {
     "title": "Reverse Integer",
@@ -589,7 +662,8 @@
     "difficulty": "Medium",
     "category": "Maths / Geometry",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/reverse-integer.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/reverse-integer.md",
+    "url": "https://leetcode.com/problems/reverse-integer/"
   },
   {
     "title": "Max Points on a Line",
@@ -597,6 +671,7 @@
     "difficulty": "Hard",
     "category": "Maths / Geometry",
     "platform": "leetcode",
-    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/max-points-on-a-line.md"
+    "youtubeLink": "https://github.com/AlgoMaster-io/leetcode-solutions/blob/main/java/max-points-on-a-line.md",
+    "url": "https://leetcode.com/problems/max-points-on-a-line/"
   }
 ]

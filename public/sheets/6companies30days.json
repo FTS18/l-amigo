@@ -4,629 +4,719 @@
     "titleSlug": "minimize-the-maximum-of-two-arrays",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimize-the-maximum-of-two-arrays/"
   },
   {
     "title": "Employee Priority Systems",
     "titleSlug": "high-access-employees",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/high-access-employees/"
   },
   {
     "title": "Kth Smallest Element Query",
     "titleSlug": "query-kth-smallest-trimmed-number",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/query-kth-smallest-trimmed-number/"
   },
   {
     "title": "Combination Sum",
     "titleSlug": "combination-sum-iii",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/combination-sum-iii/"
   },
   {
     "title": "Flip Matrix",
     "titleSlug": "random-flip-matrix",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/random-flip-matrix/"
   },
   {
     "title": "Combinations in a Phone Number",
     "titleSlug": "letter-combinations-of-a-phone-number",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/"
   },
   {
     "title": "Find Missing and Repeating",
     "titleSlug": "find-missing-and-repeating2512",
     "difficulty": "Easy",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/find-missing-and-repeating2512/1"
   },
   {
     "title": "Finding consecutive integers from a Data Stream",
     "titleSlug": "find-consecutive-integers-from-a-data-stream",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-consecutive-integers-from-a-data-stream/"
   },
   {
     "title": "Following a number pattern",
     "titleSlug": "number-following-a-pattern3126",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/number-following-a-pattern3126/1"
   },
   {
     "title": "K - divisible Elements Subarrays",
     "titleSlug": "k-divisible-elements-subarrays",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/k-divisible-elements-subarrays/"
   },
   {
     "title": "Map of Highest Peak",
     "titleSlug": "map-of-highest-peak",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/map-of-highest-peak/"
   },
   {
     "title": "Maximum Sum BST ",
     "titleSlug": "maximum-sum-bst-in-binary-tree",
     "difficulty": "Hard",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/"
   },
   {
     "title": "People aware of a secret",
     "titleSlug": "number-of-people-aware-of-a-secret",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/number-of-people-aware-of-a-secret/"
   },
   {
     "title": "Run Length Encoding",
     "titleSlug": "run-length-encoding",
     "difficulty": "Easy",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/run-length-encoding/1"
   },
   {
     "title": "Ways to reach a position after K steps",
     "titleSlug": "number-of-ways-to-reach-a-position-after-exactly-k-steps",
     "difficulty": "Medium",
     "category": "Company 1 - Goldman Sachs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/number-of-ways-to-reach-a-position-after-exactly-k-steps/"
   },
   {
     "title": "Overlap Circle and Rectangle",
     "titleSlug": "circle-and-rectangle-overlapping",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/circle-and-rectangle-overlapping/"
   },
   {
     "title": "Who is the Winner?",
     "titleSlug": "find-the-winner-of-the-circular-game",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-winner-of-the-circular-game/"
   },
   {
     "title": "Envelopes and Dolls",
     "titleSlug": "russian-doll-envelopes",
     "difficulty": "Hard",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/russian-doll-envelopes/"
   },
   {
     "title": "Image Smoother",
     "titleSlug": "image-smoother",
     "difficulty": "Easy",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/image-smoother/"
   },
   {
     "title": "Minimum Moves to Equal Array Elements",
     "titleSlug": "minimum-moves-to-equal-array-elements-ii",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/"
   },
   {
     "title": "Random Point in Non-overlapping Rectangles",
     "titleSlug": "random-point-in-non-overlapping-rectangles",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/random-point-in-non-overlapping-rectangles/"
   },
   {
     "title": "Bulls and Cows",
     "titleSlug": "bulls-and-cows",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/bulls-and-cows/"
   },
   {
     "title": "Counting Nice Sub Arrays",
     "titleSlug": "count-number-of-nice-subarrays",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-number-of-nice-subarrays/"
   },
   {
     "title": "Repeated DNA Sequences",
     "titleSlug": "repeated-dna-sequences",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/repeated-dna-sequences/"
   },
   {
     "title": "City with Smallest Number of Threshhold Distance",
     "titleSlug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/"
   },
   {
     "title": "Count the Number of Incremovable Subarrays I",
     "titleSlug": "count-the-number-of-incremovable-subarrays-i",
     "difficulty": "Easy",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-the-number-of-incremovable-subarrays-i/"
   },
   {
     "title": "Max Product of Length of Two Palindromic Sequences",
     "titleSlug": "maximum-product-of-the-length-of-two-palindromic-subsequences",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-product-of-the-length-of-two-palindromic-subsequences/"
   },
   {
     "title": "Wiggle Sort",
     "titleSlug": "wiggle-sort-ii",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/wiggle-sort-ii/"
   },
   {
     "title": "Shopping Offers",
     "titleSlug": "shopping-offers",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/shopping-offers/"
   },
   {
     "title": "Minimum Cost to Convert String I",
     "titleSlug": "minimum-cost-to-convert-string-i",
     "difficulty": "Medium",
     "category": "Company 2 - Microsoft",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-cost-to-convert-string-i/"
   },
   {
     "title": "Largest Divisible Subset",
     "titleSlug": "largest-divisible-subset",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/largest-divisible-subset/"
   },
   {
     "title": "Find Subsequence of Length K With the Largest Sum",
     "titleSlug": "find-subsequence-of-length-k-with-the-largest-sum",
     "difficulty": "Easy",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-subsequence-of-length-k-with-the-largest-sum/"
   },
   {
     "title": "Amount of Time for Binary Tree to Be Infected",
     "titleSlug": "amount-of-time-for-binary-tree-to-be-infected",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected/"
   },
   {
     "title": "K-diff Pairs in an Array",
     "titleSlug": "k-diff-pairs-in-an-array",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/k-diff-pairs-in-an-array/"
   },
   {
     "title": "Count the Number of Square-Free Subsets",
     "titleSlug": "count-the-number-of-square-free-subsets",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-the-number-of-square-free-subsets/"
   },
   {
     "title": "Rotate Function",
     "titleSlug": "rotate-function",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/rotate-function/"
   },
   {
     "title": "Get Equal Substrings Within Budget",
     "titleSlug": "get-equal-substrings-within-budget",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/get-equal-substrings-within-budget/"
   },
   {
     "title": "Friends Of Appropriate Ages",
     "titleSlug": "friends-of-appropriate-ages",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/friends-of-appropriate-ages/"
   },
   {
     "title": "Maximum Length of Repeated Subarray",
     "titleSlug": "maximum-length-of-repeated-subarray",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-length-of-repeated-subarray/"
   },
   {
     "title": "Verify Preorder Serialization of a Binary Tree",
     "titleSlug": "verify-preorder-serialization-of-a-binary-tree",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/"
   },
   {
     "title": "Top K Frequent Words",
     "titleSlug": "top-k-frequent-words",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/top-k-frequent-words/"
   },
   {
     "title": "Battleships in a Board",
     "titleSlug": "battleships-in-a-board",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/battleships-in-a-board/"
   },
   {
     "title": "Sort Characters By Frequency",
     "titleSlug": "sort-characters-by-frequency",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
   },
   {
     "title": "Word Break",
     "titleSlug": "word-break",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/word-break/"
   },
   {
     "title": "Extra Characters in a String",
     "titleSlug": "extra-characters-in-a-string",
     "difficulty": "Medium",
     "category": "Company 3 - Walmart",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/extra-characters-in-a-string/"
   },
   {
     "title": "Trim a Binary Search Tree",
     "titleSlug": "trim-a-binary-search-tree",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/trim-a-binary-search-tree/"
   },
   {
     "title": "Construct the Longest New String",
     "titleSlug": "construct-the-longest-new-string",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/construct-the-longest-new-string/"
   },
   {
     "title": "Short Encoding of Words",
     "titleSlug": "short-encoding-of-words",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/short-encoding-of-words/"
   },
   {
     "title": "Constrained Subsequence Sum",
     "titleSlug": "constrained-subsequence-sum",
     "difficulty": "Hard",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/constrained-subsequence-sum/"
   },
   {
     "title": "Special Permutations",
     "titleSlug": "special-permutations",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/special-permutations/"
   },
   {
     "title": "Matrix Cells in Distance Order",
     "titleSlug": "matrix-cells-in-distance-order",
     "difficulty": "Easy",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/matrix-cells-in-distance-order/"
   },
   {
     "title": "The Skyline Problem",
     "titleSlug": "the-skyline-problem",
     "difficulty": "Hard",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/the-skyline-problem/"
   },
   {
     "title": "Minimum Cost of a Path With Special Roads",
     "titleSlug": "minimum-cost-of-a-path-with-special-roads",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-cost-of-a-path-with-special-roads/"
   },
   {
     "title": "Longest Word in Dictionary through Deleting",
     "titleSlug": "longest-word-in-dictionary-through-deleting",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/"
   },
   {
     "title": "Find Players With Zero or One Losses",
     "titleSlug": "find-players-with-zero-or-one-losses",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-players-with-zero-or-one-losses/"
   },
   {
     "title": "Cinema Seat Allocation",
     "titleSlug": "cinema-seat-allocation",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/cinema-seat-allocation/"
   },
   {
     "title": "Airplane Seat Assignment Probability",
     "titleSlug": "airplane-seat-assignment-probability",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/airplane-seat-assignment-probability/"
   },
   {
     "title": "Erect the Fence",
     "titleSlug": "erect-the-fence",
     "difficulty": "Hard",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/erect-the-fence/"
   },
   {
     "title": "Get Equal Substrings Within Budget",
     "titleSlug": "get-equal-substrings-within-budget",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/get-equal-substrings-within-budget/"
   },
   {
     "title": "Last Moment Before All Ants Fall Out of a Plank",
     "titleSlug": "last-moment-before-all-ants-fall-out-of-a-plank",
     "difficulty": "Medium",
     "category": "Company 4 - Adobe",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/last-moment-before-all-ants-fall-out-of-a-plank/"
   },
   {
     "title": "Assign Cookies",
     "titleSlug": "assign-cookies",
     "difficulty": "Easy",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/assign-cookies/"
   },
   {
     "title": "Throne Inheritance",
     "titleSlug": "throne-inheritance",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/throne-inheritance/"
   },
   {
     "title": "Kth Largest Element in a Stream",
     "titleSlug": "kth-largest-element-in-a-stream",
     "difficulty": "Easy",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/"
   },
   {
     "title": "Maximize Area of Square Hole in Grid",
     "titleSlug": "maximize-area-of-square-hole-in-grid",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximize-area-of-square-hole-in-grid/"
   },
   {
     "title": "LRU Cache",
     "titleSlug": "lru-cache",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/lru-cache/"
   },
   {
     "title": "Find Beautiful Indices in the Given Array I",
     "titleSlug": "find-beautiful-indices-in-the-given-array-i",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-beautiful-indices-in-the-given-array-i/"
   },
   {
     "title": "Count Words Obtained After Adding a Letter",
     "titleSlug": "count-words-obtained-after-adding-a-letter",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-words-obtained-after-adding-a-letter/"
   },
   {
     "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
     "titleSlug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/"
   },
   {
     "title": "Minimum Non-Zero Product of the Array Elements",
     "titleSlug": "minimum-non-zero-product-of-the-array-elements",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-non-zero-product-of-the-array-elements/"
   },
   {
     "title": "Query Kth Smallest Trimmed Number",
     "titleSlug": "query-kth-smallest-trimmed-number",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/query-kth-smallest-trimmed-number/"
   },
   {
     "title": "The Number of Good Subsets",
     "titleSlug": "the-number-of-good-subsets",
     "difficulty": "Hard",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/the-number-of-good-subsets/"
   },
   {
     "title": "Count Collisions on a Road",
     "titleSlug": "count-collisions-on-a-road",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-collisions-on-a-road/"
   },
   {
     "title": "Find the Distance Value Between Two Arrays",
     "titleSlug": "find-the-distance-value-between-two-arrays",
     "difficulty": "Easy",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-distance-value-between-two-arrays/"
   },
   {
     "title": "Length of Longest Subarray With at Most K Frequency",
     "titleSlug": "length-of-longest-subarray-with-at-most-k-frequency",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/"
   },
   {
     "title": "Construct the Longest New String",
     "titleSlug": "construct-the-longest-new-string",
     "difficulty": "Medium",
     "category": "Company 5 - Atlassian",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/construct-the-longest-new-string/"
   },
   {
     "title": "Destroying Asteroids",
     "titleSlug": "destroying-asteroids",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/destroying-asteroids/"
   },
   {
     "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
     "titleSlug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/"
   },
   {
     "title": "Integer to English Words",
     "titleSlug": "integer-to-english-words",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/integer-to-english-words/"
   },
   {
     "title": "Repeated DNA Sequences",
     "titleSlug": "repeated-dna-sequences",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/repeated-dna-sequences/"
   },
   {
     "title": "Stone Game VI",
     "titleSlug": "stone-game-vi",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/stone-game-vi/"
   },
   {
     "title": "Merge k Sorted Lists",
     "titleSlug": "merge-k-sorted-lists",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists/"
   },
   {
     "title": "Maximum Product After K Increments",
     "titleSlug": "maximum-product-after-k-increments",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-product-after-k-increments/"
   },
   {
     "title": "Russian Doll Envelopes",
     "titleSlug": "russian-doll-envelopes",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/russian-doll-envelopes/"
   },
   {
     "title": "Query Kth Smallest Trimmed Number",
     "titleSlug": "query-kth-smallest-trimmed-number",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/query-kth-smallest-trimmed-number/"
   },
   {
     "title": "Count Subtrees With Max Distance Between Cities",
     "titleSlug": "count-subtrees-with-max-distance-between-cities",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-subtrees-with-max-distance-between-cities/"
   },
   {
     "title": "Minimum Number of Days to Disconnect Island",
     "titleSlug": "minimum-number-of-days-to-disconnect-island",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-number-of-days-to-disconnect-island/"
   },
   {
     "title": "Sum of Scores of Built Strings",
     "titleSlug": "sum-of-scores-of-built-strings",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/sum-of-scores-of-built-strings/"
   },
   {
     "title": "Find in Mountain Array",
     "titleSlug": "find-in-mountain-array",
     "difficulty": "Hard",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-in-mountain-array/"
   },
   {
     "title": "Design Add and Search Words Data Structure",
     "titleSlug": "design-add-and-search-words-data-structure",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/"
   },
   {
     "title": "Number of Good Leaf Nodes Pairs",
     "titleSlug": "number-of-good-leaf-nodes-pairs",
     "difficulty": "Medium",
     "category": "Company 6 - Google",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/number-of-good-leaf-nodes-pairs/"
   }
 ]

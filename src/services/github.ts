@@ -7,7 +7,7 @@ import { fetchWithTimeout } from "../utils/network";
 
 export interface SyncResult {
   count: number;
-  syncedSubmissions: Array<{ title: string; lang: string }>;
+  syncedSubmissions: Array<{ title: string; lang: string; filePath?: string }>;
 }
 
 export interface GitHubSyncConfig {
@@ -409,7 +409,7 @@ export class GitHubSyncService {
     let syncedCount = 0;
     let processedCount = 0;
     let failedCount = 0;
-    const syncedDetails: Array<{ title: string; lang: string }> = [];
+    const syncedDetails: Array<{ title: string; lang: string; filePath?: string }> = [];
     const toSync = submissions.filter((s) => {
       const titleKey = `${s.platform}-${s.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}_folder`;
       if (s.platform === 'cses' || s.platform === 'codeforces' || s.platform === 'gfg' || s.platform === 'codechef') {
@@ -446,7 +446,7 @@ export class GitHubSyncService {
       }
       
       const batch = toSync.slice(i, i + BATCH_SIZE);
-      await Promise.all(batch.map(async (sub) => {
+      for (const sub of batch) {
         // O(1) try number lookup
         const tryIndex = tryIndexMap.get(sub.id) || 1;
         
@@ -475,10 +475,20 @@ export class GitHubSyncService {
             ]);
             if (!fetchedCode) {
               console.warn(`[GH] Failed to fetch LeetCode code for ${sub.title} (${sub.id}). Skipping to allow retry later.`);
+              if (failedCount === 0) {
+                try {
+                  const auth = await LeetCodeService.checkAuthStatus();
+                  if (!auth.isSignedIn) {
+                    await chrome.storage.local.set({
+                      sync_error: "Not logged into LeetCode. Please log in at leetcode.com in your browser."
+                    });
+                  }
+                } catch { /* ignore */ }
+              }
               failedCount++;
               processedCount++;
               onProgress?.(processedCount, total, failedCount);
-              return;
+              continue;
             }
             code = fetchedCode;
             meta = fetchedMeta;
@@ -488,7 +498,7 @@ export class GitHubSyncService {
               failedCount++;
               processedCount++;
               onProgress?.(processedCount, total, failedCount);
-              return;
+              continue;
             }
             code = (sub as any).code;
             meta = { num: null, difficulty: "Unknown" };
@@ -500,7 +510,7 @@ export class GitHubSyncService {
               failedCount++;
               processedCount++;
               onProgress?.(processedCount, total, failedCount);
-              return;
+              continue;
             }
             code = fetchedCode;
             meta = { num: null, difficulty: (sub as any).difficulty || "Unknown" };
@@ -511,7 +521,7 @@ export class GitHubSyncService {
               failedCount++;
               processedCount++;
               onProgress?.(processedCount, total, failedCount);
-              return;
+              continue;
             }
             code = fetchedCode;
             meta = { num: null, difficulty: (sub as any).difficulty || "Unknown" };
@@ -541,7 +551,7 @@ export class GitHubSyncService {
             await this.batchMarkSynced(syncKeys);
             syncKeys.forEach(k => synced.add(k));
             syncedCount++;
-            syncedDetails.push({ title: sub.title, lang: sub.lang });
+            syncedDetails.push({ title: sub.title, lang: sub.lang, filePath });
             console.log(`[GH]  ${filePath}`);
           } catch (err: any) {
             console.error(`[GH]  ${filePath}:`, err);
@@ -571,7 +581,7 @@ export class GitHubSyncService {
 
         processedCount++;
         onProgress?.(processedCount, total, failedCount);
-      }));
+      }
       
       // Delay between chunks to reduce load
       if (i + BATCH_SIZE < toSync.length) {
@@ -1005,44 +1015,59 @@ ${code || "// Code not available"}
     repo: string,
     path: string,
     content: string,
+    retries = 3,
   ): Promise<void> {
-    // Get SHA if file already exists
-    let sha: string | undefined;
-    try {
-      const g = await fetchWithTimeout(
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      // Get SHA if file already exists
+      let sha: string | undefined;
+      try {
+        const g = await fetchWithTimeout(
+          `${this.API}/repos/${user}/${repo}/contents/${path}`,
+          {
+            headers: {
+              Authorization: `token ${token}`,
+              Accept: "application/vnd.github.v3+json",
+            },
+            cache: "no-store",
+          },
+        );
+        if (g.ok) sha = (await g.json()).sha;
+      } catch {
+        /* file doesn't exist yet */
+      }
+
+      const r = await fetchWithTimeout(
         `${this.API}/repos/${user}/${repo}/contents/${path}`,
         {
+          method: "PUT",
           headers: {
             Authorization: `token ${token}`,
             Accept: "application/vnd.github.v3+json",
+            "Content-Type": "application/json",
           },
-          cache: "no-store",
+          body: JSON.stringify({
+            message: sha ? `Update ${path}` : `Add ${path}`,
+            content: btoa(unescape(encodeURIComponent(content))),
+            ...(sha && { sha }),
+          }),
         },
       );
-      if (g.ok) sha = (await g.json()).sha;
-    } catch {
-      /* file doesn't exist yet */
-    }
 
-    const r = await fetchWithTimeout(
-      `${this.API}/repos/${user}/${repo}/contents/${path}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `token ${token}`,
-          Accept: "application/vnd.github.v3+json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: sha ? `Update ${path}` : `Add ${path}`,
-          content: btoa(unescape(encodeURIComponent(content))),
-          ...(sha && { sha }),
-        }),
-      },
-    );
-    if (!r.ok) {
-      const e = await r.json();
-      throw new Error(e.message || `Failed to update ${path}`);
+      if (r.ok) return;
+
+      const e = await r.json().catch(() => ({}));
+      const msg = e.message || `Failed to update ${path}`;
+      if (
+        (r.status === 409 || msg.includes("is at") || msg.includes("expected")) &&
+        attempt < retries
+      ) {
+        console.warn(
+          `[GH] Branch head conflict for ${path}. Retrying in ${500 * (attempt + 1)}ms...`,
+        );
+        await sleep(500 * (attempt + 1) + Math.random() * 500);
+        continue;
+      }
+      throw new Error(msg);
     }
   }
 

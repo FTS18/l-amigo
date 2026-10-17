@@ -4,1049 +4,1199 @@
     "titleSlug": "1068",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1068"
   },
   {
     "title": "Missing Number",
     "titleSlug": "1083",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1083"
   },
   {
     "title": "Repetitions",
     "titleSlug": "1069",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1069"
   },
   {
     "title": "Increasing Array",
     "titleSlug": "1094",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1094"
   },
   {
     "title": "Permutations",
     "titleSlug": "1070",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1070"
   },
   {
     "title": "Number Spiral",
     "titleSlug": "1071",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1071"
   },
   {
     "title": "Two Knights",
     "titleSlug": "1072",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1072"
   },
   {
     "title": "Two Sets",
     "titleSlug": "1092",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1092"
   },
   {
     "title": "Bit Strings",
     "titleSlug": "1617",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1617"
   },
   {
     "title": "Trailing Zeros",
     "titleSlug": "1618",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1618"
   },
   {
     "title": "Coin Piles",
     "titleSlug": "1754",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1754"
   },
   {
     "title": "Palindrome Reorder",
     "titleSlug": "1755",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1755"
   },
   {
     "title": "Gray Code",
     "titleSlug": "2205",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2205"
   },
   {
     "title": "Fence Construction",
     "titleSlug": "1622",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1622"
   },
   {
     "title": "Apple Division",
     "titleSlug": "1623",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1623"
   },
   {
     "title": "Chessboard and Queens",
     "titleSlug": "1624",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1624"
   },
   {
     "title": "Digit Queries",
     "titleSlug": "1625",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1625"
   },
   {
     "title": "Grid Paths",
     "titleSlug": "1626",
     "difficulty": "Easy",
     "category": "Introductory Problems",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1626"
   },
   {
     "title": "Distinct Numbers",
     "titleSlug": "1621",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1621"
   },
   {
     "title": "Apartments",
     "titleSlug": "1084",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1084"
   },
   {
     "title": "Ferris Wheel",
     "titleSlug": "1090",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1090"
   },
   {
     "title": "Concert Tickets",
     "titleSlug": "1091",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1091"
   },
   {
     "title": "Restaurant Customers",
     "titleSlug": "1619",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1619"
   },
   {
     "title": "Movie Festival",
     "titleSlug": "1631",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1631"
   },
   {
     "title": "Sum of Two Values",
     "titleSlug": "1163",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1163"
   },
   {
     "title": "Maximum Subarray Sum",
     "titleSlug": "1164",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1164"
   },
   {
     "title": "Stick Lengths",
     "titleSlug": "1620",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1620"
   },
   {
     "title": "Missing Coin Sum",
     "titleSlug": "1630",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1630"
   },
   {
     "title": "Collecting Numbers",
     "titleSlug": "1641",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1641"
   },
   {
     "title": "Towers",
     "titleSlug": "1073",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1073"
   },
   {
     "title": "Array Division",
     "titleSlug": "1085",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1085"
   },
   {
     "title": "Sliding Median",
     "titleSlug": "1076",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1076"
   },
   {
     "title": "Sliding Cost",
     "titleSlug": "1077",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1077"
   },
   {
     "title": "Movie Festival II",
     "titleSlug": "1632",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1632"
   },
   {
     "title": "Nested Ranges Check",
     "titleSlug": "2183",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2183"
   },
   {
     "title": "Nested Ranges Count",
     "titleSlug": "2184",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2184"
   },
   {
     "title": "Subarray Sums I",
     "titleSlug": "1085",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1085"
   },
   {
     "title": "Subarray Sums II",
     "titleSlug": "2422",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2422"
   },
   {
     "title": "Subarray Divisibility",
     "titleSlug": "1660",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1660"
   },
   {
     "title": "Subarray Distinct Values",
     "titleSlug": "2428",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2428"
   },
   {
     "title": "Array Division",
     "titleSlug": "1076",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1076"
   },
   {
     "title": "Pizzeria Queries",
     "titleSlug": "1203",
     "difficulty": "Medium",
     "category": "Sorting and Searching",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1203"
   },
   {
     "title": "Dice Combinations",
     "titleSlug": "1633",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1633"
   },
   {
     "title": "Minimizing Coins",
     "titleSlug": "1634",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1634"
   },
   {
     "title": "Coin Combinations I",
     "titleSlug": "1635",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1635"
   },
   {
     "title": "Coin Combinations II",
     "titleSlug": "1636",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1636"
   },
   {
     "title": "Removing Digits",
     "titleSlug": "1637",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1637"
   },
   {
     "title": "Grid Paths",
     "titleSlug": "1638",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1638"
   },
   {
     "title": "Edit Distance",
     "titleSlug": "1639",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1639"
   },
   {
     "title": "Counting Towers",
     "titleSlug": "1640",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1640"
   },
   {
     "title": "Collecting Numbers",
     "titleSlug": "1641",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1641"
   },
   {
     "title": "Collecting Numbers II",
     "titleSlug": "1642",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1642"
   },
   {
     "title": "Elevator Rides",
     "titleSlug": "1643",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1643"
   },
   {
     "title": "Money Sums",
     "titleSlug": "1644",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1644"
   },
   {
     "title": "Removal Game",
     "titleSlug": "1645",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1645"
   },
   {
     "title": "Drop Balls",
     "titleSlug": "1646",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1646"
   },
   {
     "title": "Increasing Subsequence",
     "titleSlug": "1647",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1647"
   },
   {
     "title": "Projects",
     "titleSlug": "1648",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1648"
   },
   {
     "title": "Counting Tilings",
     "titleSlug": "1649",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1649"
   },
   {
     "title": "Counting Numbers",
     "titleSlug": "1650",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1650"
   },
   {
     "title": "LCS",
     "titleSlug": "1651",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1651"
   },
   {
     "title": "Increasing Array II",
     "titleSlug": "1745",
     "difficulty": "Medium",
     "category": "Dynamic Programming",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1745"
   },
   {
     "title": "Counting Rooms",
     "titleSlug": "1192",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1192"
   },
   {
     "title": "Labyrinth",
     "titleSlug": "1193",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1193"
   },
   {
     "title": "Building Roads",
     "titleSlug": "1666",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1666"
   },
   {
     "title": "Message Route",
     "titleSlug": "1667",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1667"
   },
   {
     "title": "Building Teams",
     "titleSlug": "1668",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1668"
   },
   {
     "title": "Round Trip",
     "titleSlug": "1669",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1669"
   },
   {
     "title": "Monsters",
     "titleSlug": "1670",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1670"
   },
   {
     "title": "Shortest Routes I",
     "titleSlug": "1671",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1671"
   },
   {
     "title": "Shortest Routes II",
     "titleSlug": "1672",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1672"
   },
   {
     "title": "High Score",
     "titleSlug": "1673",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1673"
   },
   {
     "title": "Flight Discount",
     "titleSlug": "1674",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1674"
   },
   {
     "title": "Cycle Finding",
     "titleSlug": "1675",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1675"
   },
   {
     "title": "Flight Routes",
     "titleSlug": "1676",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1676"
   },
   {
     "title": "Round Trip II",
     "titleSlug": "1677",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1677"
   },
   {
     "title": "Course Schedule",
     "titleSlug": "1678",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1678"
   },
   {
     "title": "Longest Flight Route",
     "titleSlug": "1679",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1679"
   },
   {
     "title": "Game Routes",
     "titleSlug": "1680",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1680"
   },
   {
     "title": "Investigation",
     "titleSlug": "1681",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1681"
   },
   {
     "title": "Planets Queries I",
     "titleSlug": "1682",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1682"
   },
   {
     "title": "Planets Queries II",
     "titleSlug": "1683",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1683"
   },
   {
     "title": "Planets Cycles",
     "titleSlug": "1684",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1684"
   },
   {
     "title": "Road Reparation",
     "titleSlug": "1685",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1685"
   },
   {
     "title": "Road Construction",
     "titleSlug": "1686",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1686"
   },
   {
     "title": "Flight Routes Check",
     "titleSlug": "1687",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1687"
   },
   {
     "title": "Planets and Kingdoms",
     "titleSlug": "1688",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1688"
   },
   {
     "title": "Giant Pizza",
     "titleSlug": "1689",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1689"
   },
   {
     "title": "Coin Collector",
     "titleSlug": "1690",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1690"
   },
   {
     "title": "Mail Delivery",
     "titleSlug": "1691",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1691"
   },
   {
     "title": "De Bruijn Sequence",
     "titleSlug": "1692",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1692"
   },
   {
     "title": "Teleporters Path",
     "titleSlug": "1693",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1693"
   },
   {
     "title": "Hamiltonian Flights",
     "titleSlug": "1694",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1694"
   },
   {
     "title": "Knight's Tour",
     "titleSlug": "1695",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1695"
   },
   {
     "title": "Download Speed",
     "titleSlug": "1696",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1696"
   },
   {
     "title": "Police Chase",
     "titleSlug": "1697",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1697"
   },
   {
     "title": "School Dance",
     "titleSlug": "1698",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1698"
   },
   {
     "title": "Distinct Routes",
     "titleSlug": "1699",
     "difficulty": "Hard",
     "category": "Graph Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1699"
   },
   {
     "title": "Subordinates",
     "titleSlug": "1674",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1674"
   },
   {
     "title": "Tree Matching",
     "titleSlug": "1130",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1130"
   },
   {
     "title": "Tree Diameter",
     "titleSlug": "1131",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1131"
   },
   {
     "title": "Tree Distances I",
     "titleSlug": "1132",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1132"
   },
   {
     "title": "Tree Distances II",
     "titleSlug": "1133",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1133"
   },
   {
     "title": "Company Queries I",
     "titleSlug": "1134",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1134"
   },
   {
     "title": "Company Queries II",
     "titleSlug": "1135",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1135"
   },
   {
     "title": "Distance Queries",
     "titleSlug": "1136",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1136"
   },
   {
     "title": "Counting Paths",
     "titleSlug": "1137",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1137"
   },
   {
     "title": "Subtree Queries",
     "titleSlug": "1138",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1138"
   },
   {
     "title": "Path Queries",
     "titleSlug": "1139",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1139"
   },
   {
     "title": "Distinct Colors",
     "titleSlug": "1140",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1140"
   },
   {
     "title": "Finding a Centroid",
     "titleSlug": "2079",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2079"
   },
   {
     "title": "Fixed-Length Paths I",
     "titleSlug": "2080",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2080"
   },
   {
     "title": "Fixed-Length Paths II",
     "titleSlug": "2081",
     "difficulty": "Hard",
     "category": "Tree Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2081"
   },
   {
     "title": "Word Combinations",
     "titleSlug": "1731",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1731"
   },
   {
     "title": "String Matching",
     "titleSlug": "1753",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1753"
   },
   {
     "title": "String Factors",
     "titleSlug": "1732",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1732"
   },
   {
     "title": "String Transform",
     "titleSlug": "1733",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1733"
   },
   {
     "title": "Minimal Rotation",
     "titleSlug": "1110",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1110"
   },
   {
     "title": "Longest Palindrome",
     "titleSlug": "1111",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1111"
   },
   {
     "title": "Palindrome Queries",
     "titleSlug": "2101",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2101"
   },
   {
     "title": "Required Substring",
     "titleSlug": "2102",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2102"
   },
   {
     "title": "Palindrome Partition",
     "titleSlug": "2103",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2103"
   },
   {
     "title": "Counting Patterns",
     "titleSlug": "2104",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2104"
   },
   {
     "title": "Pattern Positions",
     "titleSlug": "2105",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2105"
   },
   {
     "title": "Distinct Substrings",
     "titleSlug": "2106",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2106"
   },
   {
     "title": "Substring Order I",
     "titleSlug": "2107",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2107"
   },
   {
     "title": "Substring Order II",
     "titleSlug": "2108",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2108"
   },
   {
     "title": "Substring Distribution",
     "titleSlug": "2109",
     "difficulty": "Hard",
     "category": "String Algorithms",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2109"
   },
   {
     "title": "Exponentiation",
     "titleSlug": "1712",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1712"
   },
   {
     "title": "Exponentiation II",
     "titleSlug": "1713",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1713"
   },
   {
     "title": "Counting Divisors",
     "titleSlug": "1081",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1081"
   },
   {
     "title": "Common Divisors",
     "titleSlug": "1082",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1082"
   },
   {
     "title": "Binomial Coefficients",
     "titleSlug": "1079",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1079"
   },
   {
     "title": "Creating Strings II",
     "titleSlug": "1715",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1715"
   },
   {
     "title": "Distributing Apples",
     "titleSlug": "1716",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1716"
   },
   {
     "title": "Christmas Party",
     "titleSlug": "1717",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1717"
   },
   {
     "title": "Fibonacci Numbers",
     "titleSlug": "1718",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1718"
   },
   {
     "title": "Throwing Dice",
     "titleSlug": "1719",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1719"
   },
   {
     "title": "Graph Paths I",
     "titleSlug": "1720",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1720"
   },
   {
     "title": "Graph Paths II",
     "titleSlug": "1721",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1721"
   },
   {
     "title": "Dice Probability",
     "titleSlug": "1722",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1722"
   },
   {
     "title": "Moving Robots",
     "titleSlug": "1723",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1723"
   },
   {
     "title": "Candy Lottery",
     "titleSlug": "1724",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1724"
   },
   {
     "title": "Inversion Probability",
     "titleSlug": "1725",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1725"
   },
   {
     "title": "Stick Game",
     "titleSlug": "1726",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1726"
   },
   {
     "title": "Nim Game I",
     "titleSlug": "1727",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1727"
   },
   {
     "title": "Nim Game II",
     "titleSlug": "1728",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1728"
   },
   {
     "title": "Staircase Game",
     "titleSlug": "1729",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1729"
   },
   {
     "title": "Grundy's Game",
     "titleSlug": "1730",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/1730"
   },
   {
     "title": "Another Game",
     "titleSlug": "2413",
     "difficulty": "Hard",
     "category": "Mathematics",
-    "platform": "cses"
+    "platform": "cses",
+    "url": "https://cses.fi/problemset/task/2413"
   }
 ]

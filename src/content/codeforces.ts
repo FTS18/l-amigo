@@ -1639,11 +1639,36 @@ chrome.runtime.onMessage.addListener((message) => {
     
     toast.appendChild(icon);
     toast.appendChild(text);
+
+    if (message.url) {
+      const link = document.createElement("a");
+      link.href = message.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = message.linkText || "View on GitHub ↗";
+      link.style.cssText = `
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-left: 6px;
+        white-space: nowrap;
+      `;
+      toast.appendChild(link);
+    }
+
     document.body.appendChild(toast);
     
     setTimeout(() => {
       toast.remove();
-    }, 5000);
+    }, 6500);
   }
 });
 

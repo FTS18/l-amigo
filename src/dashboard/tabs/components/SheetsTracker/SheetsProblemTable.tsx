@@ -19,6 +19,7 @@ interface SheetsProblemTableProps {
   setSelectedSheetId: (id: string) => void;
   getSheetName: (id: string) => string;
   toggleManualSolve: (slug: string, title: string, platform: string) => void;
+  companyTags?: Record<string, string[]>;
 }
 
 export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(({
@@ -37,6 +38,7 @@ export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(
   setSelectedSheetId,
   getSheetName,
   toggleManualSolve,
+  companyTags,
 }) => {
   return (
     <div className="card" style={{ padding: "0", overflowX: "auto" }}>
@@ -234,21 +236,51 @@ export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(
                 </tr>
                 {expandedCategories.has(category) &&
                   problems.map((prob) => {
-                    const isCf = prob.platform === "codeforces";
-                    const isCses = prob.platform === "cses";
-                    const isGfg = prob.platform === "gfg";
-                    const isCc = prob.platform === "codechef";
+                    const plat = (prob.platform || "").toLowerCase();
+                    const urlStr = (prob.url || "").toLowerCase();
+                    const isGfg =
+                      plat === "gfg" ||
+                      urlStr.includes("geeksforgeeks.org") ||
+                      (!prob.platform &&
+                        (prob.titleSlug.includes("158711") ||
+                          prob.titleSlug.includes("gfg") ||
+                          Boolean(prob.titleSlug.match(/-\d{4,}$/))));
                     const isTuf =
-                      prob.platform === "tuf" ||
-                      prob.platform === "other";
+                      plat === "tuf" ||
+                      plat === "other" ||
+                      urlStr.includes("takeuforward.org");
+                    const isCf =
+                      plat === "codeforces" || urlStr.includes("codeforces.com");
+                    const isCses = plat === "cses" || urlStr.includes("cses.fi");
+                    const isCc =
+                      plat === "codechef" || urlStr.includes("codechef.com");
+
+                    const isHr = plat === "hackerrank" || urlStr.includes("hackerrank.com");
 
                     const match = isCf
                       ? prob.titleSlug.match(/^(\d+)([A-Z]\d*)$/i)
                       : null;
 
                     let link = prob.url;
+                    if (link && link.includes("leetcode.com")) {
+                      if (isGfg) {
+                        link = `https://www.geeksforgeeks.org/problems/${prob.titleSlug}/1`;
+                      } else if (isTuf) {
+                        link = `https://takeuforward.org/plus/dsa/problems/${prob.titleSlug}`;
+                      } else if (isHr) {
+                        link = `https://www.hackerrank.com/challenges/${prob.titleSlug}/problem`;
+                      } else if (isCf && match) {
+                        link = `https://codeforces.com/contest/${match[1]}/problem/${match[2]}`;
+                      } else if (isCf) {
+                        link = `https://codeforces.com/problemset/problem/${prob.titleSlug}`;
+                      } else if (isCses) {
+                        link = `https://cses.fi/problemset/task/${prob.titleSlug}`;
+                      } else if (isCc) {
+                        link = `https://www.codechef.com/problems/${prob.titleSlug}`;
+                      }
+                    }
+
                     if (!link) {
-                      link = `https://leetcode.com/problems/${prob.titleSlug}/`;
                       if (isCses)
                         link = `https://cses.fi/problemset/task/${prob.titleSlug}`;
                       else if (isCf && match)
@@ -259,6 +291,12 @@ export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(
                         link = `https://www.geeksforgeeks.org/problems/${prob.titleSlug}/1`;
                       else if (isCc)
                         link = `https://www.codechef.com/problems/${prob.titleSlug}`;
+                      else if (isTuf)
+                        link = `https://takeuforward.org/plus/dsa/problems/${prob.titleSlug}`;
+                      else if (isHr)
+                        link = `https://www.hackerrank.com/challenges/${prob.titleSlug}/problem`;
+                      else
+                        link = `https://leetcode.com/problems/${prob.titleSlug}/`;
                     }
 
                     let solLink = `https://leetcode.com/problems/${prob.titleSlug}/solutions/`;
@@ -272,7 +310,8 @@ export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(
                       solLink = `https://www.geeksforgeeks.org/problems/${prob.titleSlug}/1?tab=editorial`;
                     else if (isCc)
                       solLink = `https://www.codechef.com/problems/${prob.titleSlug}/solutions`;
-                    else if (isTuf && prob.url) solLink = prob.url;
+                    else if (isTuf || isHr)
+                      solLink = prob.url || link;
 
                     return (
                       <tr key={prob.titleSlug}>
@@ -395,11 +434,34 @@ export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(
                                   <CodeChefIcon size={14} />
                                 </span>
                               )}
+                              {isHr && (
+                                <span
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    padding: "0 4px",
+                                    height: "20px",
+                                    background: "rgba(0, 234, 100, 0.2)",
+                                    border: "1px solid #00ea64",
+                                    color: "#00ea64",
+                                    borderRadius: "0px",
+                                    fontSize: "var(--font-size-xs)",
+                                    fontWeight: 700,
+                                    fontFamily: "monospace",
+                                    letterSpacing: "0.5px",
+                                  }}
+                                  title="HackerRank"
+                                >
+                                  HR
+                                </span>
+                              )}
                               {!isGfg &&
                                 !isCf &&
                                 !isCses &&
                                 !isCc &&
-                                !isTuf && (
+                                !isTuf &&
+                                !isHr && (
                                   <span
                                     style={{
                                       display: "flex",
@@ -458,6 +520,30 @@ export const SheetsProblemTable: React.FC<SheetsProblemTableProps> = React.memo(
                               )}
                               {prob.title}
                             </a>
+                            {companyTags && companyTags[prob.titleSlug]?.length > 0 && (
+                              <span
+                                style={{
+                                  fontSize: "11px",
+                                  color: "var(--text-muted)",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  gap: "4px",
+                                  marginLeft: "6px",
+                                  whiteSpace: "nowrap",
+                                  background: "var(--bg-secondary)",
+                                  padding: "1px 6px",
+                                  borderRadius: "4px",
+                                  border: "1px solid var(--border-color)",
+                                }}
+                                title={`Asked in: ${companyTags[prob.titleSlug].join(", ")}`}
+                              >
+                                <span>🏢</span>
+                                <span style={{ maxWidth: "160px", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                  {companyTags[prob.titleSlug].slice(0, 3).join(", ")}
+                                  {companyTags[prob.titleSlug].length > 3 ? ` +${companyTags[prob.titleSlug].length - 3}` : ""}
+                                </span>
+                              </span>
+                            )}
                             {prob.youtubeLink && (
                               <a
                                 href={prob.youtubeLink}

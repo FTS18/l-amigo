@@ -1,9 +1,9 @@
 export const SHEET_METADATA = [
   // ── Striver (takeUforward) ───────────────────────────────────────────────
-  { id: 'striversA2Z', name: 'Strivers A2Z DSA Sheet', group: 'Striver', questions: 455, available: true },
+  { id: 'striversA2Z', name: 'Strivers A2Z DSA Sheet', group: 'Striver', questions: 386, available: true },
   { id: 'striverSDE', name: 'Striver SDE Sheet', group: 'Striver', questions: 191, available: true },
   { id: 'striver79', name: 'Striver 79', group: 'Striver', questions: 79, available: true },
-  { id: 'striverCpSheet', name: 'Striver CP Sheet', group: 'Striver', questions: 30, available: true },
+  { id: 'striverCpSheet', name: 'Striver CP Sheet', group: 'Striver', questions: 292, available: true },
 
   // ── NeetCode ─────────────────────────────────────────────────────────────
   { id: 'neetcode250', name: 'Neetcode 250', group: 'NeetCode', questions: 250, available: true },
@@ -18,6 +18,7 @@ export const SHEET_METADATA = [
   // ── Popular Creator Sheets ───────────────────────────────────────────────
   { id: 'loveBabbar', name: 'Love Babbar Sheet', group: 'Creators', questions: 445, available: true },
   { id: 'arshDsa', name: 'Arsh DSA Sheet', group: 'Creators', questions: 286, available: true },
+  { id: 'frazAllPatterns', name: "Fraz's All DSA Patterns (LearnYard)", group: 'Creators', questions: 1091, available: true },
   { id: 'frazDsa', name: 'Fraz DSA Sheet', group: 'Creators', questions: 279, available: true },
   { id: 'shradhaAman', name: 'DSA by Shradha Didi & Aman', group: 'Creators', questions: 418, available: true },
   { id: 'codeArmy', name: 'Code Army Sheet', group: 'Creators', questions: 726, available: true },
@@ -26,7 +27,7 @@ export const SHEET_METADATA = [
   { id: 'nishant151', name: "Nishant's 151", group: 'Creators', questions: 151, available: true },
   { id: 'manasiDeshmane', name: "Manasi Deshmane", group: 'Creators', questions: 70, available: true },
 
-  // ── Essential Collections ────────────────────────────────────────────────
+  { id: 'companyWise', name: 'Company Wise (All-Time FAANG+)', group: 'Collections', questions: 1322, available: true },
   { id: 'topInterview150', name: 'Top Interview 150', group: 'Collections', questions: 150, available: true },
   { id: 'leetcode100', name: 'Leetcode 100 Most Liked', group: 'Collections', questions: 100, available: true },
   { id: 'leetcode75', name: 'LeetCode 75', group: 'Collections', questions: 75, available: true },

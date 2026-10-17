@@ -4,468 +4,535 @@
     "titleSlug": "climbing-stairs",
     "difficulty": "Easy",
     "category": "Fibonacci Sequence",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/climbing-stairs/"
   },
   {
     "title": "Fibonacci Number",
     "titleSlug": "fibonacci-number",
     "difficulty": "Easy",
     "category": "Fibonacci Sequence",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/fibonacci-number/"
   },
   {
     "title": "Min Cost Climbing Stairs",
     "titleSlug": "min-cost-climbing-stairs",
     "difficulty": "Easy",
     "category": "Fibonacci Sequence",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/min-cost-climbing-stairs/"
   },
   {
     "title": "Maximum Subarray",
     "titleSlug": "maximum-subarray",
     "difficulty": "Medium",
     "category": "Kadane's Algorithm",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-subarray/"
   },
   {
     "title": "Maximum Sum Circular Subarray",
     "titleSlug": "maximum-sum-circular-subarray",
     "difficulty": "Medium",
     "category": "Kadane's Algorithm",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-sum-circular-subarray/"
   },
   {
     "title": "Maximum Product Subarray",
     "titleSlug": "maximum-product-subarray",
     "difficulty": "Medium",
     "category": "Kadane's Algorithm",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-product-subarray/"
   },
   {
     "title": "Subset Sum Problem",
     "titleSlug": "subset-sum-problem-1611555638",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1"
   },
   {
     "title": "Perfect Sum Problem",
     "titleSlug": "perfect-sum-problem5633",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1"
   },
   {
     "title": "Partition Array Into Two Arrays to Minimize Sum Difference",
     "titleSlug": "partition-array-into-two-arrays-to-minimize-sum-difference",
     "difficulty": "Hard",
     "category": "0/1 Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/"
   },
   {
     "title": "Partitions with Given Difference",
     "titleSlug": "partitions-with-given-difference",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/partitions-with-given-difference/1"
   },
   {
     "title": "Partition Equal Subset Sum",
     "titleSlug": "partition-equal-subset-sum",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/partition-equal-subset-sum/"
   },
   {
     "title": "Target Sum",
     "titleSlug": "target-sum",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/target-sum/"
   },
   {
     "title": "Last Stone Weight II",
     "titleSlug": "last-stone-weight-ii",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/last-stone-weight-ii/"
   },
   {
     "title": "Partition to K Equal Sum Subsets",
     "titleSlug": "partition-to-k-equal-sum-subsets",
     "difficulty": "Medium",
     "category": "0/1 Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/"
   },
   {
     "title": "Rod Cutting",
     "titleSlug": "rod-cutting0840",
     "difficulty": "Medium",
     "category": "Unbounded Knapsack",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/rod-cutting0840/1"
   },
   {
     "title": "Coin Change",
     "titleSlug": "coin-change",
     "difficulty": "Medium",
     "category": "Unbounded Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/coin-change/"
   },
   {
     "title": "Coin Change II",
     "titleSlug": "coin-change-ii",
     "difficulty": "Medium",
     "category": "Unbounded Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/coin-change-ii/"
   },
   {
     "title": "Perfect Squares",
     "titleSlug": "perfect-squares",
     "difficulty": "Medium",
     "category": "Unbounded Knapsack",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/perfect-squares/"
   },
   {
     "title": "Longest Common Subsequence",
     "titleSlug": "longest-common-subsequence",
     "difficulty": "Medium",
     "category": "Longest Common Subsequence (LCS)",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-common-subsequence/"
   },
   {
     "title": "All Longest Common Subsequences",
     "titleSlug": "print-all-lcs-sequences3413",
     "difficulty": "Hard",
     "category": "Longest Common Subsequence (LCS)",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/print-all-lcs-sequences3413/1"
   },
   {
     "title": "Delete Operation for Two Strings",
     "titleSlug": "delete-operation-for-two-strings",
     "difficulty": "Medium",
     "category": "Longest Common Subsequence (LCS)",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/delete-operation-for-two-strings/"
   },
   {
     "title": "Shortest Common Supersequence ",
     "titleSlug": "shortest-common-supersequence",
     "difficulty": "Hard",
     "category": "Longest Common Subsequence (LCS)",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/shortest-common-supersequence/"
   },
   {
     "title": "Wildcard Pattern Matching",
     "titleSlug": "wildcard-pattern-matching",
     "difficulty": "Medium",
     "category": "Longest Common Subsequence (LCS)",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/wildcard-pattern-matching/1"
   },
   {
     "title": "Longest Increasing Subsequence",
     "titleSlug": "longest-increasing-subsequence",
     "difficulty": "Medium",
     "category": "Longest Increasing Subsequence (LIS)",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-increasing-subsequence/"
   },
   {
     "title": "Number of Longest Increasing Subsequence",
     "titleSlug": "number-of-longest-increasing-subsequence",
     "difficulty": "Medium",
     "category": "Longest Increasing Subsequence (LIS)",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/number-of-longest-increasing-subsequence/"
   },
   {
     "title": "Russian Doll Envelopes",
     "titleSlug": "russian-doll-envelopes",
     "difficulty": "Hard",
     "category": "Longest Increasing Subsequence (LIS)",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/russian-doll-envelopes/"
   },
   {
     "title": "Longest Palindromic Subsequence",
     "titleSlug": "longest-palindromic-subsequence",
     "difficulty": "Medium",
     "category": "Palindromic Subsequence",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-palindromic-subsequence/"
   },
   {
     "title": "Palindromic Substrings",
     "titleSlug": "palindromic-substrings",
     "difficulty": "Medium",
     "category": "Palindromic Subsequence",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindromic-substrings/"
   },
   {
     "title": "Minimum Insertion Steps to Make a String Palindrome",
     "titleSlug": "minimum-insertion-steps-to-make-a-string-palindrome",
     "difficulty": "Hard",
     "category": "Palindromic Subsequence",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/"
   },
   {
     "title": "Minimum number of deletions",
     "titleSlug": "minimum-number-of-deletions4610",
     "difficulty": "Medium",
     "category": "Palindromic Subsequence",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-number-of-deletions4610/1"
   },
   {
     "title": "Edit Distance",
     "titleSlug": "edit-distance",
     "difficulty": "Medium",
     "category": "Edit Distance",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/edit-distance/"
   },
   {
     "title": "Minimum ASCII Delete Sum for Two Strings",
     "titleSlug": "minimum-ascii-delete-sum-for-two-strings",
     "difficulty": "Medium",
     "category": "Edit Distance",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/"
   },
   {
     "title": "Word Break",
     "titleSlug": "word-break",
     "difficulty": "Medium",
     "category": "String Partition",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/word-break/"
   },
   {
     "title": "Palindrome Partitioning II",
     "titleSlug": "palindrome-partitioning-ii",
     "difficulty": "Hard",
     "category": "String Partition",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindrome-partitioning-ii/"
   },
   {
     "title": "Concatenated Words",
     "titleSlug": "concatenated-words",
     "difficulty": "Hard",
     "category": "String Partition",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/concatenated-words/"
   },
   {
     "title": "Unique Binary Search Trees",
     "titleSlug": "unique-binary-search-trees",
     "difficulty": "Medium",
     "category": "Catalan Numbers",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/unique-binary-search-trees/"
   },
   {
     "title": "Generate Parentheses",
     "titleSlug": "generate-parentheses",
     "difficulty": "Medium",
     "category": "Catalan Numbers",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/generate-parentheses/"
   },
   {
     "title": "Palindrome Partitioning",
     "titleSlug": "palindrome-partitioning",
     "difficulty": "Medium",
     "category": "Matrix Chain Multiplication",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindrome-partitioning/"
   },
   {
     "title": "Matrix Chain Multiplication",
     "titleSlug": "matrix-chain-multiplication0303",
     "difficulty": "Hard",
     "category": "Matrix Chain Multiplication",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1"
   },
   {
     "title": "Minimum Score Triangulation of Polygon",
     "titleSlug": "minimum-score-triangulation-of-polygon",
     "difficulty": "Medium",
     "category": "Matrix Chain Multiplication",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-score-triangulation-of-polygon/"
   },
   {
     "title": "Burst Balloons",
     "titleSlug": "burst-balloons",
     "difficulty": "Hard",
     "category": "Matrix Chain Multiplication",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/burst-balloons/"
   },
   {
     "title": "Minimum Cost to Merge Stones",
     "titleSlug": "minimum-cost-to-merge-stones",
     "difficulty": "Hard",
     "category": "Matrix Chain Multiplication",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-cost-to-merge-stones/"
   },
   {
     "title": "Egg Dropping Puzzle",
     "titleSlug": "egg-dropping-puzzle-1587115620",
     "difficulty": "Medium",
     "category": "Matrix Chain Multiplication",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1"
   },
   {
     "title": "Boolean Parenthesization",
     "titleSlug": "boolean-parenthesization5610",
     "difficulty": "Hard",
     "category": "Matrix Chain Multiplication",
-    "platform": "gfg"
+    "platform": "gfg",
+    "url": "https://www.geeksforgeeks.org/problems/boolean-parenthesization5610/1"
   },
   {
     "title": "Scramble String",
     "titleSlug": "scramble-string",
     "difficulty": "Hard",
     "category": "Matrix Chain Multiplication",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/scramble-string/"
   },
   {
     "title": "Decode Ways",
     "titleSlug": "decode-ways",
     "difficulty": "Medium",
     "category": "Count Distinct Ways",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/decode-ways/"
   },
   {
     "title": "Count Number of Texts",
     "titleSlug": "count-number-of-texts",
     "difficulty": "Medium",
     "category": "Count Distinct Ways",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-number-of-texts/"
   },
   {
     "title": "Unique Paths",
     "titleSlug": "unique-paths",
     "difficulty": "Medium",
     "category": "DP on Grids",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/unique-paths/"
   },
   {
     "title": "Minimum Path Sum",
     "titleSlug": "minimum-path-sum",
     "difficulty": "Medium",
     "category": "DP on Grids",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-path-sum/"
   },
   {
     "title": "Longest Increasing Path in a Matrix",
     "titleSlug": "longest-increasing-path-in-a-matrix",
     "difficulty": "Hard",
     "category": "DP on Grids",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/"
   },
   {
     "title": "Diameter of Binary Tree",
     "titleSlug": "diameter-of-binary-tree",
     "difficulty": "Easy",
     "category": "DP on Trees",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/diameter-of-binary-tree/"
   },
   {
     "title": "House Robber III",
     "titleSlug": "house-robber-iii",
     "difficulty": "Medium",
     "category": "DP on Trees",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/house-robber-iii/"
   },
   {
     "title": "Binary Tree Maximum Path Sum",
     "titleSlug": "binary-tree-maximum-path-sum",
     "difficulty": "Hard",
     "category": "DP on Trees",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
   },
   {
     "title": "Binary Tree Cameras",
     "titleSlug": "binary-tree-cameras",
     "difficulty": "Hard",
     "category": "DP on Trees",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/binary-tree-cameras/"
   },
   {
     "title": "Cheapest Flights Within K Stops",
     "titleSlug": "cheapest-flights-within-k-stops",
     "difficulty": "Medium",
     "category": "DP on Graphs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/"
   },
   {
     "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
     "titleSlug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
     "difficulty": "Medium",
     "category": "DP on Graphs",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/"
   },
   {
     "title": "Count Numbers with Unique Digits",
     "titleSlug": "count-numbers-with-unique-digits",
     "difficulty": "Medium",
     "category": "Digit DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/count-numbers-with-unique-digits/"
   },
   {
     "title": "Number of Digit One",
     "titleSlug": "number-of-digit-one",
     "difficulty": "Hard",
     "category": "Digit DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/number-of-digit-one/"
   },
   {
     "title": "Numbers At Most N Given Digit Set",
     "titleSlug": "numbers-at-most-n-given-digit-set",
     "difficulty": "Hard",
     "category": "Digit DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/numbers-at-most-n-given-digit-set/"
   },
   {
     "title": "Minimum Number of Work Sessions to Finish the Tasks",
     "titleSlug": "minimum-number-of-work-sessions-to-finish-the-tasks",
     "difficulty": "Medium",
     "category": "Bitmasking DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-number-of-work-sessions-to-finish-the-tasks/"
   },
   {
     "title": "Fair Distribution of Cookies",
     "titleSlug": "fair-distribution-of-cookies",
     "difficulty": "Medium",
     "category": "Bitmasking DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/fair-distribution-of-cookies/"
   },
   {
     "title": "Shortest Path Visiting All Nodes",
     "titleSlug": "shortest-path-visiting-all-nodes",
     "difficulty": "Hard",
     "category": "Bitmasking DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/shortest-path-visiting-all-nodes/"
   },
   {
     "title": "Knight Probability in Chessboard",
     "titleSlug": "knight-probability-in-chessboard",
     "difficulty": "Medium",
     "category": "Probability DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/knight-probability-in-chessboard/"
   },
   {
     "title": "Soup Servings",
     "titleSlug": "soup-servings",
     "difficulty": "Medium",
     "category": "Probability DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/soup-servings/"
   },
   {
     "title": "New 21 Game",
     "titleSlug": "new-21-game",
     "difficulty": "Medium",
     "category": "Probability DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/new-21-game/"
   },
   {
     "title": "Best Time to Buy and Sell Stock with Cooldown",
     "titleSlug": "best-time-to-buy-and-sell-stock-with-cooldown",
     "difficulty": "Medium",
     "category": "State Machine DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/"
   },
   {
     "title": "Best Time to Buy and Sell Stock III",
     "titleSlug": "best-time-to-buy-and-sell-stock-iii",
     "difficulty": "Hard",
     "category": "State Machine DP",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/"
   }
 ]

@@ -1,702 +1,802 @@
 [
   {
-    "title": "1A - Theatre Square",
-    "titleSlug": "1A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "3A - Shortest path of the king",
-    "titleSlug": "3A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "4B - Before an Exam",
-    "titleSlug": "4B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
     "title": "4A - Watermelon",
     "titleSlug": "4A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "5B - Center Alignment",
-    "titleSlug": "5B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "5A - Chat Servers Outgoing Traffic",
-    "titleSlug": "5A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "6C - Alice, Bob and Chocolate",
-    "titleSlug": "6C",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "6B - President's Office",
-    "titleSlug": "6B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "6A - Triangle",
-    "titleSlug": "6A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "7A - Kalevitch and Chess",
-    "titleSlug": "7A",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "8A - Train and Peter",
-    "titleSlug": "8A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "9C - Hexadecimal's Numbers",
-    "titleSlug": "9C",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "9B - Running Student",
-    "titleSlug": "9B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/4/problem/A"
   },
   {
     "title": "9A - Die Roll",
     "titleSlug": "9A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "10A - Power Consumption Calculation",
-    "titleSlug": "10A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "11A - Increasing Sequence",
-    "titleSlug": "11A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "12C - Fruits",
-    "titleSlug": "12C",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "12B - Correct Solution?",
-    "titleSlug": "12B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/9/problem/A"
   },
   {
     "title": "12A - Super Agent",
     "titleSlug": "12A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "13A - Numbers",
-    "titleSlug": "13A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "14B - Young Photographer",
-    "titleSlug": "14B",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/12/problem/A"
   },
   {
     "title": "14A - Letter",
     "titleSlug": "14A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "15A - Cottage Village",
-    "titleSlug": "15A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "16B - Burglar and Matches",
-    "titleSlug": "16B",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/14/problem/A"
   },
   {
     "title": "16A - Flag",
     "titleSlug": "16A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "17A - Noldbach problem",
-    "titleSlug": "17A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "18C - Stripe",
-    "titleSlug": "18C",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/16/problem/A"
   },
   {
     "title": "22A - Second Order Statistics",
     "titleSlug": "22A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "23A - You're Given a String...",
-    "titleSlug": "23A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "25B - Phone numbers",
-    "titleSlug": "25B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "26A - Almost Prime",
-    "titleSlug": "26A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "27A - Next Test",
-    "titleSlug": "27A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "29A - Spit Problem",
-    "titleSlug": "29A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "31A - Worms Evolution",
-    "titleSlug": "31A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "32B - Borze",
-    "titleSlug": "32B",
-    "difficulty": "Easy",
-    "category": "800 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/22/problem/A"
   },
   {
     "title": "32A - Reconnaissance",
     "titleSlug": "32A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/32/problem/A"
   },
   {
-    "title": "33A - What is for dinner?",
-    "titleSlug": "33A",
+    "title": "32B - Borze",
+    "titleSlug": "32B",
     "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "34B - Sale",
-    "titleSlug": "34B",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
+    "category": "800 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/32/problem/B"
   },
   {
     "title": "34A - Reconnaissance 2",
     "titleSlug": "34A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "35A - Shell Game",
-    "titleSlug": "35A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "37A - Towers",
-    "titleSlug": "37A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "38B - Chess",
-    "titleSlug": "38B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/34/problem/A"
   },
   {
     "title": "38A - Army",
     "titleSlug": "38A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "39D - Cubical Planet",
-    "titleSlug": "39D",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/38/problem/A"
   },
   {
     "title": "41A - Translation",
     "titleSlug": "41A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "43B - Letter",
-    "titleSlug": "43B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "43A - Football",
-    "titleSlug": "43A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "44A - Indian Summer",
-    "titleSlug": "44A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "45A - Codecraft III",
-    "titleSlug": "45A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "46B - T-shirts from Sponsor",
-    "titleSlug": "46B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/41/problem/A"
   },
   {
     "title": "46A - Ball Game",
     "titleSlug": "46A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "47B - Coins",
-    "titleSlug": "47B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/46/problem/A"
   },
   {
     "title": "47A - Triangular numbers",
     "titleSlug": "47A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "48B - Land Lot",
-    "titleSlug": "48B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "48A - Rock-paper-scissors",
-    "titleSlug": "48A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/47/problem/A"
   },
   {
     "title": "49A - Sleuth",
     "titleSlug": "49A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/49/problem/A"
   },
   {
     "title": "50A - Domino piling",
     "titleSlug": "50A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "52A - 123-sequence",
-    "titleSlug": "52A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "53C - Little Frog",
-    "titleSlug": "53C",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "53A - Autocomplete",
-    "titleSlug": "53A",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "55A - Flea travel",
-    "titleSlug": "55A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "56A - Bar",
-    "titleSlug": "56A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "58A - Chat room",
-    "titleSlug": "58A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "59B - Fortune Telling",
-    "titleSlug": "59B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/50/problem/A"
   },
   {
     "title": "59A - Word",
     "titleSlug": "59A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/59/problem/A"
   },
   {
     "title": "61A - Ultra-Fast Mathematician",
     "titleSlug": "61A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "63B - Settlers' Training",
-    "titleSlug": "63B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "63A - Sinking Ship",
-    "titleSlug": "63A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "66B - Petya and Countryside",
-    "titleSlug": "66B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "68A - Irrational problem",
-    "titleSlug": "68A",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "69B - Bets",
-    "titleSlug": "69B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "69A - Young Physicist",
-    "titleSlug": "69A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/61/problem/A"
   },
   {
     "title": "71A - Way Too Long Words",
     "titleSlug": "71A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "72G - Fibonacci army",
-    "titleSlug": "72G",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "72C - Extraordinarily Nice Numbers",
-    "titleSlug": "72C",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "74A - Room Leader",
-    "titleSlug": "74A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "75A - Life Without Zeros",
-    "titleSlug": "75A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "78B - Easter Eggs",
-    "titleSlug": "78B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/71/problem/A"
   },
   {
     "title": "78A - Haiku",
     "titleSlug": "78A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "79A - Bus Game",
-    "titleSlug": "79A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "80B - Depression",
-    "titleSlug": "80B",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/78/problem/A"
   },
   {
     "title": "80A - Panoramix's Prediction",
     "titleSlug": "80A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "82A - Double Cola",
-    "titleSlug": "82A",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "84A - Toy Army",
-    "titleSlug": "84A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "88A - Chord",
-    "titleSlug": "88A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "90B - African Crossword",
-    "titleSlug": "90B",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "90A - Cableway",
-    "titleSlug": "90A",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/80/problem/A"
   },
   {
     "title": "92A - Chips",
     "titleSlug": "92A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "94A - Restoring Password",
-    "titleSlug": "94A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "96A - Football",
-    "titleSlug": "96A",
-    "difficulty": "Easy",
-    "category": "900 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/92/problem/A"
   },
   {
     "title": "99A - Help Far Away Kingdom",
     "titleSlug": "99A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "100A - Carpeting the Room",
-    "titleSlug": "100A",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "101A - Homework",
-    "titleSlug": "101A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "102B - Sum of Digits",
-    "titleSlug": "102B",
-    "difficulty": "Easy",
-    "category": "1000 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "102A - Clothes",
-    "titleSlug": "102A",
-    "difficulty": "Easy",
-    "category": "1200 Rating",
-    "platform": "codeforces"
-  },
-  {
-    "title": "103A - Testing Pants for Sadness",
-    "titleSlug": "103A",
-    "difficulty": "Easy",
-    "category": "1100 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/99/problem/A"
   },
   {
     "title": "104A - Blackjack",
     "titleSlug": "104A",
     "difficulty": "Easy",
     "category": "800 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/104/problem/A"
   },
   {
-    "title": "106B - Choosing Laptop",
-    "titleSlug": "106B",
+    "title": "6A - Triangle",
+    "titleSlug": "6A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/6/problem/A"
+  },
+  {
+    "title": "10A - Power Consumption Calculation",
+    "titleSlug": "10A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/10/problem/A"
+  },
+  {
+    "title": "11A - Increasing Sequence",
+    "titleSlug": "11A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/11/problem/A"
+  },
+  {
+    "title": "16B - Burglar and Matches",
+    "titleSlug": "16B",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/16/problem/B"
+  },
+  {
+    "title": "26A - Almost Prime",
+    "titleSlug": "26A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/26/problem/A"
+  },
+  {
+    "title": "34B - Sale",
+    "titleSlug": "34B",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/34/problem/B"
+  },
+  {
+    "title": "44A - Indian Summer",
+    "titleSlug": "44A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/44/problem/A"
+  },
+  {
+    "title": "45A - Codecraft III",
+    "titleSlug": "45A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/45/problem/A"
+  },
+  {
+    "title": "48A - Rock-paper-scissors",
+    "titleSlug": "48A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/48/problem/A"
+  },
+  {
+    "title": "52A - 123-sequence",
+    "titleSlug": "52A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/52/problem/A"
+  },
+  {
+    "title": "63A - Sinking Ship",
+    "titleSlug": "63A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/63/problem/A"
+  },
+  {
+    "title": "84A - Toy Army",
+    "titleSlug": "84A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/84/problem/A"
+  },
+  {
+    "title": "94A - Restoring Password",
+    "titleSlug": "94A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/94/problem/A"
+  },
+  {
+    "title": "96A - Football",
+    "titleSlug": "96A",
+    "difficulty": "Easy",
+    "category": "900 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/96/problem/A"
+  },
+  {
+    "title": "1A - Theatre Square",
+    "titleSlug": "1A",
     "difficulty": "Easy",
     "category": "1000 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1/problem/A"
+  },
+  {
+    "title": "3A - Shortest path of the king",
+    "titleSlug": "3A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/3/problem/A"
+  },
+  {
+    "title": "5A - Chat Servers Outgoing Traffic",
+    "titleSlug": "5A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/5/problem/A"
+  },
+  {
+    "title": "13A - Numbers",
+    "titleSlug": "13A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/13/problem/A"
+  },
+  {
+    "title": "14B - Young Photographer",
+    "titleSlug": "14B",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/14/problem/B"
+  },
+  {
+    "title": "17A - Noldbach problem",
+    "titleSlug": "17A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/17/problem/A"
+  },
+  {
+    "title": "29A - Spit Problem",
+    "titleSlug": "29A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/29/problem/A"
+  },
+  {
+    "title": "35A - Shell Game",
+    "titleSlug": "35A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/35/problem/A"
+  },
+  {
+    "title": "37A - Towers",
+    "titleSlug": "37A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/37/problem/A"
+  },
+  {
+    "title": "43A - Football",
+    "titleSlug": "43A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/43/problem/A"
+  },
+  {
+    "title": "56A - Bar",
+    "titleSlug": "56A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/56/problem/A"
+  },
+  {
+    "title": "58A - Chat room",
+    "titleSlug": "58A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/58/problem/A"
+  },
+  {
+    "title": "69A - Young Physicist",
+    "titleSlug": "69A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/69/problem/A"
+  },
+  {
+    "title": "72G - Fibonacci army",
+    "titleSlug": "72G",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/72/problem/G"
+  },
+  {
+    "title": "74A - Room Leader",
+    "titleSlug": "74A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/74/problem/A"
+  },
+  {
+    "title": "75A - Life Without Zeros",
+    "titleSlug": "75A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/75/problem/A"
+  },
+  {
+    "title": "90A - Cableway",
+    "titleSlug": "90A",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/90/problem/A"
+  },
+  {
+    "title": "102B - Sum of Digits",
+    "titleSlug": "102B",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/102/problem/B"
   },
   {
     "title": "106A - Card Game",
     "titleSlug": "106A",
     "difficulty": "Easy",
     "category": "1000 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/106/problem/A"
+  },
+  {
+    "title": "106B - Choosing Laptop",
+    "titleSlug": "106B",
+    "difficulty": "Easy",
+    "category": "1000 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/106/problem/B"
   },
   {
     "title": "108A - Palindromic Times",
     "titleSlug": "108A",
     "difficulty": "Easy",
     "category": "1000 Rating",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/108/problem/A"
+  },
+  {
+    "title": "6B - President's Office",
+    "titleSlug": "6B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/6/problem/B"
+  },
+  {
+    "title": "7A - Kalevitch and Chess",
+    "titleSlug": "7A",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/7/problem/A"
+  },
+  {
+    "title": "12B - Correct Solution?",
+    "titleSlug": "12B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/12/problem/B"
+  },
+  {
+    "title": "12C - Fruits",
+    "titleSlug": "12C",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/12/problem/C"
+  },
+  {
+    "title": "25B - Phone numbers",
+    "titleSlug": "25B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/25/problem/B"
+  },
+  {
+    "title": "39D - Cubical Planet",
+    "titleSlug": "39D",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/39/problem/D"
+  },
+  {
+    "title": "43B - Letter",
+    "titleSlug": "43B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/43/problem/B"
+  },
+  {
+    "title": "46B - T-shirts from Sponsor",
+    "titleSlug": "46B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/46/problem/B"
+  },
+  {
+    "title": "53A - Autocomplete",
+    "titleSlug": "53A",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/53/problem/A"
+  },
+  {
+    "title": "66B - Petya and Countryside",
+    "titleSlug": "66B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/66/problem/B"
+  },
+  {
+    "title": "68A - Irrational problem",
+    "titleSlug": "68A",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/68/problem/A"
+  },
+  {
+    "title": "82A - Double Cola",
+    "titleSlug": "82A",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/82/problem/A"
+  },
+  {
+    "title": "90B - African Crossword",
+    "titleSlug": "90B",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/90/problem/B"
+  },
+  {
+    "title": "100A - Carpeting the Room",
+    "titleSlug": "100A",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/100/problem/A"
+  },
+  {
+    "title": "103A - Testing Pants for Sadness",
+    "titleSlug": "103A",
+    "difficulty": "Easy",
+    "category": "1100 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/103/problem/A"
+  },
+  {
+    "title": "4B - Before an Exam",
+    "titleSlug": "4B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/4/problem/B"
+  },
+  {
+    "title": "5B - Center Alignment",
+    "titleSlug": "5B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/5/problem/B"
+  },
+  {
+    "title": "6C - Alice, Bob and Chocolate",
+    "titleSlug": "6C",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/6/problem/C"
+  },
+  {
+    "title": "8A - Train and Peter",
+    "titleSlug": "8A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/8/problem/A"
+  },
+  {
+    "title": "9B - Running Student",
+    "titleSlug": "9B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/9/problem/B"
+  },
+  {
+    "title": "9C - Hexadecimal's Numbers",
+    "titleSlug": "9C",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/9/problem/C"
+  },
+  {
+    "title": "15A - Cottage Village",
+    "titleSlug": "15A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/15/problem/A"
+  },
+  {
+    "title": "18C - Stripe",
+    "titleSlug": "18C",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/18/problem/C"
+  },
+  {
+    "title": "23A - You're Given a String...",
+    "titleSlug": "23A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/23/problem/A"
+  },
+  {
+    "title": "27A - Next Test",
+    "titleSlug": "27A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/27/problem/A"
+  },
+  {
+    "title": "31A - Worms Evolution",
+    "titleSlug": "31A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/31/problem/A"
+  },
+  {
+    "title": "33A - What is for dinner?",
+    "titleSlug": "33A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/33/problem/A"
+  },
+  {
+    "title": "38B - Chess",
+    "titleSlug": "38B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/38/problem/B"
+  },
+  {
+    "title": "47B - Coins",
+    "titleSlug": "47B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/47/problem/B"
+  },
+  {
+    "title": "48B - Land Lot",
+    "titleSlug": "48B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/48/problem/B"
+  },
+  {
+    "title": "53C - Little Frog",
+    "titleSlug": "53C",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/53/problem/C"
+  },
+  {
+    "title": "55A - Flea travel",
+    "titleSlug": "55A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/55/problem/A"
+  },
+  {
+    "title": "59B - Fortune Telling",
+    "titleSlug": "59B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/59/problem/B"
+  },
+  {
+    "title": "63B - Settlers' Training",
+    "titleSlug": "63B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/63/problem/B"
+  },
+  {
+    "title": "69B - Bets",
+    "titleSlug": "69B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/69/problem/B"
+  },
+  {
+    "title": "72C - Extraordinarily Nice Numbers",
+    "titleSlug": "72C",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/72/problem/C"
+  },
+  {
+    "title": "78B - Easter Eggs",
+    "titleSlug": "78B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/78/problem/B"
+  },
+  {
+    "title": "79A - Bus Game",
+    "titleSlug": "79A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/79/problem/A"
+  },
+  {
+    "title": "80B - Depression",
+    "titleSlug": "80B",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/80/problem/B"
+  },
+  {
+    "title": "88A - Chord",
+    "titleSlug": "88A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/88/problem/A"
+  },
+  {
+    "title": "101A - Homework",
+    "titleSlug": "101A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/101/problem/A"
+  },
+  {
+    "title": "102A - Clothes",
+    "titleSlug": "102A",
+    "difficulty": "Easy",
+    "category": "1200 Rating",
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/102/problem/A"
   }
 ]

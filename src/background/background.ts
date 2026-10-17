@@ -10,6 +10,7 @@ import { SettingsHandler } from "./message-handlers/settings-handler";
 import { StatsHandler } from "./message-handlers/stats-handler";
 import { SyncHandler } from "./message-handlers/sync-handler";
 import { MessageHandler } from "./message-handlers/types";
+import { BadgeService } from "../services/badge";
 
 
 function setupDevAutoReload(): void {
@@ -64,6 +65,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   chrome.alarms.create("syncGitHub", {
     periodInMinutes: GITHUB_SYNC_INTERVAL_MINUTES,
   });
+  BadgeService.updateBadge();
 });
 
 chrome.runtime.onStartup.addListener(async () => {
@@ -75,15 +77,18 @@ chrome.runtime.onStartup.addListener(async () => {
   }
   // Remove alarms for contests that already started
   sweepStaleContestAlarms();
+  BadgeService.updateBadge();
 });
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === "refreshFriends") {
     const refreshHandler = new RefreshHandler();
     await refreshHandler.refreshAllFriends();
+    BadgeService.updateBadge();
   } else if (alarm.name === "syncGitHub") {
     console.log("[L'Amigo] Periodic background sync triggered by alarm");
     await SyncManager.handleIncrementalSync();
+    BadgeService.updateBadge();
   } else if (alarm.name === "retry_sync_offline") {
     if (typeof navigator !== 'undefined' && navigator.onLine) {
       console.log("[L'Amigo] Device came online. Resuming pending sync...");
@@ -247,6 +252,10 @@ const BACKUP_DEBOUNCE_MS = 5000;
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName !== "local") return;
+
+  if (changes.all_accepted_submissions || changes.daily_goal || changes.own_username) {
+    BadgeService.updateBadge();
+  }
 
   const monitoredKeys = [
     "friend_identities_v2",

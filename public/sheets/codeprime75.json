@@ -4,524 +4,599 @@
     "titleSlug": "282A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/282/problem/A"
   },
   {
     "title": "Team",
     "titleSlug": "231A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/231/problem/A"
   },
   {
     "title": "Tram",
     "titleSlug": "116A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/116/problem/A"
   },
   {
     "title": "Stones on the Table",
     "titleSlug": "266A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/266/problem/A"
   },
   {
     "title": "Translation",
     "titleSlug": "41A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/41/problem/A"
   },
   {
     "title": "Way Too Long Words",
     "titleSlug": "71A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/71/problem/A"
   },
   {
     "title": "Word Capitalization",
     "titleSlug": "281A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/281/problem/A"
   },
   {
     "title": "Boy or Girl",
     "titleSlug": "236A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/236/problem/A"
   },
   {
     "title": "Ultra-Fast Mathematician",
     "titleSlug": "61A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/61/problem/A"
   },
   {
     "title": "Magnets",
     "titleSlug": "344A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/344/problem/A"
   },
   {
     "title": "Twins",
     "titleSlug": "160A",
     "difficulty": "900",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/160/problem/A"
   },
   {
     "title": "Little Elephant and Bits",
     "titleSlug": "258A",
     "difficulty": "1100",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/258/problem/A"
   },
   {
     "title": "Bear and Big Brother",
     "titleSlug": "791A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/791/problem/A"
   },
   {
     "title": "Hit the Lottery",
     "titleSlug": "996A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/996/problem/A"
   },
   {
     "title": "Taxi",
     "titleSlug": "158B",
     "difficulty": "1100",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/158/problem/B"
   },
   {
     "title": "Young Physicist",
     "titleSlug": "69A",
     "difficulty": "1000",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/69/problem/A"
   },
   {
     "title": "Transfusion",
     "titleSlug": "2050B",
     "difficulty": "1100",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/2050/problem/B"
   },
   {
     "title": "Fox And Snake",
     "titleSlug": "510A",
     "difficulty": "800",
     "category": "Newbie (Rating < 1200)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/510/problem/A"
   },
   {
     "title": "A Balanced Problemset?",
     "titleSlug": "1925B",
     "difficulty": "1200",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1925/problem/B"
   },
   {
     "title": "Uninteresting Number",
     "titleSlug": "2050C",
     "difficulty": "1200",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/2050/problem/C"
   },
   {
     "title": "Stone Age Problem",
     "titleSlug": "1679B",
     "difficulty": "1200",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1679/problem/B"
   },
   {
     "title": "Drazil and Date",
     "titleSlug": "515A",
     "difficulty": "1000",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/515/problem/A"
   },
   {
     "title": "Lucky Ticket",
     "titleSlug": "146A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/146/problem/A"
   },
   {
     "title": "Minutes Before the New Year",
     "titleSlug": "1283A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1283/problem/A"
   },
   {
     "title": "Last Year's Substring",
     "titleSlug": "1462B",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1462/problem/B"
   },
   {
     "title": "Minimal Square",
     "titleSlug": "1360A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1360/problem/A"
   },
   {
     "title": "Floor Number",
     "titleSlug": "1426A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1426/problem/A"
   },
   {
     "title": "Robot Cleaner",
     "titleSlug": "1623A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1623/problem/A"
   },
   {
     "title": "Chips Moving",
     "titleSlug": "1213A",
     "difficulty": "900",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1213/problem/A"
   },
   {
     "title": "Prefixes",
     "titleSlug": "1216A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1216/problem/A"
   },
   {
     "title": "Soldier and Bananas",
     "titleSlug": "546A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/546/problem/A"
   },
   {
     "title": "Favorite Sequence",
     "titleSlug": "1462A",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1462/problem/A"
   },
   {
     "title": "Same Parity Summands",
     "titleSlug": "1352B",
     "difficulty": "1200",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1352/problem/B"
   },
   {
     "title": "Dreamoon and Stairs",
     "titleSlug": "476A",
     "difficulty": "1000",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/476/problem/A"
   },
   {
     "title": "Who's Opposite?",
     "titleSlug": "1560B",
     "difficulty": "800",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1560/problem/B"
   },
   {
     "title": "Ehab Fails to Be Thanos",
     "titleSlug": "1174A",
     "difficulty": "1000",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1174/problem/A"
   },
   {
     "title": "Number of Apartments",
     "titleSlug": "1430A",
     "difficulty": "900",
     "category": "Pupil (Rating 1200–1399)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1430/problem/A"
   },
   {
     "title": "Lights Out",
     "titleSlug": "275A",
     "difficulty": "900",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/275/problem/A"
   },
   {
     "title": "Helpful Maths",
     "titleSlug": "339A",
     "difficulty": "800",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/339/problem/A"
   },
   {
     "title": "Drinks",
     "titleSlug": "200B",
     "difficulty": "800",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/200/problem/B"
   },
   {
     "title": "Valera and X",
     "titleSlug": "404A",
     "difficulty": "1000",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/404/problem/A"
   },
   {
     "title": "Panoramix's Prediction",
     "titleSlug": "80A",
     "difficulty": "800",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/80/problem/A"
   },
   {
     "title": "Bus Game",
     "titleSlug": "79A",
     "difficulty": "1200",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/79/problem/A"
   },
   {
     "title": "DZY Loves Strings",
     "titleSlug": "447B",
     "difficulty": "1000",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/447/problem/B"
   },
   {
     "title": "T-primes",
     "titleSlug": "230B",
     "difficulty": "1300",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/230/problem/B"
   },
   {
     "title": "Dividing Orange",
     "titleSlug": "244A",
     "difficulty": "900",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/244/problem/A"
   },
   {
     "title": "Hamburgers",
     "titleSlug": "371C",
     "difficulty": "1600",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/371/problem/C"
   },
   {
     "title": "Little Elephant and Problem",
     "titleSlug": "220A",
     "difficulty": "1300",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/220/problem/A"
   },
   {
     "title": "Mashmokh and Numbers",
     "titleSlug": "414A",
     "difficulty": "1500",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/414/problem/A"
   },
   {
     "title": "Football",
     "titleSlug": "96A",
     "difficulty": "900",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/96/problem/A"
   },
   {
     "title": "cAPS lOCK",
     "titleSlug": "131A",
     "difficulty": "1000",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/131/problem/A"
   },
   {
     "title": "Puzzles",
     "titleSlug": "337A",
     "difficulty": "900",
     "category": "Specialist (Rating 1400–1599)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/337/problem/A"
   },
   {
     "title": "Triangles",
     "titleSlug": "1453C",
     "difficulty": "1700",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1453/problem/C"
   },
   {
     "title": "Mocha and Red and Blue",
     "titleSlug": "1559B",
     "difficulty": "900",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1559/problem/B"
   },
   {
     "title": "Save the Magazines",
     "titleSlug": "1743C",
     "difficulty": "1100",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1743/problem/C"
   },
   {
     "title": "Omkar and Waterslide",
     "titleSlug": "1392C",
     "difficulty": "1200",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1392/problem/C"
   },
   {
     "title": "XOR = Average",
     "titleSlug": "1758B",
     "difficulty": "900",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1758/problem/B"
   },
   {
     "title": "1397/C",
     "titleSlug": "1397C",
     "difficulty": "Easy",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1397/problem/C"
   },
   {
     "title": "Palindrome Basis",
     "titleSlug": "1673C",
     "difficulty": "1500",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1673/problem/C"
   },
   {
     "title": "Same Differences",
     "titleSlug": "1520D",
     "difficulty": "1200",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1520/problem/D"
   },
   {
     "title": "New Year and the Treasure Geolocation",
     "titleSlug": "1091B",
     "difficulty": "1200",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1091/problem/B"
   },
   {
     "title": "Swap Game",
     "titleSlug": "1747C",
     "difficulty": "1200",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1747/problem/C"
   },
   {
     "title": "Divide by three, multiply by two",
     "titleSlug": "977D",
     "difficulty": "1400",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/977/problem/D"
   },
   {
     "title": "Anti-Sudoku",
     "titleSlug": "1335D",
     "difficulty": "1300",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1335/problem/D"
   },
   {
     "title": "Maximum Median",
     "titleSlug": "1201C",
     "difficulty": "1400",
     "category": "Expert (Rating 1600–1899)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1201/problem/C"
   },
   {
     "title": "Perform the Combo",
     "titleSlug": "1311C",
     "difficulty": "1300",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1311/problem/C"
   },
   {
     "title": "Maximum Set",
     "titleSlug": "1796C",
     "difficulty": "1600",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1796/problem/C"
   },
   {
     "title": "Kuroni and Simple Strings",
     "titleSlug": "1305B",
     "difficulty": "1200",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1305/problem/B"
   },
   {
     "title": "Treasure Hunting",
     "titleSlug": "1201D",
     "difficulty": "2100",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1201/problem/D"
   },
   {
     "title": "Mainak and Interesting Sequence",
     "titleSlug": "1726B",
     "difficulty": "1100",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1726/problem/B"
   },
   {
     "title": "The Bits",
     "titleSlug": "1017B",
     "difficulty": "1200",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1017/problem/B"
   },
   {
     "title": "Killjoy",
     "titleSlug": "1419C",
     "difficulty": "1500",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1419/problem/C"
   },
   {
     "title": "GCD Partition",
     "titleSlug": "1780B",
     "difficulty": "1100",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1780/problem/B"
   },
   {
     "title": "Checkpoints",
     "titleSlug": "1453D",
     "difficulty": "1900",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1453/problem/D"
   },
   {
     "title": "Ticks",
     "titleSlug": "1579C",
     "difficulty": "1500",
     "category": "Candidate Master (Rating 1900–2099)",
-    "platform": "codeforces"
+    "platform": "codeforces",
+    "url": "https://codeforces.com/contest/1579/problem/C"
   }
 ]

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Editor, { loader } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
-import { Play, Loader2, FilePlus, FolderOpen, Save, Share2, Wand2, StopCircle, Settings, X, FileCode, BookOpen } from 'lucide-react';
+import { Play, Loader2, FilePlus, FolderOpen, Save, Share2, Wand2, StopCircle, Settings, X, FileCode, BookOpen, BookmarkCheck } from 'lucide-react';
 import { STORAGE_KEYS } from '../../constants';
 import './ide.css';
 
@@ -314,6 +314,24 @@ int main() {
         setCode(tempTemplateText);
       }
       setShowTemplateModal(false);
+    });
+  };
+
+  const [templateToast, setTemplateToast] = useState<string | null>(null);
+
+  const handleSaveCurrentAsTemplate = () => {
+    if (!code.trim()) {
+      alert('Cannot save empty code as template.');
+      return;
+    }
+    const updated = {
+      ...templates,
+      [language]: code
+    };
+    setTemplates(updated);
+    chrome.storage.local.set({ [STORAGE_KEYS.IDE_TEMPLATES]: updated }, () => {
+      setTemplateToast(`Template saved for ${language.toUpperCase()}!`);
+      setTimeout(() => setTemplateToast(null), 3000);
     });
   };
 
@@ -719,6 +737,21 @@ int main() {
             ))}
           </select>
           
+          <button
+            onClick={handleSaveCurrentAsTemplate}
+            className="ide-btn"
+            title={`Save current editor code as default boilerplate template for ${language.toUpperCase()}`}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', padding: '4px 10px' }}
+          >
+            <BookmarkCheck size={14} />
+            <span>Save Template</span>
+          </button>
+          {templateToast && (
+            <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 600 }}>
+              {templateToast}
+            </span>
+          )}
+
           <div style={{ position: 'relative' }}>
             <button
               onClick={fetchActiveTabTestCases}

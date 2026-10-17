@@ -67,6 +67,35 @@ export class LeetCodeService {
     return new Promise((r) => setTimeout(r, ms));
   }
 
+  /**
+   * Check whether the user has an active session on LeetCode.
+   * Directly queries userStatus via GraphQL with credentials: 'include'.
+   */
+  static async checkAuthStatus(): Promise<{ isSignedIn: boolean; username?: string }> {
+    try {
+      const csrf = await this.getCsrfToken();
+      const headers = this.buildHeaders(csrf);
+      const res = await fetchWithTimeout(this.GQL, {
+        method: "POST",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({
+          query: `query globalData { userStatus { isSignedIn username } }`,
+        }),
+      });
+      if (!res.ok) return { isSignedIn: false };
+      const json = await res.json();
+      const status = json?.data?.userStatus;
+      return {
+        isSignedIn: !!status?.isSignedIn,
+        username: status?.username || undefined,
+      };
+    } catch (err) {
+      console.warn("[LC] Auth check failed:", err);
+      return { isSignedIn: false };
+    }
+  }
+
   private static async getCsrfToken(): Promise<string | undefined> {
     try {
       const cookies = await chrome.cookies.getAll({ domain: ".leetcode.com" });
@@ -257,6 +286,12 @@ export class LeetCodeService {
       );
 
       const list = data?.submissionList;
+      if (offset === 0 && !list) {
+        const auth = await this.checkAuthStatus();
+        if (!auth.isSignedIn) {
+          throw new Error("You are not logged into LeetCode. Please log into leetcode.com in your browser.");
+        }
+      }
       const subs = list?.submissions ?? [];
 
       let newInPage = 0;

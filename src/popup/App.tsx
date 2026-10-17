@@ -23,6 +23,7 @@ import { UpcomingContests } from './UpcomingContests';
 import { ImportExportModal } from './ImportExportModal';
 import { Sun, Moon, Database, UserPlus, LayoutDashboard, RefreshCw, WifiOff, Code2 } from 'lucide-react';
 import { StreakCalculator } from '../services/streak';
+import { BadgeService } from '../services/badge';
 import { useAppStore } from '../store/useAppStore';
 import { useStorageSync } from '../hooks/useStorageSync';
 import './App.css';
@@ -347,6 +348,7 @@ export const App: React.FC = () => {
  await verifyAndReconcileState(friendsList, profilesData);
  }
 
+  BadgeService.updateBadge();
  return { friends: friendsList, profiles: profilesData };
  } catch (error) {
  console.error('Error loading data:', error);

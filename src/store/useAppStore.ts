@@ -83,6 +83,7 @@ interface AppState {
   ui_stStatusFilter: string;
   ui_stPlatFilter: string;
   ui_stVideoFilter: string;
+  ui_stCompanyFilter: string;
   ui_stSearchQuery: string;
   ui_lbRankingMode: string;
   ui_chActiveUser: string;
@@ -175,6 +176,7 @@ export const useAppStore = create<AppState>((set) => ({
   ui_stStatusFilter: "All",
   ui_stPlatFilter: "All",
   ui_stVideoFilter: "All",
+  ui_stCompanyFilter: "All",
   ui_stSearchQuery: "",
   ui_lbRankingMode: "power",
   ui_chActiveUser: "own-user",

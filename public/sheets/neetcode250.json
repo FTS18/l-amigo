@@ -5,7 +5,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/concatenation-of-array"
+    "youtubeLink": "https://neetcode.io/solutions/concatenation-of-array",
+    "url": "https://leetcode.com/problems/concatenation-of-array/"
   },
   {
     "title": "Contains Duplicate",
@@ -13,7 +14,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/contains-duplicate"
+    "youtubeLink": "https://neetcode.io/solutions/contains-duplicate",
+    "url": "https://leetcode.com/problems/contains-duplicate/"
   },
   {
     "title": "Valid Anagram",
@@ -21,7 +23,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/valid-anagram"
+    "youtubeLink": "https://neetcode.io/solutions/valid-anagram",
+    "url": "https://leetcode.com/problems/valid-anagram/"
   },
   {
     "title": "Two Sum",
@@ -29,7 +32,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/two-sum"
+    "youtubeLink": "https://neetcode.io/solutions/two-sum",
+    "url": "https://leetcode.com/problems/two-sum/"
   },
   {
     "title": "Longest Common Prefix",
@@ -37,7 +41,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-common-prefix"
+    "youtubeLink": "https://neetcode.io/solutions/longest-common-prefix",
+    "url": "https://leetcode.com/problems/longest-common-prefix/"
   },
   {
     "title": "Group Anagrams",
@@ -45,7 +50,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/group-anagrams"
+    "youtubeLink": "https://neetcode.io/solutions/group-anagrams",
+    "url": "https://leetcode.com/problems/group-anagrams/"
   },
   {
     "title": "Remove Element",
@@ -53,7 +59,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/remove-element"
+    "youtubeLink": "https://neetcode.io/solutions/remove-element",
+    "url": "https://leetcode.com/problems/remove-element/"
   },
   {
     "title": "Majority Element",
@@ -61,7 +68,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/majority-element"
+    "youtubeLink": "https://neetcode.io/solutions/majority-element",
+    "url": "https://leetcode.com/problems/majority-element/"
   },
   {
     "title": "Design HashSet",
@@ -69,7 +77,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/design-hashset"
+    "youtubeLink": "https://neetcode.io/solutions/design-hashset",
+    "url": "https://leetcode.com/problems/design-hashset/"
   },
   {
     "title": "Design HashMap",
@@ -77,7 +86,8 @@
     "difficulty": "Easy",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/design-hashmap"
+    "youtubeLink": "https://neetcode.io/solutions/design-hashmap",
+    "url": "https://leetcode.com/problems/design-hashmap/"
   },
   {
     "title": "Sort an Array",
@@ -85,7 +95,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/sort-an-array"
+    "youtubeLink": "https://neetcode.io/solutions/sort-an-array",
+    "url": "https://leetcode.com/problems/sort-an-array/"
   },
   {
     "title": "Sort Colors",
@@ -93,7 +104,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/sort-colors"
+    "youtubeLink": "https://neetcode.io/solutions/sort-colors",
+    "url": "https://leetcode.com/problems/sort-colors/"
   },
   {
     "title": "Top K Frequent Elements",
@@ -101,7 +113,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/top-k-frequent-elements"
+    "youtubeLink": "https://neetcode.io/solutions/top-k-frequent-elements",
+    "url": "https://leetcode.com/problems/top-k-frequent-elements/"
   },
   {
     "title": "Encode and Decode Strings",
@@ -109,7 +122,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/encode-and-decode-strings"
+    "youtubeLink": "https://neetcode.io/solutions/encode-and-decode-strings",
+    "url": "https://leetcode.com/problems/encode-and-decode-strings/"
   },
   {
     "title": "Range Sum Query 2D - Immutable",
@@ -117,7 +131,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/range-sum-query-2d-immutable"
+    "youtubeLink": "https://neetcode.io/solutions/range-sum-query-2d-immutable",
+    "url": "https://leetcode.com/problems/range-sum-query-2d-immutable/"
   },
   {
     "title": "Product of Array Except Self",
@@ -125,7 +140,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/product-of-array-except-self"
+    "youtubeLink": "https://neetcode.io/solutions/product-of-array-except-self",
+    "url": "https://leetcode.com/problems/product-of-array-except-self/"
   },
   {
     "title": "Valid Sudoku",
@@ -133,7 +149,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/valid-sudoku"
+    "youtubeLink": "https://neetcode.io/solutions/valid-sudoku",
+    "url": "https://leetcode.com/problems/valid-sudoku/"
   },
   {
     "title": "Longest Consecutive Sequence",
@@ -141,7 +158,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-consecutive-sequence"
+    "youtubeLink": "https://neetcode.io/solutions/longest-consecutive-sequence",
+    "url": "https://leetcode.com/problems/longest-consecutive-sequence/"
   },
   {
     "title": "Best Time to Buy and Sell Stock II",
@@ -149,7 +167,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/best-time-to-buy-and-sell-stock-ii"
+    "youtubeLink": "https://neetcode.io/solutions/best-time-to-buy-and-sell-stock-ii",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/"
   },
   {
     "title": "Majority Element II",
@@ -157,7 +176,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/majority-element-ii"
+    "youtubeLink": "https://neetcode.io/solutions/majority-element-ii",
+    "url": "https://leetcode.com/problems/majority-element-ii/"
   },
   {
     "title": "Subarray Sum Equals K",
@@ -165,7 +185,8 @@
     "difficulty": "Medium",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/subarray-sum-equals-k"
+    "youtubeLink": "https://neetcode.io/solutions/subarray-sum-equals-k",
+    "url": "https://leetcode.com/problems/subarray-sum-equals-k/"
   },
   {
     "title": "First Missing Positive",
@@ -173,7 +194,8 @@
     "difficulty": "Hard",
     "category": "Arrays & Hashing",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/first-missing-positive"
+    "youtubeLink": "https://neetcode.io/solutions/first-missing-positive",
+    "url": "https://leetcode.com/problems/first-missing-positive/"
   },
   {
     "title": "Reverse String",
@@ -181,7 +203,8 @@
     "difficulty": "Easy",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reverse-string"
+    "youtubeLink": "https://neetcode.io/solutions/reverse-string",
+    "url": "https://leetcode.com/problems/reverse-string/"
   },
   {
     "title": "Valid Palindrome",
@@ -189,7 +212,8 @@
     "difficulty": "Easy",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/valid-palindrome"
+    "youtubeLink": "https://neetcode.io/solutions/valid-palindrome",
+    "url": "https://leetcode.com/problems/valid-palindrome/"
   },
   {
     "title": "Valid Palindrome II",
@@ -197,7 +221,8 @@
     "difficulty": "Easy",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/valid-palindrome-ii"
+    "youtubeLink": "https://neetcode.io/solutions/valid-palindrome-ii",
+    "url": "https://leetcode.com/problems/valid-palindrome-ii/"
   },
   {
     "title": "Merge Strings Alternately",
@@ -205,7 +230,8 @@
     "difficulty": "Easy",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/merge-strings-alternately"
+    "youtubeLink": "https://neetcode.io/solutions/merge-strings-alternately",
+    "url": "https://leetcode.com/problems/merge-strings-alternately/"
   },
   {
     "title": "Merge Sorted Array",
@@ -213,7 +239,8 @@
     "difficulty": "Easy",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/merge-sorted-array"
+    "youtubeLink": "https://neetcode.io/solutions/merge-sorted-array",
+    "url": "https://leetcode.com/problems/merge-sorted-array/"
   },
   {
     "title": "Remove Duplicates from Sorted Array",
@@ -221,7 +248,8 @@
     "difficulty": "Easy",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/remove-duplicates-from-sorted-array"
+    "youtubeLink": "https://neetcode.io/solutions/remove-duplicates-from-sorted-array",
+    "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"
   },
   {
     "title": "Two Sum II - Input Array Is Sorted",
@@ -229,7 +257,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/two-sum-ii-input-array-is-sorted"
+    "youtubeLink": "https://neetcode.io/solutions/two-sum-ii-input-array-is-sorted",
+    "url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/"
   },
   {
     "title": "3Sum",
@@ -237,7 +266,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/3sum"
+    "youtubeLink": "https://neetcode.io/solutions/3sum",
+    "url": "https://leetcode.com/problems/3sum/"
   },
   {
     "title": "4Sum",
@@ -245,7 +275,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/4sum"
+    "youtubeLink": "https://neetcode.io/solutions/4sum",
+    "url": "https://leetcode.com/problems/4sum/"
   },
   {
     "title": "Rotate Array",
@@ -253,7 +284,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/rotate-array"
+    "youtubeLink": "https://neetcode.io/solutions/rotate-array",
+    "url": "https://leetcode.com/problems/rotate-array/"
   },
   {
     "title": "Container With Most Water",
@@ -261,7 +293,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/container-with-most-water"
+    "youtubeLink": "https://neetcode.io/solutions/container-with-most-water",
+    "url": "https://leetcode.com/problems/container-with-most-water/"
   },
   {
     "title": "Boats to Save People",
@@ -269,7 +302,8 @@
     "difficulty": "Medium",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/boats-to-save-people"
+    "youtubeLink": "https://neetcode.io/solutions/boats-to-save-people",
+    "url": "https://leetcode.com/problems/boats-to-save-people/"
   },
   {
     "title": "Trapping Rain Water",
@@ -277,7 +311,8 @@
     "difficulty": "Hard",
     "category": "Two Pointers",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/trapping-rain-water"
+    "youtubeLink": "https://neetcode.io/solutions/trapping-rain-water",
+    "url": "https://leetcode.com/problems/trapping-rain-water/"
   },
   {
     "title": "Contains Duplicate II",
@@ -285,7 +320,8 @@
     "difficulty": "Easy",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/contains-duplicate-ii"
+    "youtubeLink": "https://neetcode.io/solutions/contains-duplicate-ii",
+    "url": "https://leetcode.com/problems/contains-duplicate-ii/"
   },
   {
     "title": "Best Time to Buy and Sell Stock",
@@ -293,7 +329,8 @@
     "difficulty": "Easy",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/best-time-to-buy-and-sell-stock"
+    "youtubeLink": "https://neetcode.io/solutions/best-time-to-buy-and-sell-stock",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"
   },
   {
     "title": "Longest Substring Without Repeating Characters",
@@ -301,7 +338,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-substring-without-repeating-characters"
+    "youtubeLink": "https://neetcode.io/solutions/longest-substring-without-repeating-characters",
+    "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
   },
   {
     "title": "Longest Repeating Character Replacement",
@@ -309,7 +347,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-repeating-character-replacement"
+    "youtubeLink": "https://neetcode.io/solutions/longest-repeating-character-replacement",
+    "url": "https://leetcode.com/problems/longest-repeating-character-replacement/"
   },
   {
     "title": "Permutation in String",
@@ -317,7 +356,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/permutation-in-string"
+    "youtubeLink": "https://neetcode.io/solutions/permutation-in-string",
+    "url": "https://leetcode.com/problems/permutation-in-string/"
   },
   {
     "title": "Minimum Size Subarray Sum",
@@ -325,7 +365,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/minimum-size-subarray-sum"
+    "youtubeLink": "https://neetcode.io/solutions/minimum-size-subarray-sum",
+    "url": "https://leetcode.com/problems/minimum-size-subarray-sum/"
   },
   {
     "title": "Find K Closest Elements",
@@ -333,7 +374,8 @@
     "difficulty": "Medium",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-k-closest-elements"
+    "youtubeLink": "https://neetcode.io/solutions/find-k-closest-elements",
+    "url": "https://leetcode.com/problems/find-k-closest-elements/"
   },
   {
     "title": "Minimum Window Substring",
@@ -341,7 +383,8 @@
     "difficulty": "Hard",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/minimum-window-substring"
+    "youtubeLink": "https://neetcode.io/solutions/minimum-window-substring",
+    "url": "https://leetcode.com/problems/minimum-window-substring/"
   },
   {
     "title": "Sliding Window Maximum",
@@ -349,7 +392,8 @@
     "difficulty": "Hard",
     "category": "Sliding Window",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/sliding-window-maximum"
+    "youtubeLink": "https://neetcode.io/solutions/sliding-window-maximum",
+    "url": "https://leetcode.com/problems/sliding-window-maximum/"
   },
   {
     "title": "Baseball Game",
@@ -357,7 +401,8 @@
     "difficulty": "Easy",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/baseball-game"
+    "youtubeLink": "https://neetcode.io/solutions/baseball-game",
+    "url": "https://leetcode.com/problems/baseball-game/"
   },
   {
     "title": "Valid Parentheses",
@@ -365,7 +410,8 @@
     "difficulty": "Easy",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/valid-parentheses"
+    "youtubeLink": "https://neetcode.io/solutions/valid-parentheses",
+    "url": "https://leetcode.com/problems/valid-parentheses/"
   },
   {
     "title": "Implement Stack using Queues",
@@ -373,7 +419,8 @@
     "difficulty": "Easy",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/implement-stack-using-queues"
+    "youtubeLink": "https://neetcode.io/solutions/implement-stack-using-queues",
+    "url": "https://leetcode.com/problems/implement-stack-using-queues/"
   },
   {
     "title": "Implement Queue using Stacks",
@@ -381,7 +428,8 @@
     "difficulty": "Easy",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/implement-queue-using-stacks"
+    "youtubeLink": "https://neetcode.io/solutions/implement-queue-using-stacks",
+    "url": "https://leetcode.com/problems/implement-queue-using-stacks/"
   },
   {
     "title": "Min Stack",
@@ -389,7 +437,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/min-stack"
+    "youtubeLink": "https://neetcode.io/solutions/min-stack",
+    "url": "https://leetcode.com/problems/min-stack/"
   },
   {
     "title": "Evaluate Reverse Polish Notation",
@@ -397,7 +446,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/evaluate-reverse-polish-notation"
+    "youtubeLink": "https://neetcode.io/solutions/evaluate-reverse-polish-notation",
+    "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"
   },
   {
     "title": "Generate Parentheses",
@@ -405,7 +455,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/generate-parentheses"
+    "youtubeLink": "https://neetcode.io/solutions/generate-parentheses",
+    "url": "https://leetcode.com/problems/generate-parentheses/"
   },
   {
     "title": "Asteroid Collision",
@@ -413,7 +464,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/asteroid-collision"
+    "youtubeLink": "https://neetcode.io/solutions/asteroid-collision",
+    "url": "https://leetcode.com/problems/asteroid-collision/"
   },
   {
     "title": "Daily Temperatures",
@@ -421,7 +473,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/daily-temperatures"
+    "youtubeLink": "https://neetcode.io/solutions/daily-temperatures",
+    "url": "https://leetcode.com/problems/daily-temperatures/"
   },
   {
     "title": "Online Stock Span",
@@ -429,7 +482,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/online-stock-span"
+    "youtubeLink": "https://neetcode.io/solutions/online-stock-span",
+    "url": "https://leetcode.com/problems/online-stock-span/"
   },
   {
     "title": "Car Fleet",
@@ -437,7 +491,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/car-fleet"
+    "youtubeLink": "https://neetcode.io/solutions/car-fleet",
+    "url": "https://leetcode.com/problems/car-fleet/"
   },
   {
     "title": "Simplify Path",
@@ -445,7 +500,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/simplify-path"
+    "youtubeLink": "https://neetcode.io/solutions/simplify-path",
+    "url": "https://leetcode.com/problems/simplify-path/"
   },
   {
     "title": "Decode String",
@@ -453,7 +509,8 @@
     "difficulty": "Medium",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/decode-string"
+    "youtubeLink": "https://neetcode.io/solutions/decode-string",
+    "url": "https://leetcode.com/problems/decode-string/"
   },
   {
     "title": "Maximum Frequency Stack",
@@ -461,7 +518,8 @@
     "difficulty": "Hard",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/maximum-frequency-stack"
+    "youtubeLink": "https://neetcode.io/solutions/maximum-frequency-stack",
+    "url": "https://leetcode.com/problems/maximum-frequency-stack/"
   },
   {
     "title": "Largest Rectangle in Histogram",
@@ -469,7 +527,8 @@
     "difficulty": "Hard",
     "category": "Stack",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/largest-rectangle-in-histogram"
+    "youtubeLink": "https://neetcode.io/solutions/largest-rectangle-in-histogram",
+    "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
   },
   {
     "title": "Binary Search",
@@ -477,7 +536,8 @@
     "difficulty": "Easy",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-search"
+    "youtubeLink": "https://neetcode.io/solutions/binary-search",
+    "url": "https://leetcode.com/problems/binary-search/"
   },
   {
     "title": "Search Insert Position",
@@ -485,7 +545,8 @@
     "difficulty": "Easy",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/search-insert-position"
+    "youtubeLink": "https://neetcode.io/solutions/search-insert-position",
+    "url": "https://leetcode.com/problems/search-insert-position/"
   },
   {
     "title": "Guess Number Higher or Lower",
@@ -493,7 +554,8 @@
     "difficulty": "Easy",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/guess-number-higher-or-lower"
+    "youtubeLink": "https://neetcode.io/solutions/guess-number-higher-or-lower",
+    "url": "https://leetcode.com/problems/guess-number-higher-or-lower/"
   },
   {
     "title": "Sqrt(x)",
@@ -501,7 +563,8 @@
     "difficulty": "Easy",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/sqrtx"
+    "youtubeLink": "https://neetcode.io/solutions/sqrtx",
+    "url": "https://leetcode.com/problems/sqrtx/"
   },
   {
     "title": "Search a 2D Matrix",
@@ -509,7 +572,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/search-a-2d-matrix"
+    "youtubeLink": "https://neetcode.io/solutions/search-a-2d-matrix",
+    "url": "https://leetcode.com/problems/search-a-2d-matrix/"
   },
   {
     "title": "Koko Eating Bananas",
@@ -517,7 +581,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/koko-eating-bananas"
+    "youtubeLink": "https://neetcode.io/solutions/koko-eating-bananas",
+    "url": "https://leetcode.com/problems/koko-eating-bananas/"
   },
   {
     "title": "Capacity To Ship Packages Within D Days",
@@ -525,7 +590,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/capacity-to-ship-packages-within-d-days"
+    "youtubeLink": "https://neetcode.io/solutions/capacity-to-ship-packages-within-d-days",
+    "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/"
   },
   {
     "title": "Find Minimum in Rotated Sorted Array",
@@ -533,7 +599,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-minimum-in-rotated-sorted-array"
+    "youtubeLink": "https://neetcode.io/solutions/find-minimum-in-rotated-sorted-array",
+    "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
   },
   {
     "title": "Search in Rotated Sorted Array",
@@ -541,7 +608,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/search-in-rotated-sorted-array"
+    "youtubeLink": "https://neetcode.io/solutions/search-in-rotated-sorted-array",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
   },
   {
     "title": "Search in Rotated Sorted Array II",
@@ -549,7 +617,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/search-in-rotated-sorted-array-ii"
+    "youtubeLink": "https://neetcode.io/solutions/search-in-rotated-sorted-array-ii",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/"
   },
   {
     "title": "Time Based Key-Value Store",
@@ -557,7 +626,8 @@
     "difficulty": "Medium",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/time-based-key-value-store"
+    "youtubeLink": "https://neetcode.io/solutions/time-based-key-value-store",
+    "url": "https://leetcode.com/problems/time-based-key-value-store/"
   },
   {
     "title": "Split Array Largest Sum",
@@ -565,7 +635,8 @@
     "difficulty": "Hard",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/split-array-largest-sum"
+    "youtubeLink": "https://neetcode.io/solutions/split-array-largest-sum",
+    "url": "https://leetcode.com/problems/split-array-largest-sum/"
   },
   {
     "title": "Median of Two Sorted Arrays",
@@ -573,7 +644,8 @@
     "difficulty": "Hard",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/median-of-two-sorted-arrays"
+    "youtubeLink": "https://neetcode.io/solutions/median-of-two-sorted-arrays",
+    "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/"
   },
   {
     "title": "Find in Mountain Array",
@@ -581,7 +653,8 @@
     "difficulty": "Hard",
     "category": "Binary Search",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-in-mountain-array"
+    "youtubeLink": "https://neetcode.io/solutions/find-in-mountain-array",
+    "url": "https://leetcode.com/problems/find-in-mountain-array/"
   },
   {
     "title": "Reverse Linked List",
@@ -589,7 +662,8 @@
     "difficulty": "Easy",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reverse-linked-list"
+    "youtubeLink": "https://neetcode.io/solutions/reverse-linked-list",
+    "url": "https://leetcode.com/problems/reverse-linked-list/"
   },
   {
     "title": "Merge Two Sorted Lists",
@@ -597,7 +671,8 @@
     "difficulty": "Easy",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/merge-two-sorted-lists"
+    "youtubeLink": "https://neetcode.io/solutions/merge-two-sorted-lists",
+    "url": "https://leetcode.com/problems/merge-two-sorted-lists/"
   },
   {
     "title": "Linked List Cycle",
@@ -605,7 +680,8 @@
     "difficulty": "Easy",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/linked-list-cycle"
+    "youtubeLink": "https://neetcode.io/solutions/linked-list-cycle",
+    "url": "https://leetcode.com/problems/linked-list-cycle/"
   },
   {
     "title": "Reorder List",
@@ -613,7 +689,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reorder-list"
+    "youtubeLink": "https://neetcode.io/solutions/reorder-list",
+    "url": "https://leetcode.com/problems/reorder-list/"
   },
   {
     "title": "Remove Nth Node From End of List",
@@ -621,7 +698,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/remove-nth-node-from-end-of-list"
+    "youtubeLink": "https://neetcode.io/solutions/remove-nth-node-from-end-of-list",
+    "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
   },
   {
     "title": "Copy List with Random Pointer",
@@ -629,7 +707,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/copy-list-with-random-pointer"
+    "youtubeLink": "https://neetcode.io/solutions/copy-list-with-random-pointer",
+    "url": "https://leetcode.com/problems/copy-list-with-random-pointer/"
   },
   {
     "title": "Add Two Numbers",
@@ -637,7 +716,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/add-two-numbers"
+    "youtubeLink": "https://neetcode.io/solutions/add-two-numbers",
+    "url": "https://leetcode.com/problems/add-two-numbers/"
   },
   {
     "title": "Find the Duplicate Number",
@@ -645,7 +725,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-the-duplicate-number"
+    "youtubeLink": "https://neetcode.io/solutions/find-the-duplicate-number",
+    "url": "https://leetcode.com/problems/find-the-duplicate-number/"
   },
   {
     "title": "Reverse Linked List II",
@@ -653,7 +734,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reverse-linked-list-ii"
+    "youtubeLink": "https://neetcode.io/solutions/reverse-linked-list-ii",
+    "url": "https://leetcode.com/problems/reverse-linked-list-ii/"
   },
   {
     "title": "Design Circular Queue",
@@ -661,7 +743,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/design-circular-queue"
+    "youtubeLink": "https://neetcode.io/solutions/design-circular-queue",
+    "url": "https://leetcode.com/problems/design-circular-queue/"
   },
   {
     "title": "LRU Cache",
@@ -669,7 +752,8 @@
     "difficulty": "Medium",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/lru-cache"
+    "youtubeLink": "https://neetcode.io/solutions/lru-cache",
+    "url": "https://leetcode.com/problems/lru-cache/"
   },
   {
     "title": "LFU Cache",
@@ -677,7 +761,8 @@
     "difficulty": "Hard",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/lfu-cache"
+    "youtubeLink": "https://neetcode.io/solutions/lfu-cache",
+    "url": "https://leetcode.com/problems/lfu-cache/"
   },
   {
     "title": "Merge k Sorted Lists",
@@ -685,7 +770,8 @@
     "difficulty": "Hard",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/merge-k-sorted-lists"
+    "youtubeLink": "https://neetcode.io/solutions/merge-k-sorted-lists",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists/"
   },
   {
     "title": "Reverse Nodes in k-Group",
@@ -693,7 +779,8 @@
     "difficulty": "Hard",
     "category": "Linked List",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reverse-nodes-in-k-group"
+    "youtubeLink": "https://neetcode.io/solutions/reverse-nodes-in-k-group",
+    "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/"
   },
   {
     "title": "Binary Tree Inorder Traversal",
@@ -701,7 +788,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-tree-inorder-traversal"
+    "youtubeLink": "https://neetcode.io/solutions/binary-tree-inorder-traversal",
+    "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/"
   },
   {
     "title": "Binary Tree Preorder Traversal",
@@ -709,7 +797,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-tree-preorder-traversal"
+    "youtubeLink": "https://neetcode.io/solutions/binary-tree-preorder-traversal",
+    "url": "https://leetcode.com/problems/binary-tree-preorder-traversal/"
   },
   {
     "title": "Binary Tree Postorder Traversal",
@@ -717,7 +806,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-tree-postorder-traversal"
+    "youtubeLink": "https://neetcode.io/solutions/binary-tree-postorder-traversal",
+    "url": "https://leetcode.com/problems/binary-tree-postorder-traversal/"
   },
   {
     "title": "Invert Binary Tree",
@@ -725,7 +815,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/invert-binary-tree"
+    "youtubeLink": "https://neetcode.io/solutions/invert-binary-tree",
+    "url": "https://leetcode.com/problems/invert-binary-tree/"
   },
   {
     "title": "Maximum Depth of Binary Tree",
@@ -733,7 +824,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/maximum-depth-of-binary-tree"
+    "youtubeLink": "https://neetcode.io/solutions/maximum-depth-of-binary-tree",
+    "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/"
   },
   {
     "title": "Diameter of Binary Tree",
@@ -741,7 +833,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/diameter-of-binary-tree"
+    "youtubeLink": "https://neetcode.io/solutions/diameter-of-binary-tree",
+    "url": "https://leetcode.com/problems/diameter-of-binary-tree/"
   },
   {
     "title": "Balanced Binary Tree",
@@ -749,7 +842,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/balanced-binary-tree"
+    "youtubeLink": "https://neetcode.io/solutions/balanced-binary-tree",
+    "url": "https://leetcode.com/problems/balanced-binary-tree/"
   },
   {
     "title": "Same Tree",
@@ -757,7 +851,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/same-tree"
+    "youtubeLink": "https://neetcode.io/solutions/same-tree",
+    "url": "https://leetcode.com/problems/same-tree/"
   },
   {
     "title": "Subtree of Another Tree",
@@ -765,7 +860,8 @@
     "difficulty": "Easy",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/subtree-of-another-tree"
+    "youtubeLink": "https://neetcode.io/solutions/subtree-of-another-tree",
+    "url": "https://leetcode.com/problems/subtree-of-another-tree/"
   },
   {
     "title": "Lowest Common Ancestor of a Binary Search Tree",
@@ -773,7 +869,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/lowest-common-ancestor-of-a-binary-search-tree"
+    "youtubeLink": "https://neetcode.io/solutions/lowest-common-ancestor-of-a-binary-search-tree",
+    "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/"
   },
   {
     "title": "Insert into a Binary Search Tree",
@@ -781,7 +878,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/insert-into-a-binary-search-tree"
+    "youtubeLink": "https://neetcode.io/solutions/insert-into-a-binary-search-tree",
+    "url": "https://leetcode.com/problems/insert-into-a-binary-search-tree/"
   },
   {
     "title": "Delete Node in a BST",
@@ -789,7 +887,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/delete-node-in-a-bst"
+    "youtubeLink": "https://neetcode.io/solutions/delete-node-in-a-bst",
+    "url": "https://leetcode.com/problems/delete-node-in-a-bst/"
   },
   {
     "title": "Binary Tree Level Order Traversal",
@@ -797,7 +896,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-tree-level-order-traversal"
+    "youtubeLink": "https://neetcode.io/solutions/binary-tree-level-order-traversal",
+    "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/"
   },
   {
     "title": "Binary Tree Right Side View",
@@ -805,7 +905,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-tree-right-side-view"
+    "youtubeLink": "https://neetcode.io/solutions/binary-tree-right-side-view",
+    "url": "https://leetcode.com/problems/binary-tree-right-side-view/"
   },
   {
     "title": "Construct Quad Tree",
@@ -813,7 +914,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/construct-quad-tree"
+    "youtubeLink": "https://neetcode.io/solutions/construct-quad-tree",
+    "url": "https://leetcode.com/problems/construct-quad-tree/"
   },
   {
     "title": "Count Good Nodes in Binary Tree",
@@ -821,7 +923,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/count-good-nodes-in-binary-tree"
+    "youtubeLink": "https://neetcode.io/solutions/count-good-nodes-in-binary-tree",
+    "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/"
   },
   {
     "title": "Validate Binary Search Tree",
@@ -829,7 +932,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/validate-binary-search-tree"
+    "youtubeLink": "https://neetcode.io/solutions/validate-binary-search-tree",
+    "url": "https://leetcode.com/problems/validate-binary-search-tree/"
   },
   {
     "title": "Kth Smallest Element in a BST",
@@ -837,7 +941,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/kth-smallest-element-in-a-bst"
+    "youtubeLink": "https://neetcode.io/solutions/kth-smallest-element-in-a-bst",
+    "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"
   },
   {
     "title": "Construct Binary Tree from Preorder and Inorder Traversal",
@@ -845,7 +950,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/construct-binary-tree-from-preorder-and-inorder-traversal"
+    "youtubeLink": "https://neetcode.io/solutions/construct-binary-tree-from-preorder-and-inorder-traversal",
+    "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/"
   },
   {
     "title": "House Robber III",
@@ -853,7 +959,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/house-robber-iii"
+    "youtubeLink": "https://neetcode.io/solutions/house-robber-iii",
+    "url": "https://leetcode.com/problems/house-robber-iii/"
   },
   {
     "title": "Delete Leaves With a Given Value",
@@ -861,7 +968,8 @@
     "difficulty": "Medium",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/delete-leaves-with-a-given-value"
+    "youtubeLink": "https://neetcode.io/solutions/delete-leaves-with-a-given-value",
+    "url": "https://leetcode.com/problems/delete-leaves-with-a-given-value/"
   },
   {
     "title": "Binary Tree Maximum Path Sum",
@@ -869,7 +977,8 @@
     "difficulty": "Hard",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/binary-tree-maximum-path-sum"
+    "youtubeLink": "https://neetcode.io/solutions/binary-tree-maximum-path-sum",
+    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"
   },
   {
     "title": "Serialize and Deserialize Binary Tree",
@@ -877,7 +986,8 @@
     "difficulty": "Hard",
     "category": "Trees",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/serialize-and-deserialize-binary-tree"
+    "youtubeLink": "https://neetcode.io/solutions/serialize-and-deserialize-binary-tree",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/"
   },
   {
     "title": "Kth Largest Element in a Stream",
@@ -885,7 +995,8 @@
     "difficulty": "Easy",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/kth-largest-element-in-a-stream"
+    "youtubeLink": "https://neetcode.io/solutions/kth-largest-element-in-a-stream",
+    "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/"
   },
   {
     "title": "Last Stone Weight",
@@ -893,7 +1004,8 @@
     "difficulty": "Easy",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/last-stone-weight"
+    "youtubeLink": "https://neetcode.io/solutions/last-stone-weight",
+    "url": "https://leetcode.com/problems/last-stone-weight/"
   },
   {
     "title": "K Closest Points to Origin",
@@ -901,7 +1013,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/k-closest-points-to-origin"
+    "youtubeLink": "https://neetcode.io/solutions/k-closest-points-to-origin",
+    "url": "https://leetcode.com/problems/k-closest-points-to-origin/"
   },
   {
     "title": "Kth Largest Element in an Array",
@@ -909,7 +1022,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/kth-largest-element-in-an-array"
+    "youtubeLink": "https://neetcode.io/solutions/kth-largest-element-in-an-array",
+    "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/"
   },
   {
     "title": "Task Scheduler",
@@ -917,7 +1031,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/task-scheduler"
+    "youtubeLink": "https://neetcode.io/solutions/task-scheduler",
+    "url": "https://leetcode.com/problems/task-scheduler/"
   },
   {
     "title": "Design Twitter",
@@ -925,7 +1040,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/design-twitter"
+    "youtubeLink": "https://neetcode.io/solutions/design-twitter",
+    "url": "https://leetcode.com/problems/design-twitter/"
   },
   {
     "title": "Single-Threaded CPU",
@@ -933,7 +1049,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/single-threaded-cpu"
+    "youtubeLink": "https://neetcode.io/solutions/single-threaded-cpu",
+    "url": "https://leetcode.com/problems/single-threaded-cpu/"
   },
   {
     "title": "Reorganize String",
@@ -941,7 +1058,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reorganize-string"
+    "youtubeLink": "https://neetcode.io/solutions/reorganize-string",
+    "url": "https://leetcode.com/problems/reorganize-string/"
   },
   {
     "title": "Longest Happy String",
@@ -949,7 +1067,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-happy-string"
+    "youtubeLink": "https://neetcode.io/solutions/longest-happy-string",
+    "url": "https://leetcode.com/problems/longest-happy-string/"
   },
   {
     "title": "Car Pooling",
@@ -957,7 +1076,8 @@
     "difficulty": "Medium",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/car-pooling"
+    "youtubeLink": "https://neetcode.io/solutions/car-pooling",
+    "url": "https://leetcode.com/problems/car-pooling/"
   },
   {
     "title": "Find Median from Data Stream",
@@ -965,7 +1085,8 @@
     "difficulty": "Hard",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-median-from-data-stream"
+    "youtubeLink": "https://neetcode.io/solutions/find-median-from-data-stream",
+    "url": "https://leetcode.com/problems/find-median-from-data-stream/"
   },
   {
     "title": "IPO",
@@ -973,7 +1094,8 @@
     "difficulty": "Hard",
     "category": "Heap / Priority Queue",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/ipo"
+    "youtubeLink": "https://neetcode.io/solutions/ipo",
+    "url": "https://leetcode.com/problems/ipo/"
   },
   {
     "title": "Subsets",
@@ -981,7 +1103,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/subsets"
+    "youtubeLink": "https://neetcode.io/solutions/subsets",
+    "url": "https://leetcode.com/problems/subsets/"
   },
   {
     "title": "Combination Sum",
@@ -989,7 +1112,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/combination-sum"
+    "youtubeLink": "https://neetcode.io/solutions/combination-sum",
+    "url": "https://leetcode.com/problems/combination-sum/"
   },
   {
     "title": "Combination Sum II",
@@ -997,7 +1121,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/combination-sum-ii"
+    "youtubeLink": "https://neetcode.io/solutions/combination-sum-ii",
+    "url": "https://leetcode.com/problems/combination-sum-ii/"
   },
   {
     "title": "Combinations",
@@ -1005,7 +1130,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/combinations"
+    "youtubeLink": "https://neetcode.io/solutions/combinations",
+    "url": "https://leetcode.com/problems/combinations/"
   },
   {
     "title": "Permutations",
@@ -1013,7 +1139,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/permutations"
+    "youtubeLink": "https://neetcode.io/solutions/permutations",
+    "url": "https://leetcode.com/problems/permutations/"
   },
   {
     "title": "Subsets II",
@@ -1021,7 +1148,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/subsets-ii"
+    "youtubeLink": "https://neetcode.io/solutions/subsets-ii",
+    "url": "https://leetcode.com/problems/subsets-ii/"
   },
   {
     "title": "Permutations II",
@@ -1029,7 +1157,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/permutations-ii"
+    "youtubeLink": "https://neetcode.io/solutions/permutations-ii",
+    "url": "https://leetcode.com/problems/permutations-ii/"
   },
   {
     "title": "Word Search",
@@ -1037,7 +1166,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/word-search"
+    "youtubeLink": "https://neetcode.io/solutions/word-search",
+    "url": "https://leetcode.com/problems/word-search/"
   },
   {
     "title": "Palindrome Partitioning",
@@ -1045,7 +1175,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/palindrome-partitioning"
+    "youtubeLink": "https://neetcode.io/solutions/palindrome-partitioning",
+    "url": "https://leetcode.com/problems/palindrome-partitioning/"
   },
   {
     "title": "Letter Combinations of a Phone Number",
@@ -1053,7 +1184,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/letter-combinations-of-a-phone-number"
+    "youtubeLink": "https://neetcode.io/solutions/letter-combinations-of-a-phone-number",
+    "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/"
   },
   {
     "title": "Matchsticks to Square",
@@ -1061,7 +1193,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/matchsticks-to-square"
+    "youtubeLink": "https://neetcode.io/solutions/matchsticks-to-square",
+    "url": "https://leetcode.com/problems/matchsticks-to-square/"
   },
   {
     "title": "Partition to K Equal Sum Subsets",
@@ -1069,7 +1202,8 @@
     "difficulty": "Medium",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/partition-to-k-equal-sum-subsets"
+    "youtubeLink": "https://neetcode.io/solutions/partition-to-k-equal-sum-subsets",
+    "url": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/"
   },
   {
     "title": "N-Queens",
@@ -1077,7 +1211,8 @@
     "difficulty": "Hard",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/n-queens"
+    "youtubeLink": "https://neetcode.io/solutions/n-queens",
+    "url": "https://leetcode.com/problems/n-queens/"
   },
   {
     "title": "N-Queens II",
@@ -1085,7 +1220,8 @@
     "difficulty": "Hard",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/n-queens-ii"
+    "youtubeLink": "https://neetcode.io/solutions/n-queens-ii",
+    "url": "https://leetcode.com/problems/n-queens-ii/"
   },
   {
     "title": "Word Break II",
@@ -1093,7 +1229,8 @@
     "difficulty": "Hard",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/word-break-ii"
+    "youtubeLink": "https://neetcode.io/solutions/word-break-ii",
+    "url": "https://leetcode.com/problems/word-break-ii/"
   },
   {
     "title": "Implement Trie (Prefix Tree)",
@@ -1101,7 +1238,8 @@
     "difficulty": "Medium",
     "category": "Tries",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/implement-trie-prefix-tree"
+    "youtubeLink": "https://neetcode.io/solutions/implement-trie-prefix-tree",
+    "url": "https://leetcode.com/problems/implement-trie-prefix-tree/"
   },
   {
     "title": "Design Add and Search Words Data Structure",
@@ -1109,7 +1247,8 @@
     "difficulty": "Medium",
     "category": "Tries",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/design-add-and-search-words-data-structure"
+    "youtubeLink": "https://neetcode.io/solutions/design-add-and-search-words-data-structure",
+    "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/"
   },
   {
     "title": "Extra Characters in a String",
@@ -1117,7 +1256,8 @@
     "difficulty": "Medium",
     "category": "Tries",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/extra-characters-in-a-string"
+    "youtubeLink": "https://neetcode.io/solutions/extra-characters-in-a-string",
+    "url": "https://leetcode.com/problems/extra-characters-in-a-string/"
   },
   {
     "title": "Word Search II",
@@ -1125,7 +1265,8 @@
     "difficulty": "Hard",
     "category": "Tries",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/word-search-ii"
+    "youtubeLink": "https://neetcode.io/solutions/word-search-ii",
+    "url": "https://leetcode.com/problems/word-search-ii/"
   },
   {
     "title": "Island Perimeter",
@@ -1133,7 +1274,8 @@
     "difficulty": "Easy",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/island-perimeter"
+    "youtubeLink": "https://neetcode.io/solutions/island-perimeter",
+    "url": "https://leetcode.com/problems/island-perimeter/"
   },
   {
     "title": "Verifying an Alien Dictionary",
@@ -1141,7 +1283,8 @@
     "difficulty": "Easy",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/verifying-an-alien-dictionary"
+    "youtubeLink": "https://neetcode.io/solutions/verifying-an-alien-dictionary",
+    "url": "https://leetcode.com/problems/verifying-an-alien-dictionary/"
   },
   {
     "title": "Find the Town Judge",
@@ -1149,7 +1292,8 @@
     "difficulty": "Easy",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-the-town-judge"
+    "youtubeLink": "https://neetcode.io/solutions/find-the-town-judge",
+    "url": "https://leetcode.com/problems/find-the-town-judge/"
   },
   {
     "title": "Number of Islands",
@@ -1157,7 +1301,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/number-of-islands"
+    "youtubeLink": "https://neetcode.io/solutions/number-of-islands",
+    "url": "https://leetcode.com/problems/number-of-islands/"
   },
   {
     "title": "Max Area of Island",
@@ -1165,7 +1310,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/max-area-of-island"
+    "youtubeLink": "https://neetcode.io/solutions/max-area-of-island",
+    "url": "https://leetcode.com/problems/max-area-of-island/"
   },
   {
     "title": "Clone Graph",
@@ -1173,7 +1319,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/clone-graph"
+    "youtubeLink": "https://neetcode.io/solutions/clone-graph",
+    "url": "https://leetcode.com/problems/clone-graph/"
   },
   {
     "title": "Walls and Gates",
@@ -1181,7 +1328,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/walls-and-gates"
+    "youtubeLink": "https://neetcode.io/solutions/walls-and-gates",
+    "url": "https://leetcode.com/problems/walls-and-gates/"
   },
   {
     "title": "Rotting Oranges",
@@ -1189,7 +1337,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/rotting-oranges"
+    "youtubeLink": "https://neetcode.io/solutions/rotting-oranges",
+    "url": "https://leetcode.com/problems/rotting-oranges/"
   },
   {
     "title": "Pacific Atlantic Water Flow",
@@ -1197,7 +1346,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/pacific-atlantic-water-flow"
+    "youtubeLink": "https://neetcode.io/solutions/pacific-atlantic-water-flow",
+    "url": "https://leetcode.com/problems/pacific-atlantic-water-flow/"
   },
   {
     "title": "Surrounded Regions",
@@ -1205,7 +1355,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/surrounded-regions"
+    "youtubeLink": "https://neetcode.io/solutions/surrounded-regions",
+    "url": "https://leetcode.com/problems/surrounded-regions/"
   },
   {
     "title": "Open the Lock",
@@ -1213,7 +1364,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/open-the-lock"
+    "youtubeLink": "https://neetcode.io/solutions/open-the-lock",
+    "url": "https://leetcode.com/problems/open-the-lock/"
   },
   {
     "title": "Course Schedule",
@@ -1221,7 +1373,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/course-schedule"
+    "youtubeLink": "https://neetcode.io/solutions/course-schedule",
+    "url": "https://leetcode.com/problems/course-schedule/"
   },
   {
     "title": "Course Schedule II",
@@ -1229,7 +1382,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/course-schedule-ii"
+    "youtubeLink": "https://neetcode.io/solutions/course-schedule-ii",
+    "url": "https://leetcode.com/problems/course-schedule-ii/"
   },
   {
     "title": "Graph Valid Tree",
@@ -1237,7 +1391,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/graph-valid-tree"
+    "youtubeLink": "https://neetcode.io/solutions/graph-valid-tree",
+    "url": "https://leetcode.com/problems/graph-valid-tree/"
   },
   {
     "title": "Course Schedule IV",
@@ -1245,7 +1400,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/course-schedule-iv"
+    "youtubeLink": "https://neetcode.io/solutions/course-schedule-iv",
+    "url": "https://leetcode.com/problems/course-schedule-iv/"
   },
   {
     "title": "Number of Connected Components in an Undirected Graph",
@@ -1253,7 +1409,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/number-of-connected-components-in-an-undirected-graph"
+    "youtubeLink": "https://neetcode.io/solutions/number-of-connected-components-in-an-undirected-graph",
+    "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/"
   },
   {
     "title": "Redundant Connection",
@@ -1261,7 +1418,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/redundant-connection"
+    "youtubeLink": "https://neetcode.io/solutions/redundant-connection",
+    "url": "https://leetcode.com/problems/redundant-connection/"
   },
   {
     "title": "Accounts Merge",
@@ -1269,7 +1427,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/accounts-merge"
+    "youtubeLink": "https://neetcode.io/solutions/accounts-merge",
+    "url": "https://leetcode.com/problems/accounts-merge/"
   },
   {
     "title": "Evaluate Division",
@@ -1277,7 +1436,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/evaluate-division"
+    "youtubeLink": "https://neetcode.io/solutions/evaluate-division",
+    "url": "https://leetcode.com/problems/evaluate-division/"
   },
   {
     "title": "Minimum Height Trees",
@@ -1285,7 +1445,8 @@
     "difficulty": "Medium",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/minimum-height-trees"
+    "youtubeLink": "https://neetcode.io/solutions/minimum-height-trees",
+    "url": "https://leetcode.com/problems/minimum-height-trees/"
   },
   {
     "title": "Word Ladder",
@@ -1293,7 +1454,8 @@
     "difficulty": "Hard",
     "category": "Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/word-ladder"
+    "youtubeLink": "https://neetcode.io/solutions/word-ladder",
+    "url": "https://leetcode.com/problems/word-ladder/"
   },
   {
     "title": "Path With Minimum Effort",
@@ -1301,7 +1463,8 @@
     "difficulty": "Medium",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/path-with-minimum-effort"
+    "youtubeLink": "https://neetcode.io/solutions/path-with-minimum-effort",
+    "url": "https://leetcode.com/problems/path-with-minimum-effort/"
   },
   {
     "title": "Network Delay Time",
@@ -1309,7 +1472,8 @@
     "difficulty": "Medium",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/network-delay-time"
+    "youtubeLink": "https://neetcode.io/solutions/network-delay-time",
+    "url": "https://leetcode.com/problems/network-delay-time/"
   },
   {
     "title": "Reconstruct Itinerary",
@@ -1317,7 +1481,8 @@
     "difficulty": "Hard",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reconstruct-itinerary"
+    "youtubeLink": "https://neetcode.io/solutions/reconstruct-itinerary",
+    "url": "https://leetcode.com/problems/reconstruct-itinerary/"
   },
   {
     "title": "Min Cost to Connect All Points",
@@ -1325,7 +1490,8 @@
     "difficulty": "Medium",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/min-cost-to-connect-all-points"
+    "youtubeLink": "https://neetcode.io/solutions/min-cost-to-connect-all-points",
+    "url": "https://leetcode.com/problems/min-cost-to-connect-all-points/"
   },
   {
     "title": "Swim in Rising Water",
@@ -1333,7 +1499,8 @@
     "difficulty": "Hard",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/swim-in-rising-water"
+    "youtubeLink": "https://neetcode.io/solutions/swim-in-rising-water",
+    "url": "https://leetcode.com/problems/swim-in-rising-water/"
   },
   {
     "title": "Alien Dictionary",
@@ -1341,7 +1508,8 @@
     "difficulty": "Hard",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/alien-dictionary"
+    "youtubeLink": "https://neetcode.io/solutions/alien-dictionary",
+    "url": "https://leetcode.com/problems/alien-dictionary/"
   },
   {
     "title": "Cheapest Flights Within K Stops",
@@ -1349,7 +1517,8 @@
     "difficulty": "Medium",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/cheapest-flights-within-k-stops"
+    "youtubeLink": "https://neetcode.io/solutions/cheapest-flights-within-k-stops",
+    "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/"
   },
   {
     "title": "Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree",
@@ -1357,7 +1526,8 @@
     "difficulty": "Hard",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree"
+    "youtubeLink": "https://neetcode.io/solutions/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree",
+    "url": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/"
   },
   {
     "title": "Build a Matrix With Conditions",
@@ -1365,7 +1535,8 @@
     "difficulty": "Hard",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/build-a-matrix-with-conditions"
+    "youtubeLink": "https://neetcode.io/solutions/build-a-matrix-with-conditions",
+    "url": "https://leetcode.com/problems/build-a-matrix-with-conditions/"
   },
   {
     "title": "Greatest Common Divisor Traversal",
@@ -1373,7 +1544,8 @@
     "difficulty": "Hard",
     "category": "Advanced Graphs",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/greatest-common-divisor-traversal"
+    "youtubeLink": "https://neetcode.io/solutions/greatest-common-divisor-traversal",
+    "url": "https://leetcode.com/problems/greatest-common-divisor-traversal/"
   },
   {
     "title": "Climbing Stairs",
@@ -1381,7 +1553,8 @@
     "difficulty": "Easy",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/climbing-stairs"
+    "youtubeLink": "https://neetcode.io/solutions/climbing-stairs",
+    "url": "https://leetcode.com/problems/climbing-stairs/"
   },
   {
     "title": "Min Cost Climbing Stairs",
@@ -1389,7 +1562,8 @@
     "difficulty": "Easy",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/min-cost-climbing-stairs"
+    "youtubeLink": "https://neetcode.io/solutions/min-cost-climbing-stairs",
+    "url": "https://leetcode.com/problems/min-cost-climbing-stairs/"
   },
   {
     "title": "N-th Tribonacci Number",
@@ -1397,7 +1571,8 @@
     "difficulty": "Easy",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/n-th-tribonacci-number"
+    "youtubeLink": "https://neetcode.io/solutions/n-th-tribonacci-number",
+    "url": "https://leetcode.com/problems/n-th-tribonacci-number/"
   },
   {
     "title": "House Robber",
@@ -1405,7 +1580,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/house-robber"
+    "youtubeLink": "https://neetcode.io/solutions/house-robber",
+    "url": "https://leetcode.com/problems/house-robber/"
   },
   {
     "title": "House Robber II",
@@ -1413,7 +1589,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/house-robber-ii"
+    "youtubeLink": "https://neetcode.io/solutions/house-robber-ii",
+    "url": "https://leetcode.com/problems/house-robber-ii/"
   },
   {
     "title": "Longest Palindromic Substring",
@@ -1421,7 +1598,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-palindromic-substring"
+    "youtubeLink": "https://neetcode.io/solutions/longest-palindromic-substring",
+    "url": "https://leetcode.com/problems/longest-palindromic-substring/"
   },
   {
     "title": "Palindromic Substrings",
@@ -1429,7 +1607,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/palindromic-substrings"
+    "youtubeLink": "https://neetcode.io/solutions/palindromic-substrings",
+    "url": "https://leetcode.com/problems/palindromic-substrings/"
   },
   {
     "title": "Decode Ways",
@@ -1437,7 +1616,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/decode-ways"
+    "youtubeLink": "https://neetcode.io/solutions/decode-ways",
+    "url": "https://leetcode.com/problems/decode-ways/"
   },
   {
     "title": "Coin Change",
@@ -1445,7 +1625,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/coin-change"
+    "youtubeLink": "https://neetcode.io/solutions/coin-change",
+    "url": "https://leetcode.com/problems/coin-change/"
   },
   {
     "title": "Maximum Product Subarray",
@@ -1453,7 +1634,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/maximum-product-subarray"
+    "youtubeLink": "https://neetcode.io/solutions/maximum-product-subarray",
+    "url": "https://leetcode.com/problems/maximum-product-subarray/"
   },
   {
     "title": "Word Break",
@@ -1461,7 +1643,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/word-break"
+    "youtubeLink": "https://neetcode.io/solutions/word-break",
+    "url": "https://leetcode.com/problems/word-break/"
   },
   {
     "title": "Longest Increasing Subsequence",
@@ -1469,7 +1652,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-increasing-subsequence"
+    "youtubeLink": "https://neetcode.io/solutions/longest-increasing-subsequence",
+    "url": "https://leetcode.com/problems/longest-increasing-subsequence/"
   },
   {
     "title": "Partition Equal Subset Sum",
@@ -1477,7 +1661,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/partition-equal-subset-sum"
+    "youtubeLink": "https://neetcode.io/solutions/partition-equal-subset-sum",
+    "url": "https://leetcode.com/problems/partition-equal-subset-sum/"
   },
   {
     "title": "Combination Sum IV",
@@ -1485,7 +1670,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/combination-sum-iv"
+    "youtubeLink": "https://neetcode.io/solutions/combination-sum-iv",
+    "url": "https://leetcode.com/problems/combination-sum-iv/"
   },
   {
     "title": "Perfect Squares",
@@ -1493,7 +1679,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/perfect-squares"
+    "youtubeLink": "https://neetcode.io/solutions/perfect-squares",
+    "url": "https://leetcode.com/problems/perfect-squares/"
   },
   {
     "title": "Integer Break",
@@ -1501,7 +1688,8 @@
     "difficulty": "Medium",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/integer-break"
+    "youtubeLink": "https://neetcode.io/solutions/integer-break",
+    "url": "https://leetcode.com/problems/integer-break/"
   },
   {
     "title": "Stone Game III",
@@ -1509,7 +1697,8 @@
     "difficulty": "Hard",
     "category": "1-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/stone-game-iii"
+    "youtubeLink": "https://neetcode.io/solutions/stone-game-iii",
+    "url": "https://leetcode.com/problems/stone-game-iii/"
   },
   {
     "title": "Unique Paths",
@@ -1517,7 +1706,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/unique-paths"
+    "youtubeLink": "https://neetcode.io/solutions/unique-paths",
+    "url": "https://leetcode.com/problems/unique-paths/"
   },
   {
     "title": "Unique Paths II",
@@ -1525,7 +1715,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/unique-paths-ii"
+    "youtubeLink": "https://neetcode.io/solutions/unique-paths-ii",
+    "url": "https://leetcode.com/problems/unique-paths-ii/"
   },
   {
     "title": "Minimum Path Sum",
@@ -1533,7 +1724,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/minimum-path-sum"
+    "youtubeLink": "https://neetcode.io/solutions/minimum-path-sum",
+    "url": "https://leetcode.com/problems/minimum-path-sum/"
   },
   {
     "title": "Longest Common Subsequence",
@@ -1541,7 +1733,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-common-subsequence"
+    "youtubeLink": "https://neetcode.io/solutions/longest-common-subsequence",
+    "url": "https://leetcode.com/problems/longest-common-subsequence/"
   },
   {
     "title": "Last Stone Weight II",
@@ -1549,7 +1742,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/last-stone-weight-ii"
+    "youtubeLink": "https://neetcode.io/solutions/last-stone-weight-ii",
+    "url": "https://leetcode.com/problems/last-stone-weight-ii/"
   },
   {
     "title": "Best Time to Buy and Sell Stock with Cooldown",
@@ -1557,7 +1751,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/best-time-to-buy-and-sell-stock-with-cooldown"
+    "youtubeLink": "https://neetcode.io/solutions/best-time-to-buy-and-sell-stock-with-cooldown",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/"
   },
   {
     "title": "Coin Change II",
@@ -1565,7 +1760,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/coin-change-ii"
+    "youtubeLink": "https://neetcode.io/solutions/coin-change-ii",
+    "url": "https://leetcode.com/problems/coin-change-ii/"
   },
   {
     "title": "Target Sum",
@@ -1573,7 +1769,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/target-sum"
+    "youtubeLink": "https://neetcode.io/solutions/target-sum",
+    "url": "https://leetcode.com/problems/target-sum/"
   },
   {
     "title": "Interleaving String",
@@ -1581,7 +1778,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/interleaving-string"
+    "youtubeLink": "https://neetcode.io/solutions/interleaving-string",
+    "url": "https://leetcode.com/problems/interleaving-string/"
   },
   {
     "title": "Stone Game",
@@ -1589,7 +1787,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/stone-game"
+    "youtubeLink": "https://neetcode.io/solutions/stone-game",
+    "url": "https://leetcode.com/problems/stone-game/"
   },
   {
     "title": "Stone Game II",
@@ -1597,7 +1796,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/stone-game-ii"
+    "youtubeLink": "https://neetcode.io/solutions/stone-game-ii",
+    "url": "https://leetcode.com/problems/stone-game-ii/"
   },
   {
     "title": "Longest Increasing Path in a Matrix",
@@ -1605,7 +1805,8 @@
     "difficulty": "Hard",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-increasing-path-in-a-matrix"
+    "youtubeLink": "https://neetcode.io/solutions/longest-increasing-path-in-a-matrix",
+    "url": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/"
   },
   {
     "title": "Distinct Subsequences",
@@ -1613,7 +1814,8 @@
     "difficulty": "Hard",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/distinct-subsequences"
+    "youtubeLink": "https://neetcode.io/solutions/distinct-subsequences",
+    "url": "https://leetcode.com/problems/distinct-subsequences/"
   },
   {
     "title": "Edit Distance",
@@ -1621,7 +1823,8 @@
     "difficulty": "Medium",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/edit-distance"
+    "youtubeLink": "https://neetcode.io/solutions/edit-distance",
+    "url": "https://leetcode.com/problems/edit-distance/"
   },
   {
     "title": "Burst Balloons",
@@ -1629,7 +1832,8 @@
     "difficulty": "Hard",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/burst-balloons"
+    "youtubeLink": "https://neetcode.io/solutions/burst-balloons",
+    "url": "https://leetcode.com/problems/burst-balloons/"
   },
   {
     "title": "Regular Expression Matching",
@@ -1637,7 +1841,8 @@
     "difficulty": "Hard",
     "category": "2-D Dynamic Programming",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/regular-expression-matching"
+    "youtubeLink": "https://neetcode.io/solutions/regular-expression-matching",
+    "url": "https://leetcode.com/problems/regular-expression-matching/"
   },
   {
     "title": "Lemonade Change",
@@ -1645,7 +1850,8 @@
     "difficulty": "Easy",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/lemonade-change"
+    "youtubeLink": "https://neetcode.io/solutions/lemonade-change",
+    "url": "https://leetcode.com/problems/lemonade-change/"
   },
   {
     "title": "Maximum Subarray",
@@ -1653,7 +1859,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/maximum-subarray"
+    "youtubeLink": "https://neetcode.io/solutions/maximum-subarray",
+    "url": "https://leetcode.com/problems/maximum-subarray/"
   },
   {
     "title": "Maximum Sum Circular Subarray",
@@ -1661,7 +1868,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/maximum-sum-circular-subarray"
+    "youtubeLink": "https://neetcode.io/solutions/maximum-sum-circular-subarray",
+    "url": "https://leetcode.com/problems/maximum-sum-circular-subarray/"
   },
   {
     "title": "Longest Turbulent Subarray",
@@ -1669,7 +1877,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/longest-turbulent-subarray"
+    "youtubeLink": "https://neetcode.io/solutions/longest-turbulent-subarray",
+    "url": "https://leetcode.com/problems/longest-turbulent-subarray/"
   },
   {
     "title": "Jump Game",
@@ -1677,7 +1886,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/jump-game"
+    "youtubeLink": "https://neetcode.io/solutions/jump-game",
+    "url": "https://leetcode.com/problems/jump-game/"
   },
   {
     "title": "Jump Game II",
@@ -1685,7 +1895,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/jump-game-ii"
+    "youtubeLink": "https://neetcode.io/solutions/jump-game-ii",
+    "url": "https://leetcode.com/problems/jump-game-ii/"
   },
   {
     "title": "Jump Game VII",
@@ -1693,7 +1904,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/jump-game-vii"
+    "youtubeLink": "https://neetcode.io/solutions/jump-game-vii",
+    "url": "https://leetcode.com/problems/jump-game-vii/"
   },
   {
     "title": "Gas Station",
@@ -1701,7 +1913,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/gas-station"
+    "youtubeLink": "https://neetcode.io/solutions/gas-station",
+    "url": "https://leetcode.com/problems/gas-station/"
   },
   {
     "title": "Hand of Straights",
@@ -1709,7 +1922,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/hand-of-straights"
+    "youtubeLink": "https://neetcode.io/solutions/hand-of-straights",
+    "url": "https://leetcode.com/problems/hand-of-straights/"
   },
   {
     "title": "Dota2 Senate",
@@ -1717,7 +1931,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/dota2-senate"
+    "youtubeLink": "https://neetcode.io/solutions/dota2-senate",
+    "url": "https://leetcode.com/problems/dota2-senate/"
   },
   {
     "title": "Merge Triplets to Form Target Triplet",
@@ -1725,7 +1940,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/merge-triplets-to-form-target-triplet"
+    "youtubeLink": "https://neetcode.io/solutions/merge-triplets-to-form-target-triplet",
+    "url": "https://leetcode.com/problems/merge-triplets-to-form-target-triplet/"
   },
   {
     "title": "Partition Labels",
@@ -1733,7 +1949,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/partition-labels"
+    "youtubeLink": "https://neetcode.io/solutions/partition-labels",
+    "url": "https://leetcode.com/problems/partition-labels/"
   },
   {
     "title": "Valid Parenthesis String",
@@ -1741,7 +1958,8 @@
     "difficulty": "Medium",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/valid-parenthesis-string"
+    "youtubeLink": "https://neetcode.io/solutions/valid-parenthesis-string",
+    "url": "https://leetcode.com/problems/valid-parenthesis-string/"
   },
   {
     "title": "Candy",
@@ -1749,7 +1967,8 @@
     "difficulty": "Hard",
     "category": "Greedy",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/candy"
+    "youtubeLink": "https://neetcode.io/solutions/candy",
+    "url": "https://leetcode.com/problems/candy/"
   },
   {
     "title": "Insert Interval",
@@ -1757,7 +1976,8 @@
     "difficulty": "Medium",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/insert-interval"
+    "youtubeLink": "https://neetcode.io/solutions/insert-interval",
+    "url": "https://leetcode.com/problems/insert-interval/"
   },
   {
     "title": "Merge Intervals",
@@ -1765,7 +1985,8 @@
     "difficulty": "Medium",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/merge-intervals"
+    "youtubeLink": "https://neetcode.io/solutions/merge-intervals",
+    "url": "https://leetcode.com/problems/merge-intervals/"
   },
   {
     "title": "Non-overlapping Intervals",
@@ -1773,7 +1994,8 @@
     "difficulty": "Medium",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/non-overlapping-intervals"
+    "youtubeLink": "https://neetcode.io/solutions/non-overlapping-intervals",
+    "url": "https://leetcode.com/problems/non-overlapping-intervals/"
   },
   {
     "title": "Meeting Rooms",
@@ -1781,7 +2003,8 @@
     "difficulty": "Easy",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/meeting-rooms"
+    "youtubeLink": "https://neetcode.io/solutions/meeting-rooms",
+    "url": "https://leetcode.com/problems/meeting-rooms/"
   },
   {
     "title": "Meeting Rooms II",
@@ -1789,7 +2012,8 @@
     "difficulty": "Medium",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/meeting-rooms-ii"
+    "youtubeLink": "https://neetcode.io/solutions/meeting-rooms-ii",
+    "url": "https://leetcode.com/problems/meeting-rooms-ii/"
   },
   {
     "title": "Meeting Rooms III",
@@ -1797,7 +2021,8 @@
     "difficulty": "Hard",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/meeting-rooms-iii"
+    "youtubeLink": "https://neetcode.io/solutions/meeting-rooms-iii",
+    "url": "https://leetcode.com/problems/meeting-rooms-iii/"
   },
   {
     "title": "Minimum Interval to Include Each Query",
@@ -1805,7 +2030,8 @@
     "difficulty": "Hard",
     "category": "Intervals",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/minimum-interval-to-include-each-query"
+    "youtubeLink": "https://neetcode.io/solutions/minimum-interval-to-include-each-query",
+    "url": "https://leetcode.com/problems/minimum-interval-to-include-each-query/"
   },
   {
     "title": "Excel Sheet Column Title",
@@ -1813,7 +2039,8 @@
     "difficulty": "Easy",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/excel-sheet-column-title"
+    "youtubeLink": "https://neetcode.io/solutions/excel-sheet-column-title",
+    "url": "https://leetcode.com/problems/excel-sheet-column-title/"
   },
   {
     "title": "Greatest Common Divisor of Strings",
@@ -1821,7 +2048,8 @@
     "difficulty": "Easy",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/greatest-common-divisor-of-strings"
+    "youtubeLink": "https://neetcode.io/solutions/greatest-common-divisor-of-strings",
+    "url": "https://leetcode.com/problems/greatest-common-divisor-of-strings/"
   },
   {
     "title": "Insert Greatest Common Divisors in Linked List",
@@ -1829,7 +2057,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/insert-greatest-common-divisors-in-linked-list"
+    "youtubeLink": "https://neetcode.io/solutions/insert-greatest-common-divisors-in-linked-list",
+    "url": "https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/"
   },
   {
     "title": "Transpose Matrix",
@@ -1837,7 +2066,8 @@
     "difficulty": "Easy",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/transpose-matrix"
+    "youtubeLink": "https://neetcode.io/solutions/transpose-matrix",
+    "url": "https://leetcode.com/problems/transpose-matrix/"
   },
   {
     "title": "Rotate Image",
@@ -1845,7 +2075,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/rotate-image"
+    "youtubeLink": "https://neetcode.io/solutions/rotate-image",
+    "url": "https://leetcode.com/problems/rotate-image/"
   },
   {
     "title": "Spiral Matrix",
@@ -1853,7 +2084,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/spiral-matrix"
+    "youtubeLink": "https://neetcode.io/solutions/spiral-matrix",
+    "url": "https://leetcode.com/problems/spiral-matrix/"
   },
   {
     "title": "Set Matrix Zeroes",
@@ -1861,7 +2093,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/set-matrix-zeroes"
+    "youtubeLink": "https://neetcode.io/solutions/set-matrix-zeroes",
+    "url": "https://leetcode.com/problems/set-matrix-zeroes/"
   },
   {
     "title": "Happy Number",
@@ -1869,7 +2102,8 @@
     "difficulty": "Easy",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/happy-number"
+    "youtubeLink": "https://neetcode.io/solutions/happy-number",
+    "url": "https://leetcode.com/problems/happy-number/"
   },
   {
     "title": "Plus One",
@@ -1877,7 +2111,8 @@
     "difficulty": "Easy",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/plus-one"
+    "youtubeLink": "https://neetcode.io/solutions/plus-one",
+    "url": "https://leetcode.com/problems/plus-one/"
   },
   {
     "title": "Roman to Integer",
@@ -1885,7 +2120,8 @@
     "difficulty": "Easy",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/roman-to-integer"
+    "youtubeLink": "https://neetcode.io/solutions/roman-to-integer",
+    "url": "https://leetcode.com/problems/roman-to-integer/"
   },
   {
     "title": "Pow(x, n)",
@@ -1893,7 +2129,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/powx-n"
+    "youtubeLink": "https://neetcode.io/solutions/powx-n",
+    "url": "https://leetcode.com/problems/powx-n/"
   },
   {
     "title": "Multiply Strings",
@@ -1901,7 +2138,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/multiply-strings"
+    "youtubeLink": "https://neetcode.io/solutions/multiply-strings",
+    "url": "https://leetcode.com/problems/multiply-strings/"
   },
   {
     "title": "Detect Squares",
@@ -1909,7 +2147,8 @@
     "difficulty": "Medium",
     "category": "Math & Geomerty",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/detect-squares"
+    "youtubeLink": "https://neetcode.io/solutions/detect-squares",
+    "url": "https://leetcode.com/problems/detect-squares/"
   },
   {
     "title": "Single Number",
@@ -1917,7 +2156,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/single-number"
+    "youtubeLink": "https://neetcode.io/solutions/single-number",
+    "url": "https://leetcode.com/problems/single-number/"
   },
   {
     "title": "Number of 1 Bits",
@@ -1925,7 +2165,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/number-of-1-bits"
+    "youtubeLink": "https://neetcode.io/solutions/number-of-1-bits",
+    "url": "https://leetcode.com/problems/number-of-1-bits/"
   },
   {
     "title": "Counting Bits",
@@ -1933,7 +2174,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/counting-bits"
+    "youtubeLink": "https://neetcode.io/solutions/counting-bits",
+    "url": "https://leetcode.com/problems/counting-bits/"
   },
   {
     "title": "Add Binary",
@@ -1941,7 +2183,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/add-binary"
+    "youtubeLink": "https://neetcode.io/solutions/add-binary",
+    "url": "https://leetcode.com/problems/add-binary/"
   },
   {
     "title": "Reverse Bits",
@@ -1949,7 +2192,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reverse-bits"
+    "youtubeLink": "https://neetcode.io/solutions/reverse-bits",
+    "url": "https://leetcode.com/problems/reverse-bits/"
   },
   {
     "title": "Missing Number",
@@ -1957,7 +2201,8 @@
     "difficulty": "Easy",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/missing-number"
+    "youtubeLink": "https://neetcode.io/solutions/missing-number",
+    "url": "https://leetcode.com/problems/missing-number/"
   },
   {
     "title": "Sum of Two Integers",
@@ -1965,7 +2210,8 @@
     "difficulty": "Medium",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/sum-of-two-integers"
+    "youtubeLink": "https://neetcode.io/solutions/sum-of-two-integers",
+    "url": "https://leetcode.com/problems/sum-of-two-integers/"
   },
   {
     "title": "Reverse Integer",
@@ -1973,7 +2219,8 @@
     "difficulty": "Medium",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/reverse-integer"
+    "youtubeLink": "https://neetcode.io/solutions/reverse-integer",
+    "url": "https://leetcode.com/problems/reverse-integer/"
   },
   {
     "title": "Bitwise AND of Numbers Range",
@@ -1981,7 +2228,8 @@
     "difficulty": "Medium",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/bitwise-and-of-numbers-range"
+    "youtubeLink": "https://neetcode.io/solutions/bitwise-and-of-numbers-range",
+    "url": "https://leetcode.com/problems/bitwise-and-of-numbers-range/"
   },
   {
     "title": "Minimum Array End",
@@ -1989,7 +2237,8 @@
     "difficulty": "Medium",
     "category": "Bit Manipulation",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/minimum-array-end"
+    "youtubeLink": "https://neetcode.io/solutions/minimum-array-end",
+    "url": "https://leetcode.com/problems/minimum-array-end/"
   },
   {
     "title": "Sum of All Subset XOR Totals",
@@ -1997,6 +2246,7 @@
     "difficulty": "Easy",
     "category": "Backtracking",
     "platform": "leetcode",
-    "youtubeLink": "https://neetcode.io/solutions/sum-of-all-subsets-xor-total"
+    "youtubeLink": "https://neetcode.io/solutions/sum-of-all-subsets-xor-total",
+    "url": "https://leetcode.com/problems/sum-of-all-subset-xor-totals/"
   }
 ]

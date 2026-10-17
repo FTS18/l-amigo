@@ -376,8 +376,30 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     font-size: 14px !important;
     font-weight: 500 !important;
-    animation: lamigo-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1), lamigo-toast-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) 4.7s forwards;
-    pointer-events: none;
+    animation: lamigo-toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1), lamigo-toast-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) 6.2s forwards;
+    pointer-events: auto !important;
+}
+
+.lamigo-toast-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 3px 8px !important;
+    background: rgba(44, 187, 93, 0.15) !important;
+    color: #2cbb5d !important;
+    border: 1px solid rgba(44, 187, 93, 0.3) !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    margin-left: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+.lamigo-toast-link:hover {
+    background: rgba(44, 187, 93, 0.25) !important;
+    border-color: #2cbb5d !important;
+    color: #34d399 !important;
 }
 
 .lamigo-toast-success-icon {
@@ -414,4 +436,63 @@
         transform: translateY(20px) scale(0.95);
         opacity: 0;
     }
+}
+
+/* Company Tags in LeetCode Problem Panel */
+.lamigo-company-tags-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 8px 0 12px 0 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    user-select: none !important;
+}
+
+.lamigo-company-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+    margin-right: 2px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.lamigo-company-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 2px 8px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #f1f5f9 !important;
+    line-height: 1.4 !important;
+    transition: all 0.15s ease !important;
+}
+
+.lamigo-company-badge:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Light mode support */
+:root:not(.dark) .lamigo-company-badge {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    color: #1e293b !important;
+}
+
+:root:not(.dark) .lamigo-company-badge:hover {
+    background: rgba(0, 0, 0, 0.09) !important;
+    border-color: rgba(0, 0, 0, 0.22) !important;
+}
+
+:root:not(.dark) .lamigo-company-label {
+    color: #64748b !important;
 }

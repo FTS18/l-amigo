@@ -4,356 +4,407 @@
     "titleSlug": "generate-parentheses",
     "difficulty": "Medium",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/generate-parentheses/"
   },
   {
     "title": "Score of Parentheses",
     "titleSlug": "score-of-parentheses",
     "difficulty": "Medium",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/score-of-parentheses/"
   },
   {
     "title": "Valid Parentheses",
     "titleSlug": "valid-parentheses",
     "difficulty": "Easy",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/valid-parentheses/"
   },
   {
     "title": "Remove Outermost Parentheses",
     "titleSlug": "remove-outermost-parentheses",
     "difficulty": "Easy",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/remove-outermost-parentheses/"
   },
   {
     "title": "Different Ways to Add Parentheses",
     "titleSlug": "different-ways-to-add-parentheses",
     "difficulty": "Medium",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/different-ways-to-add-parentheses/"
   },
   {
     "title": "Remove Invalid Parentheses",
     "titleSlug": "remove-invalid-parentheses",
     "difficulty": "Hard",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/remove-invalid-parentheses/"
   },
   {
     "title": "Minimum Remove to Make Valid Parentheses",
     "titleSlug": "minimum-remove-to-make-valid-parentheses",
     "difficulty": "Medium",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/"
   },
   {
     "title": "Maximum Nesting Depth of the Parentheses",
     "titleSlug": "maximum-nesting-depth-of-the-parentheses",
     "difficulty": "Easy",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/"
   },
   {
     "title": "Longest Valid Parentheses",
     "titleSlug": "longest-valid-parentheses",
     "difficulty": "Hard",
     "category": "Parenthesis problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-valid-parentheses/"
   },
   {
     "title": "Number of Wonderful Substrings",
     "titleSlug": "number-of-wonderful-substrings",
     "difficulty": "Medium",
     "category": "Counting of substring based on some condition",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/number-of-wonderful-substrings/"
   },
   {
     "title": "Sum of Beauty of All Substrings",
     "titleSlug": "sum-of-beauty-of-all-substrings",
     "difficulty": "Medium",
     "category": "Counting of substring based on some condition",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/sum-of-beauty-of-all-substrings/"
   },
   {
     "title": "Maximum Number of Occurrences of a Substring",
     "titleSlug": "maximum-number-of-occurrences-of-a-substring",
     "difficulty": "Medium",
     "category": "Counting of substring based on some condition",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-number-of-occurrences-of-a-substring/"
   },
   {
     "title": "Isomorphic Strings",
     "titleSlug": "isomorphic-strings",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/isomorphic-strings/"
   },
   {
     "title": "Valid Anagram",
     "titleSlug": "valid-anagram",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/valid-anagram/"
   },
   {
     "title": "Additive Number",
     "titleSlug": "additive-number",
     "difficulty": "Medium",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/additive-number/"
   },
   {
     "title": "Buddy Strings",
     "titleSlug": "buddy-strings",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/buddy-strings/"
   },
   {
     "title": "Longest Happy Prefix",
     "titleSlug": "longest-happy-prefix",
     "difficulty": "Hard",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-happy-prefix/"
   },
   {
     "title": "Increasing Decreasing String",
     "titleSlug": "increasing-decreasing-string",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/increasing-decreasing-string/"
   },
   {
     "title": "Check If a String Can Break Another String",
     "titleSlug": "check-if-a-string-can-break-another-string",
     "difficulty": "Medium",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/check-if-a-string-can-break-another-string/"
   },
   {
     "title": "Determine if Two Strings Are Close",
     "titleSlug": "determine-if-two-strings-are-close",
     "difficulty": "Medium",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/determine-if-two-strings-are-close/"
   },
   {
     "title": "Check If Two String Arrays are Equivalent",
     "titleSlug": "check-if-two-string-arrays-are-equivalent",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/check-if-two-string-arrays-are-equivalent/"
   },
   {
     "title": "Check if Word Equals Summation of Two Words",
     "titleSlug": "check-if-word-equals-summation-of-two-words",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/check-if-word-equals-summation-of-two-words/"
   },
   {
     "title": "Check if One String Swap Can Make Strings Equal",
     "titleSlug": "check-if-one-string-swap-can-make-strings-equal",
     "difficulty": "Easy",
     "category": "Check types of string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal/"
   },
   {
     "title": "Palindrome Partitioning",
     "titleSlug": "palindrome-partitioning",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindrome-partitioning/"
   },
   {
     "title": "Palindrome Partitioning II",
     "titleSlug": "palindrome-partitioning-ii",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindrome-partitioning-ii/"
   },
   {
     "title": "Valid Palindrome",
     "titleSlug": "valid-palindrome",
     "difficulty": "Easy",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/valid-palindrome/"
   },
   {
     "title": "Shortest Palindrome",
     "titleSlug": "shortest-palindrome",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/shortest-palindrome/"
   },
   {
     "title": "Palindrome Pairs",
     "titleSlug": "palindrome-pairs",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindrome-pairs/"
   },
   {
     "title": "Longest Palindrome",
     "titleSlug": "longest-palindrome",
     "difficulty": "Easy",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-palindrome/"
   },
   {
     "title": "Longest Palindromic Subsequence",
     "titleSlug": "longest-palindromic-subsequence",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-palindromic-subsequence/"
   },
   {
     "title": "Find the Closest Palindrome",
     "titleSlug": "find-the-closest-palindrome",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-the-closest-palindrome/"
   },
   {
     "title": "Palindromic Substrings",
     "titleSlug": "palindromic-substrings",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindromic-substrings/"
   },
   {
     "title": "Valid Palindrome II",
     "titleSlug": "valid-palindrome-ii",
     "difficulty": "Easy",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/valid-palindrome-ii/"
   },
   {
     "title": "Longest Chunked Palindrome Decomposition",
     "titleSlug": "longest-chunked-palindrome-decomposition",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-chunked-palindrome-decomposition/"
   },
   {
     "title": "Break a Palindrome",
     "titleSlug": "break-a-palindrome",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/break-a-palindrome/"
   },
   {
     "title": "Can Make Palindrome from Substring",
     "titleSlug": "can-make-palindrome-from-substring",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/can-make-palindrome-from-substring/"
   },
   {
     "title": "Palindrome Partitioning III",
     "titleSlug": "palindrome-partitioning-iii",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/palindrome-partitioning-iii/"
   },
   {
     "title": "Minimum Insertion Steps to Make a String Palindrome",
     "titleSlug": "minimum-insertion-steps-to-make-a-string-palindrome",
     "difficulty": "Hard",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/"
   },
   {
     "title": "Remove Palindromic Subsequences",
     "titleSlug": "remove-palindromic-subsequences",
     "difficulty": "Easy",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/remove-palindromic-subsequences/"
   },
   {
     "title": "Construct K Palindrome Strings",
     "titleSlug": "construct-k-palindrome-strings",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/construct-k-palindrome-strings/"
   },
   {
     "title": "Split Two Strings to Make Palindrome",
     "titleSlug": "split-two-strings-to-make-palindrome",
     "difficulty": "Medium",
     "category": "Palindromic string",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/split-two-strings-to-make-palindrome/"
   },
   {
     "title": "Sort Characters By Frequency",
     "titleSlug": "sort-characters-by-frequency",
     "difficulty": "Medium",
     "category": "Sorting on String",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
   },
   {
     "title": "Custom Sort String",
     "titleSlug": "custom-sort-string",
     "difficulty": "Medium",
     "category": "Sorting on String",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/custom-sort-string/"
   },
   {
     "title": "Longest Duplicate Substring",
     "titleSlug": "longest-duplicate-substring",
     "difficulty": "Hard",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-duplicate-substring/"
   },
   {
     "title": "Longest String Chain",
     "titleSlug": "longest-string-chain",
     "difficulty": "Medium",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-string-chain/"
   },
   {
     "title": "Longest Common Subsequence",
     "titleSlug": "longest-common-subsequence",
     "difficulty": "Medium",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-common-subsequence/"
   },
   {
     "title": "Longest Happy String",
     "titleSlug": "longest-happy-string",
     "difficulty": "Medium",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/longest-happy-string/"
   },
   {
     "title": "Maximum Length of a Concatenated String with Unique Characters",
     "titleSlug": "maximum-length-of-a-concatenated-string-with-unique-characters",
     "difficulty": "Medium",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/"
   },
   {
     "title": "Find Longest Awesome Substring",
     "titleSlug": "find-longest-awesome-substring",
     "difficulty": "Hard",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/find-longest-awesome-substring/"
   },
   {
     "title": "Largest Substring Between Two Equal Characters",
     "titleSlug": "largest-substring-between-two-equal-characters",
     "difficulty": "Easy",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/largest-substring-between-two-equal-characters/"
   },
   {
     "title": "Largest Odd Number in String",
     "titleSlug": "largest-odd-number-in-string",
     "difficulty": "Easy",
     "category": "Longest and shortest kind of String Problem",
-    "platform": "leetcode"
+    "platform": "leetcode",
+    "url": "https://leetcode.com/problems/largest-odd-number-in-string/"
   }
 ]
